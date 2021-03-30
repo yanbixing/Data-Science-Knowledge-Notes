@@ -1,6 +1,6 @@
 # Regularization
 
-## 1. L1 and L2
+## 1. L1 and L2 Regularization
 
 ### 1.1. Form
 
@@ -50,8 +50,8 @@ L2 $\Re$ (Ridge): $\Re(h(x;w))=  \lambda\sum_i w^2_i$
 
 #### 1.2.3 Application (when to choose what?)
 
-- When features are correlated:
-L2 $\Re$ is better. 
+- When features are **correlated**:
+**L2** $\Re$ is better. 
 Explanation: In the extreme case “linearly related”: 
   - **L2** will distribute weights among different features 
   $\sim\rightarrow$ the result is an **weighted average/vote of all correlated positions**
@@ -62,8 +62,8 @@ Explanation: In the extreme case “linearly related”:
   $\sim\rightarrow$ the result is not stable.
   $\sim\rightarrow$ higher model variance?
 
-- When features is not correlated or data is noisy:
-L1 $\Re$ may be better. 
+- When features is not correlated or data is **noisy**:
+**L1** $\Re$ may be better. 
 Explanation: **L1** can **remove useless/noise feature**. But L2 will still keep them.
 **Note**: usually weight can be also viewed as feature importance. Reduce weight = reduce reliance on the feature = reduce feature importance.
 
@@ -92,9 +92,9 @@ This means:
 
 Ref: Similar figure can be found at [Foundations of Machine Learning, Sec 11.3.4, P286](https://cs.nyu.edu/~mohri/mlbook/)
 
-## 2. Deep dive: Regularization & Bias-variance tradeoff
+## 2. Deep dive: How regularization works?
 
-This and the following parts includes knowledge to explain why regularization works.
+This and the following parts includes knowledge to explain how regularization works.
 
 ### 2.1 Bias-variance decomposition: what is "bias" and "variance"
 
