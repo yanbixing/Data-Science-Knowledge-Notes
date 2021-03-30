@@ -96,9 +96,7 @@ Ref: Similar figure can be found at [Foundations of Machine Learning, Sec 11.3.4
 
 This and the following parts includes knowledge to explain why regularization works.
 
-### 2.1 Bias-variance tradeoff
-
-#### 2.1.1 Bias-variance decomposition: what is "bias" and "variance"
+### 2.1 Bias-variance decomposition: what is "bias" and "variance"
 
 - 'Noises' always exist in real word data. i.e. even for same feature values $x$, we usually observe different label value $y$. Thus, the function between label and feature can be represented as:
 $$\begin{aligned}
@@ -132,8 +130,9 @@ Ref: [Wiki-Bias-variance tradeoff](https://en.wikipedia.org/wiki/Bias%E2%80%93va
 **Conflict**: In [The elements in statistical learning, Sec 2.9, P37](TBD) the expectation of empirical error is generalization error (also called EPE, expected prediction error.) <br>
 **Personal Clarification:** both generalization error and empirical error measure the error of a particular function. However, in the above deduction process, the function varies with the sample set. Thus, it is NOT **generalization error**.
 <!-- **Reconcile**: In the above function, we didn't restrict the form/algorithm of empirical risk, whatever form (e.g. training loss, prediction loss) of empirical risk we use, the above relation stands. If we define the empirical loss as prediction loss, then, the **expectation on empirical risk (prediction loss) over different sample set** is the **generalization risk** -->
+### 2.2 Model complexity and generalization risk
 
-#### 2.1.2 Model complexity metrics
+#### 2.2.1 Model complexity metrics
 
 - Empirical Rademacher complexity:
   
@@ -163,7 +162,7 @@ Ref: [Wiki-Bias-variance tradeoff](https://en.wikipedia.org/wiki/Bias%E2%80%93va
   Ref: [On the Bias-Variance Tradeoff, Sec 2.3, P7](https://arxiv.org/abs/1912.08286)
   
 
-#### 2.1.3 Generalization risk and model complexity.
+#### 2.2.2 Generalization risk and model complexity
 
 $$ R(h) \leq \hat{R}_\mathcal{S}(h) + PosCorrF(\frac{VC\dim(\mathcal{H})}{m})$$
 
@@ -172,17 +171,34 @@ $$ R(h) \leq \hat{R}_\mathcal{S}(h) + PosCorrF(\frac{VC\dim(\mathcal{H})}{m})$$
 - **personal understanding:** The generalization (true) risk is capped by the empirical risk (risk observed with $\mathcal{S}$) plus a value positively correlated with model complexity and negatively correlated with number of samples. This makes sense as it is consistent with our intuition:
   - Complexer model may result in higher generalization risk.
   - More samples make empirical risk approximate generalization risk.
+
+#### 2.2.3 Bias-variance tradeoff ?
+
+The **trade-off** relation is **never** mathematically proved. [On the Bias-Variance Tradeoff, Ch.4, P15](https://arxiv.org/abs/1912.08286) The concept is just an intuitive understanding:
+
+- From the above, we can conclude: 
+  - Expectation of empirical risk with $\mathcal{A}, \mathcal{H}$ can be decomposed into bias- and variance- related risk.
+    - **Personal Intuition:** $\sim \rightarrow$ with the same expectation of empirical risk, a higher model variance lead to lower bias
+  - The generalization risk capping (top limit) of a specific $h$ rough increase with model complexity. 
+    - **Personal Intuition:**  $\sim\rightarrow$ with the same empirical risk, the higher number of param, the higher model complexity, the higher generalization risk $\Rightarrow$ Overfitting.
+  - Thus, if we approximately regard $\underset{\mathcal{S}\sim\mathcal{D}^m}{\mathbb{E}}[\hat{R}_\mathcal{S}(h_\mathcal{S})]$ to $\hat{R}_\mathcal{S}(h)$ as same thing. We can intuitive understand the well known bias-variance "tradeoff": 
+    - Higher complexity $\overset{same \hat{R}_\mathcal{S}(h)}{\Rightarrow}$ higher generalization risk <br> $\sim \rightarrow$ model-overfitting <br> $\sim \rightarrow$ higher variance $\overset{same \underset{\mathcal{S}\sim\mathcal{D}^m}{\mathbb{E}}[\hat{R}_\mathcal{S}(h_\mathcal{S})]}{\Rightarrow}$ lower bias 
+    - I.e. complexer model will cause overfitting (intuitive not strict) which will result in higher model variance and lower bias (intuitive not strict)
+    - I.e. "the bias-variance can be tuned through model complexity".
+  - Actually, the bias and variance can decrease at the same time. [On the Bias-Variance Tradeoff, Ch.4, P15](https://arxiv.org/abs/1912.08286)
+- Appendix - "Model variance" (Intuitive) 
+If we approximate the model variance with in-sample error (may be training error? not generalization error), we can regard that the model variance is proportional to number of parameters:
+$$Var_{in-sample} \sim \sigma^2\frac{p}{m}$$ 
+where $p$ is number of parameters and $m$ is number of training samples, $\sigma^2$ is the **Irreducible Error**, i.e. the variance of noise $\varepsilon$ in the bias-variance decomposition section.
+**Note**: the in-sample error is not test error, so there is sti, pls check the ref *The element in statistical learning*.
+Ref: [Nonlinear System Identification, Sec 7.2, P181](TBD), [The elements in statistical learning, Sec 7.3, P224, eq.7.12](TBD)
   
 
-### 2.2 Regularization and bias-variance tradeoff
+### 2.3 Regularization and bias-variance "tradeoff"
 
-This part is not mathematically strict as bias-variance decomposition. Just an intuitive dive.
+Since the trade-off is just an intuitive understanding, the regularization of the bias-variance "tradeoff" is also just an **intuitive** understanding. 
 
-- Model variance (in-sample error, training error?): 
-$$Var\sim\sigma^2\frac{p}{m}$$ 
-where $p$ is number of parameters and $m$ is number of training samples, $\sigma^2$ is the **Irreducible Error**, i.e. the variance of noise $\varepsilon$ in the bias-variance decomposition section.
-Note: the in-sample error is not test error, pls check the ref *The element in statistical learning*.
-Ref: [Nonlinear System Identification, Sec 7.2, P181](TBD), [The elements in statistical learning, Sec 7.3, P224, eq.7.12](TBD)
+
 
 - Regularization makes model behave as though it possesses fewer parameters than it really is. Ref: [Nonlinear System Identification, Sec 7.5, P207](TBD)
 
@@ -190,7 +206,6 @@ Ref: [Nonlinear System Identification, Sec 7.2, P181](TBD), [The elements in sta
   - Since: larger weight tends to cause sharper shape of function. <br> Ref: [machinelearningmastery](https://machinelearningmastery.com/weight-regularization-to-reduce-overfitting-of-deep-learning-models/)
   - Thus: model complexity can be expressed with a function of weights. e.g. in the form of L1 and L2 regularization. <br> Ref: [Machine Learning Crush Course](https://developers.google.com/machine-learning/crash-course/regularization-for-simplicity/l2-regularization), [TowardsDataScience](https://towardsdatascience.com/l1-and-l2-regularization-explained-874c3b03f668)
 
-  
 
 
 ## Appendix - Concept Differentiation
@@ -237,7 +252,6 @@ Ref: [Nonlinear System Identification, Sec 7.2, P181](TBD), [The elements in sta
 - Typically, $E(XY) \neq E(X)E(Y)$
   - If $X$, $Y$ are independent, $E(XY) = E(X)E(Y)$
 - Ref:[wiki: expectation](https://en.wikipedia.org/wiki/Expected_value)
-
 ## TBD questions:
 
 - what does math mark ";" like ";D" means? parameterized? Ref: [Wiki-Bias-variance tradeoff](https://en.wikipedia.org/wiki/Bias%E2%80%93variance_tradeoff)
