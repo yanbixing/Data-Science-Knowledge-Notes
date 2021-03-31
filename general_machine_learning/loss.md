@@ -30,7 +30,7 @@
   - L2 aims to find the mean
   - L1 aims to find the median
   - Ref:?
-  - E.g. In sample set we have two points with same $x$ value: $(x_1, 1)$ and (x_1, 0)$
+  - E.g. In a sample set, we have two points with same $x$ value: $(x_1, 1)$ and (x_1, 0)$
     - L1 (MAE) has the same loss between $h(x_i)\in[0,1]$
     - L2 (MSE) has the smallest loss at $h(x_i) = 0.5$.
     - Ref: [Quora](https://www.quora.com/How-would-a-model-change-if-we-minimized-absolute-error-instead-of-squared-error-What-about-the-other-way-around)
