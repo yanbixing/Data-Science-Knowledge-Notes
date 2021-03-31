@@ -1,5 +1,11 @@
 # General Machine Learning
 
-## [regularization](./regularization.md)
+High-lights
 
-## [loss](./loss.md)
+## model-training realted
+
+### [regularization](./model_training/regularization.md)
+
+### [loss](./model_training/loss.md)
+
+### [evaluation metrics](./model_training/evaluation_metrics.md)
