@@ -16,12 +16,10 @@
 
 #### 2.2.1 Precision and Recall related
 
-- $\text{precision} = \frac{TP}{TP+FP}$
-English: Among the predicted positive, how many are correct (condition positive $P$ ).
+- $\text{precision} = \frac{TP}{TP+FP}$ <br> English: Among the predicted positive, how many are correct (condition positive $P$ ).
 - $\text{recall} = \frac{TP}{TP+FN} = TPR = \text{sensitivity}$
 English: Among the condition positive ($P$), how may are correct (predicted positive).
-- $\text{f1} = \frac{1}{\frac{ \frac{1}{\text{precision}} + \frac{1}{Recall} }{2}} = \frac{2\cdot \text{precision} \cdot \text{recall}}{\text{precision} + \text{recall}}$
-English: The harmonic mean of precision and recall
+- $\text{f1} = \frac{1}{\frac{ \frac{1}{\text{precision}} + \frac{1}{Recall} }{2}} = \frac{2\cdot \text{precision} \cdot \text{recall}}{\text{precision} + \text{recall}}$<br>English: The harmonic mean of precision and recall
 - $\text{accuracy} = \frac{TP+TN}{P+N} $ 
   - For balanced dataset, $\text{accuracy}\overset{P=N}{\rightarrow} \frac{1}{2} (\frac{TP}{P} + \frac{TN}{N}) = \frac{1}{2}(TPR+TNR)$
   - $TNR = \frac{TN}{N}$
@@ -71,7 +69,7 @@ Explanation: the moving on ROC curve is actually the moving of threshold.
           - $\text{precision} = \frac{TP}{TP+FP} = \frac{0.5P}{0.5P+0.5N} = \frac{P}{P+N}$
             $\text{recall} = \frac{TP}{TP+FN} = \frac{0.5P}{P} = 0.5$
         - For single prediction model,
-          - $TP = P $, $FN = 0 $, $FP = N$, $TN = 0$
+          - $TP = P$, $FN = 0$, $FP = N$, $TN = 0$
           - $\text{precision} = \frac{TP}{TP+FP} = \frac{P}{P+N}$
           $\text{recall} = \frac{TP}{TP+FN} = \frac{P}{P} = 1$
       - Less comprehensive

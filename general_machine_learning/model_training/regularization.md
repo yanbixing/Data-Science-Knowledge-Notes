@@ -5,11 +5,9 @@
 ### 1.1. Form
 
 Loss function:
-$$ L = l(y,h) + \Re(h)$$
-
-
-L1 $\Re$ (Lasso): $\Re(h(x;w)) =  \lambda\sum_i|w_i|$
-L2 $\Re$ (Ridge): $\Re(h(x;w))=  \lambda\sum_i w^2_i$ 
+$$L = l(y,h) + \Re(h)$$
+- L1 $\Re$ (Lasso): $\Re(h(x;w)) =  \lambda\sum_i|w_i|$
+- L2 $\Re$ (Ridge): $\Re(h(x;w)) =  \lambda\sum_i w^2_i$ 
 
 ### 1.2 property
 
@@ -38,11 +36,10 @@ L2 $\Re$ (Ridge): $\Re(h(x;w))=  \lambda\sum_i w^2_i$
   - L2 $\Re$ spreads weight evenly. 
     - e.g.($0.5^2+0.5^2 < 0.9^2 + 0.1^2$)
 - For linearly related features. ($x_i = c x_j$, e.g. c=3 )
-  - L1 $\Re$ assign all weight to the feature with largest scale, all others' weights are zero. ( feature scale$\uparrow$, $|w| \downarrow$, $\Re \downarrow$ )
-    - e.g. $w_ix_{m(i)}+w_jx_{m(j)} = y_m \sim\rightarrow 3w_i+w_j = 1 $
+  - L1 $\Re$ assign all weight to the feature with largest scale, all others' weights are zero. ( feature scale $\uparrow$, $|w| \downarrow$, $\Re \downarrow$ )
+    - e.g. $w_ix_{m(i)}+w_jx_{m(j)} = y_m \sim\rightarrow 3w_i+w_j = 1$
     $min(|w_i|+|w_j|) \sim min(1-2w_i)\rightarrow\frac{1}{3}$ when $(w_i,w_j) = (\frac{1}{3},0)$
-  - L2 $\Re$ prefers variable with larger scale - spread weights **proportional** to scale.
-  i.e. larger scale get larger weights, smaller scale feature get smaller (proportional) weights but not zero.
+  - L2 $\Re$ prefers variable with larger scale - spread weights **proportional** to scale.<br>i.e. larger scale get larger weights, smaller scale feature get smaller (proportional) weights but not zero.
     - e.g.$cw_i+w_j = 1, c>1$, 
     $min(w_i^2 + w_j^2) = min(w_i^2+(1-cw_i)^2)\rightarrow$ $w_i = \frac{c}{c^2+1}, w_j = \frac{1}{c^2+1}$
 
@@ -53,19 +50,10 @@ L2 $\Re$ (Ridge): $\Re(h(x;w))=  \lambda\sum_i w^2_i$
 - When features are **correlated**:
 **L2** $\Re$ is better. 
 Explanation: In the extreme case “linearly related”: 
-  - **L2** will distribute weights among different features 
-  $\sim\rightarrow$ the result is an **weighted average/vote of all correlated positions**
-  $\sim\rightarrow$ even some position are missing/inaccurate, the result is stable.
-  $\sim\rightarrow$ less model variance?
-  - L1 will assign weight to the largest scale feature.
-  $\sim\rightarrow$ the result is solely dependent on that feature 
-  $\sim\rightarrow$ the result is not stable.
-  $\sim\rightarrow$ higher model variance?
+  - **L2** will distribute weights among different features <br> $\sim\rightarrow$ the result is an **weighted average/vote of all correlated positions** <br> $\sim\rightarrow$ even some position are missing/inaccurate, the result is stable. <br> $\sim\rightarrow$ less model variance?
+  - L1 will assign weight to the largest scale feature <br> $\sim\rightarrow$ the result is solely dependent on that feature <br>$\sim\rightarrow$ the result is not stable. <br> $\sim\rightarrow$ higher model variance?
 
-- When features is not correlated or data is **noisy**:
-**L1** $\Re$ may be better. 
-Explanation: **L1** can **remove useless/noise feature**. But L2 will still keep them.
-**Note**: usually weight can be also viewed as feature importance. Reduce weight = reduce reliance on the feature = reduce feature importance.
+- When features is not correlated or data is **noisy**: <br> **L1** $\Re$ may be better. <br> Explanation: **L1** can **remove useless/noise feature**. But L2 will still keep them. <br> **Note**: usually weight can be also viewed as feature importance. Reduce weight = reduce reliance on the feature = reduce feature importance.
 
 
 ### 1.3 Understanding
@@ -238,11 +226,12 @@ Since the trade-off is just an intuitive understanding, the regularization of th
   - <br> Ref: [On the Bias-Variance Tradeoff, P17](https://arxiv.org/abs/1912.08286) 
 
 - Estimation error and approximation error
-  - Risk decomposition:$$ \begin{aligned}
+  - Risk decomposition:
+  $$\begin{aligned}
     R(h) =& (R(h) - \underset{ h' \in \mathcal{H} }{\inf}R(h')) +(\underset{ h' \in \mathcal{H} }{\inf}R(h')- R^*) + R^* \\
     :=& EstimationRisk + ApproximationRisk + BayesRisk
-  \end{aligned}
-   $$ **personal understanding:** bayes risk is the $\varepsilon (\sigma^2)$ in the bias-variance decomposition.
+  \end{aligned}$$ 
+  **personal understanding:** bayes risk is the $\varepsilon (\sigma^2)$ in the bias-variance decomposition.
   - **persoonal understanding:** The estimation-approximation decomposition targets a specific hypothesis $h$, while the bias-variance tradeoff targets an algorithm $\mathcal{A}$ and a hypothesis set $\mathcal{H}$
   - Ref: [Foundations of Machine Learning, Sec 4.1, P61](https://cs.nyu.edu/~mohri/mlbook/)
 

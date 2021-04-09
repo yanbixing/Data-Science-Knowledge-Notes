@@ -63,9 +63,9 @@ In the **training** process, we aim to get:
 ### 2.1 Gaussian Naive Bayes
 
 Assume posterior follow Gaussian distribution:
-    $$p(X_i = v | C_k = k) = \frac{1}{\sqrt{2\pi\sigma^2_k}}e^{-\frac{(v-\mu_k)^2}{2\sigma^2_k}} $$
+$$p(X_i = v | C_k = k) = \frac{1}{\sqrt{2\pi\sigma^2_k}}e^{-\frac{(v-\mu_k)^2}{2\sigma^2_k}} $$
 The parameters $\theta = (\mu,\sigma)$ is trained with MLE. Denote training set with $\mathcal{S} = \{(x^{(1)}, y^{(1)}),...(x^{(m)}, y^{(m)})\}$, we have:
-    $$\begin{aligned}
+$$\begin{aligned}
     (\mu_k, \sigma_k) & = \underset{\mu,\sigma}{\argmax}[p(\mathcal{S})]
     \\
     & = \underset{\mu,\sigma}{\argmax}[\log(p(\mathcal{\mathcal{S}})) ]
@@ -108,11 +108,11 @@ $$\begin{aligned}
     - For $p_0$: $\Delta_1(\theta)+\Delta_2(\theta) = 0$
     - For $p'$: $2\Delta_1(\theta)+\Delta_2(\theta) = 0$
     - ...
-    - In extreme case, add $N\rightarrow \infty$ features identical to $X_1$:
-    $N\Delta_1(\theta)+\Delta_2(\theta) = 0 $
-    $ \sim \Rightarrow N\Delta_1(\theta) \rightarrow 0\sim \Rightarrow \Delta_1(\theta) = 0$ 
-    namely: $ \partial_\theta \{ \sum^m_{s=1}\log[p(X^{(s)}_1|y^{(s)})] \} = 0 $
-    $ \sim \Rightarrow \theta = \underset{\theta}{\argmax} \{ \sum^m_{s=1}\log[p(X^{(s)}_1|y^{(s)})]\}$
+    - In extreme case, add $N\rightarrow \infty$ features identical to $X_1$: 
+    $N\Delta_1(\theta)+\Delta_2(\theta) = 0$
+    $\sim \Rightarrow N\Delta_1(\theta) \rightarrow 0\sim \Rightarrow \Delta_1(\theta) = 0$ 
+    namely: $\partial_\theta \{ \sum^m_{s=1}\log[p(X^{(s)}_1|y^{(s)})] \} = 0$
+    $\sim \Rightarrow \theta = \underset{\theta}{\argmax} \{ \sum^m_{s=1}\log[p(X^{(s)}_1|y^{(s)})]\}$
     namely: we only max likelihood based on $X_1$
     equally: the model only have one input feature $X_1$
     - **Conclusion:** The more $X_1$ is added, the more the model make prediction rely on $X_1$.
@@ -131,8 +131,7 @@ $$ h(x) = \underset{k\in\{1,...,K\}}{\argmax}\left[p(C_k)\prod^n_{i=1}p(X_i|C_k)
   $\begin{aligned}
     h(x) =& \underset{k\in\{1,...,K\}}{\argmax}\left[p(C_k) \cdot p^N(X_1|C_k) \cdot p(X_2|C_k) \right] \\
      \sim& \underset{k\in\{1,...,K\}}{\argmax}\left[ p(X_1|C_k) \right]
-  \end{aligned}$
-  Namely, the model makes decision only based on $X_1$
+  \end{aligned}$ <br> Namely, the model makes decision only based on $X_1$
 
 ### 3.2 Effect of imbalanced dataset.
 
@@ -141,14 +140,14 @@ $$ h(x) = \underset{k\in\{1,...,K\}}{\argmax}\left[p(C_k)\prod^n_{i=1}p(X_i|C_k)
 - Should we balance affect prediction?
   - No. Do **NOT** intentionally balance the data! The data should draw as its natural distribution.
 
-Because generative model fit the joint probability: $f(x,y)$. Balance data is equal to change the f(x,y).
+Because generative model fit the joint probability: $f(x,y)$. *Balancing data* is equal to change the f(x,y).
 e.g. 
   - increase label A and decrease label B $\rightarrow$ $f'(x,A)>f_0(x,A)$, $f'(x,B)<f_0(x,B)$ 
-  - For naive bayes, define $h_k(x)$ as the "probability score" as following:
-  $$h(x) = \underset{k\in\{1,...,K\}}{\argmax}\left[p(C_k)\prod^n_{i=1}p(X_i|C_k) \right] : = \underset{k\in\{1,...,K\}}{\argmax}\left[ h_k(X) \right]$$
-  If we intentionally duplicate A class. Because we duplicate the samples, so the $P(X|C_A)$ remain unchanged; but P(A) will increase $\Rightarrow$ Given same X, $h'_A(X) > {h_0}_A(X)$. 
-  i.e. 
-    - **Even the feature-label correlation doesn't change, the prob score can be tuned by proportion of labels.** Which is usually NOT reasonable.
+  - For naive bayes, define $h_k(x)$ as the "probability score" as following: <br> 
+  $$h(x) = \underset{k\in\{1,...,K\}}{\argmax}\left[p(C_k)\prod^n_{i=1}p(X_i|C_k) \right] : = \underset{k\in\{1,...,K\}}{\argmax}\left[ h_k(X) \right]$$ 
+  When we intentionally duplicate A class, because the samples are duplicated, the $P(X|C_A)$ will remain unchanged; but P(A) will increase $\Rightarrow$ Given same X, $h'_A(X) > {h_0}_A(X)$. 
+  i.e.
+  - **Even the feature-label correlation doesn't change, the prob score can be tuned by proportion of labels.** Which is usually NOT reasonable.
 
 Thus, for generative models, the training set are better to have a same join prob with test set (or application scenario.) 
 
