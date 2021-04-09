@@ -3,7 +3,7 @@
 ## 1. Regression:
 
 - Mean square error (MSE)
-- Mean abosolute error (MAE)
+- Mean absolute error (MAE)
 
 ## 2. Classification:
 
@@ -37,11 +37,13 @@ Area Under (ROC) Curve (ROC Curve: receiver operating characteristic )
   $FPR = \frac{FP}{FP+TN} = \frac{FP}{N}$
 
   $TPR = \frac{TP}{TP+FN} = \frac{TP}{P} = \text{recall} = \text{sensitivity}$
-<br>
+  <br>
+
 - **personal understanding on AUC ROC**:
 With the sacrifice of incorrect positive prediction, how much correct positive prediction we can can get.
 The high AUC, the higher "sacrifice" efficiency of incorrect prediction, the better model performance.
 <br>
+
 - ROC monotonously increase:
 Explanation: the moving on ROC curve is actually the moving of threshold. 
   - As threshold decreases, the predicted positive will increase, 
@@ -49,9 +51,11 @@ Explanation: the moving on ROC curve is actually the moving of threshold.
   - $\rightarrow$ Both the TP and FP may increase i.e. TPR and FPR are always positively correlated
   -  $\rightarrow$ $\frac{d TPR}{dFPR}\geq0$ $\rightarrow$ ROC curve monotonously increase.
  <br>
+
  -  The brown dashed line (---) means the performance of random guess, with AUC = 0.5, regardless of number of pos/neg samples.
  Ref: [Blog](https://blog.csdn.net/elecjack/article/details/79972097)
 <br>
+
 - AUC vs. Precision-Recall:
   - AUC:
     - Pro: 
