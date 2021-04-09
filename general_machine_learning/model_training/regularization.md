@@ -100,7 +100,7 @@ This and the following parts includes knowledge to explain how regularization wo
 
 - 'Noises' always exist in real word data. i.e. even for same feature values $x$, we usually observe different label value $y$. Thus, the function between label and feature can be represented as:
 $$\begin{aligned}
-y & = f(x)+\varepsilon \\ & : = f+\varepsilon
+y  =& f(x)+\varepsilon \\ : =& f+\varepsilon
 \end{aligned}$$
 where: 
   - $\varepsilon$ has $E(\varepsilon) = \bar{\varepsilon} = 0$ and $Var(\varepsilon) = E(\varepsilon - E(\varepsilon)) = \bar{\varepsilon^2} - \bar{\varepsilon}^2 = \sigma^2$.
@@ -108,8 +108,8 @@ where:
 
 - With machine learning algorithm $\mathcal{A}$, we can find $h_\mathcal{S}$ through minimizing **empirical risk** (square error here):
 $$\begin{aligned}
-  \hat{R}_\mathcal{S}(h_\mathcal{S}) & : = (y-h_\mathcal{S})^2 \\
-  & = (f - h_\mathcal{S})^2 + 2\varepsilon(f-h_\mathcal{S})+\varepsilon^2
+  \hat{R}_\mathcal{S}(h_\mathcal{S}) : =& (y-h_\mathcal{S})^2 \\
+   =& (f - h_\mathcal{S})^2 + 2\varepsilon(f-h_\mathcal{S})+\varepsilon^2
 \end{aligned}$$
   - Risk is another name of "loss"
 - Then, **the expectation of empirical risk over different sample set $\mathcal{S}$** equals:
