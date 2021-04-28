@@ -364,14 +364,14 @@ $$MI(Y;X_i)=D_{\mathrm {KL} }(P_{(Y,X_i)}\|P_{Y}\otimes P_{X_i})$$
 
 Discrete representation:
 
-$$\operatorname {MI} (Y;X_i) =  \sum _{x\in {\mathcal {X_i}}}\sum _{y\in {\mathcal {Y}}}{p_{(Y,X_i)}(y,x)\log {\left({\frac {p_{(Y,X_i)}(y,x)}{p_{Y}(y)\,p_{X_i}(x)}}\right)}}$$
+$$\operatorname{MI} (Y;X_i) =  \sum _{x\in {\mathcal {X_i}}}\sum _{y\in {\mathcal {Y}}}{p_{(Y,X_i)}(y,x)\log {\left({\frac {p_{(Y,X_i)}(y,x)}{p_{Y}(y)\,p_{X_i}(x)}}\right)}}$$
 
 Ref: [Wiki](https://en.wikipedia.org/wiki/Mutual_information)
 
 #### MI is the expectation of IG 
 
 $$\begin{aligned}
-  \operatorname {MI} (Y;X_i) = & \sum _{X_i\in {\mathcal {X_i}}} \sum^K_{k=1 }{p(C_k,X_i)\log {\left(
+  \operatorname{MI} (Y;X_i) = & \sum _{X_i\in {\mathcal {X_i}}} \sum^K_{k=1 }{p(C_k,X_i)\log {\left(
     {\frac {p(C_k,X_i)}{p(C_k)\,p(X_i)}}
     \right)}}
    \\
@@ -396,7 +396,7 @@ Ref: [StakeExchange](https://stats.stackexchange.com/questions/103175/informatio
 #### MI and Entropy
 
 $$\begin{aligned}
-  \operatorname {MI} (Y;X_i) = & \sum _{X_i\in {\mathcal {X_i}}} \sum^K_{k=1 }{p(C_k,X_i)\log {\left(
+  \operatorname{MI} (Y;X_i) = & \sum _{X_i\in {\mathcal {X_i}}} \sum^K_{k=1 }{p(C_k,X_i)\log {\left(
     {\frac {p(C_k,X_i)}{p(C_k)\,p(X_i)}}
     \right)}}
    \\
