@@ -46,9 +46,13 @@ $$ \begin{aligned}
 \end{aligned} $$
 
 
-## 2. Application models
+## 2. Application
 
-### 2.1 Why we need feature distribution assumption in real world application
+### 2.1 Applied models
+
+In the real application we usually need to assume the posterior.
+
+#### 2.1.0 Why we need feature distribution assumption in real world application
 
 In the **training** process, we aim to get:
 - $p(C_k)$ for all $k$ values. 
@@ -60,7 +64,7 @@ In the **training** process, we aim to get:
   - However, the problem is that for other values not appear in training set, i.e., $v_u \in [a,b]$ but $\notin\{v_1,...,v_m\}$, we cannot get $p(X_i = v_u|C_k )$ and thus cannot make prediction, this is un-applicable for real world use.
   - Thus,we need to assume a form (distribution) of $p(X_i |C_k )$ to make it have values for all $X_i \in [a,b]$
 
-### 2.1 Gaussian Naive Bayes
+#### 2.1.1 Gaussian Naive Bayes
 
 Assume posterior follow Gaussian distribution:
 $$p(X_i = v | C_k = k) = \frac{1}{\sqrt{2\pi\sigma^2_k}}e^{-\frac{(v-\mu_k)^2}{2\sigma^2_k}} $$
@@ -79,6 +83,19 @@ $$\begin{aligned}
     \Rightarrow \mu_k &= AVG( \{x^{(s)}\}), \sigma_k = \sigma( \{x^{(s)}\} )
     \end{aligned}$$
 Ref: [Toronto U Slides](https://www.cs.toronto.edu/~urtasun/courses/CSC411/tutorial4.pdf)
+
+### Pro and cons (?):
+
+- Pro: 
+  - Model is simple
+    - need less training data
+  - Convergent quicker than discriminative model.
+  - Model is simple, need less training data
+  - Computationally fast
+  - Simple to implement
+  - Works well with high dimensions
+- Cons:
+  - Relies on independence assumption and will perform badly if this assumption is not met
 
 
 ## 3. Deep Dive: 

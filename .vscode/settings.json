@@ -1,9 +1,13 @@
 {
     "cSpell.words": [
+        "Jaccard",
         "Rademacher",
         "infty",
         "mathbb",
         "mathbf",
-        "rightarrow"
+        "overfit",
+        "rightarrow",
+        "underfit",
+        "underfitting"
     ]
 }

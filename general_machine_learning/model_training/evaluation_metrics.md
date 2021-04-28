@@ -30,7 +30,7 @@ English: Among the condition positive ($P$), how may are correct (predicted posi
 Area Under (ROC) Curve (ROC Curve: receiver operating characteristic )
 
 - ROC Curve
-  <div  align="left"><img src=https://upload.wikimedia.org/wikipedia/commons/6/6b/Roccurves.png style = "zoom:40%"></div>
+  <div  align="center"><img src=https://upload.wikimedia.org/wikipedia/commons/6/6b/Roccurves.png style = "zoom:40%"></div>
 
   $FPR = \frac{FP}{FP+TN} = \frac{FP}{N}$
 
