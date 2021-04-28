@@ -360,7 +360,7 @@ $$\begin{aligned}
 
 ### Mutual information (MI)
 
-$$MI(Y;X_i)=D_{\mathrm {KL} }(P_{(Y,X_i)}\|P_{Y}\otimes P_{X_i})$$
+$$\operatorname{MI}(Y;X_i)=D_{\mathrm {KL} }(P_{(Y,X_i)}\|P_{Y}\otimes P_{X_i})$$
 
 Discrete representation:
 
