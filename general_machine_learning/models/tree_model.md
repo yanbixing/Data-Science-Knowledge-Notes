@@ -364,7 +364,7 @@ $$MI(Y;X_i)=D_{\mathrm {KL} }(P_{(Y,X_i)}\|P_{Y}\otimes P_{X_i})$$
 
 Discrete representation:
 
-$$\operatorname{MI} (Y;X_i) =  \sum _{x\in {\mathcal {X_i}}}\sum _{y\in {\mathcal {Y}}}{p_{(Y,X_i)}(y,x)\log {\left({\frac {p_{(Y,X_i)}(y,x)}{p_{Y}(y)\,p_{X_i}(x)}}\right)}}$$
+$$MI (Y;X_i) =  \sum _{x\in {\mathcal {X_i}}}\sum _{y\in {\mathcal {Y}}}{p_{(Y,X_i)}(y,x)\log {\left({\frac {p_{(Y,X_i)}(y,x)}{p_{Y}(y)\,p_{X_i}(x)}}\right)}}$$
 
 Ref: [Wiki](https://en.wikipedia.org/wiki/Mutual_information)
 
