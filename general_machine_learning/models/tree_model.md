@@ -2,7 +2,6 @@
 
 ## 0. Basic concepts
 
-
 ### Number of split points (Complexity of finding split point?): 
 
 - Brute force, N data points then there is N-1 split points, check each of them one by one.
@@ -15,7 +14,7 @@ Multiclass-classification: each leaf nodes is a class. (majority voting)
 - Classification: entropy, Gini
 - Regression: square loss.
 
-### Difference between "bagging", "random forest" and "boosting":
+<!-- ### Difference between "bagging", "random forest" and "boosting":
 
 - Bagging: Use different **bootstrapped** training sets to train multiple different trees, and take the average / majority of their predictions.
   - Bootstrap sampling: random sample a subset of training samples with replacement.
@@ -26,7 +25,7 @@ Multiclass-classification: each leaf nodes is a class. (majority voting)
   - Further decorrelate different trees and reduce variance.
 - Boosting: sequentially train multiple weak learners (tree-stump) based on previous residue, also take the weighted sum (?) / majority of all tree-stumps. 
 - Stacking: use different types of model (rather than data) to get a weighted decision.
-- Refs: [Cornell U](http://www.cs.cornell.edu/courses/cs578/2005fa/CS578.bagging.boosting.lecture.pdf), [Quora](https://www.quora.com/What-does-Bagging-reduces-the-variance-while-retaining-the-bias-mean), [Linkdin](https://www.linkedin.com/pulse/bias-variance-bagging-boosting-dummies-i-sray-agarwal/)
+- Refs: [Cornell U](http://www.cs.cornell.edu/courses/cs578/2005fa/CS578.bagging.boosting.lecture.pdf), [Quora](https://www.quora.com/What-does-Bagging-reduces-the-variance-while-retaining-the-bias-mean), [Linkdin](https://www.linkedin.com/pulse/bias-variance-bagging-boosting-dummies-i-sray-agarwal/) -->
 
 ### Entropy:
 
@@ -171,15 +170,22 @@ Compare to plain decision tree model:
 - NOT reduce bias.
 
 
-#### 2.1.4. Bagging v.s. RF
+### 2.3. Bagging&RF Summary
 
-- Similarity: both models trains multiple trees on bootstrap samples and reduce variance via model ensemble.
-- Difference: 
-  - RF randomly select a subset of the features for each tree, further de-correlate different trees, which could further decrease the variance.
-  - RF typically use fully grown tree while
+#### 2.3.1 Similarity
+both models trains multiple trees on bootstrap samples and reduce variance via model ensemble.
+
+#### 2.3.2 Difference:
+- RF randomly select a subset of the features for each tree, further de-correlate different trees, which could further decrease the variance.
+- RF typically use fully grown tree while Bagging is not specified.
 
 Ref: [StackExchange](https://stats.stackexchange.com/questions/264129/what-is-the-difference-between-bagging-and-random-forest-if-only-one-explanatory)
 
+#### 2.3.2 Data preference
+
+Bad for stable data, since to get better prediction, for stable data, we need reduce bias. But bagging/RF mainly focus on reduce variance.
+
+Suitable for noisy data, since for noisy data, we need reduce variance, which fits Bagging/RF.
 
 ## 3. Boosting tree
 
@@ -220,6 +226,12 @@ The weak leaner used in boost is usually **tree stump** or shallow tree.
 **Note:** Fitting reside = increase model complexity.
 
 Ref: [Quora](https://www.quora.com/What-effect-does-boosting-have-on-bias-and-variance)
+
+#### 3.0.4  Data preference
+
+Suitable for stable data, since to get better prediction, for stable data, we need reduce bias, which fits boosting.
+
+Bad for noisy data, since for noisy data, we need reduce variance, but boosting mainly focus on reduce bias.
 
 ### 3.1. AdaBoost (Adaptive Boost)
 
@@ -297,7 +309,7 @@ Same with AdaBoost:
 
 $$F_{t}(x)=F_{{t-1}}(x)+\alpha_{t}h_{t}(x)$$
 
-### 3.2.1 Training process:
+### 3.2.2 Training process:
 
 Similar to AdaBoost:
 
@@ -318,25 +330,99 @@ Ref: [Wiki - Gradient Boost](https://en.wikipedia.org/wiki/Gradient_boosting)
 
 Other Ref: [Auckland U - Slides](https://www.stat.auckland.ac.nz/~yee/784/files/ch10BoostingAdditiveTrees.pdf), [NEU - Slides](http://www.ccs.neu.edu/home/vip/teach/MLcourse/4_boosting/slides/gradient_boosting.pdf)
 
-**AdaBoost vs Gradient Boost:** From the above process, we can see the only difference between AdaBoost and Gradient Boost is the way to generate training set $\mathcal{S}_t$ for $h_t(x)$, i.e.:
+### 3.3 AdaBoost vs Gradient Boost: 
+From the above process, we can see the only difference between AdaBoost and Gradient Boost is the way to generate training set $\mathcal{S}_t$ for $h_t(x)$, i.e.:
 
 - AdaBoost reweigh sample weight based on loss
-- Gradient Boost calculate pseudo gradient from loss
+  - Conceptually, = Change sample distribution
+- Gradient Boost calculate pseudo residue from loss
+  - Conceptually, = Directly trained on residue, thus typically more efficient than AdaBoost.
 
-<font color="#dd0000"> AdaB = GB when square loss??? </font>
-
-#### XGB
-XGB use more regularized model formalizatioin to control overfitting, which gives better performance<font color="#dd0000"> (???) </font>
-
-
-### 3.3 Model comparison
-
-#### 3.3.1. Comparison AdaBoost vs Gradient Boost
-
-AdaBoost: weak learner is trained on sample set reweighed, the loss minimization process is used to train the learner-weight.
-Gradient Boost: weak learners directly fit to pseudo residue to minimize loss. (That is why gradient boost are usually more efficient.)
+Ref: [Quora](https://www.quora.com/What-is-the-difference-between-gradient-boosting-and-adaboost)
 
 Note: AdaBoost has the concept of residue, but just not often mentioned.Ref: [sklearn](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.AdaBoostRegressor.html)
+
+<!-- <font color="#dd0000"> AdaB = GB when square loss??? </font> -->
+
+
+### 3.4 XGBoost 
+XGBoost is actually an engineering implementation (and plus) of Gradient Boost idea.
+<!-- XGB use more regularized model formalizatioin to control overfitting, which gives better performance<font color="#dd0000"> (???) </font> -->
+
+- Base learner:
+  - GB: typically only use tree classifier.
+  - XGB: besides tree classifier, there are other types of linear classifiers (linear booster)
+- Regularization:
+  - GB: no explicit regularization term.
+  - XGB: have explicit regularization term 
+    - linear classifiers: L1, L2 regularization
+    - tree: number of leave nodes, IG (score) at leave nodes
+- Order of derivative:
+  - GB: pseudo residue, i.e. first-order derivative
+  - XGB: both first- and second- order of derivative
+- Feature (Column) Subsampling and parallelization
+  - GB: use full features and only one sequence
+  - XGB: use subset of features, can parallelize multiple GB sequences, further reduce variance.
+- Missing value:
+  - GB: No default strategy for missing value.
+  - XGB: Has strategy (can learn) to deal with missing value.
+
+Ref:[ZhiHu Blog1](https://zhuanlan.zhihu.com/p/42740654), [ZhiHu Blog2](https://zhuanlan.zhihu.com/p/81368182), [CSDN Blog1](https://blog.csdn.net/jamexfx/article/details/93780308), [CSDN Blog2](https://blog.csdn.net/qq_28031525/article/details/70207918)
+
+Terminology:
+
+- CART: Classification and Regression Trees, i.e. Decision Tree.
+
+### 3.3 Model comparison & Summary
+
+#### 3.3.1 Bagging,RF v.s. Boosting
+
+- Bagging/RF: 
+  - starts from deep/fully-grown trees (overfitting, low bias, high variance),only focusing on reduce variance during the multi-tree ensemble process. 
+  - Trees can be trained parallelly on different datasets with different subset of features. (faster.)
+  - Output the average/majority
+    - the ensemble is "independent" (each tree give an answer of the final result.)
+  - Not help for stable data, good for noisy data.
+    - Noisy data need reduce variance, which fits bagging/RF.
+    - Stable data need reduce bias, which fits boosting.
+- Boosting: 
+  - Starts from shallow tree/tree stump (underfitting, high bias, low variance), mainly focusing on reduce reduce bias during the multi-tree ensemble process.
+  - Tree have to be trained sequentially, based on the loss of previous step. (slower)
+  - output the weighted sum, the ensemble is not "independent" (final result is a sum of contribution from all different trees.)
+  - Bad for noisy data, good for stable data. 
+- Ref: [StakeExchange](https://stats.stackexchange.com/questions/173390/gradient-boosting-tree-vs-random-forest)
+  
+#### 3.3.2 Bagging v.s. RF
+  - Bagging: de-correlate different trees with bootstrap sampling.
+  - RF: bootstrap sampling + feature(column) subsampling, further decorrelate different trees
+
+#### 3.3.3. AdaBoost v.s. Gradient Boost
+
+- AdaBoost: new learner is trained reweighed dataset. The weight is equal to loss after last step.
+- Gradient Boost: new learner is directly trained with the pseudo residue after last step (usually more efficient.)
+
+#### 3.3.4. Stacking
+
+Stacking: use different types of model (rather than data) to get a weighted decision.
+
+
+<!-- 
+### Difference between "bagging", "random forest" and "boosting":
+
+- Bagging: Use different **bootstrapped** training sets to train multiple different trees, and take the average / majority of their predictions.
+  - Bootstrap sampling: random sample a subset of training samples with replacement.
+    - A kind of "data augmentation" and can increase model **independence** thus **reduce model variance**
+    - Ref:[Wiki](https://en.wikipedia.org/wiki/Bootstrapping_(statistics)), [Blog](https://nititek.wordpress.com/2013/12/10/bootstrapping/)
+- Random forest: Use bootstrapped samples and different **subset of features** to train different trees.
+  - i.e. Subset of samples (Bagged trees) + subset of features.
+  - Further decorrelate different trees and reduce variance.
+- Boosting: sequentially train multiple weak learners (tree-stump) based on previous residue, also take the weighted sum (?) / majority of all tree-stumps. 
+- Stacking: use different types of model (rather than data) to get a weighted decision.
+- Refs: [Cornell U](http://www.cs.cornell.edu/courses/cs578/2005fa/CS578.bagging.boosting.lecture.pdf), [Quora](https://www.quora.com/What-does-Bagging-reduces-the-variance-while-retaining-the-bias-mean), [Linkdin](https://www.linkedin.com/pulse/bias-variance-bagging-boosting-dummies-i-sray-agarwal/) -->
+
+
+
+
 
 ## Deep: KL Divergence, IG and MI
 
@@ -364,9 +450,9 @@ $$\operatorname{MI}(Y;X_i)=D_{\mathrm {KL} }(P_{(Y,X_i)}\|P_{Y}\otimes P_{X_i})$
 
 Discrete representation:
 
-<!-- $$MI (Y;X_i) = \sum_{x\in {\mathcal {X_i}}} \sum _{y\in {\mathcal {Y}}}{p_{(Y,X_i)}(y,x) \log {\left({\frac {p_{(Y,X_i)}(y,x)}{p_{Y}(y)p_{X_i}(x)}}\right)}}$$ -->
+$$MI (Y;X_i) = \sum_{x\in {\mathcal {X_i}}} \sum _{y\in {\mathcal {Y}}}{p_{(Y,X_i)}(y,x) \log {\left({\frac {p_{(Y,X_i)}(y,x)}{p_{Y}(y)p_{X_i}(x)}}\right)}}$$
 
-$$MI (Y;X_i) = \sum_{x \in \mathcal{X_i}} \sum _{y\in \mathcal{Y}} p_{(Y,X_i)}(y,x) \log \left( \frac{p_{(Y,X_i)}(y,x)}{p_{Y}(y)p_{X_i}(x)} \right)$$
+<!-- $$MI(Y;X_i) = \sum_{x \in \mathcal{X_i}} \sum _{y\in \mathcal{Y}} p_{(Y,X_i)}(y,x) \log \left( \frac{p_{(Y,X_i)}(y,x)}{p_{Y}(y)p_{X_i}(x)} \right)$$ -->
 
 Ref: [Wiki](https://en.wikipedia.org/wiki/Mutual_information)
 
