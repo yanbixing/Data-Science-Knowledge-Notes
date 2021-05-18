@@ -60,7 +60,7 @@ Ref: [StackExchange](https://math.stackexchange.com/questions/1305925/why-is-the
 Further dive concept: tangent plane function, normal vector.
 
 
-## D-2. Constrained optimization problem
+## D-2. Deep Dive: Constrained optimization problem
 
 Ref: [Zhihu](https://zhuanlan.zhihu.com/p/24638007)
 
@@ -294,17 +294,17 @@ The **deduction** process is shown below:
   - $\beta\geq0$: 
     <!-- - $\alpha_ih_i(x) \not = 0$ or $\beta_jg_j(x) > 0$ for at least 1 $i$ or $j$ -->
     - Define $x_{\theta_D}(\alpha,\beta):=\underset{x}{\argmin}[f(x)+\sum_i\alpha_ih_i(x)+\sum_j\beta_jg_j(x)]$
-    - $ d^* = \underset{\alpha,\beta}{\max}[ f(x_{\theta_D})+\sum_i\alpha_ih_i(x_{\theta_D})+\sum_j\beta_jg_j(x_{\theta_D})  ] $
+    - $d^* = \underset{\alpha,\beta}{\max}[ f(x_{\theta_D})+\sum_i\alpha_ih_i(x_{\theta_D})+\sum_j\beta_jg_j(x_{\theta_D})  ]$
     - Since $x_{\theta_D}\not\in\Phi$, at least 1 of the following must happen:
       - if any $h_i(x_{\theta_D})\not = 0$, by assigning $\alpha_i \rightarrow \pm \infty$, $d^*\rightarrow +\infty$
       - if any $g_j(x_{\theta_D}) > 0$, by assigning $\beta_j \rightarrow + \infty$, $d^*\rightarrow +\infty$
     - $\therefore d^* \rightarrow + \infty$
   - $\beta<0$: 
-    - Similarly, $ d^* = \underset{\alpha,\beta}{\max}[ f(x_{\theta_D})+\sum_i\alpha_ih_i(x_{\theta_D})+\sum_j\beta_jg_j(x_{\theta_D})  ] $
+    - Similarly, $d^* = \underset{\alpha,\beta}{\max}[ f(x_{\theta_D})+\sum_i\alpha_ih_i(x_{\theta_D})+\sum_j\beta_jg_j(x_{\theta_D})  ]$
     - if any $h_i(x_{\theta_D})\not = 0$, by assigning $\alpha_i \rightarrow \pm \infty$, $d^*\rightarrow +\infty$
     - if any $g_j(x_{\theta_D}) < 0$, by assigning $\beta_j \rightarrow - \infty$, $d^*\rightarrow +\infty$
     - if all $g_j(x_{\theta_D}) \geq 0$ and $h_i(x_{\theta_D})=0$:
-      - $ d^*= \underset{\alpha,\beta}{\max} [ f(x_{\theta_D})+\sum_j\beta_jg_j(x_{\theta_D}) ]$
+      - $d^*= \underset{\alpha,\beta}{\max} [ f(x_{\theta_D})+\sum_j\beta_jg_j(x_{\theta_D}) ]$
       - $d^* \rightarrow f(x_{\theta_D})$ at $\beta\rightarrow 0^-$ 
 
 ##### D-2.3.3. Appendix. Zhihu's deduction process on $d^* \leq p^*$ is NOT correct.
