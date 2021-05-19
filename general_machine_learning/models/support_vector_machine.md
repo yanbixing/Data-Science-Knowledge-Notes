@@ -16,16 +16,16 @@
   - Distance between the origin and the hyperplane is $\tfrac {b}{\|\mathbf {w} \|}$. Distance between the two margin hyperplane is $\tfrac {2}{\|\mathbf {w} \|}$ . Ref: [StackExchange](https://math.stackexchange.com/questions/1305925/why-is-the-svm-margin-equal-to-frac2-mathbfw), [Wiki - SVM](https://en.wikipedia.org/wiki/Support-vector_machine#SVM_and_the_hinge_loss) 
   <div  align="center"><img src=https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/SVM_margin.png/617px-SVM_margin.png style = "zoom:40%"></div>
 - Margin: $y\cdot f(x)$
-- Hinge loss: $l(x,y) = \max(0,1-y f(x))$
+- Hinge loss: $l_H(x,y) = \max(0,1-y f(x))$
 - Loss function (let $c:=\frac{1}{2\lambda}$): 
 $$\begin{aligned}
-    L(\mathcal{S}) &= \left[{\frac {1}{m}}\sum _{i=1}^{m}\max \left(0,1-y_{i}(\mathbf {w} ^{T}\mathbf {x} -b)\right)\right]+\lambda \|\mathbf {w} \|^{2}\\
-    &= \left[{\frac {c}{m}}\sum _{i=1}^{m}\max \left(0,1-y_{i}(\mathbf {w} ^{T}\mathbf {x} -b)\right)\right]+\frac{1}{2} \|\mathbf {w} \|^{2}
+    l(\mathcal{S},\mathbf{w},b) &= \left[{\frac {1}{m}}\sum _{i=1}^{m}\max \left(0,1-y_{i}(\mathbf {w} ^{T}\mathbf {x}_i -b)\right)\right]+\lambda \|\mathbf {w} \|^{2}\\
+    &= \left[{\frac {c}{m}}\sum _{i=1}^{m}\max \left(0,1-y_{i}(\mathbf {w} ^{T}\mathbf {x}_i -b)\right)\right]+\frac{1}{2} \|\mathbf {w} \|^{2}
 \end{aligned}$$
 
 #### Training
 
-- Minimize Hinge loss over training sets: $w = \underset{w}{\argmin}[L(\mathcal{S})]$
+- Minimize Hinge loss over training sets: $w = \underset{w}{\argmin}[l(\mathbf{w}|\mathcal{S})]$
 - Solution: $\vec{w} = \sum^m_{i=1}\alpha_i y_i \vec{x}_i$
   - For points "outside/beyond" margin ($y_if(x_i)>1$), $\alpha_i=0$, make no contribute to model.
   - For points <font color="#0000dd">**on the margin**</font> ($y_if(x_i)=1$), $\alpha_i \in [0,\frac{c}{m}]$ and points <font color="#0000dd">**inside/below the margin**</font> ($y_if(x_i)<1$), $\alpha_i=\frac{c}{m}$, these points will contribute to the model, thus are called <font color="#0000dd">**support vectors**</font>
@@ -59,11 +59,89 @@ Ref: [StackExchange](https://math.stackexchange.com/questions/1305925/why-is-the
 
 Further dive concept: tangent plane function, normal vector.
 
+## D-2. Deep Dive: How to solve SVM?
 
+The SVM problem can be expressed as: Minimize Hinge loss over training sets: $(\mathbf{w},b) = \underset{\mathbf{w},b}{\argmin}[l(\mathcal{w|S})]$ where:
+$$\begin{aligned}
+    l(\mathcal{\mathbf{w},b|S}) = \left[{\frac {c}{m}}\sum _{i=1}^{m}\max \left(0,1-y_{i}(\mathbf {w} ^{T}\mathbf{x}_i -b)\right)\right]+\frac{1}{2} \|\mathbf {w} \|^{2}
+\end{aligned} \tag{Eq. D-2.1}$$
+
+The problem is $l(\mathbf{w},b|\mathcal{S})$ is not differentiable because of $\max$. Thus, if we can remove $\max$, then the problem is easier to solve.
+
+First, we can introduce a slack variable $\mathbf{\xi}$, the problem $\underset{\mathbf{w},b}{ {\text{minimize }} } l(\mathbf{w},b|\mathcal{S})$ i.e.
+$$\begin{aligned}
+\underset{\mathbf{w},b}{ {\text{minimize }} } \frac{1}{2} \|\mathbf {w} \|^{2} + \left[{\frac {c}{m}}\sum _{i=1}^{m}\max \left(0,1-y_{i}(\mathbf {w} ^{T}\mathbf{x}_i -b)\right)\right]
+\end{aligned}$$ 
+
+can be converted (proof is shown in [D.2. Appendix] to: 
+
+$$\begin{aligned}
+\underset{\mathbf{w},\mathbf{\xi}}{ {\text{minimize }} } & \frac{1}{2} \|\mathbf {w} \|^{2}+ \left[{\frac {c}{m}}\sum _{i=1}^{m}  \xi_i  \right]\\
+{\text{subject to }} & \xi_i\geq \max \left(0,1-y_{i}(\mathbf {w} ^{T}\mathbf{x}_i -b)\right)
+\end{aligned}$$ 
+
+further converted to:
+
+$$\begin{aligned}
+\underset{\mathbf{w},\mathbf{\xi}}{ {\text{minimize }} } & \frac{1}{2} \|\mathbf {w} \|^{2}+ \left[{\frac {c}{m}}\sum _{i=1}^{m}  \xi_i  \right]\\
+{\text{subject to }} & \xi_i \geq 0\\
+& \xi_i\geq 1-y_{i}(\mathbf {w} ^{T}\mathbf{x}_i -b)
+\end{aligned}$$ 
+
+reformatted as:
+
+$$\begin{aligned}
+\underset{\mathbf{w},\mathbf{\xi}}{ {\text{minimize }} } & \frac{1}{2} \|\mathbf {w} \|^{2}+ \left[{\frac {c}{m}}\sum _{i=1}^{m}  \xi_i  \right]\\
+{\text{subject to }} & - \xi_i \leq 0\\
+& 1-y_{i}(\mathbf {w} ^{T}\mathbf{x}_i -b) - \xi_i\leq 0
+\end{aligned}$$ 
+
+The above problem is a typical [constrained optimization problem](../math_topics/constrained_optimization_problem.md).
+
+Ref: [NYU-ML](https://davidrosenberg.github.io/ml2019/#lectures), [NYU-ML,04.b. SVM](https://davidrosenberg.github.io/mlcourse/Archive/2019/Lectures/04b.SVM.pdf), [NYU-ML,04.c.SVM](https://davidrosenberg.github.io/mlcourse/Archive/2019/Lectures/04c.SVM-ComplementarySlackness.pdf), 
+
+### D-2. Appendix: 
+**problem formulation:**
+
+Prove:
+$$\underset{x}{ {\text{minimize }} } f(x) + g(x) \tag{Eq. D-2.A.1}$$
+can be converted to: 
+$$\begin{aligned}
+\underset{x,\xi}{ {\text{minimize }} } & f(x) + \xi\\
+{\text{subject to }} & \xi \geq g(x)
+\end{aligned}\tag{Eq. D-2.A.2}$$ 
+
+**Proof:**
+<div  align="center"><img src=./support_vector_machine_asset/slack_variable_equivalent_optimization.jpeg style = "zoom:30%"></div>
+
+- Geometric understanding:
+  - Denote 
+    - $F_1(x) = f(x)+g(x)$
+    - $F_2(x,\xi) = f(x)+\xi$, subject to $\xi \geq g(x)$
+  - Since 
+    - for every point $x'$: $\xi\geq g(x')$, i.e. $\xi$ can take any value $\geq g(x')$
+  - Thus, 
+    - $F_2(x',\xi)$ can take any value $\geq F_1(x')$
+    - I.e. $F_2(x',\xi)$ take the subspace $\geq F_1(x')$ as shown in the right figure.
+  - Thus,
+    - the optimal value $\min$ and solution of (Eq. D-2.A.1) and (Eq. D-2.A.2) should be same 
+
+- Analytic proof:
+  - The confusion in problem (Eq. D-2.A.2) come from the mixing of $x$ and $\xi$, thus, we can separately them by denoting:
+    - $\gamma = f(x) + \xi$
+    - $h(x) = f(x) + g(x)$
+  - Then the problem (Eq. D-2.A.2) can be expressed as:
+  $$\begin{aligned}
+  \underset{\gamma}{ {\text{minimize }} } & \gamma\\
+  {\text{subject to }} & \gamma \geq h(x)
+  \end{aligned}$$ 
+  - Obviously, $\underset{\gamma}{\min}\gamma = \underset{x}{\min}[h(x)] = \underset{x}{\min}[f(x)+g(x)]$
+  - Thus, the problem (Eq. D-2.A.1) and (Eq. D-2.A.2) should be equivalent.
+
+
+Ref: [NYU-ML,SVM-preparation](https://davidrosenberg.github.io/mlcourse/Archive/2019/Notes/svm-lecture-prep.pdf)
 
 ## FAQ:
-
-
 
 - Advantage of SVM for linear separable data. (Why maximize margin in SVM))
   - Without maximizing margin, there are infinite solutions (hyperplanes) for linear separable data.
