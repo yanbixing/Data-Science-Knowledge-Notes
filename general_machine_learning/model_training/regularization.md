@@ -47,13 +47,27 @@ $$L = l(y,h) + \Re(h)$$
 
 #### 1.2.3 Application (when to choose what?)
 
-- When features are **correlated**:
-**L2** $\Re$ is better. 
-Explanation: In the extreme case “linearly related”: 
+##### L2 is better
+
+- When 
+  - Most feature are **correlated** with **label** 
+    - (i.e. most features are useful, the data has little noise.)
+  - Features are **correlated** with **each other**
+  <!-- - The noise in features is small -->
+
+
+- Explanation: In the extreme case “linearly related”: 
   - **L2** will distribute weights among different features <br> $\sim\rightarrow$ the result is an **weighted average/vote of all correlated positions** <br> $\sim\rightarrow$ even some position are missing/inaccurate, the result is stable. <br> $\sim\rightarrow$ less model variance?
   - L1 will assign weight to the largest scale feature <br> $\sim\rightarrow$ the result is solely dependent on that feature <br>$\sim\rightarrow$ the result is not stable. <br> $\sim\rightarrow$ higher model variance?
 
-- When features is not correlated or data is **noisy**: <br> **L1** $\Re$ may be better. <br> Explanation: **L1** can **remove useless/noise feature**. But L2 will still keep them. <br> **Note**: usually weight can be also viewed as feature importance. Reduce weight = reduce reliance on the feature = reduce feature importance.
+##### L1 is better
+
+- When 
+  - Features is not correlated with label
+    - i.e.: a few features are not useful, data is **noisy**
+  - Features is independent with each other
+  
+-  Explanation: **L1** can **remove useless/noise feature**. But L2 will still keep them. <br> **Note**: usually weight can be also viewed as feature importance. Reduce weight = reduce reliance on the feature = reduce feature importance.
 
 
 ### 1.3 Understanding
@@ -84,7 +98,14 @@ Ref: Similar figure can be found at [Foundations of Machine Learning, Sec 11.3.4
 
 This and the following parts includes knowledge to explain how regularization works.
 
-### 2.1 Bias-variance decomposition: what is "bias" and "variance"
+### 2.0. Brief intuitive understanding
+
+- Model variance: roughly equal to the variance of output $\Delta y$ when the same input has a certain variance $\Delta x$.
+- Regularization $\uparrow$ $\Rightarrow$ weight $\downarrow$ $\Rightarrow$ $\Delta y \downarrow$ for same variance on input $\Delta x$ $\Rightarrow$ Model variance $\downarrow$
+
+In the following parts, we will discuss the regularization in more mathematical way.
+
+### 2.1. Bias-variance decomposition: what is "bias" and "variance"
 
 - 'Noises' always exist in real word data. i.e. even for same feature values $x$, we usually observe different label value $y$. Thus, the function between label and feature can be represented as:
 $$\begin{aligned}
