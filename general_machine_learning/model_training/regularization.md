@@ -98,10 +98,17 @@ Ref: Similar figure can be found at [Foundations of Machine Learning, Sec 11.3.4
 
 This and the following parts includes knowledge to explain how regularization works.
 
-### 2.0. Brief intuitive understanding
+### 2.0. Intuitive understanding (Not correct)
 
 - Model variance: roughly equal to the variance of output $\Delta y$ when the same input has a certain variance $\Delta x$.
 - Regularization $\uparrow$ $\Rightarrow$ weight $\downarrow$ $\Rightarrow$ $\Delta y \downarrow$ for same variance on input $\Delta x$ $\Rightarrow$ Model variance $\downarrow$
+
+However, the actually model variance bias and variance is as following:
+
+  - Generate different dataset with a same underlying distribution  $f$ (with noise $\varepsilon$)
+  - Different output $\hat{y}$ will be given by models trained on different datasets
+  - Model bias is the different between expectation of model outputs and the ground truth, i.e.,  $\mathbb{E}(\hat{y}) - f$ 
+  - Model variance is the variance of the model output $Var(\hat{y})$
 
 In the following parts, we will discuss the regularization in more mathematical way.
 
@@ -153,8 +160,8 @@ Ref: [Wiki-Bias-variance tradeoff](https://en.wikipedia.org/wiki/Bias%E2%80%93va
 - Empirical Rademacher complexity:
   
   $$Rad_\mathcal{S}(\mathcal{G}) 
-  = \underset{\mathbf{ \sigma }}{\mathbb{E}}[\underset{g\in\mathcal{G}}{\sup(\frac{1}{m}\sum^m_{i=1} \sigma_i g(z_i))}] 
-  = \underset{\mathbf{ \sigma }}{\mathbb{E}}[\underset{g\in\mathcal{G}}{\sup(\frac{\mathbf{\sigma}\cdot\mathbf{g}_\mathcal{S}}{m})}]$$
+  = \underset{\boldsymbol{ \sigma }}{\mathbb{E}}[\underset{g\in\mathcal{G}}{\sup(\frac{1}{m}\sum^m_{i=1} \sigma_i g(z_i))}] 
+  = \underset{\boldsymbol{ \sigma }}{\mathbb{E}}[\underset{g\in\mathcal{G}}{\sup(\frac{\boldsymbol{\sigma}\cdot\boldsymbol{g}_\mathcal{S}}{m})}]$$
   where:
   - $\mathcal{G}$ is a family of functions mapping from $\mathcal{Z}$ to range $[a,b]$
   - $\mathcal{S}$ is a dataset with $m$ samples $\mathcal{S} = (z_1,...,z_m)$ where $z_i \in \mathcal{Z}$.

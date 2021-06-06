@@ -6,23 +6,23 @@ Ref: [Zhihu](https://zhuanlan.zhihu.com/p/24638007)
 
 In this part, we summarize the logical relations between constrained optimization, Lagrange function, Dual problem and KKT.
 
-- Target: solve constrained optimization problem (primal): $x_P^* = \underset{x\in\Phi}{\argmin}f(x)$
+- Target: solve constrained optimization problem (primal): $\boldsymbol{x}_P^* = \underset{\boldsymbol{x}\in\Phi}{\argmin}f(x)$
   - Difficulty: solving function with constraints is hard
   - Idea: remove the constraints
-  - Result: convert the problem to $x_P^* = \underset{x\in \mathbb{R}^N}{\argmin}\theta_P(x)$, where $\theta_P(\boldsymbol{x}):=\underset{{\boldsymbol{\alpha},~\boldsymbol{\beta};~\beta_j\geq0}}{\max}L(\boldsymbol{x},\boldsymbol{\alpha},\boldsymbol{\beta})$.
-    - Denote the solution as $(x^*_P, \alpha^*_P, \beta^*_P)$
-    - Denote the optimal value as $p^*=\underset{x\in \mathbb{R}^N}{\min} \theta_P(x) =\underset{x\in \mathbb{R}^N}{\min}[ \underset{{\boldsymbol{\alpha},~\boldsymbol{\beta};~\beta_j\geq0}}{\max}L(\boldsymbol{x},\boldsymbol{\alpha},\boldsymbol{\beta}) ]$
+  - Result: convert the problem to $x_P^* = \underset{\boldsymbol{x}\in \mathbb{R}^N}{\argmin}\theta_P(x)$, where $\theta_P(\boldsymbol{x}):=\underset{{\boldsymbol{\alpha},~\boldsymbol{\beta};~\beta_j\geq0}}{\max}L(\boldsymbol{x},\boldsymbol{\alpha},\boldsymbol{\beta})$.
+    - Denote the solution as $(\boldsymbol{x}^*_P, \boldsymbol{\alpha}^*_P, \boldsymbol{\beta}^*_P)$
+    - Denote the optimal value as $p^*=\underset{\boldsymbol{x}\in \mathbb{R}^N}{\min} \theta_P(x) =\underset{\boldsymbol{x}\in \mathbb{R}^N}{\min}[ \underset{{\boldsymbol{\alpha},~\boldsymbol{\beta};~\beta_j\geq0}}{\max}L(\boldsymbol{x},\boldsymbol{\alpha},\boldsymbol{\beta}) ]$
     - Note: $\Phi$ is the is the **domain** of the primal problem, $\Phi \subseteq \mathbb{R}^N$ 
 - Target: solve $x^* = \underset{x\in \mathbb{R}^N}{\argmin}\theta_P(x)$
   - Difficulty: $\theta_P(x)$ may be not convex, hard to solve. 
   - Idea: convert the problem to a convex problem
   - Tentative solution: 
-    - Introduce dual problem: $\underset{\boldsymbol{\alpha},\boldsymbol{\beta};\beta_j\geq0}{ {\text{maximaze }} } \theta_D(\alpha,\beta)$ where $\theta_D(\boldsymbol{\alpha},\boldsymbol{\beta}) = \underset{x\in\Phi}{\min} L(\boldsymbol{x},\boldsymbol{\alpha},\boldsymbol{\beta})$
-      - Denote the solution as $(x^*_D, \alpha^*_D, \beta^*_D)$. 
-      - Denote the optimal value as $d^* = \underset{\boldsymbol{\alpha},\boldsymbol{\beta};\beta_j\geq0}{ {\max} } \theta_D(\alpha,\beta) = \underset{\boldsymbol{\alpha},\boldsymbol{\beta};\beta_j\geq0}{ {\max} } [ \underset{x\in\Phi}{\min} L(\boldsymbol{x},\boldsymbol{\alpha},\boldsymbol{\beta}) ]$
+    - Introduce dual problem: $\underset{\boldsymbol{\alpha},\boldsymbol{\beta};\beta_j\geq0}{ {\text{maximaze }} } \theta_D(\boldsymbol{\alpha},\boldsymbol{\beta})$ where $\theta_D(\boldsymbol{\alpha},\boldsymbol{\beta}) = \underset{x\in\Phi}{\min} L(\boldsymbol{x},\boldsymbol{\alpha},\boldsymbol{\beta})$
+      - Denote the solution as $(\boldsymbol{x}^*_D, \boldsymbol{\alpha}^*_D, \boldsymbol{\beta}^*_D)$. 
+      - Denote the optimal value as $d^* = \underset{\boldsymbol{\alpha},\boldsymbol{\beta};\beta_j\geq0}{ {\max} } \theta_D(\boldsymbol{\alpha},\boldsymbol{\beta}) = \underset{\boldsymbol{\alpha},\boldsymbol{\beta};\beta_j\geq0}{ {\max} } [ \underset{x\in\Phi}{\min} L(\boldsymbol{x},\boldsymbol{\alpha},\boldsymbol{\beta}) ]$
     - Dual problem is always concave even the primal is not convex, easier to solve. 
-    - However, the problem is the solution $(x^*_D, \alpha^*_D, \beta^*_D)$ is usually not same with $(x^*_P, \alpha^*_P, \beta^*_P)$ i.e. the solution to dual is usually not the solution to primal.
-- Question: when the solution to dual is also the solution to primal, i.e. $(x^*_D, \alpha^*_D, \beta^*_D)$ = $(x^*_P, \alpha^*_P, \beta^*_P)$?
+    - However, the problem is the solution $(\boldsymbol{x}^*_D, \boldsymbol{\alpha}^*_D, \boldsymbol{\beta}^*_D)$ is usually not same with $(\boldsymbol{x}^*_P, \boldsymbol{\alpha}^*_P, \boldsymbol{\beta}^*_P)$ i.e. the solution to dual is usually not the solution to primal.
+- Question: when the solution to dual is also the solution to primal, i.e. $(\boldsymbol{x}^*_D, \boldsymbol{\alpha}^*_D, \boldsymbol{\beta}^*_D)$ = $(\boldsymbol{x}^*_P, \boldsymbol{\alpha}^*_P, \boldsymbol{\beta}^*_P)$?
   - Answer: Strong duality. i.e. $p^*=d^*$
   - Quick prove: $L(\boldsymbol{x_P^*},\boldsymbol{\alpha_P^*},\boldsymbol{\beta_P^*}) = p^* =d^* = L(\boldsymbol{x_D^*},\boldsymbol{\alpha_D^*},\boldsymbol{\beta_D^*}) \Rightarrow (\boldsymbol{x_P^*},\boldsymbol{\alpha_P^*},\boldsymbol{\beta_P^*}) = (\boldsymbol{x_D^*},\boldsymbol{\alpha_D^*},\boldsymbol{\beta_D^*})$
 - Question: When strong duality holds?
@@ -32,23 +32,23 @@ In this part, we summarize the logical relations between constrained optimizatio
   - Quick prove: When (1) The primal problem is convex + (2) The Slater's condition is satisfied, we have:
     - $x^*$ is the solution for primal problem. 
     - $\Leftrightarrow$ $\forall j,\exist \beta_j\geq0$ that $(x^*, \alpha^*,\beta^*)$ is the saddle point of the $L(x,\alpha,\beta)$
-    - $\Leftrightarrow$ $(x^*,\alpha^*,\beta^*)$  satisfy KKT conditions
+    - $\Leftrightarrow$ $(\boldsymbol{x}^*,\boldsymbol{\alpha}^*,\boldsymbol{\beta}^*)$  satisfy KKT conditions
 - Note: there many ways to solve the primal, the above map is the most widely applied one.
 
 ## 1. Constrained optimization problem
 
 Generally, a constrained optimization problem can be expressed as:
 $$\begin{aligned}
-{\text{minimize }} & f(x) \\
-{\text{subject to }} & g_i(x) \leq 0 {\text{ for }} i=1,...,I \\
-& h_j(x) = 0 {\text{ for }} j=1,...,J
+{\text{minimize }} & f(\boldsymbol{x}) \\
+{\text{subject to }} & g_i(\boldsymbol{x}) \leq 0 {\text{ for }} i=1,...,I \\
+& h_j(\boldsymbol{x}) = 0 {\text{ for }} j=1,...,J
 \end{aligned}$$
 
 ### 1.1. Geometric Understanding on constraints
 
-For $x \in \mathbb{R}^N$ 
-- The equality constraints like f(x)=0, the solution is a $n-1$ dim hyperplane.
-- The inequality constraints like $f(x)<0$, the solution is a subspace in the $\mathbb{R}^d$ space.
+For $\boldsymbol{x} \in \mathbb{R}^N$ 
+- The equality constraints like $f(\boldsymbol{x})=0$, the solution is a $n-1$ dim hyperplane.
+- The inequality constraints like $f(\boldsymbol{x})<0$, the solution is a subspace in the $\mathbb{R}^d$ space.
 
 ### 1.2. Another view of the constrained optimization problem
 
@@ -58,11 +58,11 @@ Thus, we can use the mathematical concept "**domain**" to express the problem in
 
 Denote *the **domain** of the problem* as $\Phi$, i.e.: 
 
-$$x\in\Phi \Leftrightarrow g_i(x) \leq 0 {\text{ and }} h_j(x) = 0 {\text{ }} \forall i,j$$
+$$\boldsymbol{x}\in\Phi \Leftrightarrow g_i(\boldsymbol{x}) \leq 0 {\text{ and }} h_j(x) = 0 {\text{ }} \forall i,j$$
 
 Then, the problem can be expressed as:
 
-$${\text{minimize }} f(x) {\text{ for }} x\in\Phi$$
+$${\text{minimize }} f(\boldsymbol{x}) {\text{ for }} x\in\Phi$$
 
 ## 2. Convert the constrained optimization to unconstrained optimization
 
@@ -71,14 +71,14 @@ The difficulty in solving constrained optimization problem is the constraints. I
 ### 2.1. Design principle for the unconstrained problem.
 
 From the above expression, i.e. 
-$${\text{minimize }} f(x) {\text{ for }} x\in\Phi$$
+$${\text{minimize }} f(\boldsymbol{x}) {\text{ for }} \boldsymbol{x}\in\Phi$$
 
 The problem can be understood as "minimize the function $f(x)$ in the feasible subspace $\Phi$, $\Phi\subseteq \mathbb{R}^N$". Then, if we can construct a function $\theta_P(x)$ ($_P$ for "Primal") equal to $f(x)$ in the "feasible area" and have positive infinity value in the "infeasible area", i.e.:
 
-$$\theta_P(x)=\left\{ \begin{array}{ll} f(x) & x\in\Phi\\ +\infty & \textrm{otherwise} \end{array} \right.$$
+$$\theta_P(x)=\left\{ \begin{array}{ll} f(\boldsymbol{x}) & x\in\Phi\\ +\infty & \textrm{otherwise} \end{array} \right.$$
 Then, *"minimize $f(x)$ in the feasible subspace $\Phi$"* is equivalent to *"minimize the $\theta_P(x)$ over the whole space $\mathbb{R}^N$"*, i.e.:
 
-$${\text{minimize }} f(x) {\text{ for }} x\in\Phi \Leftrightarrow {\text{minimize }} \theta_P(\boldsymbol{x})$$
+$${\text{minimize }} f(\boldsymbol{x}) {\text{ for }} \boldsymbol{x}\in\Phi \Leftrightarrow {\text{minimize }} \theta_P(\boldsymbol{x})$$
 
 I.e. The constrained optimization problem is converted into an unconstrained optimization problem.
 
@@ -176,10 +176,10 @@ $$\begin{aligned}
 **Dual problem**: $d^* = \underset{\beta_j\geq0}{\max} \theta_D(\alpha,\beta)$ -->
 
 Define $p^*$ as the optimal value of the primal problem i.e.:
-$$p^* = \underset{x\in\Phi}{\min} f(x) = \min(\theta_P(x)) \tag{Eq. 3.2-1}$$
+$$p^* = \underset{\boldsymbol{x}\in\Phi}{\min} f(x) = \min(\theta_P(\boldsymbol{x})) \tag{Eq. 3.2-1}$$
 
 Define $d^*$ as the optimal value of the dual problem, i.e.:
-$$d^* = \underset{\beta_j\geq0}{\max} \theta_D(\alpha,\beta) \tag{Eq. 3.2-2}$$
+$$d^* = \underset{\beta_j\geq0}{\max} \theta_D(\boldsymbol{\alpha},\boldsymbol{\beta}) \tag{Eq. 3.2-2}$$
 
 $p^*$ can also be understood as the highest lower bound of constrained $f(x)$ ($x$ is constrained in the feasible area $\Phi$).
 
@@ -198,7 +198,7 @@ $d^*$ can also be understood as the lowest upper bound of constrained $\theta_D$
 Remember:
 
 $$\begin{aligned}
-d^* &= \underset{\beta_j\geq0}{\max} \theta_D(\alpha,\beta)\\
+d^* &= \underset{\beta_j\geq0}{\max} \theta_D(\boldsymbol{\alpha},\boldsymbol{\beta})\\
 \theta_D(\boldsymbol{\alpha},\boldsymbol{\beta}) &= \underset{x\in\Phi}{\min} L(\boldsymbol{x},\boldsymbol{\alpha},\boldsymbol{\beta})\\
 L(\boldsymbol{x},\boldsymbol{\alpha},\boldsymbol{\beta}) & = f(\boldsymbol{x})+\sum_{i=1}^m\alpha_i h_i(\boldsymbol{x})+\sum_{j=1}^n\beta_j g_j(\boldsymbol{x})
 \end{aligned}$$
@@ -374,7 +374,7 @@ Thus, we can explain why Lagrangian objective $L(x,\lambda)$ can convert a const
 
 KKT conditions extends (generalize) the Lagrange multipliers method on inequality constraints.
 
-"If ${\displaystyle (\mathbf {x} ^{\ast },\mathbf {\mu } ^{\ast })}$ is a saddle point of ${\displaystyle L(\mathbf {x} ,\mathbf {\mu } )}$ in $\mathbf{x} \in \mathbf{X}$, ${\displaystyle \mathbf {\mu } \geq \mathbf {0} }$, then ${\displaystyle \mathbf {x} ^{\ast }}$ is an optimal vector for the above optimization problem." [Wiki-KKT conditions](https://en.wikipedia.org/wiki/Karush%E2%80%93Kuhn%E2%80%93Tucker_conditions)
+"If ${\displaystyle (\boldsymbol {x} ^{\ast },\boldsymbol {\mu } ^{\ast })}$ is a saddle point of ${\displaystyle L(\boldsymbol {x} ,\boldsymbol {\mu } )}$ in $\boldsymbol{x} \in \boldsymbol{X}$, ${\displaystyle \boldsymbol {\mu } \geq \boldsymbol {0} }$, then ${\displaystyle \boldsymbol {x} ^{\ast }}$ is an optimal vector for the above optimization problem." [Wiki-KKT conditions](https://en.wikipedia.org/wiki/Karush%E2%80%93Kuhn%E2%80%93Tucker_conditions)
 
 #### 1.3.1 Geometric understanding and Lagrangian function for inequality constrained optimization
 <!-- #### Geometric understanding on inequality constrained optimization  -->

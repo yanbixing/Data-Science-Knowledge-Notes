@@ -2,9 +2,9 @@
 
 ## 0. Notations
 
-- $s=(\mathbf{x},y)$ the input of a sample
-  - $\mathbf{x}$ (or $\vec{x}$): an $(N+1)$-dim vector with $N$ features $\mathbf{x}^{(i)} :=X^{(i)}$ and an extra dimension with constant value 1 (so the $\theta_{N+1}$ corresponds to the "intercept".)
-    - $\mathbf{x}^{(i)} :=X^{(i)}$ denotes the i-th feature.
+- $s=(\boldsymbol{x},y)$ the input of a sample
+  - $\boldsymbol{x}$ (or $\vec{x}$): an $(N+1)$-dim vector with $N$ features $\boldsymbol{x}^{(i)} :=X^{(i)}$ and an extra dimension with constant value 1 (so the $\theta_{N+1}$ corresponds to the "intercept".)
+    - $\boldsymbol{x}^{(i)} :=X^{(i)}$ denotes the i-th feature.
   - $y$ (or $y^*$):  label of the sample, binary variable: $y \in \{0,1\}$
 - $\theta$ is an $(N+1)$-dim vector contains the "weights" and the "intercept" of the features.
 - $\mathcal{S}$ denotes the training set with $M$ samples $\{...s_i...\}$
@@ -14,12 +14,12 @@
 ## 1.  Basics
 
 ### 1.1. Prediction (score) function: 
-$$h_\theta(\mathbf{x}) = \frac{1}{1+\exp(\mathbf{\theta}^T\mathbf{x})}$$
+$$h_\theta(\boldsymbol{x}) = \frac{1}{1+\exp(\boldsymbol{\theta}^T\boldsymbol{x})}$$
 - Probability interpretation: 
-  - $p(\hat{y}=1|\mathbf{x}):= \hat{p}(1|\mathbf{x}) = h_\theta(\mathbf{x})$
-  - $p(\hat{y}=0|\mathbf{x}):= \hat{p}(0|\mathbf{x})  = 1-h_\theta(\mathbf{x})$
+  - $p(\hat{y}=1|\boldsymbol{x}):= \hat{p}(1|\boldsymbol{x}) = h_\theta(\boldsymbol{x})$
+  - $p(\hat{y}=0|\boldsymbol{x}):= \hat{p}(0|\boldsymbol{x})  = 1-h_\theta(\boldsymbol{x})$
   - The above two cases can be summarized as:<p>
-  $$p(\hat{y}=v|\mathbf{x}) = v \cdot h_\theta(\mathbf{x}) + (1-v) \cdot (1-h_\theta(\mathbf{x}))$$
+  $$p(\hat{y}=v|\boldsymbol{x}) = v \cdot h_\theta(\boldsymbol{x}) + (1-v) \cdot (1-h_\theta(\boldsymbol{x}))$$
 
 ### 1.2. Training
 
@@ -28,7 +28,7 @@ Minimize loss function with gradient descent.
 ### 1.2.1. Loss function
 
 Average of sample's cross entropy on the true label distribution and predicted label distribution:
-  $$J(\theta|\mathcal{S})= - \frac{1}{M}\sum^M_{i=1}[ y_i \log (h_\theta(\mathbf{x}_i)) + (1-y_i) \log (1-h_\theta(\mathbf{x}_i)) ]$$
+  $$J(\theta|\mathcal{S})= - \frac{1}{M}\sum^M_{i=1}[ y_i \log (h_\theta(\boldsymbol{x}_i)) + (1-y_i) \log (1-h_\theta(\boldsymbol{x}_i)) ]$$
 - Deduction:
   - The probability distribution of sample's true label:<p>
   $$P_i^*(v) :=p(y_i^* = v| s_i )=\left\{ \begin{array}{ll} 1 & v=y_i\\ 0 & v\not = y_i \end{array} \right.$$
@@ -40,7 +40,7 @@ Average of sample's cross entropy on the true label distribution and predicted l
   & = -[ P_i^*(v=0) \log(\hat{P}_i(v=0)) + P_i^*(v=1) \log(\hat{P}_i(v=1))] \\
   & = 1 \cdot \log(\hat{P}_i(v=y_i)) \\
   & = \log[ p(\hat{y}_i=y^*_i| s_i ) ] \\
-  & = \log[y^*_i \cdot h_\theta(\mathbf{x}_i) + (1-y^*_i) \cdot (1-h_\theta(\mathbf{x}_i))]
+  & = \log[y^*_i \cdot h_\theta(\boldsymbol{x}_i) + (1-y^*_i) \cdot (1-h_\theta(\boldsymbol{x}_i))]
   \end{aligned} $$
   - Loss function take the average of the sample's cross entropy:<p>
   $$J(\theta|\mathcal{S})= \frac{1}{M} \sum^M_{i=1} H_i(P_i^*(v), \hat{P}_i(v)) $$
@@ -59,13 +59,13 @@ Object:
 $$\text{minimize } J(\theta)$$
 Algorithm - Gradient Descent, i.e.:
 
-$$\mathbf{\theta}^{(i)}_{t+1} = \mathbf{\theta}^{(i)}_{t} - \alpha \frac{\partial J(\theta_t)}{\partial \mathbf{\theta}_t^{(i)}} $$
+$$\boldsymbol{\theta}^{(i)}_{t+1} = \boldsymbol{\theta}^{(i)}_{t} - \alpha \frac{\partial J(\theta_t)}{\partial \boldsymbol{\theta}_t^{(i)}} $$
 
 where $\alpha$ is the step length:
 
-$$\frac{\partial J(\theta)}{\partial \mathbf{\theta}^{(i)}} = \frac{1}{M}\sum^M_{m=1} [h_\theta(\mathbf{x}_m) - y^*_m]\cdot\mathbf{x}^{(i)}_m$$
+$$\frac{\partial J(\theta)}{\partial \boldsymbol{\theta}^{(i)}} = \frac{1}{M}\sum^M_{m=1} [h_\theta(\boldsymbol{x}_m) - y^*_m]\cdot\boldsymbol{x}^{(i)}_m$$
 
-Note: $\theta^{(N+1)} := b$, $\mathbf{x}^{(N+1)}_m := 1$
+Note: $\theta^{(N+1)} := b$, $\boldsymbol{x}^{(N+1)}_m := 1$
 
 Note: Follow the direction of the gradient, the function value changes has a same sign with the gradient.
 
@@ -78,13 +78,13 @@ Ref: [StackExchange](https://math.stackexchange.com/questions/477207/derivative-
 	Regularized LR is still strictly convex的 -->
 
 
-<!-- - $\{y^*_1,...,y^*_M\}$ and corresponding predicted score $\{ \hat{p}(y^*_1|\mathbf{x}_1),...\hat{p}(y^*_M|\mathbf{x}_M) \}$. -->
+<!-- - $\{y^*_1,...,y^*_M\}$ and corresponding predicted score $\{ \hat{p}(y^*_1|\boldsymbol{x}_1),...\hat{p}(y^*_M|\boldsymbol{x}_M) \}$. -->
   <!-- - Define: 
     - $\hat{p}(x,y) = \left\{ \begin{array}{ll} h_\theta(x) & y=1\\ 1-h_\theta(x) & y=0 \end{array} \right.$
     - $\hat{p}(x,y) = \left\{ \begin{array}{ll} h_\theta(x) & y=1\\ 1-h_\theta(x) & y=0 \end{array} \right.$
     - $p(y=1|x,y)$
   - $H(p^*,\hat{p})$
-  $$l(\mathbf{w},b|\mathcal{S})=$$
+  $$l(\boldsymbol{w},b|\mathcal{S})=$$
   - $\left\{ \begin{array}{ll} p(\hat{y}=1| s_i ) = h_\theta(x) \\ p(\hat{y}=0| s_i )  = 1-h_\theta(x) \end{array} \right.$
   - $p(y^*=1| s_i )  = \left\{ \begin{array}{ll} 1 & y=1\\ 0 & y=0 \end{array} \right.$
   - $p(y^*=0| s_i )  = \left\{ \begin{array}{ll} 0 & y=1\\ 1 & y=0 \end{array} \right.$ -->
@@ -124,10 +124,10 @@ But <mark style="background-color:yellow;">in the case of Logistic regression</m
 **Proof:**
 
 - Likelihood of the dataset given parameter $\theta$ is:
-  $$p(S|\theta) = \prod^M_{i=1} p(\hat{y} = y_i|\mathbf{x}_i)$$
+  $$p(S|\theta) = \prod^M_{i=1} p(\hat{y} = y_i|\boldsymbol{x}_i)$$
 - Then:
   $$\begin{aligned}
-      NLL(S|\theta) & = - \sum^M_{i=1} \log[ p(\hat{y} = y_i|\mathbf{x}_i) ]\\
+      NLL(S|\theta) & = - \sum^M_{i=1} \log[ p(\hat{y} = y_i|\boldsymbol{x}_i) ]\\
       & = - \sum^M_{i=1} \log[ p(\hat{y} = y_i|s_i) ] \\
       & \underset{LR}{=} - \sum^M_{i=1} H_i(P_i^*(v), \hat{P}_i(v))\\
       & = M\cdot J(\theta)
@@ -136,10 +136,6 @@ But <mark style="background-color:yellow;">in the case of Logistic regression</m
   - Thus, also, **in LR**, the training strategy "minimize the average cross-entropy loss" can also be viewed as MLE
 
 Backup refs: [StackExchange](https://stats.stackexchange.com/questions/198038/cross-entropy-or-log-likelihood-in-output-layer), [Quora](https://www.quora.com/What-are-the-differences-between-maximum-likelihood-and-cross-entropy-as-a-loss-function)
-
-
-
-
 
 ## FAQ:
 

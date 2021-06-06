@@ -4,25 +4,25 @@
 
 ### 0.0 Notations
 
-- $(\mathbf{x},y)$ the input of a sample
-  - $\mathbf{x}$ ($\vec{x}$) is an n-dim vector with $N$ features $\mathbf{x}^{(i)} :=X^{(i)}$ 
+- $(\boldsymbol{x},y)$ the input of a sample
+  - $\boldsymbol{x}$ ($\vec{x}$) is an n-dim vector with $N$ features $\boldsymbol{x}^{(i)} :=X^{(i)}$ 
   - $y$ label of the sample, binary variable: $y \in \{-1,+1\}$
-- $\mathcal{S}$ denotes the training set with $M$ samples $\{...(\mathbf{x}_i,y_i)...\}$
-- $[\mathbf{w} (\text{or }\vec{w}),b]$ is the (weight vector, intercept) in the prediction function
+- $\mathcal{S}$ denotes the training set with $M$ samples $\{...(\boldsymbol{x}_i,y_i)...\}$
+- $[\boldsymbol{w} (\text{or }\vec{w}),b]$ is the (weight vector, intercept) in the prediction function
 - $\lambda$ the coefficient on the weight regularization, $c:=\frac{1}{2\lambda}$
 
 ### 0.1 Equations
 
-- Prediction (score) function: $f(\mathbf{x}) = \mathbf{w}^T\mathbf{x} - b$
+- Prediction (score) function: $f(\boldsymbol{x}) = \boldsymbol{w}^T\boldsymbol{x} - b$
   - Use $-b$ for convenience.
-  - Distance between the origin and the hyperplane is $\tfrac {b}{\|\mathbf {w} \|}$. Distance between the two margin hyperplane is $\tfrac {2}{\|\mathbf {w} \|}$ . Ref: [StackExchange](https://math.stackexchange.com/questions/1305925/why-is-the-svm-margin-equal-to-frac2-mathbfw), [Wiki - SVM](https://en.wikipedia.org/wiki/Support-vector_machine#SVM_and_the_hinge_loss) 
+  - Distance between the origin and the hyperplane is $\tfrac {b}{\|\boldsymbol {w} \|}$. Distance between the two margin hyperplane is $\tfrac {2}{\|\boldsymbol {w} \|}$ . Ref: [StackExchange](https://math.stackexchange.com/questions/1305925/why-is-the-svm-margin-equal-to-frac2-boldsymbolw), [Wiki - SVM](https://en.wikipedia.org/wiki/Support-vector_machine#SVM_and_the_hinge_loss) 
   <div  align="center"><img src=https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/SVM_margin.png/617px-SVM_margin.png style = "zoom:40%"></div>
 - Margin
   - Functional margin: $y \cdot f(x)$
     - $y \in \{-1,+1\}$, $\hat{y} \in R$
     - We want to maximize margin
       - the higher correct score of the data points, the better classifier
-  - Geometric margin: $d_m = \frac{2}{\| \mathbf{w} \|}$
+  - Geometric margin: $d_m = \frac{2}{\| \boldsymbol{w} \|}$
     - This is the distance between the f(x) = +1 and the f(x) = -1 hyperplane, no matter the margin is hard or soft.
 
 
@@ -31,19 +31,21 @@
 
 ### 1.1. Hard-margin
 
-All the sample must be predict correctly, no data-points are allow within margin, that is called hard margin. ($\Rightarrow y_{i}(\mathbf {w} ^{T}\mathbf {x}_i -b) \geq 1$)
+All the sample must be predict correctly, no data-points are allow within margin, that is called hard margin. ($\Rightarrow y_{i}(\boldsymbol {w} ^{T}\boldsymbol {x}_i -b) \geq 1$)
 
-Since we tend to maximize the geometric margin $d_m=\frac{2}{\|\mathbf{w}\|}$. ($\Rightarrow {\text{minimize }} \|\mathbf{w}\|$)
+Since we tend to maximize the geometric margin $d_m=\frac{2}{\|\boldsymbol{w}\|}$. ($\Rightarrow {\text{minimize }} \|\boldsymbol{w}\|$)
 
 Thus the training algorithm is:
 $$\begin{aligned}
-  {\text{minimize }} & \|\mathbf{w}\| \\
-  {\text{subject to }} & y_{i}(\mathbf {w} ^{T}\mathbf {x}_i -b) \geq 1
+  {\text{minimize }} & \|\boldsymbol{w}\| \\
+  {\text{subject to }} & y_{i}(\boldsymbol {w} ^{T}\boldsymbol {x}_i -b) \geq 1
 \end{aligned}$$
 
 The problem is a typical [constrained optimization problem](../math_topics/constrained_optimization_problem.md).
 
 ### 1.2. Soft-margin
+
+Sometimes, the data at the boundary mixed together, not separable. So we wish to tolerate some error. In this case, hard margin will have no solution, we can introduce soft-margin SVM.
 
 #### 1.2.1 Basic
 
@@ -51,31 +53,31 @@ Data points are allowed to be with-in margin or misclassified. Penalty on with-i
 
 - Hinge loss: $l_H(x,y) = \max(0,1-y f(x))$
 
-Under certain degree of penalty on misclassification (parameter $c$), we still aims to maximize margin $d_m$, i.e. minimize $\|\mathbf{w}\|$, thus we add l2-regularization on $\|\mathbf{w}\|$ to the loss functions
+Under certain degree of penalty on misclassification (parameter $c$), we still aims to maximize margin $d_m$, i.e. minimize $\|\boldsymbol{w}\|$, thus we add l2-regularization on $\|\boldsymbol{w}\|$ to the loss functions
 
 - Loss function (let $c:=\frac{1}{2\lambda}$): <br> $\begin{aligned}
-    l(\mathcal{S},\mathbf{w},b) &= \lambda \|\mathbf {w} \|^{2} + \left[{\frac {1}{M}}\sum _{i=1}^{M}\max \left(0,1-y_{i}(\mathbf {w} ^{T}\mathbf {x}_i -b)\right)\right]\\
-    &= \frac{1}{2} \|\mathbf {w} \|^{2} + \left[{\frac {c}{M}}\sum _{i=1}^{M}\max \left(0,1-y_{i}(\mathbf {w} ^{T}\mathbf {x}_i -b)\right)\right]
+    l(\mathcal{S},\boldsymbol{w},b) &= \lambda \|\boldsymbol {w} \|^{2} + \left[{\frac {1}{M}}\sum _{i=1}^{M}\max \left(0,1-y_{i}(\boldsymbol {w} ^{T}\boldsymbol {x}_i -b)\right)\right]\\
+    &= \frac{1}{2} \|\boldsymbol {w} \|^{2} + \left[{\frac {c}{M}}\sum _{i=1}^{M}\max \left(0,1-y_{i}(\boldsymbol {w} ^{T}\boldsymbol {x}_i -b)\right)\right]
 \end{aligned}$
 
 
 #### 1.2.2 Training
 
-- Minimize Hinge loss over training sets: $\mathbf{w} = \underset{\mathbf{w}}{\argmin}[l(\mathbf{w},b|\mathcal{S})]$
+- Minimize Hinge loss over training sets: $\boldsymbol{w} = \underset{\boldsymbol{w}}{\argmin}[l(\boldsymbol{w},b|\mathcal{S})]$
 
 - Solution: 
   - $\vec{w} = \sum^M_{i=1}\alpha_i y_i \vec{x}_i$
     - For points "outside/beyond" margin ($y_if(x_i)>1$), $\alpha_i=0$, make no contribute to model.
     - For points <mark style="background-color:yellow;"><font color="#0000dd">**on the margin**</font></mark> ($y_if(x_i)=1$), $\alpha_i \in [0,\frac{c}{m}]$ and points <mark style="background-color:yellow;"><font color="#0000dd">**inside/below the margin**</font></mark> ($y_if(x_i)<1$), $\alpha_i=\frac{c}{m}$, these points will contribute to the model, thus are called <mark style="background-color:yellow;"><font color="#0000dd">**support vectors**</font></mark>
-    - I.e. <mark style="background-color:yellow;">$\mathbf{w}$ vector is a <mark style="background-color:yellow;"><font color="#0000dd">**linear combination**</font></mark> of the <font color="#0000dd">**support vectors**</font> $\{\mathbf{x_i}\}$</mark>
-  - $b=\mathbf {w} ^{T}\mathbf {x}_i - y_i$ for any point $(\mathbf{x}_i, y_i)$ on the margin 
-    - $\Leftarrow$ On the margin: $\mathbf {w} ^{T}\mathbf {x}_i -b = y_i = \pm1$
+    - I.e. <mark style="background-color:yellow;">$\boldsymbol{w}$ vector is a <mark style="background-color:yellow;"><font color="#0000dd">**linear combination**</font></mark> of the <font color="#0000dd">**support vectors**</font> $\{\boldsymbol{x_i}\}$</mark>
+  - $b=\boldsymbol {w} ^{T}\boldsymbol {x}_i - y_i$ for any point $(\boldsymbol{x}_i, y_i)$ on the margin 
+    - $\Leftarrow$ On the margin: $\boldsymbol {w} ^{T}\boldsymbol {x}_i -b = y_i = \pm1$
   - Ref: [NYU-ML](https://davidrosenberg.github.io/ml2019/#home), [NYU-ML-04.b.SVM](https://davidrosenberg.github.io/mlcourse/Archive/2019/Lectures/04b.SVM.pdf), [NYU-ML-04.c.SVM](https://davidrosenberg.github.io/mlcourse/Archive/2019/Lectures/04c.SVM-ComplementarySlackness.pdf)
 
 
-**Note:** For hard margin SVM, there are no points inside the margin, only points on the margin, so the support vectors are just points on the margin. For both soft and hard margin SVM, the support vectors $(\mathbf {x_{(sv)}}_i,y_{(sv)i})$ can be expressed as:
-- $y_{(sv)i}(\mathbf {w} ^{T}\mathbf {x_{(sv)}}_i -b)\leq 1$
-  - ${\text{ i.e. : }}  -1  s\leq f(\mathbf {x_{(sv)}}_i) \leq 1$
+**Note:** For hard margin SVM, there are no points inside the margin, only points on the margin, so the support vectors are just points on the margin. For both soft and hard margin SVM, the support vectors $(\boldsymbol {x_{(sv)}}_i,y_{(sv)i})$ can be expressed as:
+- $y_{(sv)i}(\boldsymbol {w} ^{T}\boldsymbol {x_{(sv)}}_i -b)\leq 1$
+  - ${\text{ i.e. : }}  -1  s\leq f(\boldsymbol {x_{(sv)}}_i) \leq 1$
 - Ref: [StackOverflow](https://stackoverflow.com/questions/50141815/are-the-points-inside-the-margin-of-a-svm-classifier-also-support-vectors)
 
 #### 1.2.3 Variance-bias tradeoff
@@ -83,8 +85,8 @@ Under certain degree of penalty on misclassification (parameter $c$), we still a
 - c: regularization parameter (inverse to weight regularization)
   - $c \uparrow$
   - $\Rightarrow$
-    - smaller penalty on $\|\mathbf{w}\|$ $\Rightarrow$ larger $\|\mathbf{w}\|$
-    - larger penalty on with-in margin points $\Rightarrow$ smaller geometric margin width $d_m = \frac{2}{\|\mathbf{w}\|}$, consistent with "larger $\|\mathbf{w}\|$"
+    - smaller penalty on $\|\boldsymbol{w}\|$ $\Rightarrow$ larger $\|\boldsymbol{w}\|$
+    - larger penalty on with-in margin points $\Rightarrow$ smaller geometric margin width $d_m = \frac{2}{\|\boldsymbol{w}\|}$, consistent with "larger $\|\boldsymbol{w}\|$"
   - $\Rightarrow$ Less tolerance on misclassification
     - = complexer boundary 
     - = **increase** model complexity/**variance**
@@ -96,28 +98,28 @@ Under certain degree of penalty on misclassification (parameter $c$), we still a
 **Proof**:
 
 - For hard margin SVM, the problem is: <p>$$\begin{aligned}
-  {\text{minimize }} & \|\mathbf{w}\| \\
-  {\text{subject to }} & y_{i}(\mathbf {w} ^{T}\mathbf {x}_i -b) \geq 1
+  {\text{minimize }} & \|\boldsymbol{w}\| \\
+  {\text{subject to }} & y_{i}(\boldsymbol {w} ^{T}\boldsymbol {x}_i -b) \geq 1
 \end{aligned}$$
-  - Define the domain of $(\mathbf{w},b)$ as $\Phi_{(\mathbf{w},b)}$, i.e.:<p>
-  $$(\mathbf{w},b)\in\Phi_{(\mathbf{w},b)} \Leftrightarrow y_{i}(\mathbf {w} ^{T}\mathbf {x}_i -b) \geq 1$$
+  - Define the domain of $(\boldsymbol{w},b)$ as $\Phi_{(\boldsymbol{w},b)}$, i.e.:<p>
+  $$(\boldsymbol{w},b)\in\Phi_{(\boldsymbol{w},b)} \Leftrightarrow y_{i}(\boldsymbol {w} ^{T}\boldsymbol {x}_i -b) \geq 1$$
   - Since the following is equivalent:<p>
-  $$\underset{}{\text{minimize }} \|\mathbf {w} \|\Leftrightarrow \underset{}{\text{minimize }} \frac{1}{2} \|\mathbf {w} \|^{2}$$
+  $$\underset{}{\text{minimize }} \|\boldsymbol {w} \|\Leftrightarrow \underset{}{\text{minimize }} \frac{1}{2} \|\boldsymbol {w} \|^{2}$$
   - The problem can be written as:<p>
   $$\begin{aligned}
-    \underset{(\mathbf{w},b)\in\Phi_{(\mathbf{w},b)}}{\text{minimize }} \frac{1}{2} \|\mathbf {w} \|^{2}
+    \underset{(\boldsymbol{w},b)\in\Phi_{(\boldsymbol{w},b)}}{\text{minimize }} \frac{1}{2} \|\boldsymbol {w} \|^{2}
   \end{aligned}$$
 
-- For soft margin SVM, the problem is $\underset{\mathbf{w}}{\text{minimize }}l(\mathbf{w},b|\mathcal{S})$, i.e.:<p>
+- For soft margin SVM, the problem is $\underset{\boldsymbol{w}}{\text{minimize }}l(\boldsymbol{w},b|\mathcal{S})$, i.e.:<p>
 $$\begin{aligned}
-  \underset{(\mathbf{w},b)}{\text{minimize }} \frac{1}{2} \|\mathbf {w} \|^{2} + \left[{\frac {c}{M}}\sum _{i=1}^{M}\max \left(0,1-y_{i}(\mathbf {w} ^{T}\mathbf {x}_i -b)\right)\right]
+  \underset{(\boldsymbol{w},b)}{\text{minimize }} \frac{1}{2} \|\boldsymbol {w} \|^{2} + \left[{\frac {c}{M}}\sum _{i=1}^{M}\max \left(0,1-y_{i}(\boldsymbol {w} ^{T}\boldsymbol {x}_i -b)\right)\right]
 \end{aligned}$$
   - When $c \rightarrow \infty$:<p>
-  $$\left[{\frac {c}{M}}\sum _{i=1}^{M}\max \left(0,1-y_{i}(\mathbf {w} ^{T}\mathbf {x}_i -b)\right)\right]=\left\{ \begin{array}{ll} 0 & (\mathbf{w},b)\in\Phi_{(\mathbf{w},b)}\\ +\infty & \textrm{otherwise} \end{array} \right.$$
-  - I.e.:<p>$$l(\mathbf{w},b|\mathcal{S})=\left\{ \begin{array}{ll} \frac{1}{2} \|\mathbf {w} \|^{2} & (\mathbf{w},b)\in\Phi_{(\mathbf{w},b)}\\ +\infty & \textrm{otherwise} \end{array} \right.$$
-  - Then, the problem $\underset{\mathbf{w}}{\text{minimize }}l(\mathbf{w},b|\mathcal{S})$ has a same solution with the following equation, which is exactly the hard margin SVM problem: <p>
+  $$\left[{\frac {c}{M}}\sum _{i=1}^{M}\max \left(0,1-y_{i}(\boldsymbol {w} ^{T}\boldsymbol {x}_i -b)\right)\right]=\left\{ \begin{array}{ll} 0 & (\boldsymbol{w},b)\in\Phi_{(\boldsymbol{w},b)}\\ +\infty & \textrm{otherwise} \end{array} \right.$$
+  - I.e.:<p>$$l(\boldsymbol{w},b|\mathcal{S})=\left\{ \begin{array}{ll} \frac{1}{2} \|\boldsymbol {w} \|^{2} & (\boldsymbol{w},b)\in\Phi_{(\boldsymbol{w},b)}\\ +\infty & \textrm{otherwise} \end{array} \right.$$
+  - Then, the problem $\underset{\boldsymbol{w}}{\text{minimize }}l(\boldsymbol{w},b|\mathcal{S})$ has a same solution with the following equation, which is exactly the hard margin SVM problem: <p>
   $$\begin{aligned}
-    \underset{(\mathbf{w},b)\in\Phi_{(\mathbf{w},b)}}{\text{minimize }} \frac{1}{2} \|\mathbf {w} \|^{2}
+    \underset{(\boldsymbol{w},b)\in\Phi_{(\boldsymbol{w},b)}}{\text{minimize }} \frac{1}{2} \|\boldsymbol {w} \|^{2}
   \end{aligned}$$
 
 ### 1.3. Inner product representation
@@ -125,22 +127,22 @@ $$\begin{aligned}
 #### 1.3.1. Prediction function
 
 $$\begin{aligned}
-f(\mathbf{x}) &= \mathbf{w}^T\mathbf{x} +b \\
-&= \sum_{i}\alpha_{i} y_{i}\mathbf{x}_i^T\mathbf{x}  +b\\
-& := \sum_{i}\alpha_{i} y_{i} \langle\mathbf{x}_{i}, \mathbf{x} \rangle +b
+f(\boldsymbol{x}) &= \boldsymbol{w}^T\boldsymbol{x} +b \\
+&= \sum_{i}\alpha_{i} y_{i}\boldsymbol{x}_i^T\boldsymbol{x}  +b\\
+& := \sum_{i}\alpha_{i} y_{i} \langle\boldsymbol{x}_{i}, \boldsymbol{x} \rangle +b
 \end{aligned}$$
-- Denote $\langle \mathbf{x}_i, \mathbf{x}_j\rangle$ as the **inner product** of $\mathbf{x}_i$ and $\mathbf{x}_j$
-  - $\langle \mathbf{x}_i, \mathbf{x}_j\rangle = \mathbf{x}_i^T\mathbf{x}_j = \vec{x}_i\cdot\vec{x}_j$
+- Denote $\langle \boldsymbol{x}_i, \boldsymbol{x}_j\rangle$ as the **inner product** of $\boldsymbol{x}_i$ and $\boldsymbol{x}_j$
+  - $\langle \boldsymbol{x}_i, \boldsymbol{x}_j\rangle = \boldsymbol{x}_i^T\boldsymbol{x}_j = \vec{x}_i\cdot\vec{x}_j$
 - If define the index of support vector as set $\mathcal{M}_{sv} \subseteq \{1,2,...,M\}$, i.e., the weight coefficient $\alpha_{i_{sv}} \not = 0 \forall i_{sv}  \in \mathcal{M}_{sv} $
-  - $f(\mathbf{x}) = \sum_{i_{sv}\in\mathcal{M_{sv}}}\alpha_{i_{sv}} y_{i_{sv}} \mathbf{x}_{i_{sv}}^T\mathbf{x} +b := \sum_{i_{sv}\in\mathcal{M_{sv}}}\alpha_{i_{sv}} y_{i_{sv}} \langle\mathbf{x}_{i_{sv}}, \mathbf{x} \rangle +b$
+  - $f(\boldsymbol{x}) = \sum_{i_{sv}\in\mathcal{M_{sv}}}\alpha_{i_{sv}} y_{i_{sv}} \boldsymbol{x}_{i_{sv}}^T\boldsymbol{x} +b := \sum_{i_{sv}\in\mathcal{M_{sv}}}\alpha_{i_{sv}} y_{i_{sv}} \langle\boldsymbol{x}_{i_{sv}}, \boldsymbol{x} \rangle +b$
 
 #### 1.3.2. Optimization function
 
 The optimization problem (dual problem) can also be written with inner product. (TBD). Ref: [NYU-ML: 04b.SVM](https://davidrosenberg.github.io/mlcourse/Archive/2019/Lectures/04b.SVM.pdf)
 
 $$\begin{aligned}
-\underset{\mathbf{\alpha},\mathbf{\beta}}{ {\text{maximize }} } & 
-\sum_{i=1}^M \alpha_i - \frac{1}{2}\sum_{i,j=1}^M\alpha_i\alpha_jy_iy_j\langle \mathbf{x}_i, \mathbf{x_j}\rangle
+\underset{\boldsymbol{\alpha},\boldsymbol{\beta}}{ {\text{maximize }} } & 
+\sum_{i=1}^M \alpha_i - \frac{1}{2}\sum_{i,j=1}^M\alpha_i\alpha_jy_iy_j\langle \boldsymbol{x}_i, \boldsymbol{x_j}\rangle
 \\
 {\text{subject to }} & \sum_{i=1}^M \alpha_iy_i=0 \\
 & \alpha_i+ \beta_i = \frac{c}{M}
@@ -150,9 +152,9 @@ $$\begin{aligned}
 & \beta_i \geq 0
 \end{aligned}$$ 
 where:
-- $\alpha_i$ is the Lagrange Multiplier for constraints $1-y_{i}(\mathbf {w} ^{T}\mathbf{x}_i -b) - \xi_i\leq 0$
+- $\alpha_i$ is the Lagrange Multiplier for constraints $1-y_{i}(\boldsymbol {w} ^{T}\boldsymbol{x}_i -b) - \xi_i\leq 0$
 - $\beta_i$ is the Lagrange Multiplier for constraints $-\xi_i \leq 0$
-- $\alpha_i$ is the $\alpha_i$ in $\vec{w} = \sum^M_{i=1}\alpha_i y_i \vec{x}_i$, $c$ is the regulation parameter $c$ in $l(\mathcal{S},\mathbf{w},b)$
+- $\alpha_i$ is the $\alpha_i$ in $\vec{w} = \sum^M_{i=1}\alpha_i y_i \vec{x}_i$, $c$ is the regulation parameter $c$ in $l(\mathcal{S},\boldsymbol{w},b)$
 
   
 
@@ -166,7 +168,7 @@ Ref: [Blog](https://blog.pluskid.org/?p=685&utm_source=ZHShareTargetIDMore&utm_m
   - I.e. the boundary of a "naive" SVM is always linear.
   - I.e. the space "separator" is always a hyperplane, not a hypersurface. 
   - Q: Why the boundary must be linear?
-    - Because prediction function $f(\mathbf{x}) = \mathbf{w}^T\mathbf{x} - b$ is linear to $\mathbf{x}$ and $f(x) = 0$ is a hyperplane.)
+    - Because prediction function $f(\boldsymbol{x}) = \boldsymbol{w}^T\boldsymbol{x} - b$ is linear to $\boldsymbol{x}$ and $f(x) = 0$ is a hyperplane.)
 - To make SVM work with <font color="#0000dd">**not-linear-separable data**</font>. We introduce kernel method.
 
 ### 3.2. How kernel method works?
@@ -181,19 +183,19 @@ The <font color="#0000dd">not-linear-separable</font> data may be <mark style="b
 
 For example, in the above figure (a), we have the data:
 
-- $\mathbf{x} = (x^{(1)},x^{(2)})$, $y\in\{-1,1\}$, 
+- $\boldsymbol{x} = (x^{(1)},x^{(2)})$, $y\in\{-1,1\}$, 
 - The underlying generation function is $y=\sqrt{( x^{(1)} )^2+(x^{(2)})^2}-1$.
-- The data $(\mathbf{x},y)$ is not linear-separable
+- The data $(\boldsymbol{x},y)$ is not linear-separable
 
 However, we can do a projection, like shown in figure (b):
 
-- project function $\mathbf{\phi}: \mathbf{x} \rightarrow \mathbf{z}$
-  - $\mathbf{z} = (z^{(1)},z^{(2)},z^{(3)} )$ where $z^{(1)}=x^{(1)}$, $z^{(2)}=x^{(2)}, z^{(3)}= ( x^{(1)} )^2+(x^{(2)})^2 $
-- The data $(\mathbf{z},y)$ i.e. $(\mathbf{\phi}(\mathbf{x}),y)$, as shown in figure (b) is linear separable with hyperplane $F(\mathbf{z})=0$
+- project function $\boldsymbol{\phi}: \boldsymbol{x} \rightarrow \boldsymbol{z}$
+  - $\boldsymbol{z} = (z^{(1)},z^{(2)},z^{(3)} )$ where $z^{(1)}=x^{(1)}$, $z^{(2)}=x^{(2)}, z^{(3)}= ( x^{(1)} )^2+(x^{(2)})^2 $
+- The data $(\boldsymbol{z},y)$ i.e. $(\boldsymbol{\phi}(\boldsymbol{x}),y)$, as shown in figure (b) is linear separable with hyperplane $F(\boldsymbol{z})=0$
 - Note: 
   - After project to higher dimension, the 2D space is a hyper-surface in 3D, it will not saturate all the 3D space.
-  - In 3D, the separator is a hyperplane, i.e. the score function $F(\mathbf{z}) = c_{1}z^{(3)} + c_{0}$ is linear to $\mathbf{z}$; But project back to 2D, the score function $f(\mathbf{x}) = c_{1}[ ( x^{(1)} )^2+(x^{(2)})^2 ] + c_{0}$ is non-linear to $\mathbf{x}$
-  - $F(\mathbf{z})$ and $f(\mathbf{x})$ is actually a "same" function i.e. (for $\mathbf{x'} \in \mathbb{R}^2$ and $\mathbf{z'}=\mathbf{\phi}(\mathbf{x'})$, $ F(\mathbf{z'})=f(\mathcal{x'}) $), the difference is: $F(\mathbf{z})$ has boarder domain ($\mathbb{R}^3$, i.e., the whole space in 3D); but domain of $f(\mathbf{x})$ is $\mathbb{R}^2$, or, a 2D hypersurface in 3D.
+  - In 3D, the separator is a hyperplane, i.e. the score function $F(\boldsymbol{z}) = c_{1}z^{(3)} + c_{0}$ is linear to $\boldsymbol{z}$; But project back to 2D, the score function $f(\boldsymbol{x}) = c_{1}[ ( x^{(1)} )^2+(x^{(2)})^2 ] + c_{0}$ is non-linear to $\boldsymbol{x}$
+  - $F(\boldsymbol{z})$ and $f(\boldsymbol{x})$ is actually a "same" function i.e. (for $\boldsymbol{x'} \in \mathbb{R}^2$ and $\boldsymbol{z'}=\boldsymbol{\phi}(\boldsymbol{x'})$, $ F(\boldsymbol{z'})=f(\mathcal{x'}) $), the difference is: $F(\boldsymbol{z})$ has boarder domain ($\mathbb{R}^3$, i.e., the whole space in 3D); but domain of $f(\boldsymbol{x})$ is $\mathbb{R}^2$, or, a 2D hypersurface in 3D.
 
 
 <!-- - <div  align="center"><img src=https://blog.pluskid.org/wp-content/uploads/2010/09/two_circles.png style = "zoom:60%"><img src=https://blog.pluskid.org/wp-content/uploads/2010/09/rotate.gif style = "zoom:40%"></div> -->
@@ -204,60 +206,60 @@ Projecting data to higher dimension possibly make data linear separable. But hig
 
 The kernel trick is a technique, with which we equivalently project the data to higher dimension, but no need to explicitly represent the projected vector.
 
-Here we use a quadratic kernel $\kappa(\mathbf{x}_i,\mathbf{x}_j) = (\langle \mathbf{x}_i,\mathbf{x}_j \rangle + 1)^2$ as example.
+Here we use a quadratic kernel $\kappa(\boldsymbol{x}_i,\boldsymbol{x}_j) = (\langle \boldsymbol{x}_i,\boldsymbol{x}_j \rangle + 1)^2$ as example.
 
 Let's say we have the data:
 
-- $\mathbf{x} = (x^{(1)},x^{(2)})$, $y\in\{-1,1\}$
+- $\boldsymbol{x} = (x^{(1)},x^{(2)})$, $y\in\{-1,1\}$
 
-We want to (explicitly) project $\mathbf{x}$ to a $\mathbb{R}^6$ space (denote with $\mathbf{z}$), as:
+We want to (explicitly) project $\boldsymbol{x}$ to a $\mathbb{R}^6$ space (denote with $\boldsymbol{z}$), as:
 
 - Define: <p> $\begin{aligned}
-    \mathbf{z} & := \mathbf{\phi}(\mathbf{x}) \\
+    \boldsymbol{z} & := \boldsymbol{\phi}(\boldsymbol{x}) \\
     & := (z^{(1)},z^{(2)},z^{(3)},z^{(4)},z^{(5)},z^{(6)})\\
     & := (\sqrt{2}x^{(1)}, (x^{(1)})^2,\sqrt{2}x^{(2)}, (x^{(2)})^2,\sqrt{2}x^{(1)}x^{(2)},1)
   \end{aligned}$
 - Then, our problem becomes:
-  - the data points: $(\mathbf{\phi}(\mathbf{x}),y)$
+  - the data points: $(\boldsymbol{\phi}(\boldsymbol{x}),y)$
   - the optimization problem: 
   $$\begin{aligned}
-  \underset{\mathbf{\alpha_{\mathbf{\phi}}},\mathbf{\beta_{\mathbf{\phi}}}}{ {\text{maximize }} } & 
-  \sum_{i=1}^M \alpha_{\mathbf{\phi}i} - \frac{1}{2}\sum_{i,j=1}^M\alpha_{\mathbf{\phi}i}\alpha_{\mathbf{\phi}j}y_iy_j\langle \mathbf{\phi}(\mathbf{x}_i), \mathbf{\phi}(\mathbf{x_j}) \rangle
+  \underset{\boldsymbol{\alpha_{\boldsymbol{\phi}}},\boldsymbol{\beta_{\boldsymbol{\phi}}}}{ {\text{maximize }} } & 
+  \sum_{i=1}^M \alpha_{\boldsymbol{\phi}i} - \frac{1}{2}\sum_{i,j=1}^M\alpha_{\boldsymbol{\phi}i}\alpha_{\boldsymbol{\phi}j}y_iy_j\langle \boldsymbol{\phi}(\boldsymbol{x}_i), \boldsymbol{\phi}(\boldsymbol{x_j}) \rangle
   \\
-  {\text{subject to }}& ...( \alpha_{\mathbf{\phi}i}, \beta_{\mathbf{\phi}i} {\text{ related conditions}} )
+  {\text{subject to }}& ...( \alpha_{\boldsymbol{\phi}i}, \beta_{\boldsymbol{\phi}i} {\text{ related conditions}} )
   \end{aligned}$$
   - the prediction functions becomes:
-  $$f(\mathbf{x}) = \sum_{i}\alpha_{\phi i} y_{i} \langle \mathbf{\phi}(\mathbf{x}_{i}), \mathbf{\phi}(\mathbf{x}) \rangle +b$$
+  $$f(\boldsymbol{x}) = \sum_{i}\alpha_{\phi i} y_{i} \langle \boldsymbol{\phi}(\boldsymbol{x}_{i}), \boldsymbol{\phi}(\boldsymbol{x}) \rangle +b$$
 
-Here, we can define a kernel function $\mathbf{\kappa}(\mathbf{x}_i,\mathbf{x}_j) = (\langle \mathbf{x}_i,\mathbf{x}_j \rangle + 1)^2$ and prove:
+Here, we can define a kernel function $\boldsymbol{\kappa}(\boldsymbol{x}_i,\boldsymbol{x}_j) = (\langle \boldsymbol{x}_i,\boldsymbol{x}_j \rangle + 1)^2$ and prove:
 
 $$\begin{aligned}
-  \mathbf{\kappa}(\mathbf{x}_i,\mathbf{x}_j) =& (\langle \mathbf{x}_i,\mathbf{x}_j \rangle + 1)^2\\
+  \boldsymbol{\kappa}(\boldsymbol{x}_i,\boldsymbol{x}_j) =& (\langle \boldsymbol{x}_i,\boldsymbol{x}_j \rangle + 1)^2\\
   =&(x_i^{(1)}x_j^{(1)} + x_i^{(2)}x_j^{(2)} + 1)^2\\
   =&(x_i^{(1)}x_j^{(1)} + x_i^{(2)}x_j^{(2)} + 1)(x_i^{(1)}x_j^{(1)} + x_i^{(2)}x_j^{(2)} + 1)\\
   =& ( x_i^{(1)}x_j^{(1)} )^2 +x_i^{(1)}x_j^{(1)}x_i^{(2)}x_j^{(2)}+x_i^{(1)}x_j^{(1)}\\
   &+x_i^{(1)}x_j^{(1)}x_i^{(2)}x_j^{(2)}+( x_i^{(2)}x_j^{(2)} )^2 +x_i^{(2)}x_j^{(2)} \\
   &+x_i^{(1)}x_j^{(1)} + x_i^{(2)}x_j^{(2)} + 1 \\
   =& 2x_i^{(1)}x_j^{(1)} + ( x_i^{(1)}x_j^{(1)} )^2 + 2x_i^{(2)}x_j^{(2)} + ( x_i^{(2)}x_j^{(2)} )^2 + 2 x_i^{(1)}x_j^{(1)}x_i^{(2)}x_j^{(2)} + 1\\
-  =&\langle \mathbf{\phi}(\mathbf{x}_{i}), \mathbf{\phi}(\mathbf{x}_j) \rangle
+  =&\langle \boldsymbol{\phi}(\boldsymbol{x}_{i}), \boldsymbol{\phi}(\boldsymbol{x}_j) \rangle
 \end{aligned} $$
 
 Then the problem (after projected to high dimension) can be representative as:
 
-- the data points: $(\mathbf{x},y)$
+- the data points: $(\boldsymbol{x},y)$
 - the optimization problem:
  $$\begin{aligned}
-\underset{\mathbf{\alpha_{\mathbf{\kappa}}},\mathbf{\beta_{\mathbf{\kappa}}}}{ {\text{maximize }} } & 
-\sum_{i=1}^M \alpha_{\mathbf{\kappa}i} - \frac{1}{2}\sum_{i,j=1}^M\alpha_{\mathbf{\kappa}i}\alpha_{\mathbf{\kappa}j} y_i y_j \mathbf{\kappa}(\mathbf{x}_i,\mathbf{x}_j)
+\underset{\boldsymbol{\alpha_{\boldsymbol{\kappa}}},\boldsymbol{\beta_{\boldsymbol{\kappa}}}}{ {\text{maximize }} } & 
+\sum_{i=1}^M \alpha_{\boldsymbol{\kappa}i} - \frac{1}{2}\sum_{i,j=1}^M\alpha_{\boldsymbol{\kappa}i}\alpha_{\boldsymbol{\kappa}j} y_i y_j \boldsymbol{\kappa}(\boldsymbol{x}_i,\boldsymbol{x}_j)
 \\
-{\text{subject to }}& ...( \alpha_{\mathbf{\kappa}i}, \beta_{\mathbf{\kappa}i} {\text{ related conditions}} )
+{\text{subject to }}& ...( \alpha_{\boldsymbol{\kappa}i}, \beta_{\boldsymbol{\kappa}i} {\text{ related conditions}} )
 \end{aligned}$$
 - the prediction functions:
-$$f(\mathbf{x}) = \sum_{i}\alpha_{\kappa i} y_{i} \kappa(\mathbf{x}_i,\mathbf{x}_j) +b$$
+$$f(\boldsymbol{x}) = \sum_{i}\alpha_{\kappa i} y_{i} \kappa(\boldsymbol{x}_i,\boldsymbol{x}_j) +b$$
 
 It looks like: 
 
-- Rather than explicitly projecting data points to higher dimension, we just use the kernel function to replace the inner product $\langle \mathbf{x}_i,\mathbf{x}_j \rangle$ appears in the problem. And the effect (training/prediction process/result) is exactly same with the operation explicitly projecting data points to higher dimension. 
+- Rather than explicitly projecting data points to higher dimension, we just use the kernel function to replace the inner product $\langle \boldsymbol{x}_i,\boldsymbol{x}_j \rangle$ appears in the problem. And the effect (training/prediction process/result) is exactly same with the operation explicitly projecting data points to higher dimension. 
 
 Such method is called <mark style="background-color:yellow;">**kernel trick**</mark>, i.e.:
 
@@ -274,7 +276,7 @@ Such method is called <mark style="background-color:yellow;">**kernel trick**</m
 
 Ref [Wiki: Polynomial kernel](https://en.wikipedia.org/wiki/Polynomial_kernel)
 
-$$\kappa(\mathbf{x}_i,\mathbf{x}_j) = (\langle \mathbf{x}_i,\mathbf{x}_j \rangle + c)^d$$
+$$\kappa(\boldsymbol{x}_i,\boldsymbol{x}_j) = (\langle \boldsymbol{x}_i,\boldsymbol{x}_j \rangle + c)^d$$
 
 Project data to finite higher dimension.
 
@@ -282,12 +284,12 @@ Project data to finite higher dimension.
 
 Ref: [Wiki: Radial basis function kernel](https://en.wikipedia.org/wiki/Radial_basis_function_kernel)
 
-$$\kappa(\mathbf{x}_i,\mathbf{x}_j)=\exp \left(-{\frac {\|\mathbf {x}_i -\mathbf {x}_j \|^{2}}{2\sigma ^{2}}}\right)$$
+$$\kappa(\boldsymbol{x}_i,\boldsymbol{x}_j)=\exp \left(-{\frac {\|\boldsymbol {x}_i -\boldsymbol {x}_j \|^{2}}{2\sigma ^{2}}}\right)$$
 
 Project data to infinite higher dimension.
 
 
-## D-1. Deep Dive: why margin is $\tfrac {2}{\|\mathbf {w} \|}$?
+## D-1. Deep Dive: why margin is $\tfrac {2}{\|\boldsymbol {w} \|}$?
 <div  align="center"><img src=https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/SVM_margin.png/617px-SVM_margin.png style = "zoom:40%"></div>
 
 - Fact: 
@@ -309,46 +311,46 @@ Project data to infinite higher dimension.
     - $\vec{v'} = \vec{x}_{f=1} - \vec{x}_{f=-1}$ then we have:
     $$\vec{w}\cdot(\vec{x}_{f=1}-\vec{x}_{f=-1}) = 2 \Rightarrow \|\vec{w}\|\vec{v}_p\cdot\vec{v'}=2\Rightarrow d=\frac{2}{\|\vec{w}\|}$$
 
-Ref: [StackExchange](https://math.stackexchange.com/questions/1305925/why-is-the-svm-margin-equal-to-frac2-mathbfw), [Wiki - SVM](https://en.wikipedia.org/wiki/Support-vector_machine#SVM_and_the_hinge_loss) 
+Ref: [StackExchange](https://math.stackexchange.com/questions/1305925/why-is-the-svm-margin-equal-to-frac2-boldsymbolw), [Wiki - SVM](https://en.wikipedia.org/wiki/Support-vector_machine#SVM_and_the_hinge_loss) 
 
 
 Further dive concept: tangent plane function, normal vector.
 
 ## D-2. Deep Dive: How to solve soft-margin SVM?
 
-The SVM problem can be expressed as: Minimize Hinge loss over training sets: $(\mathbf{w},b) = \underset{\mathbf{w},b}{\argmin}[l(\mathcal{\mathbf{w},b|S})]$ where:
+The SVM problem can be expressed as: Minimize Hinge loss over training sets: $(\boldsymbol{w},b) = \underset{\boldsymbol{w},b}{\argmin}[l(\mathcal{\boldsymbol{w},b|S})]$ where:
 $$\begin{aligned}
-    l(\mathcal{\mathbf{w},b|S}) = \left[{\frac {c}{m}}\sum _{i=1}^{m}\max \left(0,1-y_{i}(\mathbf {w} ^{T}\mathbf{x}_i -b)\right)\right]+\frac{1}{2} \|\mathbf {w} \|^{2}
+    l(\mathcal{\boldsymbol{w},b|S}) = \left[{\frac {c}{m}}\sum _{i=1}^{m}\max \left(0,1-y_{i}(\boldsymbol {w} ^{T}\boldsymbol{x}_i -b)\right)\right]+\frac{1}{2} \|\boldsymbol {w} \|^{2}
 \end{aligned} \tag{Eq. D-2.1}$$
 
-The problem is $l(\mathbf{w},b|\mathcal{S})$ is not differentiable because of $\max$. Thus, if we can remove $\max$, then the problem is easier to solve.
+The problem is $l(\boldsymbol{w},b|\mathcal{S})$ is not differentiable because of $\max$. Thus, if we can remove $\max$, then the problem is easier to solve.
 
-First, we can introduce a slack variable $\mathbf{\xi}$, the problem $\underset{\mathbf{w},b}{ {\text{minimize }} } l(\mathbf{w},b|\mathcal{S})$ i.e.
+First, we can introduce a slack variable $\boldsymbol{\xi}$, the problem $\underset{\boldsymbol{w},b}{ {\text{minimize }} } l(\boldsymbol{w},b|\mathcal{S})$ i.e.
 $$\begin{aligned}
-\underset{\mathbf{w},b}{ {\text{minimize }} } \frac{1}{2} \|\mathbf {w} \|^{2} + \left[{\frac {c}{m}}\sum _{i=1}^{m}\max \left(0,1-y_{i}(\mathbf {w} ^{T}\mathbf{x}_i -b)\right)\right]
+\underset{\boldsymbol{w},b}{ {\text{minimize }} } \frac{1}{2} \|\boldsymbol {w} \|^{2} + \left[{\frac {c}{m}}\sum _{i=1}^{m}\max \left(0,1-y_{i}(\boldsymbol {w} ^{T}\boldsymbol{x}_i -b)\right)\right]
 \end{aligned}$$ 
 
 can be converted (proof is shown in [D.2. Appendix] to: 
 
 $$\begin{aligned}
-\underset{\mathbf{w},\mathbf{\xi}}{ {\text{minimize }} } & \frac{1}{2} \|\mathbf {w} \|^{2}+ \left[{\frac {c}{m}}\sum _{i=1}^{m}  \xi_i  \right]\\
-{\text{subject to }} & \xi_i\geq \max \left(0,1-y_{i}(\mathbf {w} ^{T}\mathbf{x}_i -b)\right)
+\underset{\boldsymbol{w},\boldsymbol{\xi}}{ {\text{minimize }} } & \frac{1}{2} \|\boldsymbol {w} \|^{2}+ \left[{\frac {c}{m}}\sum _{i=1}^{m}  \xi_i  \right]\\
+{\text{subject to }} & \xi_i\geq \max \left(0,1-y_{i}(\boldsymbol {w} ^{T}\boldsymbol{x}_i -b)\right)
 \end{aligned}$$ 
 
 further converted to:
 
 $$\begin{aligned}
-\underset{\mathbf{w},\mathbf{\xi}}{ {\text{minimize }} } & \frac{1}{2} \|\mathbf {w} \|^{2}+ \left[{\frac {c}{m}}\sum _{i=1}^{m}  \xi_i  \right]\\
+\underset{\boldsymbol{w},\boldsymbol{\xi}}{ {\text{minimize }} } & \frac{1}{2} \|\boldsymbol {w} \|^{2}+ \left[{\frac {c}{m}}\sum _{i=1}^{m}  \xi_i  \right]\\
 {\text{subject to }} & \xi_i \geq 0\\
-& \xi_i\geq 1-y_{i}(\mathbf {w} ^{T}\mathbf{x}_i -b)
+& \xi_i\geq 1-y_{i}(\boldsymbol {w} ^{T}\boldsymbol{x}_i -b)
 \end{aligned}$$ 
 
 reformatted as:
 
 $$\begin{aligned}
-\underset{\mathbf{w},\mathbf{\xi}}{ {\text{minimize }} } & \frac{1}{2} \|\mathbf {w} \|^{2}+ \left[{\frac {c}{m}}\sum _{i=1}^{m}  \xi_i  \right]\\
+\underset{\boldsymbol{w},\boldsymbol{\xi}}{ {\text{minimize }} } & \frac{1}{2} \|\boldsymbol {w} \|^{2}+ \left[{\frac {c}{m}}\sum _{i=1}^{m}  \xi_i  \right]\\
 {\text{subject to }} & - \xi_i \leq 0\\
-& 1-y_{i}(\mathbf {w} ^{T}\mathbf{x}_i -b) - \xi_i\leq 0
+& 1-y_{i}(\boldsymbol {w} ^{T}\boldsymbol{x}_i -b) - \xi_i\leq 0
 \end{aligned}$$ 
 
 The above problem is a typical [constrained optimization problem](../math_topics/constrained_optimization_problem.md).
@@ -402,7 +404,16 @@ Ref:[Wiki-SVM](https://en.wikipedia.org/wiki/Support-vector_machine)
 
 ### Sub-gradient descent (TBD)
 
-### Coordinate descent (TBD)
+### Coordinate descent
+
+Ref: [Wiki_Coordinate_descent](https://en.wikipedia.org/wiki/Coordinate_descent), [RochesterU](https://www.cs.rochester.edu/u/jliu/CSC-576/class-note-8.pdf)
+
+- Do K rounds following operation:
+  - Optimize function on each axis $\boldsymbol{w}^{(i)}$ iteratively from $1$ to $N$, i.e.:
+    $$\begin{aligned}
+      \boldsymbol{w}^{(i)}_{t+1} &= \underset{\boldsymbol{w}^{(i)}}{\argmin}l(\boldsymbol{w})\\
+      & := \underset{\boldsymbol{w}^{(i)}}{\argmin}l(\boldsymbol{w}^{(1)}_{t+1}...,\boldsymbol{w}^{(i)}, ..., \boldsymbol{w}^{(N)}_{t})
+    \end{aligned}$$
 
 ## FAQ:
 
@@ -480,10 +491,10 @@ Ref: [Blog](http://blog.pluskid.org/?p=685&utm_source=ZHShareTargetIDMore&utm_me
     - Those points will push margin towards  (y=-1, minority) area
     - The prediction score will be higher than ground truth, i.e. the model prefer to predict/give (y=+1, majority) result.
     - Solution: class-weighted SVM, i.e. assign more weight on loss of minority. (This is actually duplicate data, equivalent to add more data for minority.)
-- Understanding on "Weight Regularization" "$\|\mathbf{w}\|$" or "$\|\mathbf{w}\|^2$" 
-  - In SVM, the "$\|\mathbf{w}\|$" or "$\|\mathbf{w}\|^2$" must be contained, cannot be removed. Actually
+- Understanding on "Weight Regularization" "$\|\boldsymbol{w}\|$" or "$\|\boldsymbol{w}\|^2$" 
+  - In SVM, the "$\|\boldsymbol{w}\|$" or "$\|\boldsymbol{w}\|^2$" must be contained, cannot be removed. Actually
     - it is NOT "weight regularization"
-    - it originates from the core idea "maximize (geometric) margin" $d=\frac{2}{\|\mathbf{w}\|}$
+    - it originates from the core idea "maximize (geometric) margin" $d=\frac{2}{\|\boldsymbol{w}\|}$
 
 - Different types of kernel:
   - Linear kernel: produce linear boundary, the most simple one is just the inner product. [ref:?]()
@@ -491,16 +502,16 @@ Ref: [Blog](http://blog.pluskid.org/?p=685&utm_source=ZHShareTargetIDMore&utm_me
   - RBF (Gaussian) kernel: could produce non-linear boundary, simulate infinite higher dimension.[ref:?]()
   - Ref: [sklearn-SVM](https://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html) [Quora](https://www.quora.com/What-differentiates-a-radial-basis-function-from-a-gaussian-kernel-while-using-SVM)
 - Gaussian Kernel (? Not strict, TBD)
-  - $\kappa(\mathbf{x}_i, \mathbf{x}_j) = \exp(-\frac{\|\mathbf{x}_i - \mathbf{x}_j\|^2}{2\sigma^2})$
+  - $\kappa(\boldsymbol{x}_i, \boldsymbol{x}_j) = \exp(-\frac{\|\boldsymbol{x}_i - \boldsymbol{x}_j\|^2}{2\sigma^2})$
     - Infinity dimensions
       - There are infinite terms/orders (Taylor expansion), can be written as inner produce of infinity dimensions: <p>
       $$\begin{aligned}
-        \kappa(\mathbf{x}_i, \mathbf{x}_j) &= \exp(-\frac{\|\mathbf{x}_i - \mathbf{x}_j\|^2}{2\sigma^2})\\
-        &=\frac{c_1}{\sigma^2}\|(\mathbf{x}_i - \mathbf{x}_j\|)^2 + ... + \frac{c_n}{\sigma^{2\infty} }(\|\mathbf{x}_i - \mathbf{x}_j\|)^{2\infty}\\
-        &=\sum^\infty_{r=2} \sum^r_{t=0} \sum_{d_i,d_j}\frac{c^{(2)}_{t,r,d_i,d_j}}{\sigma^{2r}} [\mathbf{x}^{(d_i)}_i]^{2t} [\mathbf{x}^{(d_j)}_j]^{2(r-t)}\\
-        &= \phi(\mathbf{x}_i) \cdot \phi(\mathbf{x}_j)
+        \kappa(\boldsymbol{x}_i, \boldsymbol{x}_j) &= \exp(-\frac{\|\boldsymbol{x}_i - \boldsymbol{x}_j\|^2}{2\sigma^2})\\
+        &=\frac{c_1}{\sigma^2}\|(\boldsymbol{x}_i - \boldsymbol{x}_j\|)^2 + ... + \frac{c_n}{\sigma^{2\infty} }(\|\boldsymbol{x}_i - \boldsymbol{x}_j\|)^{2\infty}\\
+        &=\sum^\infty_{r=2} \sum^r_{t=0} \sum_{d_i,d_j}\frac{c^{(2)}_{t,r,d_i,d_j}}{\sigma^{2r}} [\boldsymbol{x}^{(d_i)}_i]^{2t} [\boldsymbol{x}^{(d_j)}_j]^{2(r-t)}\\
+        &= \phi(\boldsymbol{x}_i) \cdot \phi(\boldsymbol{x}_j)
       \end{aligned}$$
-      - where $\phi(\mathbf{x}) = ( ..., \frac{c^{(3)}_{t,r,i}}{\sigma^r}\prod_i [\mathbf{x}^{(d_i)}]^{t_i} ,... )$
+      - where $\phi(\boldsymbol{x}) = ( ..., \frac{c^{(3)}_{t,r,i}}{\sigma^r}\prod_i [\boldsymbol{x}^{(d_i)}]^{t_i} ,... )$
   - By tuning $\sigma$, the "effective dimension" could change.
     - $\sigma \uparrow$, effective dimension $\downarrow$, model complexity $\downarrow$, model variance $\downarrow$, overfitting $\downarrow$
       - The larger $\sigma$:
