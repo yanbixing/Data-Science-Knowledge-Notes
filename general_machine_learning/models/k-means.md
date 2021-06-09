@@ -67,7 +67,16 @@ The metrics used to select K is as following.
   - Maximize silhouette score, i.e. the larger silhouette, the better clustering result (the more similar for points in a same cluster.)
 
 
-## GMM
+## Gaussian Mixture Model (GMM)
+
+In short, a more advance K-means:
+
+- Assign each centroid with a gaussian distribution $\boldsymbol{\mu}_k \rightarrow \boldsymbol{\theta}_k = (\boldsymbol{\mu}_k, \boldsymbol{\Sigma}_k)$
+- The label of a data point is not a single label anymore. Instead, it becomes a $K$-dim vector denotes the probability the point belongs to $k$-th centroids.
+- The objective change from "minimize sum distance" $\rightarrow$ "maximize likelihood"
+  - Solve with EM algorithm
+    - $\boldsymbol{Z}$ refers to the label distribution $\{\boldsymbol{s}_k\}$
+    - $\boldsymbol{X}$ refers to the dataset $\mathcal{S}$.
 
 ## Deep Dive: Expectation–maximization (EM) algorithm 
 

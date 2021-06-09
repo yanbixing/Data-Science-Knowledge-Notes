@@ -421,10 +421,7 @@ Stacking: use different types of model (rather than data) to get a weighted deci
 - Refs: [Cornell U](http://www.cs.cornell.edu/courses/cs578/2005fa/CS578.bagging.boosting.lecture.pdf), [Quora](https://www.quora.com/What-does-Bagging-reduces-the-variance-while-retaining-the-bias-mean), [Linkdin](https://www.linkedin.com/pulse/bias-variance-bagging-boosting-dummies-i-sray-agarwal/) -->
 
 
-
-
-
-## Deep: KL Divergence, IG and MI
+<!-- ## Deep: KL Divergence, IG and MI
 
 ### Kullback–Leibler divergence
 
@@ -438,27 +435,27 @@ where:
 ### Information gain (IG)
 <!-- $$IG_{Y,X}{(Y,X_i)}=D_{\text{KL}}{\left(p{(Y|X_i)}\|p{(Y)}\right)}$$ -->
 
-$$\begin{aligned}
+<!-- $$\begin{aligned}
   \operatorname{IG}_{Y,X}{(Y,X_i)}&=D_{\text{KL}}{\left(p{(Y|X_i)}\|p{(Y)}\right)}
   \\
   &=\sum^K_{k=1} p(C_k|X_i)\log \left({\frac { p(C_k|X_i) }{ p(C_k) }}\right)
-\end{aligned}$$
+\end{aligned}$$ -->
 
-### Mutual information (MI)
+<!-- ### Mutual information (MI) -->
 
-$$\operatorname{MI}(Y;X_i)=D_{\mathrm {KL} }(P_{(Y,X_i)}\|P_{Y}\otimes P_{X_i})$$
+<!-- $$\operatorname{MI}(Y;X_i)=D_{\mathrm {KL} }(P_{(Y,X_i)}\|P_{Y}\otimes P_{X_i})$$
 
 Discrete representation:
 
-$$MI (Y;X_i) = \sum_{x\in {\mathcal {X_i}}} \sum _{y\in {\mathcal {Y}}}{p_{(Y,X_i)}(y,x) \log {\left({\frac {p_{(Y,X_i)}(y,x)}{p_{Y}(y)p_{X_i}(x)}}\right)}}$$
+$$MI (Y;X_i) = \sum_{x\in {\mathcal {X_i}}} \sum _{y\in {\mathcal {Y}}}{p_{(Y,X_i)}(y,x) \log {\left({\frac {p_{(Y,X_i)}(y,x)}{p_{Y}(y)p_{X_i}(x)}}\right)}}$$ -->
 
 <!-- $$MI(Y;X_i) = \sum_{x \in \mathcal{X_i}} \sum _{y\in \mathcal{Y}} p_{(Y,X_i)}(y,x) \log \left( \frac{p_{(Y,X_i)}(y,x)}{p_{Y}(y)p_{X_i}(x)} \right)$$ -->
 
-Ref: [Wiki](https://en.wikipedia.org/wiki/Mutual_information)
+<!-- Ref: [Wiki](https://en.wikipedia.org/wiki/Mutual_information) -->
 
-#### MI is the expectation of IG 
+<!-- #### MI is the expectation of IG  -->
 
-$$\begin{aligned}
+<!-- $$\begin{aligned}
   \operatorname{MI} (Y;X_i) = & \sum _{X_i\in {\mathcal {X_i}}} \sum^K_{k=1 }{p(C_k,X_i)\log {\left(
     {\frac {p(C_k,X_i)}{p(C_k)\,p(X_i)}}
     \right)}}
@@ -505,11 +502,11 @@ $$\begin{aligned}
    = & H(Y) - H(Y|X_i)   
 \end{aligned}$$
 
-Ref: [StakeExchange](https://stats.stackexchange.com/questions/103175/information-gain-is-kl-divergence)
+Ref: [StakeExchange](https://stats.stackexchange.com/questions/103175/information-gain-is-kl-divergence) -->
 
-#### Example: MI Calculation process for decision tree
+<!-- #### Example: MI Calculation process for decision tree -->
 
-We have two labels (0,1), and 1 input feature $x\in [-1, 1]$:
+<!-- We have two labels (0,1), and 1 input feature $x\in [-1, 1]$:
 
 Before the treestump split, the entropy is calculated by
 $$\begin{aligned}
@@ -523,7 +520,7 @@ $$ \begin{aligned}
    &+ p(x>0,y=0)\log p(y=0|x>0) \\
    &+ p(x<0,y=1)\log p(y=1|x<0) \\
    &+ p(x>0,y=1)\log p(y=1|x>0) ] 
-\end{aligned}$$
+\end{aligned}$$ -->
 
 <!-- ## $D_{KL}$, $IG$ and $MI$
 

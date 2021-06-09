@@ -16,10 +16,17 @@
 ### 1.1. Prediction (score) function: 
 $$h_\theta(\boldsymbol{x}) = \frac{1}{1+\exp(\boldsymbol{\theta}^T\boldsymbol{x})}$$
 - Probability interpretation: 
-  - $p(\hat{y}=1|\boldsymbol{x}):= \hat{p}(1|\boldsymbol{x}) = h_\theta(\boldsymbol{x})$
-  - $p(\hat{y}=0|\boldsymbol{x}):= \hat{p}(0|\boldsymbol{x})  = 1-h_\theta(\boldsymbol{x})$
+  - Since:
+    - $p(\hat{y}=1|\boldsymbol{x}):= \hat{p}(1|\boldsymbol{x}) = h_\theta(\boldsymbol{x})$
+    - $p(\hat{y}=0|\boldsymbol{x}):= \hat{p}(0|\boldsymbol{x})  = 1-h_\theta(\boldsymbol{x})$
   - The above two cases can be summarized as:<p>
-  $$p(\hat{y}=v|\boldsymbol{x}) = v \cdot h_\theta(\boldsymbol{x}) + (1-v) \cdot (1-h_\theta(\boldsymbol{x}))$$
+    $$p(\hat{y}=v|\boldsymbol{x}) = v \cdot h_\theta(\boldsymbol{x}) + (1-v) \cdot (1-h_\theta(\boldsymbol{x}))$$
+  - Similarly, since: 
+    - $\log p(\hat{y}=1|\boldsymbol{x}):= \log\hat{p}(1|\boldsymbol{x}) = \log h_\theta(\boldsymbol{x})$
+    - $\log p(\hat{y}=0|\boldsymbol{x}):= \log \hat{p}(0|\boldsymbol{x})  = \log[ 1-h_\theta(\boldsymbol{x})]$
+  - We can have:
+    $$\log p(\hat{y}=v|\boldsymbol{x}) = v \cdot \log h_\theta(\boldsymbol{x}) + (1-v) \cdot \log (1-h_\theta(\boldsymbol{x}))$$
+  - This is a math trick, i.e. 
 
 ### 1.2. Training
 
@@ -89,7 +96,7 @@ Ref: [StackExchange](https://math.stackexchange.com/questions/477207/derivative-
   - $p(y^*=1| s_i )  = \left\{ \begin{array}{ll} 1 & y=1\\ 0 & y=0 \end{array} \right.$
   - $p(y^*=0| s_i )  = \left\{ \begin{array}{ll} 0 & y=1\\ 1 & y=0 \end{array} \right.$ -->
 
-## Deep Dive: Cross Entropy, Log-Likelihood and LR
+<!-- ## Deep Dive: Cross Entropy, Log-Likelihood and LR
 
 ### Differentiation: Entropy, Cross Entropy, DL-Divergence and Log-Likelihood
 
@@ -135,7 +142,7 @@ But <mark style="background-color:yellow;">in the case of Logistic regression</m
   - Minimize NLL = MLE
   - Thus, also, **in LR**, the training strategy "minimize the average cross-entropy loss" can also be viewed as MLE
 
-Backup refs: [StackExchange](https://stats.stackexchange.com/questions/198038/cross-entropy-or-log-likelihood-in-output-layer), [Quora](https://www.quora.com/What-are-the-differences-between-maximum-likelihood-and-cross-entropy-as-a-loss-function)
+Backup refs: [StackExchange](https://stats.stackexchange.com/questions/198038/cross-entropy-or-log-likelihood-in-output-layer), [Quora](https://www.quora.com/What-are-the-differences-between-maximum-likelihood-and-cross-entropy-as-a-loss-function) -->
 
 ## FAQ:
 
