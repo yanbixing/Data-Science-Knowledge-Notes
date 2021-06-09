@@ -2,14 +2,21 @@
 
 ## 0. Notations
 
-- $s=(\boldsymbol{x},y)$ the input of a sample
-  - $\boldsymbol{x}$ (or $\vec{x}$): an $(N+1)$-dim vector with $N$ features $\boldsymbol{x}^{(i)} :=X^{(i)}$ and an extra dimension with constant value 1 (so the $\theta_{N+1}$ corresponds to the "intercept".)
-    - $\boldsymbol{x}^{(i)} :=X^{(i)}$ denotes the i-th feature.
-  - $y$ (or $y^*$):  label of the sample, binary variable: $y \in \{0,1\}$
-- $\theta$ is an $(N+1)$-dim vector contains the "weights" and the "intercept" of the features.
 - $\mathcal{S}$ denotes the training set with $M$ samples $\{...s_i...\}$
+  - $s_i =(\boldsymbol{x}_i,y_i)$ is an individual sample point.
+  - $\boldsymbol{x}$ (or $\vec{x}$): an $(N+1)$-dim vector with $N$ features and an extra dimension with constant value 1 (so the $\theta_{N+1}$ corresponds to the "intercept".)
+  -  $y$ (or $y^*$):  label of the sample, binary variable: $y \in \{0,1\}$
+- $\boldsymbol{x}_i^{(j)}$ denotes the value of j-th feature of i-th sample.
+
+- $X$, $Y$, $S$ denotes the "axis"/"variable"/"name" of $\mathcal{X}$, $\mathcal{Y}$, $\mathcal{X}\times\mathcal{Y}$ space. $X^{(i)}$ denotes the i-th feature. 
+- $\theta$ is an $(N+1)$-dim vector contains the "weights" and the "intercept" of the features.
 - $v$: an independent binary variable: $v \in \{0,1\}$ 
 - $\log := \log_2$
+- $P$ vs $p$:
+  - Capital $P$ denotes a probability distribution function (pdf), i.e., can be viewed as a "function name". E.g. $P_{(Y,X)}$ means the joint probability of variable $X$ and $Y$, $P_{(Y|\boldsymbol{x})}(\boldsymbol{y})$ denotes a function with variable $Y$, whose value is conditional probability of $\boldsymbol{y}$ given a fixed $\boldsymbol{x}$, i.e. $p(\boldsymbol{y}|\boldsymbol{x})$
+  - lower $p$ is the "mark" of probability. E.g. $p(\boldsymbol{x},\boldsymbol{y})$ is the joint probability, $p(\boldsymbol{y}|\boldsymbol{x})$ is the conditional probability.
+- $\hat{y_i}$ is the estimated label of i-th sample given by the model.
+  - $P_{(\hat{y}=v|X=\boldsymbol{x})}(\boldsymbol{x}) := p(\hat{y}=v|X=\boldsymbol{x}):= \hat{p}(v|\boldsymbol{x})$ denotes the the probability of $\hat{y} = v$ given by the model.
 
 ## 1.  Basics
 
@@ -17,15 +24,17 @@
 $$h_\theta(\boldsymbol{x}) = \frac{1}{1+\exp(\boldsymbol{\theta}^T\boldsymbol{x})}$$
 - Probability interpretation: 
   - Since:
-    - $p(\hat{y}=1|\boldsymbol{x}):= \hat{p}(1|\boldsymbol{x}) = h_\theta(\boldsymbol{x})$
-    - $p(\hat{y}=0|\boldsymbol{x}):= \hat{p}(0|\boldsymbol{x})  = 1-h_\theta(\boldsymbol{x})$
+      $$P_{(\hat{y}=v|\boldsymbol{x})}(\boldsymbol{x}) :=\left\{ \begin{array}{ll} h_\theta(\boldsymbol{x}) & v=1\\ 1-h_\theta(\boldsymbol{x}) & v = 0 \end{array} \right.$$
+    <!-- - $P_{(\hat{y}=1|\boldsymbol{x})}(\boldsymbol{x}) := h_\theta(\boldsymbol{x})$
+    - $P_{(\hat{y}=0|\boldsymbol{x})}(\boldsymbol{x}) = 1-h_\theta(\boldsymbol{x})$ -->
   - The above two cases can be summarized as:<p>
-    $$p(\hat{y}=v|\boldsymbol{x}) = v \cdot h_\theta(\boldsymbol{x}) + (1-v) \cdot (1-h_\theta(\boldsymbol{x}))$$
-  - Similarly, since: 
-    - $\log p(\hat{y}=1|\boldsymbol{x}):= \log\hat{p}(1|\boldsymbol{x}) = \log h_\theta(\boldsymbol{x})$
-    - $\log p(\hat{y}=0|\boldsymbol{x}):= \log \hat{p}(0|\boldsymbol{x})  = \log[ 1-h_\theta(\boldsymbol{x})]$
-  - We can have:
-    $$\log p(\hat{y}=v|\boldsymbol{x}) = v \cdot \log h_\theta(\boldsymbol{x}) + (1-v) \cdot \log (1-h_\theta(\boldsymbol{x}))$$
+    $$p(\hat{y}=v|X=\boldsymbol{x}) = v \cdot h_\theta(\boldsymbol{x}) + (1-v) \cdot (1-h_\theta(\boldsymbol{x}))$$
+  - We can repeat the process for log probability, i.e., the two cases: 
+    $$\log p(\hat{y} = 1|X = \boldsymbol{x}) =\left\{ \begin{array}{ll} \log [h_\theta(\boldsymbol{x})] & v=1\\ \log[1-h_\theta(\boldsymbol{x})] & v = 0 \end{array} \right.$$
+    <!-- - $\log p(\hat{y} = 1|\boldsymbol{x}) = \log h_\theta(\boldsymbol{x})$
+    - $\log p(\hat{y}=0|\boldsymbol{x}) = \log[ 1-h_\theta(\boldsymbol{x})]$ -->
+  - Can be summarized the log probability as:
+    $$\log p(\hat{y}=v|X=\boldsymbol{x}) = v \cdot \log h_\theta(\boldsymbol{x}) + (1-v) \cdot \log (1-h_\theta(\boldsymbol{x}))$$
   - This is a math trick, i.e. 
 
 ### 1.2. Training
@@ -37,20 +46,22 @@ Minimize loss function with gradient descent.
 Average of sample's cross entropy on the true label distribution and predicted label distribution:
   $$J(\theta|\mathcal{S})= - \frac{1}{M}\sum^M_{i=1}[ y_i \log (h_\theta(\boldsymbol{x}_i)) + (1-y_i) \log (1-h_\theta(\boldsymbol{x}_i)) ]$$
 - Deduction:
-  - The probability distribution of sample's true label:<p>
-  $$P_i^*(v) :=p(y_i^* = v| s_i )=\left\{ \begin{array}{ll} 1 & v=y_i\\ 0 & v\not = y_i \end{array} \right.$$
-  - The probability distribution of sample's predicted label:<p>
-  $$\hat{P}_i(v) := p(\hat{y}_i=v| s_i )$$
-  - sample's cross_entropy: <p>
+  - The probability distribution of sample's true label given the sample's info is:
+  $$P_{(Y = v| S=s_i)}(v) :=p(Y= v| s_i )=\left\{ \begin{array}{ll} 1 & v=y_i\\ 0 & v\not = y_i \end{array} \right.$$
+  - The probability distribution of sample's predicted label given sample's info is:
+  $$P_{(\hat{y} = v| S=s_i)}(v) := p(\hat{y}_i=v| s_i ) = p(\hat{y}_i=v|\boldsymbol{x}_i)$$
+  - the cross_entropy for i-th sample is:
   $$\begin{aligned}
-  H_i(P_i^*(v), \hat{P}_i(v)) &= - \sum_{v\in{0,1}} P_i^*(v) \log(\hat{P}_i(v))\\
-  & = -[ P_i^*(v=0) \log(\hat{P}_i(v=0)) + P_i^*(v=1) \log(\hat{P}_i(v=1))] \\
-  & = 1 \cdot \log(\hat{P}_i(v=y_i)) \\
-  & = \log[ p(\hat{y}_i=y^*_i| s_i ) ] \\
-  & = \log[y^*_i \cdot h_\theta(\boldsymbol{x}_i) + (1-y^*_i) \cdot (1-h_\theta(\boldsymbol{x}_i))]
+  & H_i(P_{(Y = v| S=s_i)}(v), P_{(\hat{y} = v| S=s_i)}(v)) \\
+  = & - \sum_{v\in{0,1}} P_{(Y = v| S=s_i)}(v) \log[P_{(\hat{y} = v| S=s_i)}(v)] \\
+   = & 1 \cdot \log[ P_{(\hat{y} = y_i| S=s_i)}(y_i) ] + 0 \\
+   = & \log[ p(\hat{y}_i=y_i| \boldsymbol{x}_i ) ] \\
+   = & y_i \cdot \log h_\theta(\boldsymbol{x}_i) + (1-y_i) \cdot \log (1-h_\theta(\boldsymbol{x}_i))
   \end{aligned} $$
   - Loss function take the average of the sample's cross entropy:<p>
-  $$J(\theta|\mathcal{S})= \frac{1}{M} \sum^M_{i=1} H_i(P_i^*(v), \hat{P}_i(v)) $$
+  $$J(\theta|\mathcal{S})= \frac{1}{M} \sum^M_{i=1} H_i(P_{(Y| S)}, P_{(\hat{y} | S)}) $$
+
+  <!-- & = -[ P_i^*(v=0) \log(\hat{P}_i(v=0)) + P_i^*(v=1) \log(\hat{P}_i(v=1))] \\ -->
 
 - **Note:** The <mark style="background-color:yellow;">cross entropy loss</mark> (w/ or w/o regularization) is <mark style="background-color:yellow;">**strictly convex**</mark>.
   - No need random initialization

@@ -214,18 +214,17 @@ But <mark style="background-color:yellow;">in the case of Logistic regression</m
 
 **Proof:**
 - Notation:
-  - $\mathcal{S}$ denotes the training set with $M$ samples $\{...s_i...\}$
-    - $s_i=(\boldsymbol{x}_i,y_i)$ is the (feature,label) of the i-th sample
-    - the label is binary, i.e., $y\in \{0,1\}$
+  - - $\mathcal{S}$ denotes the training set with $M$ samples $\{...s_i...\}$
+    - $s_i =(\boldsymbol{x}_i,y_i)$ is an individual sample point.
+    - $S$ denotes the "axis"/"variable"/"name" of $\mathcal{X}\times\mathcal{Y}$ space. 
   - $\theta$ is an $(N+1)$-dim vector contains the "weights" and the "intercept" of the features.
-  - $v$: an independent binary variable: $v \in \{0,1\}$ 
+  <!-- - $v$: an independent binary variable: $v \in \{0,1\}$  -->
 - Likelihood of the dataset given parameter $\theta$ is:
-  $$p(\mathcal{S}|\theta) = \prod^M_{i=1} p(\hat{y} = y_i|\boldsymbol{x}_i)$$
+  $$p(\mathcal{S}|\theta) = \prod^M_{i=1} p(\hat{y}_i = y_i|X=\boldsymbol{x}_i)$$
 - Then:
   $$\begin{aligned}
-      NLL(\mathcal{S}|\theta) & = - \sum^M_{i=1} \log[ p(\hat{y} = y_i|\boldsymbol{x}_i) ]\\
-      & = - \sum^M_{i=1} \log[ p(\hat{y} = y_i|s_i) ] \\
-      & \underset{LR}{=} - \sum^M_{i=1} H_i(P_i^*(v), \hat{P}_i(v))\\
+      NLL(\mathcal{S}|\theta) & = - \sum^M_{i=1} \log[ p(\hat{y}_i = y_i|\boldsymbol{x}_i) ]\\
+      & \underset{LR}{=} - \sum^M_{i=1} H_i(P_{(Y| S)}, P_{(\hat{y} | S)})\\
       & = M\cdot J(\theta)
   \end{aligned}$$
   - Note: the core fact here is, 
