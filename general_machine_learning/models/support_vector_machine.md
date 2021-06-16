@@ -474,11 +474,11 @@ Ref: [Blog](http://blog.pluskid.org/?p=685&utm_source=ZHShareTargetIDMore&utm_me
   - Tree could be random (if same info gain or if missing data)
 - Why use hinge loss?
   - More accurate decision boundary:
-    - The loss focus on the near-boundary samples (support vectors), ignore the "very confident" (far-away-from-boundary ) samples.
-    - Thus, the shape of boundary is determined by the near-boundary samples not affected by "very confident" points.
+    - The loss focus on the near-boundary samples (support vectors), ignore the high-confidence (far-away-from-boundary ) samples.
+    - Thus, the shape of boundary is determined by the near-boundary samples not affected by high-confidence points.
     - Thus, the model should have a higher accuracy on near-boundary sample (without affecting far-away-from-boundary points.)
     - Thus, the model should have a higher overall accuracy (more accurate decision boundary)
-  - Other loss like log-loss would more or less affected by "very confident" (far-away-from-boundary ) samples.
+  - Other loss like log-loss would more or less affected by high-confidence (far-away-from-boundary ) samples.
 - SVM is sensitive to missing values
   - SVM has no strategy to automatically deal with missing values.
   - Naive SVM require linear separable, so the distribution of data is important

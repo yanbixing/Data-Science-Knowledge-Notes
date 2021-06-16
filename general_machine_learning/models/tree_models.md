@@ -1,4 +1,4 @@
-# Tree model
+# Tree models
 
 ## 0. Basic concepts
 

@@ -1,6 +1,6 @@
 # Feature Scaling
 
-sdfsdf
+
 
 <div  align="center"><img src=https://i.stack.imgur.com/kRbSk.png style = "zoom:100%"></div>
 

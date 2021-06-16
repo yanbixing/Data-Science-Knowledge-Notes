@@ -35,7 +35,7 @@ $$h_\theta(\boldsymbol{x}) = \frac{1}{1+\exp(\boldsymbol{\theta}^T\boldsymbol{x}
     - $\log p(\hat{y}=0|\boldsymbol{x}) = \log[ 1-h_\theta(\boldsymbol{x})]$ -->
   - Can be summarized the log probability as:
     $$\log p(\hat{y}=v|X=\boldsymbol{x}) = v \cdot \log h_\theta(\boldsymbol{x}) + (1-v) \cdot \log (1-h_\theta(\boldsymbol{x}))$$
-  - This is a math trick, i.e. 
+  - This is a math trick under specific conditions/definitions, not a widely adaptable rule.
 
 ### 1.2. Training
 
