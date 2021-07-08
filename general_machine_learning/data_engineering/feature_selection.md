@@ -28,11 +28,18 @@ Backward: similar to the above process, start from full features and reduce one 
 
 Ref [Coursera](https://www.coursera.org/lecture/ml-regression/complexity-of-the-greedy-forward-stepwise-algorithm-RRah3)
 
-## 4. Dimension Reduction Algos
+## 4. Dimension Reduction Algos (?)
 
-SVD
+- SVD: SVD will extract the latent factors in row/column of X.
+  - $\mathbf{X}_{m \times n} =\mathbf{U}_{m \times k} \mathbf{\Sigma}_{k \times k} (\mathbf{V}_{n \times k})^{T}$
+    - $\mathbf{U}_{m \times k}$: m sample with k elements, corresponds to the <mark style="background-color:yellow;">latent factors of each **row**</mark> in $\mathbf{X}$. $\mathbf{U}$ is usually orthonormal (orthogonal+normalized).
+    - $\mathbf{\Sigma}_{k \times k}$: a diagonal matrix that hold singular values in descending order. The singular values is the weight that <mark style="background-color:yellow;"> how much the **latent factor** **contributes to the matrix** $\mathbf{X}_{m \times n}$ </mark>.
+    - $\mathbf{V}_{n \times k}$: is a matrix of singular vectors, each row corresponds to the <mark style="background-color:yellow;"> latent factor of each **column** </mark> in $\mathbf{X}$. $\mathbf{V}$ is orthonormal.
+  - A dimension-reduced matrix can be created via $\mathbf{X'}_{m \times k} = \mathbf{X}_{m \times n} \mathbf{V}_{n \times k}$.
 
-PCA
+- PCA: PCA will keep the direction with greatest variance axes as principle components (axis).
+  - I.e. PCA will eliminate the direction with smallest variance.
+  - PCA technique can use SVD to get principle components.
 
 ## 5. Regularization
 
@@ -41,7 +48,7 @@ Regularization can reduce the effective number of features, is a kind of implici
 Typically useful when dimension is very high, hard to reduce it manually (rely on metric) or determine exact dimension we want.
 
 
-## Deep Dive: SVD (TBD)
+## 6. Deep Dive: SVD (TBD)
 
 Terminology: "matrix factorization" = "matrix decomposition", i.e. transform a matrix to a product of multiple matrices. [Ref: Wiki](https://en.wikipedia.org/wiki/Matrix_decomposition)
 
@@ -58,8 +65,9 @@ $$\mathbf {M} =\mathbf {U\Sigma V^{*}}$$
 
 Ref: [CSDN-blog-basics](https://blog.csdn.net/weixin_42575020/article/details/103504792), [CSDN-blog](https://blog.csdn.net/u010087338/article/details/114576013), [Zhihu-blog](https://zhuanlan.zhihu.com/p/36546367), [ScienceNet-Blog](http://blog.sciencenet.cn/blog-696950-699432.html) , [Zhihu-blog](https://zhuanlan.zhihu.com/p/36538284)
 
+### 6.1. Understanding
 
-### Eigenvalue, eigenvector
+### 6.2. Eigenvalue, eigenvector
 
 Ref: [Wiki-Eigenvalues_and_eigenvectors](https://en.wikipedia.org/wiki/Eigenvalues_and_eigenvectors)
 
@@ -74,7 +82,7 @@ Ref: [Wiki-Eigenvalues_and_eigenvectors](https://en.wikipedia.org/wiki/Eigenvalu
   - For other matrices, the eigenvectors are not necessarily orthogonal.
 
 
-## Deep Dive: Feature relation statistics
+## 7. Deep Dive: Feature relation statistics
 
 - Correlation coefficient:
   - Pro: 

@@ -219,7 +219,7 @@ Ref: [KDnuggets-Blog](https://www.kdnuggets.com/2021/01/sparse-features-machine-
 
 ## Deep Dive: Hashing
 
-- Hash function: A hash function is any function that can be used to map data of arbitrary size (key) to **fixed-size** values (hash value). The process is called *Hashing*. [Wiki-Hash_function](https://en.wikipedia.org/wiki/Hash_function)
+- Hash function: A hash function is any function that can be used to <font color="#0000dd"> map data of arbitrary size (key) to **fixed-size** values (hash value)</font>. The process is called *Hashing*. [Wiki-Hash_function](https://en.wikipedia.org/wiki/Hash_function)
   - Collision: different keys are mapped to a same hash value.
   - A good hash function should satisfy:
     - fast to compute
