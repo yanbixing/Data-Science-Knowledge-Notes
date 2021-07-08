@@ -36,10 +36,12 @@ PCA
 
 ## 5. Regularization
 
-Regularization can reduce the effective number of features, is a kind of implicit feature selection.
+Regularization can reduce the effective number of features, is a kind of implicit feature selection. (It softly restrict the scope of the weight.)
+
+Typically useful when dimension is very high, hard to reduce it manually (rely on metric) or determine exact dimension we want.
 
 
-## Deep Dive SVD (TBD)
+## Deep Dive: SVD (TBD)
 
 Terminology: "matrix factorization" = "matrix decomposition", i.e. transform a matrix to a product of multiple matrices. [Ref: Wiki](https://en.wikipedia.org/wiki/Matrix_decomposition)
 
@@ -68,5 +70,25 @@ Ref: [Wiki-Eigenvalues_and_eigenvectors](https://en.wikipedia.org/wiki/Eigenvalu
     - After transformation, the points on eigenvector direction $\mathbf{u}$ will still be on the direction of eigenvector $\mathbf{u}$
     - $\mathbf{A}\mathbf{v} = \mathbf{A}\mathbf{(u_1 + u_2 + u_3 +...}) = \lambda_1\mathbf{u_1}+\lambda_2 \mathbf{u_2} + \lambda_3 \mathbf{u_3} +... $
     - Ref: [Zhihu](https://www.zhihu.com/question/400720726)
-- 对实对称矩阵，不同特征值对应的特征向量互相正交
-  - 其他举证，特征向量不一定有正交性质
+- For [real symmetric matrix](https://en.wikipedia.org/wiki/Symmetric_matrix#Real_symmetric_matrices), the eigenvectors corresponding to different eigenvalues are orthogonal. Ref: [wiki-對稱矩陣#實對稱矩陣](https://zh.wikipedia.org/wiki/%E5%B0%8D%E7%A8%B1%E7%9F%A9%E9%99%A3#%E5%AF%A6%E5%B0%8D%E7%A8%B1%E7%9F%A9%E9%99%A3)
+  - For other matrices, the eigenvectors are not necessarily orthogonal.
+
+
+## Deep Dive: Feature relation statistics
+
+- Correlation coefficient:
+  - Pro: 
+    - give positive/negative dependence
+    - intuitive (easy to understand)
+  - Con:
+    - just measure linear relationship, cannot give non-linear info.
+    - Naturally works on numerical data, hard to work on categorical data.
+- Mutual information (information gain):
+  - Pro:
+    - Give relation between feature even regardless linear or non-linear
+    - Work naturally with categorical data.
+    - Note: the behind mechanism of above advantage is because mutual info it is probability metric, so don'care about linear/non-linear, numerical/categorical
+  - Cons:
+    - Not so intuitive as correlation
+    - Usually need additional engineering (binning/grouping) for continuos(numerical) input.
+  - Ref: [Entropy_related_stats Sec 2.1. Mutual_info](../math_topics/entropy_related_statistics.md)

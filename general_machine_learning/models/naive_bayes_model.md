@@ -111,7 +111,7 @@ Let's use a simple case as an example:
 - Introduce a third feature $X_3$ identical to $X_1$ i.e. $X_3 = X_1$, this model is denoted as $p'$.
 
 #### 3.1.1 In training process
-**Conclusion:** The more $X_1$ is added, the more the model make decision only on $X_1$.
+**Conclusion:** The more $X_1$ is added, the more the model prefer to optimize on $X_1$.
 
 - Deduction:
 $$\begin{aligned}
@@ -132,11 +132,11 @@ $$\begin{aligned}
     $\sim \Rightarrow \theta = \underset{\theta}{\argmax} \{ \sum^m_{s=1}\log[p(X^{(s)}_1|y^{(s)})]\}$
     namely: we only max likelihood based on $X_1$
     equally: the model only have one input feature $X_1$
-    - **Conclusion:** The more $X_1$ is added, the more the model make prediction rely on $X_1$.
+    - **Conclusion:** The more $X_1$ is added, the more the model optimize on $X_1$.
 
 #### 3.1.2 In prediction process
 
-**Conclusion:** Same conclusion with training process: the more $X_1$ is added, the more the model make decision only on $X_1$.
+**Conclusion:** Similar conclusion with training process: the more $X_1$ is added, the more the model make decision only on $X_1$.
 
 - Deduction:
 Based on:

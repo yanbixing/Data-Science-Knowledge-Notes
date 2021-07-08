@@ -36,14 +36,14 @@ $$L = l(y,h) + \Re(h)$$
   - L2 $\Re$ spreads weight evenly. 
     - e.g.($0.5^2+0.5^2 < 0.9^2 + 0.1^2$)
 - For linearly related features. ($x_i = c x_j$, e.g. c=3 )
-  - L1 $\Re$ assign all weight to the feature with largest scale, all others' weights are zero. ( feature scale $\uparrow$, $|w| \downarrow$, $\Re \downarrow$ )
+  - L1 $\Re$ **only** assign weight to the feature with **largest scale**, **all other**s' weights are **zero**. ( feature scale $\uparrow$, $|w| \downarrow$, $\Re \downarrow$ )
     - e.g. $w_ix_{m(i)}+w_jx_{m(j)} = y_m \sim\rightarrow 3w_i+w_j = 1$
     $min(|w_i|+|w_j|) \sim min(1-2w_i)\rightarrow\frac{1}{3}$ when $(w_i,w_j) = (\frac{1}{3},0)$
   - L2 $\Re$ prefers variable with larger scale - spread weights **proportional** to scale.<br>i.e. larger scale get larger weights, smaller scale feature get smaller (proportional) weights but not zero.
     - e.g.$cw_i+w_j = 1, c>1$, 
     $min(w_i^2 + w_j^2) = min(w_i^2+(1-cw_i)^2)\rightarrow$ $w_i = \frac{c}{c^2+1}, w_j = \frac{1}{c^2+1}$
-
-  - For correlated feature (TBD)
+  - Note: both L1/L2 $\Re$ give more weight to larger scale, this is because regularization always punish on weight, and weights on larger scale feature are smaller, thus get preferred.
+- For correlated feature (TBD)
 
 #### 1.2.3 Application (when to choose what?)
 
