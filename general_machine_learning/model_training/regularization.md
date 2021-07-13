@@ -152,6 +152,12 @@ $$ \underset{\mathcal{S}\sim\mathcal{D}^m}{Var}(h_\mathcal{S}) = \underset{\math
 Ref: [Wiki-Bias-variance tradeoff](https://en.wikipedia.org/wiki/Bias%E2%80%93variance_tradeoff), [The elements in statistical learning, Sec 7.3, e.q.7.9, P223](TBD) <br> 
 **Conflict**: In [The elements in statistical learning, Sec 2.9, P37](TBD) the expectation of empirical error is generalization error (also called EPE, expected prediction error.) <br>
 **Personal Clarification:** both generalization error and empirical error measure the error of a particular function. However, in the above deduction process, the function varies with the sample set. Thus, it is NOT **generalization error**.
+
+**Unsolved Q:** Relation between sample size and bias/variance? Tentative answer:
+
+- Number of sample affect the stability (variance) of the dataset, not the expectation.
+- Thus, sample size affect the stability (variance) of the prediction, i.e. $h_\mathcal{S}$, but not its expectation.
+- I.e. sample size will affect the model variance, but not affect model bias.
 <!-- **Reconcile**: In the above function, we didn't restrict the form/algorithm of empirical risk, whatever form (e.g. training loss, prediction loss) of empirical risk we use, the above relation stands. If we define the empirical loss as prediction loss, then, the **expectation on empirical risk (prediction loss) over different sample set** is the **generalization risk** -->
 ### 2.2 Model complexity and generalization risk
 

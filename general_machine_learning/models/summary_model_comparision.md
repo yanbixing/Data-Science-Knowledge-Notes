@@ -1,4 +1,4 @@
-# Model comparison
+# Model comparison (Model selection?)
 
 ## 1. Model comparison
 

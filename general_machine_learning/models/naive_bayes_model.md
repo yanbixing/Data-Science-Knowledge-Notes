@@ -214,13 +214,19 @@ $$\begin{aligned}
 
 ### 4.2 Generative model vs Discriminative model
 
-Generative model:  model learns $P(X,Y)$ or $P(X|Y)$
-Discriminative model: model learns $P(Y|X)$
+Generative model:  model learns $P(X,Y)$ or $P(X|Y)$, calculate $P(Y|X)$ with bayesian rule.
+Discriminative model: model directly learns $P(Y|X)$
 Ref: [Wiki - Generative model](https://en.wikipedia.org/wiki/Generative_model)
 
 Generative models model the distribution of individual classes.
 Discriminative models learn the (hard or soft) boundary between classes.
 Ref: [StakeExchange](https://stats.stackexchange.com/questions/12421/generative-vs-discriminative)
+
+Ref: [ml_model_general_concepts.md](../general_topics/ml_model_general_concepts.md)
+
+## FAQs:
+- Why call naive bayes "naive"?
+  - It assume the features are independent, which is usually not true in real life.
 
 <!-- - Answer is **Yes**!
 - From the equantion:

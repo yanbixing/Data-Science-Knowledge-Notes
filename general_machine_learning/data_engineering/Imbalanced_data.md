@@ -15,14 +15,58 @@ The imbalance usually make the common evaluation metric, like accuracy or precis
 
 Thus, using proper metric may alleviate the effect on data imbalance on evaluation part.
 
-- AUC
+### 1.1. Mechanism
+
+- For most common metrics, like, $precision = \frac{TP}{PredictP}=\frac{TP}{TP+FP}$, 
+  - the PredictedP not only varies from model-to-model, but also capped by the number of ground true P & N
+  - Thus, for different test sets with different ground true P/N ratio, the metric has different values.
+  - This means, the metric value not only depends on the real performance of the model, but also also affected by data imbalance. 
+  - In other words: such metric not only reflect the model performance but also reflect the imbalance of the dataset. Thus it is not a fair metric to compare different models.
+
+- However, for base-rate-invariant metric, like, $recall (TPR) = \frac{TP}{Ground P} = \frac{TP}{TP+FN}$
+  - The GroundP not varies from model-to-model.
+  - For different model the denominator is always same, thus is fair metric to compare different models.
+  - This means, the base-rate-invariant metric only reflect the performance of the model, independent of the ground true P/N ratio of the test set.
+  - Thus, it is a fair metric for doing model comparison across different datasets.
+    - It should not change when dataset have different P/N ratio (base-rate)
+    - That is why it is called "base-rate invariant"
+
+- E.g: Duplicate positive sample c times in *test* set.
+  - $GroundP' = c \times GroundP_0$, $TP'=c \times TP_0$, $FN'=c \times FN_0$
+  - $GroundN' =  GroundN_0$, $TN'=TN_0$, $FP'=FP_0$
+  - $precision' = \frac{TP'}{PredictedP'} = \frac{TP'}{TP'+FP'} = \frac{c \times TP_0}{c \times TP_0+FP_0} $
+    $=\frac{TP_0}{ TP_0+FP_0/c} \geq \frac{TP_0}{ TP_0+FP_0} = precision_0$
+  - $recall' = \frac{TP'}{GroundP'} = \frac{TP'}{TP'+FN'} = \frac{c \times TP_0}{c \times TP_0+c \times FN_0} = recall_0$
+
+- **Note:** for a trained model, the "constant"/"inherent"/invariant metric is P(f(x)|y), i.e. metrics with ground true P or ground true N as denominator.
+
+### 1.2. Solutions:
+
+
+- Recall, FPR (Single base-rate-invariant metrics)
+  - Ref: [evaluation_metrics.md](../model_training/evaluation_metrics.md)
+  - Summary:
+    - PredictedP varies with model.
+    - GroundP invariant with model. (GroundP,GroundN is called base-rate.)
+    - When dataset is imbalanced, for different models, the denominator of "base-rate invariant" metric is same/constant
+    - Thus, "base-rate invariant" metric is more objective when compare the performance of different models when the dataset is imbalanced. 
+  - Pro&Cons:
+    - Pro (v.s. precision/accuracy): comparable for different models (constant denominator, more fair/objective)
+    - Con (v.s. AUC): not comprehensive, e.g. recall has no FP TN info.
+
+- AUC (ensemble of multiple base-rate-invariant metric)
   - ROC, TPR ($\frac{TP}{Ground P} = \frac{TP}{TP+FN} $) as y-axis vs FPR ($\frac{FP}{Ground N} = \frac{FP}{FP+TN}$) as x-axis
-  - Has all $TP,FP,TN,FN$ info
-  - Compare to precision-recall
-    - precision-recall has no TN info
-    - $precision = \frac{TP}{PredictP}=\frac{TP}{TP+FP}$
-    - $recall = \frac{TP}{Ground P} = \frac{TP}{TP+FN} = TPR$
-- F1 (precision-recall) is better than single precision or recall
+  - Pro: 
+    - Has all $TP,FP,TN,FN$ info
+      - v.s. Recall: recall has no FP, TN info.
+      - v.s. F1 (precision-recall framework)
+        - precision-recall has no TN info
+        - $precision = \frac{TP}{PredictP}=\frac{TP}{TP+FP}$
+        - $recall = \frac{TP}{Ground P} = \frac{TP}{TP+FN} = TPR$
+
+- F1: (ensemble of multiple metrics)
+  - Pro: Although F1 is not base-rate invariant, it is more comprehensive and intuitive than single precision or recall.
+  - Con: Has no TN info.
 
 ## 2. Data
 

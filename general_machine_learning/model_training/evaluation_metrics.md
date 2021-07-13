@@ -75,6 +75,42 @@ Explanation: the moving on ROC curve is actually the moving of threshold.
       - Less comprehensive
       Explain: No info of $TN$
 
+- "Separation of classes" [Ref: TowardsDataScience](https://towardsdatascience.com/understanding-auc-roc-curve-68b2303cc9c5)
+  - AUC indicates the separability of the classes with our current model.
+    
+    <div align="center" ><img src=https://miro.medium.com/max/1014/1*yF8hvKR9eNfqqej2JnVKzg.png height="100"> <img src=https://miro.medium.com/max/730/1*-tPXUvvNIZDbqXP0qqYNuQ.png height="100" > </div>
+    <div  align="center"  ><img src=https://miro.medium.com/max/1056/1*Uu-t4pOotRQFoyrfqEvIEg.png height="100"> <img src=https://miro.medium.com/max/860/1*iLW_BrJZRI0UZSflfMrmZQ.png height="100" ></div>
+
+    - Note: threshold=0.5 is just a default example, the threshold can also be other values, 
+      - E.g. The graph below, threshold is 0.8, AUC is 1. [Ref: StackExchange](https://stats.stackexchange.com/questions/200815/why-auc-1-even-classifier-has-misclassified-half-of-the-samples)
+      <div align="center"><img src=https://i.stack.imgur.com/2MEb8.png height="200" > </div>
+  - When AUC is smaller than 0.5?
+    - AUC = 0.5 $\Rightarrow$ the model is random guesser.
+    - AUC < 0.5 $\Rightarrow$ the model is worse than random guesser, i.e. the positive will be predicted as negative, the negative will be predicted as positive.
+      - When the model is total reverse to the ground truth, AUC = 0.
+    <div align="center"><img src=https://miro.medium.com/max/1112/1*aUZ7H-Lw74KSucoLlj1pgw.png height="100" > </div>
+
+
+### Deep Dive "Base rate invariant" metrics
+
+- [Base_rate](https://en.wikipedia.org/wiki/Base_rate): generally refers to the (base) class probabilities unconditioned on featural evidence, i.e. p(y)
+
+- base-rate-invariant metric: the metric will not change with different p(y) distribution. I.e. the metric is not affected by data imbalance. [Ref: Imbalanced_data](../data_engineering/Imbalanced_data.md)
+  - Mechanism:
+    - Data imbalance: the ground true label is not equal.
+    - For different models, 
+      - The PredictedP (TP+FP) varies from model-to-model, 
+      - GroundP (=TP+FN) is constant (it only relies on the data)
+    - Thus, for genenral metrics 
+      - like $Precision = \frac{TP}{TP+FP} = \frac{TP}{Predicted}$
+      - the numerator varies from model to model
+      - thus it is not ideal for performance comparison.
+    - But, for base-rate invariant metrics:
+      - like $Recall (TPR) = \frac{TP}{TP+FN} = \frac{TP}{GroundP}$, $FPR = \frac{FP}{GroundN}$, $AUC (ROC) = f(TPR, FPR)$
+      - The numerator is invariant from model-to-model
+      - thus it is a good metric for performance comparison.
+
+
 ## 3. Ranking
 
 - Precision@k (recall@k, accuracy@k)
@@ -82,3 +118,5 @@ Explanation: the moving on ROC curve is actually the moving of threshold.
 ## 4. Clustering
 
 - Silhouette score
+
+
