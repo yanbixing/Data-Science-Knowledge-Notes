@@ -48,41 +48,9 @@ Regularization can reduce the effective number of features, is a kind of implici
 Typically useful when dimension is very high, hard to reduce it manually (rely on metric) or determine exact dimension we want.
 
 
-## 6. Deep Dive: SVD (TBD)
-
-Terminology: "matrix factorization" = "matrix decomposition", i.e. transform a matrix to a product of multiple matrices. [Ref: Wiki](https://en.wikipedia.org/wiki/Matrix_decomposition)
 
 
-$$\mathbf {M} =\mathbf {U\Sigma V^{*}}$$
-- [Wiki-SVD](https://en.wikipedia.org/wiki/Singular_value_decomposition)
-- $\mathbf{U}$, $\mathbf{V}$ is [unitary matrix](https://en.wikipedia.org/wiki/Unitary_matrix): $U^*U=I$
-- $\mathbf{\Sigma}$ is a [Rectangular diagonal matrix](https://en.wikipedia.org/wiki/Diagonal_matrix#Rectangular_diagonal_matrices)
-<!-- $$\begin{aligned}
-    m_{ij} &= \sum_x u_{ix} (\sum_y\sigma_{xy}v_{yj}) \\ & = \sum_x u_{ix}\sigma_{xx}v_{xj} \leftarrow \Sigma {\text{ is diagonal}}
-    \\ & = \vec{u}_i \cdot \vec{v}_j?
-\end{aligned}$$ -->
-
-
-Ref: [CSDN-blog-basics](https://blog.csdn.net/weixin_42575020/article/details/103504792), [CSDN-blog](https://blog.csdn.net/u010087338/article/details/114576013), [Zhihu-blog](https://zhuanlan.zhihu.com/p/36546367), [ScienceNet-Blog](http://blog.sciencenet.cn/blog-696950-699432.html) , [Zhihu-blog](https://zhuanlan.zhihu.com/p/36538284)
-
-### 6.1. Understanding
-
-### 6.2. Eigenvalue, eigenvector
-
-Ref: [Wiki-Eigenvalues_and_eigenvectors](https://en.wikipedia.org/wiki/Eigenvalues_and_eigenvectors)
-
-- $\mathbf{A}\mathbf{u} = \lambda\mathbf{u}$ 
-  - $\mathbf{u}$ is called eigenvector
-  - $\lambda$ is called eigenvalue
-  - How to interpret eigenvalue and eigenvector: 
-    - After transformation, the points on eigenvector direction $\mathbf{u}$ will still be on the direction of eigenvector $\mathbf{u}$
-    - $\mathbf{A}\mathbf{v} = \mathbf{A}\mathbf{(u_1 + u_2 + u_3 +...}) = \lambda_1\mathbf{u_1}+\lambda_2 \mathbf{u_2} + \lambda_3 \mathbf{u_3} +... $
-    - Ref: [Zhihu](https://www.zhihu.com/question/400720726)
-- For [real symmetric matrix](https://en.wikipedia.org/wiki/Symmetric_matrix#Real_symmetric_matrices), the eigenvectors corresponding to different eigenvalues are orthogonal. Ref: [wiki-對稱矩陣#實對稱矩陣](https://zh.wikipedia.org/wiki/%E5%B0%8D%E7%A8%B1%E7%9F%A9%E9%99%A3#%E5%AF%A6%E5%B0%8D%E7%A8%B1%E7%9F%A9%E9%99%A3)
-  - For other matrices, the eigenvectors are not necessarily orthogonal.
-
-
-## 7. Deep Dive: Feature relation statistics
+## Deep Dive: Feature relation statistics
 
 - Correlation coefficient:
   - Pro: 

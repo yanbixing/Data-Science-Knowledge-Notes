@@ -137,19 +137,18 @@ Use hash function to map one or multiple features to a fixed-dimension vector. T
 
 - Binary encoding = one-hot encoding + hash encoding
 
-##### 1.2.3.5. Differentiation
-
-- FeatureHasher is different from HashingVectorizer
-  - FeatureHasher: encode one- or multi-column features to vector.
-    - i.e. the input of FeatureHasher is categorical feature(s), 
-      - the feature could be either text or numerical.
-      - the text will be considered as a whole, i.e., different text will be considered as different categorical values.
-    - Ref: [Sklearn-FeatureHasher](https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.FeatureHasher.html)
-  - HashingVectorizer: encode text to vector.
-    - i.e. the input of HashingVectorizer is text documents.
-      - the feature is only one column of long text.
-      - the text will be broken into word level (bag of words) during vectorization.
-    - Ref: [Sklearn-HashingVectorizer](https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.FeatureHasher.html)
+##### 1.2.3.5. Differentiation: FeatureHasher vs. HashingVectorizer
+- FeatureHasher: encode one- or multi-column features to vector. 
+  - i.e. the input of FeatureHasher is categorical feature(s), 
+    - the feature could be either text or numerical.
+    - the text will be considered as a whole, i.e., different text will be considered as different categorical values.
+  - Ref: [Sklearn-FeatureHasher](https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.FeatureHasher.html)
+- HashingVectorizer: encode text to vector.
+  - i.e. the input of HashingVectorizer is text documents.
+    - the feature is only one column of long text.
+    - the text will be broken into word level (bag of words), and then vectorize it with feature hasher. 
+      -  i.e. Hashing vectorizer $\approx$ bag-of-word + Feature Hasher
+  - Ref: [Sklearn-HashingVectorizer](https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.FeatureHasher.html)
 
 #### 1.2.4. Mean (target) encoder
 
@@ -231,4 +230,4 @@ Ref: [KDnuggets-Blog](https://www.kdnuggets.com/2021/01/sparse-features-machine-
     - Key can be translated to index, via hash function, to retrieve the stored value.
     <div  align="center"><img src=https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Hash_table_3_1_1_0_1_0_0_SP.svg/640px-Hash_table_3_1_1_0_1_0_0_SP.svg.png style = "zoom:40%"></div>
   - E.g. Python dict is a hash map.
-  - Hash function is a way to
+  - Hash function is the way to create the index of the bucket.
