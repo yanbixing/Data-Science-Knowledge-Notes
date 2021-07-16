@@ -6,35 +6,137 @@ Matrix factorization, i.e., decompose matrix into to production of a few factor 
 
 - All vectors are column vector.
 - Typically, we denote different types of matrix as:
-  - $\mathbf{X}$ regular $m \times n$ matrix
-  - $\mathbf{A}$ a symmetric matrix $m \times m$
-
-## 1. Non-negative matrix factorization (NMF)
+  - $\mathbf{X}$: regular $m \times n$ matrix
+  - $\mathbf{A}$: a symmetric matrix $m \times m$
 
 
+## 1. Matrix factorization methods
 
-
-## 2. Singular value decomposition :SVD (TBD)
+### 1.1. Non-negative matrix factorization (NMF)
 
 Terminology: "matrix factorization" = "matrix decomposition", i.e. transform a matrix to a product of multiple matrices. [Ref: Wiki](https://en.wikipedia.org/wiki/Matrix_decomposition)
 
 
-$$\mathbf {X} =\mathbf {U\Sigma V^{*}}$$
-- [Wiki-SVD](https://en.wikipedia.org/wiki/Singular_value_decomposition)
+### 1.2. Singular value decomposition :SVD (TBD)
+
+<!-- - 
 - $\mathbf{U}$, $\mathbf{V}$ is [unitary matrix](https://en.wikipedia.org/wiki/Unitary_matrix): $U^*U=I$, $V^*V=I$
-- $\mathbf{\Sigma}$ is a [Rectangular diagonal matrix](https://en.wikipedia.org/wiki/Diagonal_matrix#Rectangular_diagonal_matrices)
+- $\mathbf{\Sigma}$ is a [Rectangular diagonal matrix](https://en.wikipedia.org/wiki/Diagonal_matrix#Rectangular_diagonal_matrices) -->
 <!-- $$\begin{aligned}
     m_{ij} &= \sum_x u_{ix} (\sum_y\sigma_{xy}v_{yj}) \\ & = \sum_x u_{ix}\sigma_{xx}v_{xj} \leftarrow \Sigma {\text{ is diagonal}}
     \\ & = \vec{u}_i \cdot \vec{v}_j?
 \end{aligned}$$ -->
 
 
-Ref: [CSDN-blog-basics](https://blog.csdn.net/weixin_42575020/article/details/103504792), [CSDN-blog](https://blog.csdn.net/u010087338/article/details/114576013), [Zhihu-blog](https://zhuanlan.zhihu.com/p/36546367), [ScienceNet-Blog](http://blog.sciencenet.cn/blog-696950-699432.html) , [Zhihu-blog](https://zhuanlan.zhihu.com/p/36538284)
+SVD aims to decompose a $m \times n$ matrix.
+  - $\mathbf{X}_{m \times n} =\mathbf{U}_{m \times m} \mathbf{\Sigma}_{m \times n} (\mathbf{V}_{n \times n})^{T}$
+    - $\mathbf{U}$, $\mathbf{V}$ is [unitary matrix](https://en.wikipedia.org/wiki/Unitary_matrix): $U^TU=I$, $V^TV=I$
+    - $\mathbf{\Sigma}$ is a [Rectangular diagonal matrix](https://en.wikipedia.org/wiki/Diagonal_matrix#Rectangular_diagonal_matrices)
+    - e.g. (The "A" in the following figure refer to our $\mathbf{X}$)
+
+    <div  align="center">
+    <img src=https://img-blog.csdnimg.cn/20191212111401278.png style = "zoom:80%">
+    </div>
+
+
+Ref: [CSDN-blog-basics](https://blog.csdn.net/weixin_42575020/article/details/103504792), [CSDN-blog](https://blog.csdn.net/u010087338/article/details/114576013), [Zhihu-blog](https://zhuanlan.zhihu.com/p/36546367), [ScienceNet-Blog](http://blog.sciencenet.cn/blog-696950-699432.html) , [Zhihu-blog](https://zhuanlan.zhihu.com/p/36538284),[Wiki-SVD](https://en.wikipedia.org/wiki/Singular_value_decomposition)
+
+
+
+## 2. Matrix factorization applications
+
+
+### 2.1. Principle component analysis (PCA)
 
 
 
 
-## 3. Principle component analysis (PCA)
+
+#### 2.1.0. Definitions
+
+Principle component: the direction has the largest variance.
+
+**Note**: For PCA, we should first subtract the mean. Ref: [Wiki-PCA](https://en.wikipedia.org/wiki/Principal_component_analysis),[StackeExchange](https://stats.stackexchange.com/questions/94103/pca-on-non-centered-data), [Standford-U-stats](https://www.stat.cmu.edu/~cshalizi/uADA/12/lectures/ch18.pdf)
+
+#### 2.1.1. Calculation of principle components from definition
+
+From definition, The principle components can be calculated via maximize the variance in a direction.
+
+The variance of dataset $\mathbf{X}$ on the direction of $\mathbf{w}$ is:
+
+$$\begin{aligned}
+Var_\mathbf{w}(\mathbf{X})& = \sum_{i=1}^m (\mathbf{x}_i\cdot\mathbf{w} - \mathbf{\bar{x}}\cdot\mathbf{w})^2 \\
+& =  \sum_{i=1}^m [  (\mathbf{x}_i\cdot\mathbf{w})^2 ] \leftarrow \underset{\text{preprocess: subtract mean }} { \mathbf{\bar{x}}=0}  \\
+& =  (\mathbf{X}\mathbf{w})^T(\mathbf{X}\mathbf{w})\\
+& =  \mathbf{w}^T\mathbf{X}^T\mathbf{X}\mathbf{w}
+\end{aligned} $$
+
+The first component is calculated with:
+
+$$\begin{aligned}
+\mathbf{w}_1 & = \underset{\|\mathbf{w}\|=1}{\argmax} [ Var_\mathbf{w}(\mathbf{X})] \\
+& =  \underset{\|\mathbf{w}\|=1}{\argmax}( \mathbf{w}^T\mathbf{X}^T\mathbf{X}\mathbf{w} )
+\end{aligned} $$
+
+The remaining components can be calculated iteratively with:
+
+$$\mathbf {\hat {X}} _{k}=\mathbf {X} -\sum _{s=1}^{k-1}\mathbf {X} \mathbf {w} _{(s)}\mathbf {w} _{(s)}^{\mathsf {T}}$$
+
+$$\mathbf {w} _{(k)}=\mathop {\operatorname {arg\,max} } _{\left\|\mathbf {w} \right\|=1}\left\{\left\|\mathbf {\hat {X}} _{k}\mathbf {w} \right\|^{2}\right\}=\arg \max \left\{{\tfrac {\mathbf {w} ^{\mathsf {T}}\mathbf {\hat {X}} _{k}^{\mathsf {T}}\mathbf {\hat {X}} _{k}\mathbf {w} }{\mathbf {w} ^{T}\mathbf {w} }}\right\}$$
+
+Note: 
+- The coordinate value of i-th sample $\mathbf{x}_i$ on j-th principle components ($\mathbf{w}_j$) is $x_{i,\mathbf{w}_j} = \mathbf{x}_i\cdot\mathbf{w}_j$. 
+- Thus column vector formed from j-th principle component coordinate value of all samples $[x_{1,\mathbf{w}_j},..., x_{m,\mathbf{w}_j}]^T = \mathbf{X}\cdot \mathbf{w}_j$
+- Thus, if we denote $\mathbf{W} = [\mathbf{w}_1,...\mathbf{w}_k]$, the coordinate values of samples in the coordinate system of principle components is $\mathbf{X_\mathbf{W}} = \mathbf{X}\mathbf{W}$
+
+
+
+#### 2.1.2. PCA and SVD
+
+We can get principle components with SVD, the principle components are vectors in the right singular vector $\mathbf{V}$, 
+- proof:
+  - We can prove that, the solution for $\underset{\|\mathbf{w}\|=1}{\argmax}( \mathbf{w}^T\mathbf{X}^T\mathbf{X}\mathbf{w})$ is the eigenvector of $\mathbf{X}^T\mathbf{X}$
+    -  i.e. the principle components of $\mathbf{X}$, i.e. $\mathbf{W}$,are eigenvectors of $\mathbf{X}^T\mathbf{X}$
+  -  From Section DD-3, we can know, for SVD $\mathbf {X} =\mathbf {U\Sigma V^{T}}$, $\mathbf{V}=[\mathbf{v}_1, \mathbf{v}_2...]$ are exactly the eigenvectors of $\mathbf{X}^T\mathbf{X}=\mathbf{V}\mathbf{\Sigma}^T\mathbf{\Sigma}\mathbf{V}^T=\mathbf{V}\mathbf{\Lambda}\mathbf{V}^T$
+  -  Thus, we can know the principle components $\mathbf{W}$ is exactly the right singular vector $\mathbf{V}$ in SVD, i.e.: $\mathbf{W} = \mathbf{V}$
+
+- Notes:
+  - New coordinates values $\mathbf{X_{V}} = \mathbf{X}\mathbf{V}$
+    - Also, coordinates values can be calculated as: $\mathbf{X_{V}} = \mathbf{X} = \mathbf {U\Sigma V^{T}}\mathbf{V} =  \mathbf {U\Sigma}$
+  - The order of principle components can be determined with the eigenvalues of $\mathbf{X}^T\mathbf{X}$, i.e. $\mathbf{\Lambda} = \mathbf{\Sigma}^T\mathbf{\Sigma}$
+    - This is because then, the i-th eigenvalue $\lambda_i$ in $\mathbf{\Lambda}$ is exactly the variance on the principle component $\mathbf{v}_i$, proof:
+      - Since the principle components are orthonormal, i.e.: 
+      $$\mathbf{v}_i\cdot\mathbf{v}_j = \begin{cases} 1 & i=j \\ 0 & i \neq j \end{cases}$$
+      - Then, the variance on i-th principle components $\mathbf{v}_i$ is: 
+      $$\begin{aligned}
+          Var_\mathbf{v_i}(\mathbf{X}) & = \mathbf{v_j}^T\mathbf{X}^T\mathbf{X}\mathbf{v_i} 
+          \\ &= \mathbf{v_i}^T\mathbf{V}\mathbf{\Lambda}\mathbf{V}^T\mathbf{v_i} \\ &= [0,...0,\underset{ \text{i-th position} }{1},0,...,0] \mathbf{\Lambda} [0,...0,\underset{ \text{i-th position} }{1},0,...,0]^T
+          \\ &=\lambda_i
+      \end{aligned}$$
+
+
+<!-- - For PCA,
+  - From [Standford-U-stats-Chp18.1.2](https://www.stat.cmu.edu/~cshalizi/uADA/12/lectures/ch18.pdf) or [Wiki-PCA](https://en.wikipedia.org/wiki/Principal_component_analysis), we can know the solution should be an eigenvector of $\mathbf{X}^T\mathbf{X}$.
+  - Since $\mathbf{X}^T\mathbf{X}$ must be a symmetric matrix, should be able to be decomposed in the form: "$\mathbf{A} = \mathbf{U} \mathbf{\Lambda}\mathbf{U}^T$" where:
+    - $\mathbf{U} = [u_1, u_2, u_3...]$ is a symmetric orthonormal matrix composed from eigenvectors.
+    - $\mathbf{\Lambda} = \begin{bmatrix} \lambda_{1} & & \\
+          & \ddots & \\
+          & & \lambda_{m}
+          \end{bmatrix}$ is a diagonal matrix with eigenvalues.
+
+- For SVD,
+  - $\mathbf {X} =\mathbf {U\Sigma V^{T}}$
+  - Then $\mathbf{X}^T\mathbf{X} = \mathbf{V}^T \Sigma^T \Sigma \mathbf{V}^{T} = \mathbf{V} \mathbf{\Lambda} \mathbf{V}^{T}$ i.e. $\mathbf{V} \mathbf{\Lambda} \mathbf{V}^{T}$ is exactly the decomposition of $\mathbf{X}^T\mathbf{X}$
+  - I.e. the orthonormal vectors in $\mathbf{V}$ is exactly the principal components. -->
+
+<!-- - How to get the new coordinates in the principle-components-axis?
+  - New coordinates values $\mathbf{X_{V}} = \mathbf{X}\mathbf{V} $
+    - From $\mathbf {X} =\mathbf {U\Sigma V^{T}}$, 
+- How to determine the order of those principle components?
+  - Use the eigenvalue. Since the principle components are normalized, the value of the eigenvalue equal the variance on the principle component. -->
+
+
+- Other Ref: [StackExchange](https://stats.stackexchange.com/questions/134282/relationship-between-svd-and-pca-how-to-use-svd-to-perform-pca)
 
 
 ## Deep Dive: SVD-related linear algebra basics
@@ -54,7 +156,7 @@ Ref: [Wiki-Eigenvalues_and_eigenvectors](https://en.wikipedia.org/wiki/Eigenvalu
     - $\mathbf{X}\mathbf{v} = \mathbf{X}\mathbf{(u_1 + u_2 + u_3 +...}) = \lambda_1\mathbf{u_1}+\lambda_2 \mathbf{u_2} + \lambda_3 \mathbf{u_3} +... $
     - Ref: [Zhihu](https://www.zhihu.com/question/400720726)
 - For [real symmetric matrix](https://en.wikipedia.org/wiki/Symmetric_matrix#Real_symmetric_matrices), the eigenvectors corresponding to different eigenvalues are orthogonal. Ref: [wiki-對稱矩陣#實對稱矩陣](https://zh.wikipedia.org/wiki/%E5%B0%8D%E7%A8%B1%E7%9F%A9%E9%99%A3#%E5%AF%A6%E5%B0%8D%E7%A8%B1%E7%9F%A9%E9%99%A3)
-- For other matrices, the eigenvectors are not necessarily orthogonal: 
+- For other matrices, the eigenvectors are not necessarily orthogonal.
 
 
 ### DD-2. Symmetric matrix and eigenvector
@@ -68,10 +170,11 @@ For a symetric matrix, the matrix usually can be decomposed as:
         & \ddots & \\
         & & \lambda_{m}
         \end{bmatrix}$ is a diagonal matrix with eigenvalues.
+- How to solve symmetric matrix? Find its eigenvectors and eigen
 
 ### DD-3. SVD and symmetric matrix
 
-- Similar to this decomposition, SVD aims to decompose a $m \times n$ matrix.
+<!-- - Similar to this decomposition, SVD aims to decompose a $m \times n$ matrix.
   - $\mathbf{X}_{m \times n} =\mathbf{U}_{m \times m} \mathbf{\Sigma}_{m \times n} (\mathbf{V}_{n \times n})^{T}$
     - $\mathbf{U}$, $\mathbf{V}$ is [unitary matrix](https://en.wikipedia.org/wiki/Unitary_matrix): $U^*U=I$, $V^*V=I$
     - $\mathbf{\Sigma}$ is a [Rectangular diagonal matrix](https://en.wikipedia.org/wiki/Diagonal_matrix#Rectangular_diagonal_matrices)
@@ -79,24 +182,28 @@ For a symetric matrix, the matrix usually can be decomposed as:
 
     <div  align="center">
     <img src=https://img-blog.csdnimg.cn/20191212111401278.png style = "zoom:80%">
-    </div>
+    </div> -->
 
-- Then how to solve out $\mathbf{U}$, $\mathbf{V}$? Using the property of symmetric matrix:
-  - Construct a symmetric matrix $\mathbf{A} =\mathbf{X}^T\mathbf{X}$
-    - $A_{ij} = \sum_k (X^T)_{ik}X_{kj} = \sum_k X_{ki}X_{kj} = \sum_k (X^T)_{jk}X_{ki} = A_{ji} $
-  - From the SVD, we have $\mathbf{A} = \mathbf{X}^T\mathbf{X} = \mathbf{V}\mathbf{\Sigma}^T\mathbf{\Sigma}\mathbf{V}^T$
-    - denote $\mathbf{\Lambda} = \mathbf{\Sigma}^T\mathbf{\Sigma}$, $\mathbf{\Lambda} $ is diagonal, proof:
-      - $\because \Sigma$ is diagonal, i.e. $\Sigma_{ij} = \begin{cases} 1 & i=j\\0 & i \neq j \end{cases}$
-      - $\therefore$ $\Sigma_{ki}\Sigma_{kj} = \begin{cases} 1 & i=j=k\\0 & otherwise \end{cases}$
-      - $\therefore \Lambda_{ij} = \sum_k (\Sigma^T)_{ik}\Sigma_{kj}= \sum_k \Sigma_{ki}\Sigma_{kj} =  \begin{cases} 1 & i=j\\0 & i \neq j \end{cases}$, 
-  - We have $\mathbf{A} = \mathbf{V} \mathbf{\Lambda} \mathbf{V}^T$
-    - Remember that "for symmetric matrix $\mathbf{A} = \mathbf{U} \mathbf{\Lambda}\mathbf{U}^T$..."
-    - We could know the here, $\mathbf{V} = [\mathbf{v}_1,\mathbf{v_2},....]$, where:
-      - $\mathbf{v_i}$ is the eigenvector of the symmetric matrix $\mathbf{A} =\mathbf{X}^T\mathbf{X} $
-  - Similarly, construct $\mathbf{B} =\mathbf{X}\mathbf{X}^T =  = \mathbf{U}\mathbf{\Sigma}\mathbf{\Sigma}^T\mathbf{U}^T$
-    - We could know $\mathbf{U} = [\mathbf{u}_1,\mathbf{u_2},....]$, where:
-      - $\mathbf{u_i}$ is the eigenvector of the symmetric matrix $\mathbf{B} =\mathbf{X}\mathbf{X}^T $
-- Ref: [CSDN-blog](https://blog.csdn.net/weixin_42575020/article/details/103504792)
+With SVD, we know:
+
+$$\mathbf {X} =\mathbf {U\Sigma V^{*}}$$
+
+Then how to solve out $\mathbf{U}$, $\mathbf{V}$? Using the property of symmetric matrix:
+
+- Construct a matrix $\mathbf{A'} =\mathbf{X}^T\mathbf{X}$, we can prove the matrix is symmetric: 
+   - $A'_{ij} = \sum_k (X^T)_{ik}X_{kj} = \sum_k X_{ki}X_{kj} = \sum_k (X^T)_{jk}X_{ki} = A'_{ji}$
+- With SVD, we can express $\mathbf{A'}$ as: $\mathbf{A'} = \mathbf{X}^T\mathbf{X} = \mathbf{V}\mathbf{\Sigma}^T\mathbf{\Sigma}\mathbf{V}^T$
+- Denote $\mathbf{\Lambda'} = \mathbf{\Sigma}^T\mathbf{\Sigma}$,   we have $\mathbf{A'} = \mathbf{V} \mathbf{\Lambda'} \mathbf{V}^T$ 
+  - $\mathbf{\Lambda'} $ is diagonal, proof:
+    - $\because \Sigma$ is diagonal, i.e. $\Sigma_{ij} = \begin{cases} 1 & i=j\\0 & i \neq j \end{cases}$
+    - $\therefore$ $\Sigma_{ki}\Sigma_{kj} = \begin{cases} 1 & i=j=k\\0 & otherwise \end{cases}$
+    - $\therefore \Lambda'_{ij} = \sum_k (\Sigma^T)_{ik}\Sigma_{kj}= \sum_k \Sigma_{ki}\Sigma_{kj} =  \begin{cases} 1 & i=j\\0 & i \neq j \end{cases}$
+- Given "symmetric matrix $\mathbf{A}$ can be eigen-decomposed as $\mathbf{A}=\mathbf{U} \mathbf{\Lambda}\mathbf{U}^T$, where $\mathbf{\Lambda}$ is a *diagonal* matrix of eigenvalues and $\mathbf{U}$ is a matrix of eigenvectors." We could know:
+  - Here, $\mathbf{A'} = \mathbf{V} \mathbf{\Lambda'} \mathbf{V}^T$ could be an eigendecomposition
+- Thus, $\mathbf{V} = [\mathbf{v}_1,\mathbf{v_2},....]$, where $\mathbf{v_i}$ is the eigenvector of the symmetric matrix $\mathbf{A} =\mathbf{X}^T\mathbf{X} $
+
+Similarly, construct $\mathbf{A'} =\mathbf{X}\mathbf{X}^T =  = \mathbf{U}\mathbf{\Sigma}\mathbf{\Sigma}^T\mathbf{U}^T$, and then we can know $\mathbf{U} = [\mathbf{u}_1,\mathbf{u_2},....]$ where $\mathbf{u_i}$ is the eigenvector of the symmetric matrix $\mathbf{A'} =\mathbf{X}\mathbf{X}^T $
+- Ref: [CSDN-blog](https://blog.csdn.net/weixin_42575020/article/details/103504792), [Wiki-SVD](https://en.wikipedia.org/wiki/Singular_value_decomposition)
 
 ## Deep Dive: Real symmetric matrix
 

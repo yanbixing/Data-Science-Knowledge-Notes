@@ -4,6 +4,7 @@
         "Jaccard",
         "Rademacher",
         "boldsymbol",
+        "eigen",
         "infty",
         "mathbb",
         "overfit",
