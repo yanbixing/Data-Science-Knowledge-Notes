@@ -40,3 +40,19 @@ A process converting string to vector.
         - 0 filling
           - Missing value techs, ref [feature_engineering-Sec 2.1](../general_machine_learning/data_engineering/feature_engineering.md)
           - Smoothing techs, like Laplacian smoothing: For all features, add 1 count to the bag. (To guarantee all features have at least 1 count; then, the total counts increase with the number of features. ) Ref: [Lazyprogrammer blog](https://lazyprogrammer.me/probability-smoothing-for-natural-language-processing/)
+
+## NLP Tasks
+
+### Part of speech (PoS) Tagging
+
+Find the grammatical tag (noun, adjective, verb, etc.) of the word.
+
+A classification task. The output is 
+
+#### Typical models
+
+- HMM (TBD)
+  - Training method: MLE (Maximum likelihood estimation)
+    - Expression of the likelihood? $L(\mathcal{S}) = \prod^m_i p( {\text{tag}}_i, {\text{word}}_i)$?
+  - The transition matrix?
+  - P as a function of transition matrix?

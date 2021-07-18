@@ -4,15 +4,24 @@ Ref: [Analyticsvidhya](https://www.analyticsvidhya.com/blog/2018/10/stepwise-gui
 
 ## Summary
 
-Note: all the vectors are column vectors by default.
+
 
 - LSA is an application of Truncated SVD.
-- LSA is a topic model.
+
+- Why to use LSA (Purpose):
+  - The document term matrix is too sparse, LSA is used for word/docment embedding.
+  - Find the latent relation between words/doc in order to improve information understanding (topics).
+- Topic modelling application:
   - We can truncate to keep top-k topics for the datasets.
-  - The documents (often) and terms (rare) can be represented with the k topics respectively.
   - Also, each topic can be represented with terms (often) or documents (rare) according to needs.
+- Word/Doc embedding application:
+  - The documents (often) and terms (rare) can be represented with the k topics respectively.
+- LSA is an unsupervised model.
+
 
 ## LSA Interpretation
+
+Note: all the vectors are column vectors by default.
 
 ### Data Matrix
 
