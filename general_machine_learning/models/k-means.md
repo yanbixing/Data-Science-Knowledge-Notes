@@ -80,6 +80,8 @@ In short, a more advance K-means:
 
 ## Deep Dive: Expectation–maximization (EM) algorithm 
 
+Also see: [NLP-HMM](../../natural_language_processing/hidden_markov_model.md)
+
 Ref: [Wiki-EM_algorithm](https://en.wikipedia.org/wiki/Expectation%E2%80%93maximization_algorithm)
 
 - When using EM on a function, the function usually have three components:
@@ -103,3 +105,5 @@ Ref: [Wiki-EM_algorithm](https://en.wikipedia.org/wiki/Expectation%E2%80%93maxim
     - $\boldsymbol{\theta}$ and $\boldsymbol{Z}$ is optimized/updated iteratively
       - In formal coordinate descent, axis $x^{(1)}...x^{(N)}$ is optimized iteratively.
     - Ref: [RochesterU](https://www.cs.rochester.edu/u/jliu/CSC-576/class-note-8.pdf)
+
+
