@@ -79,11 +79,48 @@ In sum, we have two different types of variables to model during training:
 
 
 
-## 3. Application POS Tagging
+## 3. Application
+
+### 3.1. POS Tagging
 
 - Model:
-  - Tag are hidden states
-  - Words are observable states (outcomes).
+  - Tags are hidden states. 
+  - Words are observable states.
+
+<div  align="center">
+  <img src=./hidden_markov_model_asset/hmm_on_pos_tagging.png style = "zoom:20%">
+</div>
+
+Picture Source: [Coursera-NLP-HSEU](https://www.coursera.org/lecture/language-processing/hidden-markov-models-cNdwa?utm_source=link&utm_medium=page_share&utm_content=vlp&utm_campaign=top_button)
+
+
+## 4. Model comparisons
+
+### 4.1. HMM vs. RNN
+
+- Similarity
+  - Both are sequential model.
+
+- Difference
+  - Linearity: 
+    - HMM output/hidden state is **linear** to the hidden state. 
+    - RNN output/hidden state isi can be **non-linear** to the hidden state. 
+      - Note: Non-linearity is a main advantage of most DL models compared to the classical ML models. Ref: [Quora](https://www.quora.com/Why-are-hidden-Markov-models-replaced-by-RNN-nowadays-in-many-applications-What-is-the-strength-of-RNN-over-HMM)
+  - Generative/Discriminative: (Why? TBD.)
+    - HMM is a generative model.
+    - Most RNN are discriminative.
+    - Ref: [Quora](https://www.quora.com/Why-are-hidden-Markov-models-replaced-by-RNN-nowadays-in-many-applications-What-is-the-strength-of-RNN-over-HMM)
+  - Model complexity:
+    - Suitable data: Markov process or not.
+      - HMM: only suitable to model a markov process (the current state is only related to the previous state.)
+      - RNN: also suitable to model non-markove process (current state is related to several previous states.)
+        - Although in terms of math, RNN is also a markov process, but RNN's hidden state is usually much complex than HMM's hidden state, contain info from previous states.
+      - Ref: [StackExchange](https://stats.stackexchange.com/questions/358496/can-i-claim-makrov-chain-or-hidden-markov-model-are-simple-recurrent-neural-netw)
+    - Complexity of task:
+      - HMM only suitable to one ($H$) to one ($Y$) generation task, the $H \rightarrow Y$ generation process  should be real-time/instant.
+      - RNN can choose to generate one or zero output, the $Y$ also can be generated later.
+        - E.g. In machine translation task, the output sequence will be generated after the input sequence is all input; also, the length (number of words) in input and output sequence is usually different.
+
 
 ## Deep Dive 1: BW Algorithm
 
