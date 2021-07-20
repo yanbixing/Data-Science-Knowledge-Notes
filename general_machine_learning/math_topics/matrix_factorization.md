@@ -174,7 +174,7 @@ Notes:
 
 
 - Other Ref: [StackExchange](https://stats.stackexchange.com/questions/134282/relationship-between-svd-and-pca-how-to-use-svd-to-perform-pca)
-
+- Other Ref - probabilistic interpretation: if we regard $\boldsymbol{X}_{m\times n} = [p(d_i, t_{j})]$ as a bag of word (term $t$) representation, then $\boldsymbol{X_V}_{m\times k} = \boldsymbol{XV} = [p(d_i, \tau_{z})]$ is a "bag of topics" representation. see "$\boldsymbol{A_V}$" in [latent_semantic_analysis.md](../../natural_language_processing/latent_semantic_analysis.md)
 
 ## Deep Dive 1: SVD-related linear algebra basics
 
