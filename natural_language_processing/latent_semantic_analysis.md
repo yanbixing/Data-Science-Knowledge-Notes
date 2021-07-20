@@ -64,11 +64,17 @@ Cons:
 - LSA involves SVD, which is computationally intensive and hard to update as new data comes up.
 
 
-## Deep Dive: pLSA - A probability interpretation of LSA and SVD
+## Deep Dive: pLSA - A probability interpretation of LSA and SVD (TBD)
+
+In pLSA, the matrix elements is defined as:
+
+$$A_{ij} := p(d_i, t_{j})$$
+
+### DD-1. pLSA v.s. LSA: an unsupervised learning algorithm using SVD
 
 Ref: [Medium-blog](https://medium.com/nanonets/topic-modeling-with-lsa-psla-lda-and-lda2vec-555ff65b0b05), [wiki-pLSA](https://en.wikipedia.org/wiki/Probabilistic_latent_semantic_analysis)
 
-In pLSA, the matrix elements $A_{ij} = p(d_i, t_{j})$,
+
 <!-- I.e. $\boldsymbol{A} = p(D, W)$ -->
 With SVD (matrix interpretation), we can decompose the matrix $\boldsymbol{A}$ with
 $\boldsymbol{A}_{m \times n} \approx \boldsymbol{U}_{m \times k} \boldsymbol{\Sigma}_{k \times k} (\boldsymbol{V}_{n \times k})^{T}$ as:
@@ -79,7 +85,7 @@ On the other side, with the probability interpretation, we have:
 Thus, with:
   $$\sum^k_{z=1} U_{iz}\sigma_{z}V_{jz} = A_{ij} = p(d_i, t_{j}) = \sum^k_{z=1} p(\tau_z)p(d_i|\tau_z)p(t_{j}|\tau_z)$$
   we can see the following correspondence:
-  <div  align="center"><img src=https://miro.medium.com/max/552/1*SWvSwy3jdIiATmMXBCqQVg.png 276w, https://miro.medium.com/max/838/1*SWvSwy3jdIiATmMXBCqQVg.png style = "zoom:80%"></div>
+  <div  align="center"><img src=https://miro.medium.com/max/552/1*SWvSwy3jdIiATmMXBCqQVg.png style = "zoom:80%"></div>
 
 I.e.:
 
@@ -96,3 +102,15 @@ Further deduction:
   - That is why $\boldsymbol{A_V}_{m \times k} = \boldsymbol{AV}$ can be used as an alternative representation of $\boldsymbol{A}_{m\times n}$
   - I.e. If we regard $\boldsymbol{A}_{m\times n} = [p(d_i, t_{j})]$ as a bag of word representation, then $\boldsymbol{A_V}_{m\times k} = \boldsymbol{AV} = [p(d_i, \tau_{z})]$ is a "bag of topics" representation.
   - Note - geometric interpretation: $\boldsymbol{A_V}$ is the coordinates of $\boldsymbol{A}$ in new coordinate system of $\boldsymbol{V}$), see "$\boldsymbol{X_V}$" in [matrix_factorization.md](../general_machine_learning/math_topics/matrix_factorization.md)
+
+### DD-2. pLSA v.s. LDA: a generative topic model.
+
+The pLSA model can also be interpreted in this way:
+
+$$P(w,d)=\sum _{c}P(c)P(d|c)P(w|c)=P(d)\sum _{c}P(c|d)P(w|c)$$
+
+The generative process can be shown as:
+  <div  align="center"><img src=https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Plsi_1.svg/640px-Plsi_1.svg.png style = "zoom:40%"></div>
+
+Compared with [LDA](./latent_dirichlet_allocation.md) is much simpler.
+
