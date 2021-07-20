@@ -64,13 +64,19 @@ Cons:
 - LSA involves SVD, which is computationally intensive and hard to update as new data comes up.
 
 
-## Deep Dive: pLSA - A probability interpretation of LSA and SVD (TBD)
+## Deep Dive: pLSA - Probabilistic LSA
+
+Ref: [wiki-pLSA](https://en.wikipedia.org/wiki/Probabilistic_latent_semantic_analysis)
 
 In pLSA, the matrix elements is defined as:
 
 $$A_{ij} := p(d_i, t_{j})$$
 
-### DD-1. pLSA v.s. LSA: an unsupervised learning algorithm using SVD
+I.e. replace the term frequency in LSA matrix with the probability of **occurrence** of $d_i$ and $w_{ij}$ as : $$p(d_i, t_{j}) := \frac{ \text{num of words same to } w_{ij} \text{ in } d_i \times \text{num of docs same to } d_i \text{ in } \mathcal{S} }{\text{number of words in } \mathcal{S} }$$
+
+Note: If no doc duplication, then $p(d_i, t_{j})$ is proportional to the "term frequency", i.e. $\text{num of words same to } w_{ij} \text{ in } d_i$.
+
+### DD-1. A probability interpretation of LSA and SVD
 
 Ref: [Medium-blog](https://medium.com/nanonets/topic-modeling-with-lsa-psla-lda-and-lda2vec-555ff65b0b05), [wiki-pLSA](https://en.wikipedia.org/wiki/Probabilistic_latent_semantic_analysis)
 
@@ -103,7 +109,9 @@ Further deduction:
   - I.e. If we regard $\boldsymbol{A}_{m\times n} = [p(d_i, t_{j})]$ as a bag of word representation, then $\boldsymbol{A_V}_{m\times k} = \boldsymbol{AV} = [p(d_i, \tau_{z})]$ is a "bag of topics" representation.
   - Note - geometric interpretation: $\boldsymbol{A_V}$ is the coordinates of $\boldsymbol{A}$ in new coordinate system of $\boldsymbol{V}$), see "$\boldsymbol{X_V}$" in [matrix_factorization.md](../general_machine_learning/math_topics/matrix_factorization.md)
 
-### DD-2. pLSA v.s. LDA: a generative topic model.
+### DD-2. A generative topic model.
+
+Ref: [wiki-pLSA](https://en.wikipedia.org/wiki/Probabilistic_latent_semantic_analysis)
 
 The pLSA model can also be interpreted in this way:
 
