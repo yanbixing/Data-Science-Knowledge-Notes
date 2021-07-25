@@ -1,101 +1,8 @@
-# AB Testing
+# Sample size calculation
 
-## AB Testing
+## 1. Preparation knowledges
 
-Ref: [TowardsDataScience-blog](https://towardsdatascience.com/a-summary-of-udacity-a-b-testing-course-9ecc32dedbb1), [1p3a-bbs](https://www.1point3acres.com/bbs/thread-470867-1-1.html)
-
-### Definition
-A/B testing: A way to compare two versions of a single variable. [Wiki-AB_testing](https://en.wikipedia.org/wiki/A/B_testing)
-    - English: typically, we test the response of the population to two versions of a product, the two versions **only have 1 difference**, all other conditions/design are same. Our purpose is to determine which one is better.
-
-### Process
-
-Ref: [TowardsDataScience](https://towardsdatascience.com/a-summary-of-udacity-a-b-testing-course-9ecc32dedbb1)
-
-0. Brainstorm:
-   - What is your goal/objective?
-   - Do you have existing metric/target?
-1. Choose the evaluation metric and invariant metric.
-   - Evaluation metric is "what do you care about?"
-   - Invariant metric is for sanity check, i.e. "what should be affected during the experiment"
-   - Need to consider about sensitivity and robustness when choosing metric.
-2. Choose: 
-   - Significant level ($\alpha$)
-   - Sensitivity ($1-\beta$, also called statistical power)
-   - Practical significant level $d$ (also called minimum detectable effect)
-3. Calculate the required sample size.
-   - Required quantity: 
-     - $p_0$: baseline conversion rate.
-     - $d$: minimum detectable effect (practical significant).
-     - $\alpha$: significant level
-     - $1-\beta$: sensitivity
-   - Need to consider about unit of diversion, population, duration.
-
-
-
-## Background Knowledges
-
-### Metric
-
-#### Typical metrics in AB testing:
-- Sum and counts
-- Statistics of distribution (e.g. mean, median, percentiles)
-- Probability and rates (e.g. click through probability/rates)
-- Ratios: division between any two numbers.
-
-#### Sensitivity and robustness
-
-**Definition:**
-
-- Sensitivity: Whether the metric is *sensitive* to the change of the data.
-  - English: if a part of the data changes, how much the metric is affected. 
-  - The higher the metric value changes, the higher sensitivity.
-- Robustness: Whether the metric is robust (resistant) to the change of *outliers*.
-  - English: if a part of the data become outliers, i.e. have extreme abnormal values, how much the metric is affected.
-  - The lower the metric value changes, the higher robustness.
-
-Generally, there should be a counter effect between sensitivity and robustness. 
-  - This is because *outlier* can be viewed as a kind extreme large change of data. 
-  - If the metric is easily affected by change of particular data, then it should have higher sensitivity but lower robustness.
-  - If the metric is hardly affected by change of particular data, then it should have lower sensitivity but higher robustness.
-- E.g. mean vs median
-  - Typically:
-    - mean: have higher sensitivity lower robustness .
-    - median: median have lower sensitivity higher robustness.
-  - Exp: data: $[1,1,2,3,3] \rightarrow [1,1,2,3, {\color{red}{93}}]$
-    - mean: $2 \rightarrow \textcolor{red}{20}$
-    - median: $2 \rightarrow 2$
-
-
-Note (personal understanding): although mathematically outlier is a also a kind of change, in terms of the purpose,sensitivity aims to capture small changes in a relatively large part of samples. While the robustness aims to exclude the affect from very extreme individual samples. For example can can design a metric that ignore the outliers and then get average of "normal" samples, then, the sensitivity and robustness may be achieved at same time. (?)
-
-Q: How to measure/observe the sensitivity and robustness?
-- Use real experiment, 
-  - i.e. change data in the dataset and observe the change of metric.
-  - e.g.: "E.g. mean vs median" above.
-- Use A/A test:
-  - If the metric on the two identical groups of data are same, then it has high robustness and low sensitivity. Vice versa.
-  - A/A test: two groups of test, noting changes. 
-    - I.e. Test the response of the population to the same version of a product.
-    - Can be achieved by randomly sample two group of data from the A version or B version. 
-    - The purpose of A/A test is to examine the stability of statistics/metric. 
-- Retrospective cohort analysis [Ref: wiki](https://en.wikipedia.org/wiki/Retrospective_cohort_study) (TBD???)
-  - If sample with same metric are from an identical group, the metric is stable, i.e. it has high robustness and low sensitivity. (Else, the metric is sensitive to other unobservable factors.)
-    - Looks a reverse of A/A test.
-  - Retrospective cohort analysis: for samples with same experimental result, whether they have same experimental condition.
-    - I.e. here, we analysis if same experimental results have a similar experimental conditions.
-    - Cohort: group of individual share same **observable** properties.
-    - A/A test can be viewed as prospective cohort analysis: for samples with same observable experimental condition, if they have same experimental result.
-    <div  align="center"><img src=https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/ExplainingCaseControlSJW-en.svg/462px-ExplainingCaseControlSJW-en.svg.png style = "zoom:60%"></div>
-  
-    - Ref:[1p3a-bbs](https://www.1point3acres.com/bbs/thread-529848-1-1.html), [github-blog](https://nancyyanyu.github.io/posts/17c5bb19/), [TowardsDataScience](https://towardsdatascience.com/what-i-learned-from-udacitys-course-on-a-b-testing-by-google-45f6d3297f42)
-  
-
-## Deep Dive: Sample size calculation
-
-### DD-SSC.1. Basics knowledges
-
-#### DD-SSC.1.1. SD vs SE: different kinds of "standard deviation"
+### 1.1. SD vs SE: different kinds of "standard deviation"
 
 - SD: standard deviation of the **population**
   - We have a sample set with N samples: $\mathcal{S} = \{x_1,\dots, x_N\}$
@@ -116,9 +23,16 @@ Q: How to measure/observe the sensitivity and robustness?
   - [Openanesthesia](https://www.openanesthesia.org/se_vs-_sd_calculation/): 'SD' vs. 'SE'
   - [Wiki-Standard_deviation](https://en.wikipedia.org/wiki/Standard_deviation#:~:text=The%20mean's%20standard%20error%20turns,root%20of%20the%20sample%20size.): $SE=\frac{SD}{\sqrt{N}}$
 
+- SD for AB testing:
+  - Usually, the user action/response in AB test is binary, e.g., click or not, purchase or not, etc. This is called binomial trial or [Bernoulli_trial](https://en.wikipedia.org/wiki/Bernoulli_trial)
+    - The corresponding distribution is called [Bernoulli_distribution](https://en.wikipedia.org/wiki/Bernoulli_distribution)
+    - Binominal distribution is a different thing.
+  - The SD for Bernoulli_distribution is  $\sigma = \sqrt{p(1-p)}$
+    - p: the probability of 1 appears.
+  - Ref: [Medium blog](https://productcoalition.com/start-here-statistics-for-a-b-testing-5f5c7e02ce1e)
 
 
-#### DD-SSC.1.2. Effect size
+### 1.2. Effect size
 
 [Effect size (in ab test)](https://www.simplypsychology.org/effect-size.html) is the magnitude of the difference of population mean between control group and experimental group in terms of their pooled standard deviation.
 
@@ -141,7 +55,7 @@ where:
 - The concept "effect size" is often used in [estimating sample size](https://en.wikipedia.org/wiki/Sample_size_determination#Estimating_sample_sizes)
 - Since $\mu$ and SD ($E(\mu)$ and $E(SD)$) is almost independent of sample size, so the $D_{ef}$ should also **not affected by sample size**.
 
-#### DD-SSC.1.2. G\*power app
+### 1.3. G\*power app
 
 The related topic to calculate sample size is "power analysis". "G\*power" is a widely used app for power analysis. An example of using G\*power to calculate sample size is [here: Splitmetrics](https://splitmetrics.com/blog/mobile-a-b-testing-sample-size/).
 
@@ -155,7 +69,7 @@ A detailed explanation of the G\*power graph in t-test is [here: Wordpress-Blog]
 - The blue curve is called non-central distribution
 
 
-### DD-SSC.2. Mechanism of sample size calculation.
+## 2. Mechanism of sample size calculation.
 
 An [example](https://splitmetrics.com/blog/mobile-a-b-testing-sample-size/) of using G\*power to calculate sample size is as:
 
@@ -163,7 +77,7 @@ An [example](https://splitmetrics.com/blog/mobile-a-b-testing-sample-size/) of u
 
 We will explain why/how the sample size is calculated via such method.
 
-#### DD-SSC.2.1. Explanation on the two curves
+### 2.1. Explanation on the two curves
 
 Notation:
 
@@ -193,7 +107,7 @@ Blue curve: the non-central distribution, i.e.,  the distribution of $\Delta \mu
   - It is the difference between the centers of the blue curve and the red curve.
 
 
-#### DD-SSC.2.2. Mechanism for sample size calculation
+### 2.2. Mechanism for sample size calculation
 
 <div  align="center"><img src=https://splitmetrics.com/wp-content/uploads/2018/04/8-1-1.png style = "zoom:60%"></div>
 
@@ -228,6 +142,7 @@ Blue curve: the non-central distribution, i.e.,  the distribution of $\Delta \mu
 - [Blog](https://jeffshow.com/caculate-abtest-required-sample-size.html): equation of sample size.
 - [StakeExchange](https://stats.stackexchange.com/questions/392979/ab-test-sample-size-calculation-by-hand): equation of sample size.
 - [Splitmetrics](https://splitmetrics.com/blog/mobile-a-b-testing-sample-size/): graph illustration of relation between $p_1, p_2, \alpha, \beta$ and the width of the distribution.
+- [Ucla](https://stats.idre.ucla.edu/other/gpower/two-independent-proportions-power-analysis/): power analysis.
 
 ### Remaining Qs (TBD):
 
