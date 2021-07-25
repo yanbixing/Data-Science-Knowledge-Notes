@@ -4,6 +4,8 @@
 
 ### 1.1. Standard deviation for EG/CG: SD
 
+For group, the target in EG and CG is individual samples. (Not mean value.) So. the standard deviation we use to describe EG or CG is population standard deviation, i.e. SD.
+
 Usually, the user action/response in AB test is binary (1,0), e.g., click or not, purchase or not, etc. This is called binomial trial or [Bernoulli_trial](https://en.wikipedia.org/wiki/Bernoulli_trial). The binary outcomes follow [Bernoulli_distribution](https://en.wikipedia.org/wiki/Bernoulli_distribution). See: [bernoulli_distribution.md](../probability_distributions/bernoulli_distribution.md).
 
 So, we can use bernoulli distribution to calcuate statistics like SD. E.g.:
@@ -16,7 +18,8 @@ So, we can use bernoulli distribution to calcuate statistics like SD. E.g.:
 - Then
   - $E(X^{CG}) = p(X^{CG} = 1) = \frac{n^{CG}_1}{N} =: p_{CG}$
   - $s_{CG} = SD(X^{CG}) = \sqrt{p_{CG}(1-p_{CG})}$
-
+- Note:
+  - $SD \underset{\sim}{\perp} N$: SD is almost independent of N. See [standard_deviation.md](../basic_concepts/standard_deviation.md)
 
 
 <!-- The mean for bernoulli distribution is 
@@ -45,13 +48,26 @@ Ref: [Wiki-Pooled_variance](https://en.wikipedia.org/wiki/Pooled_variance)
 
 
 
-### 1.3. Standard deviation for Hypothesis: SE
+### 1.3. Standard deviation in Hypothesis: SE
 
-For the hypothesis $H_0, H_1$ in ab testing, the quantity we care about is $\Delta \mu = p_{EG} - p_{CG}$: a variable denotes the difference of the population mean between the experimental group and the control group. I.e.:
+For the hypothesis $H_0, H_1$ in ab testing, the quantity we care about is $\Delta \mu$ rather individual I.e.:
 
 - $H_0 \Leftrightarrow E(\Delta\mu_{obs} = 0)$
 - $H_1 \Leftrightarrow E(\Delta\mu_{obs} \not = 0)$
 
 where:
-- $$
-- $\Delta \mu_{obs}$: the observed $\Delta \mu$, i.e., the $\Delta \mu$ we calculated with real data from the experimental and control group.
+- $\Delta \mu = p_{EG} - p_{CG}$: a variable denotes the difference of the population mean between the experimental group and the control group.
+  - $\Delta \mu^{obs}= p^{obs}_1 - p^{obs}_0$: the observed $\Delta \mu$, i.e., the $\Delta \mu$ we calculated with real data from the experimental and control group.
+
+where: 
+
+- $p_{EG}:=p_{1}:=\mu_{EG}:=\mu_{1}$: (human-expected) conversion rate of experimental group.
+  - $p^{obs}_{EG}:=p^{obs}_{1}:=\mu^{obs}_{EG}:=\mu^{obs}_{1}$: observed/calculated conversion rate of experimental group from the real data.
+- $p_{CG}:=p_{0}:=\mu_{CG}:=\mu_{0}$: (human-expected) conversion rate of control group. (baseline conversion rate.)
+  - $p^{obs}_{CG}:=p^{obs}_{0}:=\mu^{obs}_{CG}:=\mu^{obs}_{0}$: observed/calculated conversion rate of control group from the real data.
+
+Thus, the "standard deviation" for $\Delta \mu$ is standard error for mean, i.e. SE.
+
+$$SE = \frac{SD}{\sqrt{N}}$$
+
+Note: $\because$ $SD \underset{\sim}{\perp} N$ $\therefore$ $SE\underset{\sim}{\propto} \frac{1}{\sqrt{N}}$
