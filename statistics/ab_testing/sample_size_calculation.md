@@ -2,37 +2,7 @@
 
 ## 1. Preparation knowledges
 
-### 1.1. SD vs SE: different kinds of "standard deviation"
-
-- SD: standard deviation of the **population**
-  - We have a sample set with N samples: $\mathcal{S} = \{x_1,\dots, x_N\}$
-    - $SD:=$ the standard deviation of theses samples. 
-  - $SD:=\sigma(x) = \sqrt{\frac{\sum^N_{i-1} (x_i - \mu)^2 }{N}} = \sqrt{Var(x)}$
-    - $Var(x) := E[ (x-\bar{x})^2] = E(x^2) - [E(x)]^2$
-    - $\mu(x)$ means the standard deviation of the x variable.
-    - $E(x)$ means the expectation of the x variable.'
-  - From the definition, we can see **SD is almost independent of sample size**. I.e. $E(SD) \perp N$ (TBD: any proof/ref?)
-- SE: standard 'error' of the mean value. Also written as "SEM"
-  - We have enormous sample sets (each has $N$ samples)  $\{\mathcal{S}_1,\mathcal{S}_2,\dots\}$ drawn from a same distribution.
-    - For each sample set, we have a mean value: $\mu_1, \mu_2, \dots$
-  - $SE:=$ the standard deviation of the these mean values
-    - $SE:=\sigma(\mu)$
-    - $\sigma(\mu)$ means the standard deviation of the $\mu$ variable.
-    - $SE=\frac{SD}{\sqrt{N}}\propto\frac{1}{\sqrt{N}}$
-- Ref: 
-  - [Openanesthesia](https://www.openanesthesia.org/se_vs-_sd_calculation/): 'SD' vs. 'SE'
-  - [Wiki-Standard_deviation](https://en.wikipedia.org/wiki/Standard_deviation#:~:text=The%20mean's%20standard%20error%20turns,root%20of%20the%20sample%20size.): $SE=\frac{SD}{\sqrt{N}}$
-
-- SD for AB testing:
-  - Usually, the user action/response in AB test is binary, e.g., click or not, purchase or not, etc. This is called binomial trial or [Bernoulli_trial](https://en.wikipedia.org/wiki/Bernoulli_trial)
-    - The corresponding distribution is called [Bernoulli_distribution](https://en.wikipedia.org/wiki/Bernoulli_distribution)
-    - Binominal distribution is a different thing.
-  - The SD for Bernoulli_distribution is  $\sigma = \sqrt{p(1-p)}$
-    - p: the probability of 1 appears.
-  - Ref: [Medium blog](https://productcoalition.com/start-here-statistics-for-a-b-testing-5f5c7e02ce1e)
-
-
-### 1.2. Effect size
+### 1.1. Effect size
 
 [Effect size (in ab test)](https://www.simplypsychology.org/effect-size.html) is the magnitude of the difference of population mean between control group and experimental group in terms of their pooled standard deviation.
 
@@ -44,18 +14,18 @@ where:
 - $\mu_{EG}$: population mean of the experimental group.
 - $\mu_{CG}$: population mean of the control group.
 
-- $s_{pooled}$: the pooled standard deviation of the experimental and experimental group
-  - $s_{pooled} = \sqrt{\frac{(N_{EG}-1)s^2_{EG} + (N_{CG}-1)s^2_{CG}}{N_{EG}+N_{CG} - 2}}$
+- $s_{pooled}$: the pooled standard deviation of the experimental and experimental group. Can be calculated from $s_{EG}$ and $s_{CG}$.
+  <!-- - $s_{pooled} = \sqrt{\frac{(N_{EG}-1)s^2_{EG} + (N_{CG}-1)s^2_{CG}}{N_{EG}+N_{CG} - 2}}$
     - $s_{EG}$: SD of the experimental group.
     - $s_{CG}$: SD of the control group.
     - $N_{EG}$: size of the experimental group.
-    - $N_{CG}$: size of the control group.
+    - $N_{CG}$: size of the control group. -->
 
 **Notes**:
 - The concept "effect size" is often used in [estimating sample size](https://en.wikipedia.org/wiki/Sample_size_determination#Estimating_sample_sizes)
 - Since $\mu$ and SD ($E(\mu)$ and $E(SD)$) is almost independent of sample size, so the $D_{ef}$ should also **not affected by sample size**.
 
-### 1.3. G\*power app
+### 1.2. G\*power app
 
 The related topic to calculate sample size is "power analysis". "G\*power" is a widely used app for power analysis. An example of using G\*power to calculate sample size is [here: Splitmetrics](https://splitmetrics.com/blog/mobile-a-b-testing-sample-size/).
 

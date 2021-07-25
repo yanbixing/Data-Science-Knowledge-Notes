@@ -40,6 +40,6 @@ Ref: [Wiki-Bernoulli_trial](https://en.wikipedia.org/wiki/Bernoulli_trial)
 
 $X\sim Bernoulli(p)$
 
-- Mean: E(X) = p
-- Variance: Var(x) = p(1-p)
+- Mean: $E(X) = p$
+- Variance: $Var(X) = p(1-p)$
   - Population standard deviation $\sigma(x) := SD(X) = \sqrt{p(1-p)} $
