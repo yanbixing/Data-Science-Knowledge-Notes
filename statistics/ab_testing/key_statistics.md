@@ -1,6 +1,6 @@
 # Key statistics
 
-## Standard deviation
+## 1. Standard deviation
 
 ### 1.1. Standard deviation for EG/CG: SD
 
