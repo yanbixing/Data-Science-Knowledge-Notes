@@ -42,4 +42,4 @@ $X\sim Bernoulli(p)$
 
 - Mean: $E(X) = p$
 - Variance: $Var(X) = p(1-p)$
-  - Population standard deviation $\sigma(x) := SD(X) = \sqrt{p(1-p)} $
+  - Population standard deviation $\sigma(x) := SD(X) = \sqrt{p(1-p)}$

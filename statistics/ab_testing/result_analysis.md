@@ -150,7 +150,7 @@ where:
 
 - $z$ score: the width of the $\mathrm{CI}$. 
   - A numerical value, the unit is the standard deviation of the distribution. 
-  - Determined by confidence level $\mathrm{C}$. E.g. $z(\mathrm{C} = 95\% ) =1.96 $
+  - Determined by confidence level $\mathrm{C}$. E.g. $z(\mathrm{C} = 95\% ) =1.96$
 - Note: The distribution here is the distribution of $\Delta \mu$ i.e. $\sim$ population mean. Thus, the standard deviation of the distribution is SE.
 
 

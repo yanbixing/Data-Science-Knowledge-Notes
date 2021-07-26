@@ -81,7 +81,7 @@ Blue curve: the non-central distribution, i.e.,  the distribution of $\Delta \mu
 
 <div  align="center"><img src=https://splitmetrics.com/wp-content/uploads/2018/04/8-1-1.png style = "zoom:60%"></div>
 
-- Point 1: $N \uparrow \Rightarrow $ width of the two curves will shrinkage
+- Point 1: $N \uparrow \Rightarrow$ width of the two curves will shrinkage
   - $\because$ the two curves is the distribution about mean 
   - $\therefore$ the "standard deviation" of the two curve is the "standard deviation of mean (SE)" not "standard deviation of population (SD)". 
   - $\because$ $SE \propto \frac{1}{\sqrt{N}}$,
