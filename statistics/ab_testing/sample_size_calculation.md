@@ -56,9 +56,9 @@ Notation:
   - $\Delta \mu_{obs}$: the observed $\Delta \mu$, i.e., the $\Delta \mu$ we calculated with real data from the experimental and control group.
   - $E(\Delta \mu)$: the expectation of variable $\Delta \mu$.
 - Hypothesis related
-  - $d_{mde}$: practical significance, also called minimum detectable effect.
+  - $d_{\min}$: practical significance, also called minimum detectable effect.
   - $p_2:=p_{EG}:=\mu_2$: the conversion rate from experimental group.
-    - Is calculated as $p_2 = p_1 + d_{mde}$
+    - Is calculated as $p_2 = p_1 + d_{\min}$
   - $p_1:=p_{CG}:=\mu_1$: the (expected) conversion rate from control group.
   - $D_{ef}$: effect size
 
@@ -71,8 +71,8 @@ Blue curve: the non-central distribution, i.e.,  the distribution of $\Delta \mu
   - Blue curve is often viewed as the distribution of $\Delta \mu_{obs}$ under the alternative hypothesis. 
   - But, different from null hypothesis: $H_0: p_{EG} = p_{CG} \Rightarrow \Delta \mu = 0$ case, if we want to quantitatively express $\Delta \mu$ from the alternative hypothesis $H_1: p_{EG} \not = p_{CG}$
   - So, to quantitatively represent $H_1$ we need to answer "How much difference can be viewed as $\not =$". 
-  - $d_{mde} := p_2-p_1$ is the threshold we manually/subjectively set for the question, i.e. it is our expectation on the $\Delta \mu$.
-- $D_{ef} := \frac{p_2-p_1}{s_{pooled}} = \frac{d_{mde}}{s_{pooled}}$
+  - $d_{\min} := p_2-p_1$ is the threshold we manually/subjectively set for the question, i.e. it is our expectation on the $\Delta \mu$.
+- $D_{ef} := \frac{p_2-p_1}{s_{pooled}} = \frac{d_{\min}}{s_{pooled}}$
   - $s_{pooled}$ is the pooled SD for the control and experimental group.
   - It is the difference between the centers of the blue curve and the red curve.
 
@@ -87,23 +87,23 @@ Blue curve: the non-central distribution, i.e.,  the distribution of $\Delta \mu
   - $\because$ $SE \propto \frac{1}{\sqrt{N}}$,
   - $\therefore$ when $N \uparrow$,  width of the curve will shrinkage 
 - Point 2: The centers of the two curves (almost) not change with $N$
-  - The distance between the centers of the two curves is $D_{ef} = \frac{d_{mde}}{s_{pooled} }$
+  - The distance between the centers of the two curves is $D_{ef} = \frac{d_{\min}}{s_{pooled} }$
   - $\because$
-    - $d_{mde}$ is manually set by us, not change with $N$
+    - $d_{\min}$ is manually set by us, not change with $N$
     - $s_{pooled}$ is a kind of SD, also not change with $N$ (t is the pooled value of the population standard deviation (SD) of experimental and control group.)
   - $\therefore$ $D_{ef}$ not change with $N$
-- Brainstorming: Graphical relations between $N, d_{mde}, \alpha, \beta$
+- Brainstorming: Graphical relations between $N, d_{\min}, \alpha, \beta$
   - Give an $N$ value, the shape (width) of the two curves is fixed.
-  - Give a $d_{mde}$ value, the distance between two curves is fixed.
+  - Give a $d_{\min}$ value, the distance between two curves is fixed.
   - Then, from the red curve and $\alpha$ value, we can calculate the position of $z$
   - Bring $z$ to the blue curve, we can get the value of $\beta$
 - An intuition algorithm:
-  - From the brainstorming above, we can regard the $\beta$ as a function of $N, d_{mde}, \alpha$ as $\beta = f_{\beta}(N, d_{mde}, \alpha)$
-  - When the $d_{mde}, \alpha$ is given (as $d_{mde0}, \alpha_0$), $\beta$ is a function solely of $N$ as $\beta = f_{(\beta|d_{mde0},\alpha_0)}(N)$
+  - From the brainstorming above, we can regard the $\beta$ as a function of $N, d_{\min}, \alpha$ as $\beta = f_{\beta}(N, d_{\min}, \alpha)$
+  - When the $d_{\min}, \alpha$ is given (as $d_{mde0}, \alpha_0$), $\beta$ is a function solely of $N$ as $\beta = f_{(\beta|d_{mde0},\alpha_0)}(N)$
   - So, we can scan over different $N$ values, find the required size value $N_{req}$ that make $f_{(\beta|d_{mde0},\alpha_0)}(N_{req}) = \beta_0$ i.e. our input $\beta$ value.
   - Then, $N_{req}$ is the solution.
-- Or, more directly, from the $\beta = f_{\beta}(N, d_{mde}, \alpha)$, we can know $N$ is a function of $\alpha, \beta, d_{mde}$
-  - I.e. $N = f_N(\alpha, \beta, d_{mde})$
+- Or, more directly, from the $\beta = f_{\beta}(N, d_{\min}, \alpha)$, we can know $N$ is a function of $\alpha, \beta, d_{\min}$
+  - I.e. $N = f_N(\alpha, \beta, d_{\min})$
 
 
 

@@ -1,4 +1,4 @@
-# Metric 
+# Metric
 
 ## 1. Typical metrics in AB testing:
 

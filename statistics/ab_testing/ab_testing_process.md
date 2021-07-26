@@ -24,11 +24,11 @@ Ref: [TowardsDataScience](https://towardsdatascience.com/a-summary-of-udacity-a-
 2. Choose: 
    - Significant level ($\alpha$)
    - Sensitivity ($1-\beta$, also called statistical power)
-   - Practical significant level $d$ (also called minimum detectable effect)
+   - Practical significant level $d_{\min}$ (also called minimum detectable effect)
 3. Calculate the required sample size. (Details see [sample_size_calculation.md](./sample_size_calculation.md))
    - Required quantity: 
      - $p_0$: baseline conversion rate.
-     - $d$: minimum detectable effect (practical significant).
+     - $d_{\min}$: minimum detectable effect (practical significant).
      - $\alpha$: significant level
      - $1-\beta$: sensitivity
    - Need to consider about unit of diversion, population, duration.
