@@ -3,6 +3,41 @@
 
 ## Evaluation metric analysis
 
+### Examples
+
+
+We use from cases from an Udacity course as the example. Link: [Udacity-Ab_test](https://classroom.udacity.com/courses/ud257/lessons/4018018619/concepts/40043987150923) or [Udacity-Ab_test(Youtube)](https://youtu.be/6pGDwrJHitw)
+
+Q: the purple ranges (1) - (6) are different confident interval cases (for $\Delta \mu$), analyze the decision we should take.
+
+<div  align="center"><img src=./result_analysis_asset/confidence_interval_cases.png style = "zoom:15%"></div>
+
+**Explanation**:
+
+1. $ \min(\Delta \mu) > d_{\min} \Rightarrow$ practically significant, 
+   - I.e., $p_{EG}>p_{CG}+d_{min}$ must stand.
+   - Therefore: the EG version are much better than CG version, should launch the new (EG) version.
+2. $\Delta \mu$ may be zero, and $\max(\Delta \mu) < d_{\min}$ 
+   - I.e. $p_{EG}=p_{CG}$ may stand, and $p_{EG}<p_{CG}+d_{min}$ must stands
+   - Since: $p_{EG}<p_{CG}+d_{min}$ must stand.
+   - Therefore: the improvement of EG version must be lower than our expectation (i.e. $d_{\min}$), thus, no need to launch it.
+3. $\min(\Delta \mu) >0$, but $\max(\Delta \mu) < d_{\min}$ 
+   - I.e. $p_{EG}>p_{CG}$ and $p_{EG}<p_{CG}+d_{min}$ must stand.
+   - Since: $p_{EG}<p_{CG}+d_{min}$ must stands
+   - Therefore: Although there must be an improvement of EG compared to CG, the improvement of must be lower than our expectation (i.e. $d_{\min}$). Thus, no need to launch it.
+4. $\min(\Delta \mu) <-d_{\min}$, and $\max(\Delta \mu) > d_{\min}$ 
+   - I.e. Both $p_{EG}<p_{CG} - d_{\min}$ or $p_{EG}>p_{CG}+d_{min}$ may stand.
+   - Therefore: the EG may be much worse or may be better than our expectation, we are not sure, so need additional tests.
+5. $\min(\Delta \mu) <0$, and $\max(\Delta \mu) > d_{\min}$ 
+   - I.e. Both $p_{EG}<p_{CG}$ or $p_{EG}>p_{CG}+d_{min}$ may stand.
+   - Therefore: the EG may be slightly worse or may be better than our expectation, we are not sure, so need additional tests.
+6. $\min(\Delta \mu) >0$, and $\max(\Delta \mu) > d_{\min}$ 
+   - I.e. Both $p_{EG}>p_{CG}$ must stand but $p_{EG}>p_{CG}+d_{min}$ may or may not stand.
+   - Therefore: the EG must be better than CG, but we are not sure whether it is better than our expectation, so need additional tests.
+
+## Sanity check
+
+asdfasdfasf
 
 ## Deep dive: practically and statistically significant
 
@@ -93,9 +128,10 @@ When $\Delta \mu > d_{\min}$: -->
 
 <!-- <div  align="center"><img src=./result_analysis_asset/statistically_and_practically_significant.jpeg style = "zoom:25%"></div> -->
 
-[]()
-
 Ref: [Udacity-Ab_test](https://classroom.udacity.com/courses/ud257/lessons/4018018619/concepts/40043987150923): practical siginificant and statistical significant
+
+
+
 
 
 ## Deep Dive: Confidence Interval
