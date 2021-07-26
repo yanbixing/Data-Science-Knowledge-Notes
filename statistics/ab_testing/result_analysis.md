@@ -1,10 +1,8 @@
 # Result Analysis
 
-
 ## Evaluation metric analysis
 
 ### Examples
-
 
 We use from cases from an Udacity course as the example. Link: [Udacity-Ab_test](https://classroom.udacity.com/courses/ud257/lessons/4018018619/concepts/40043987150923) or [Udacity-Ab_test(Youtube)](https://youtu.be/6pGDwrJHitw)
 
