@@ -1,4 +1,4 @@
-## Hypothesis testing
+# Hypothesis testing
 
 Ref: [StatTrek](https://stattrek.com/hypothesis-test/hypothesis-testing.aspx)
 
@@ -29,25 +29,55 @@ Example: toss a coin, observe the probability of head up $p(H)$.
 
 ## Type 1 and type 2 error
 
-- Definition:
+### Definition:
+
   - Type 1 error: reject null hypothesis when it is true.
   - Type 2 error ($\beta$, sensitivity): accept null hypothesis when it is false.
     - null hypothesis is false = alternative hypothesis is true. 
-- Probability representation:
-  - Type 1 error: $\alpha = p(\text{reject } H_0| H_0 \text{ is true})$, also called **significant level**
+
+### Probability representation:
+
+  - Type 1 error: $\alpha = p(\text{reject } H_0| H_0 \text{ is true})$, also called **significant level**.
     - English: if the null hypothesis is correct, the probability we observe a value more extreme than the experiment result.
-  - Type 2 error:$\beta = p(\text{reject } H_0| H_1 \text{ is true})$
+  - Type 2 error:$\beta = p(\text{accept } H_0| H_1 \text{ is true})$
     - English: if the alternative hypothesis is correct, the probability we observe a value more extreme than the experiment result.
     <div  align="center"><img src=https://dp8v87cz8a7qa.cloudfront.net/45396/5bd20d03240611540492547.png style = "zoom:50%"></div>
-- PN interpretation:
-  - Ground true P := $H_1$ is true; Ground true N := $H_0$ is true
-  - Label P := $H_1$ is accepted; Label N := $H_0$ is accepted
-  - $\alpha = FPR = \frac{FP}{FP+TN}$
-  - $\beta = TPR = \frac{TP}{TP+FN}$
+
+### Metric representation:
+
+Definition:
+
+- Ground true P := "$H_1$ is true"; Ground true N := "$H_0$ is true"
+- Label P := $H_1$ is accepted; Label N := $H_0$ is accepted
+
+Representation
+
+- $\alpha = FPR = \frac{FP}{FP+TN}$ 
+  - reject $H_0$: predicted label is P
+  - $H_0$ is true: true label is N 
+  - $\therefore$ $\alpha = \frac{FP}{GroundN} = FPR$
+- $\beta = FNR = \frac{FN}{TP+FN}$
+  - Accept $H_0$: predicted label is N
+  - $H_1$ is true: true label is P
+  - $\therefore$ $\beta = \frac{FN}{GroundP} = FNR$
   
+Note:
+
+- $\mathrm{Sensitivity} := 1 - \beta = 1- \frac{FN}{TP+FN} = \frac{TP}{TP+FN} = TPR = Recall$
+- Sensitivity is also called "power"
 
 
+Ref: [Wiki-FPR&FNR](https://en.wikipedia.org/wiki/False_positives_and_false_negatives#False_positive_and_false_negative_rates), [OptimizeSmart](https://www.optimizesmart.com/understanding-ab-testing-statistics-to-get-real-lift-in-conversions/)
 
+#### Effect of sample size
+
+Typically, what we test is the mean of the population. Thus, the standard deviation of is SE, which will be affected by sample size $N$ (i.e. $\mathrm{SE} \propto \frac{1}{\sqrt{N}}$), thus the probability of type 1 and type 2 error may be affected by the sample size.
+
+It doesn't matter to set:
+- $H_0$: 
+- $H_1$: 
+
+null hypothesis expect the observed value to be zero
 
 
 ## P-value

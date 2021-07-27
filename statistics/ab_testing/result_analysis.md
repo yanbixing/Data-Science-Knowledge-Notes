@@ -55,7 +55,6 @@ Thus, if we can confirm $p_{EG} \geq p_{CG}+d_{\min}$, then, we will say the con
 
 ### Experiment result and "significant"
 
-
 In our experiment, $\Delta \mu$ is the difference between $p_{EG}$ and $p_{CG}$. I.e. $\Delta \mu = p_{EG} - p_{CG}$
 
 From the above section, we can know:
@@ -67,7 +66,7 @@ However, with experiment, we can never get the ground true $\Delta \mu$, $\Delta
 
 Thus, we solve the problem in such way:
 
-<div  align="center"><img src=./result_analysis_asset/statistically_and_practically_significant.jpeg style = "zoom:25%"></div>
+<div  align="center"><img src=./result_analysis_asset/statistically_and_practically_significant_1.jpeg style = "zoom:25%"></div>
 
  By setting the confidence level, we can determine limit the possible value of $\Delta \mu$ to a limit range, i.e. *confidence interval*. And if the minimum possible $\Delta \mu$ value, (i.e. $\Delta \mu_{\min}$), is larger than 0 (i.e. $\Delta \mu_{\min} > 0$), it is reasonable to claim $\Delta \mu$ must be larger than 0 ( i.e. $\Delta \mu >0$ stands). Then, we can claim the result is "statistically significant". I.e.:
 
@@ -94,7 +93,16 @@ $$\begin{aligned}
     &= \Delta\mu^{obs} - z\cdot \mathrm{SE} \\
     &= (p^{obs}_{EG} - p^{obs}_{CG}) - z\cdot \frac{s_{\mathrm{pooled}}}{\sqrt{N}} 
 \end{aligned}$$
-where z is determined by confidence level $\mathrm{C}$, i.e. $z = z(\mathrm{C})$. 
+where 
+- z is determined by confidence level $\gamma$, i.e. $z = z(\gamma)$.
+- Confidence level $\gamma$ is determined by significance level $\alpha$, i.e. $\gamma = 1-\alpha$
+  - Ref:  [Wiki-Statistical_significance](https://en.wikipedia.org/wiki/Statistical_significance), [Wiki-Confidence_level](https://en.wikipedia.org/wiki/Confidence_interval), [DataScienceCentral-Blog](https://www.datasciencecentral.com/profiles/blogs/significance-level-vs-confidence-level-vs-confidence-interval), [Blog](https://statisticsbyjim.com/hypothesis-testing/hypothesis-tests-confidence-intervals-levels/)
+
+
+Note: The above discussion is from the point of view of "the location of ground true $\Delta \mu$". So, an alternative understanding is from the point of view of "the location of  the observed $\Delta \mu$ (i.e. $\Delta \mu^{obs}$)"
+(The two views are equivalent, since $\Delta \mu_{\min} > 0 \Leftrightarrow \Delta\mu^{obs} - z\cdot\mathrm{SE}>0 \Leftrightarrow \Delta\mu^{obs} > z \cdot SE$. )
+
+<div  align="center"><img src=./result_analysis_asset/statistically_and_practically_significant_2.jpeg style = "zoom:25%"></div>
 
 <!-- 
 When $\Delta \mu > 0$, we can infer that  ${``H_0 (p_{EG} = p_{CG} )\text{ is incorrect"}} $ or ${`` p_{EG} \text{ must be larger than }p_{CG}" }$, then we will say the statement "$p_{EG}>p_{CG}$" is statistically significant.
@@ -127,10 +135,6 @@ When $\Delta \mu > d_{\min}$: -->
 <!-- <div  align="center"><img src=./result_analysis_asset/statistically_and_practically_significant.jpeg style = "zoom:25%"></div> -->
 
 Ref: [Udacity-Ab_test](https://classroom.udacity.com/courses/ud257/lessons/4018018619/concepts/40043987150923): practical siginificant and statistical significant
-
-
-
-
 
 ## Deep Dive: Confidence Interval
 
