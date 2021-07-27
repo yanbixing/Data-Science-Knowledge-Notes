@@ -71,13 +71,42 @@ Ref: [Wiki-FPR&FNR](https://en.wikipedia.org/wiki/False_positives_and_false_nega
 
 #### Effect of sample size
 
-Typically, what we test is the mean of the population. Thus, the standard deviation of is SE, which will be affected by sample size $N$ (i.e. $\mathrm{SE} \propto \frac{1}{\sqrt{N}}$), thus the probability of type 1 and type 2 error may be affected by the sample size.
+**Conclusion:**
+
+- Chance of type-1 error is not affected by the sample size.
+- Chance of type-2 error decreases as we increase the sample size.
+  - I.e. when the sample size is small. The result hypothesis may have a higher chance to be the type-2 error.
+
+
+**Explanation:**
+
+Typically, what we test is the mean of the population. Thus, the standard deviation of is SE, which will be affected by sample size $N$ (i.e. $\mathrm{SE} \propto \frac{1}{\sqrt{N}}$), thus the probability of type-1 and type-2 error ($\alpha$ and $\beta$) may be affected by the sample size.
 
 It doesn't matter to set:
-- $H_0$: 
-- $H_1$: 
+- $H_0$: $\mu = 0$
+- $H_1$: $\mu \neq 0$
 
-null hypothesis expect the observed value to be zero
+Then we can visualize the effect of sample size on $\alpha$ and $\beta$ as:
+- (a) $\alpha$ for small $N$
+- (b) $\alpha$ for large $N$, when $N$ increases, the shape of the pdf will be sharper.
+- (c) $\beta$ for small $N$
+- (d) $\beta$ for large $N$
+
+<div  align="center"><img src=./hypothesis_testing_asset/type_1_and_type2_error_vs_sample_size.jpeg style = "zoom:50%"></div>
+
+- Under $H_0$, we have an expected distribution for the observed $\mu$
+  - And from the given certain significant level $\alpha_0$, we can determine the confidence interval.
+  - We $\mu^{obs}$ fall outside of the confidence interval under $H_0$, we can reject $H_0$, i.e. we say $H_1$ is statistically significant.
+- "$H_0$ is true" means the ground true value of $\mu$ is 0. Then, the distribution of $\mu^{obs}$ is exactly the the expected distribution for the observed $\mu$ of $H_0$
+  - Type 1 error is the case that $\mu^{obs}$ fall outside of the confidence interval under $H_0$
+  - Then, the probability of type-1 error ($\alpha$) is the part of distribution of $\mu^{obs}$ outside of the confidence interval of $H_0$ , as the orange area shown in (a).
+  - This orange area is exactly $\alpha_0$, it is independent of width of the curve, i.e. it is the sample size, as shown in (a) and (b).
+- "$H_0$ is false" means the ground true value of $\mu$ is not 0. Then, the distribution of $\mu^{obs}$ will deviates from the the expected distribution for the observed $\mu$ under $H_0$.
+  - Type 2 error is the case that that $\mu^{obs}$ fall inside the confidence interval of $H_0$
+  - Then, the probability of type-2 error ($\beta$) is the intersection between the distribution of $\mu^{obs}$ and the confidence interval, as the purple area shown in (c).
+  - This purple area in heavily affected by width of the curve, sharper curve (larger $N$) will result in smaller chance of type-2 error. 
+
+<!-- null hypothesis expect the observed value to be zero -->
 
 
 ## P-value
