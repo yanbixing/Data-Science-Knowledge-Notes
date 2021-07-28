@@ -71,12 +71,13 @@ Ref: [Wiki-FPR&FNR](https://en.wikipedia.org/wiki/False_positives_and_false_nega
 
 #### Effect of sample size
 
+Ref: [Udacity-Ab_test](https://classroom.udacity.com/courses/ud257/lessons/4018018619/concepts/40043987050923)
+
 **Conclusion:**
 
-- Chance of type-1 error is not affected by the sample size.
+- Chance of type-1 error is NOT affected by the sample size.
 - Chance of type-2 error decreases as we increase the sample size.
   - I.e. when the sample size is small. The result hypothesis may have a higher chance to be the type-2 error.
-
 
 **Explanation:**
 
@@ -92,7 +93,7 @@ Then we can visualize the effect of sample size on $\alpha$ and $\beta$ as:
 - (c) $\beta$ for small $N$
 - (d) $\beta$ for large $N$
 
-<div  align="center"><img src=./hypothesis_testing_asset/type_1_and_type2_error_vs_sample_size.jpeg style = "zoom:50%"></div>
+<div  align="center"><img src=./hypothesis_testing_asset/type_1_and_type_2_error_vs_sample_size.jpeg style = "zoom:50%"></div>
 
 - Under $H_0$, we have an expected distribution for the observed $\mu$
   - And from the given certain significant level $\alpha_0$, we can determine the confidence interval.
@@ -108,6 +109,26 @@ Then we can visualize the effect of sample size on $\alpha$ and $\beta$ as:
 
 <!-- null hypothesis expect the observed value to be zero -->
 
+**Application:**
+
+When the sample size is small, the chance to make type-1 error is small, as long as you set the confidence interval is large, as in figure (a). However, the chance of type-2 error is high, as in figure (c). To reduce the chance of type-2 error, you need to increase the sample size. I.e.:
+
+- To reduce chance of type-1 error, we reduce the set alpha-value (increase the confidence interval.)
+- But this measure will increase the chance of type-2 error.
+  
+- Then, to reduce the chance of type-2 error, we increase sample size.
+  
+
+<div  align="center"><img src=./hypothesis_testing_asset/type_1_vs_type_2_error.jpeg style = "zoom:30%"></div>
+
+**Trade-off relation:** from the above description, we can conclude:
+
+- Under fixed $N$, there is a trade-off between $\alpha$ and $\beta$, .
+  - I.e.: $\alpha \downarrow$, $\beta \uparrow$
+- Under fixed $\alpha$, there is a trade-off between $\beta$ and $N$.
+  - I.e.: $N \uparrow$, $\beta \downarrow$
+
+Note: $\alpha \downarrow = \mathrm{CI} \uparrow$
 
 ## P-value
 
