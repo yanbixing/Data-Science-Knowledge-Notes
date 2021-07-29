@@ -45,7 +45,7 @@ Note (personal understanding): although mathematically outlier is a also a kind 
     - I.e. Test the response of the population to the same version of a product.
     - Can be achieved by randomly sample two group of data from the A version or B version. 
     - The purpose of A/A test is to examine the stability of statistics/metric. 
-- Retrospective cohort analysis [Ref: wiki](https://en.wikipedia.org/wiki/Retrospective_cohort_study) (TBD???)
+- Retrospective cohort analysis [(Ref: wiki)](https://en.wikipedia.org/wiki/Retrospective_cohort_study)
   - If sample with same metric are from an identical group, the metric is stable, i.e. it has high robustness and low sensitivity. (Else, the metric is sensitive to other unobservable factors.)
     - Looks a reverse of A/A test.
   - Retrospective cohort analysis: for samples with same experimental result, whether they have same experimental condition.
@@ -54,5 +54,9 @@ Note (personal understanding): although mathematically outlier is a also a kind 
     - A/A test can be viewed as prospective cohort analysis: for samples with same observable experimental condition, if they have same experimental result.
     <div  align="center"><img src=https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/ExplainingCaseControlSJW-en.svg/462px-ExplainingCaseControlSJW-en.svg.png style = "zoom:60%"></div>
   
+    - Note: Retrospective vs prospective:
+      - Prospective examine the **difference on result values** under different feature values.
+      - Retrospective examine the **difference on feature values** under different result values. 
+      - Ref: [theclassroom](https://www.theclassroom.com/ethical-issues-research-design-8084192.html)
     - Ref:[1p3a-bbs](https://www.1point3acres.com/bbs/thread-529848-1-1.html), [github-blog](https://nancyyanyu.github.io/posts/17c5bb19/), [TowardsDataScience](https://towardsdatascience.com/what-i-learned-from-udacitys-course-on-a-b-testing-by-google-45f6d3297f42)
   

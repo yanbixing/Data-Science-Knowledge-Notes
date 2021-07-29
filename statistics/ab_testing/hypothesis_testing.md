@@ -64,7 +64,7 @@ Representation
 Note:
 
 - $\mathrm{Sensitivity} := 1 - \beta = 1- \frac{FN}{TP+FN} = \frac{TP}{TP+FN} = TPR = Recall$
-- Sensitivity is also called "power"
+- Sensitivity is also called "power" or "statistical power".
 
 
 Ref: [Wiki-FPR&FNR](https://en.wikipedia.org/wiki/False_positives_and_false_negatives#False_positive_and_false_negative_rates), [OptimizeSmart](https://www.optimizesmart.com/understanding-ab-testing-statistics-to-get-real-lift-in-conversions/)

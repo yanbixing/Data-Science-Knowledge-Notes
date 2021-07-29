@@ -69,9 +69,9 @@ However, if $p_{EG}$ just slightly larger than $p_{CG}$, then, even "$p_{EG}>p_{
 
 Then, how to determine if the conclusion "$p_{EG}>p_{CG}$" have practical use?
 
-Remember that, we set a $d_{\min}$ value. This implies we hope the $p_{EG} \geq p_{CG}+d_{\min}$, then, the experimental version is worthy to launch.
+Remember that, we set a $d_{\min}$ value. This implies we hope the $p_{EG} \geq p_{CG}+d_{\min}$, then, the experimental version is worthy to launch. (That is why $d_{\min}$ is called "minimum detectable effect".)
 
-Thus, if we can confirm $p_{EG} \geq p_{CG}+d_{\min}$, then, we will say the conclusion "$p_{EG}>p_{CG}$" from the ab-testing is **practically significant**. I.e. the conclusion "$p_{EG}>p_{CG}$" from the ab-testing is of-practically-use/practically-useful.
+Thus, if we can confirm $p_{EG} \geq p_{CG}+d_{\min}$, then, we will say the conclusion "$p_{EG}>p_{CG}$" from the ab-testing is **practically significant**. I.e. the conclusion "$p_{EG}>p_{CG}$" from the ab-testing is of-practically-use/practically-useful. (That is why $d_{\min}$ is also called "practical significance level".)
 
 ### Experiment result and "significant"
 
