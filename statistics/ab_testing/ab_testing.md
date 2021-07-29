@@ -59,7 +59,7 @@ Ref: [TowardsDataScience](https://towardsdatascience.com/a-summary-of-udacity-a-
 
 
 
-## FAQs
+## A/B testing deep dives
 
 <!-- - To use A/B testing, you need to determine: 
   - What is your control group (baseline for comparison)?
@@ -99,7 +99,38 @@ Ref: [Udacity-Abtesting-Lesson1-Lecture3](https://classroom.udacity.com/courses/
   - Ref: [Udacity-Abtesting-Lesson1-Lecture6](https://classroom.udacity.com/courses/ud257/lessons/4018018619/concepts/40043986810923)
 
 
+### Overpower and underpower
+<!-- - Overpower: 
+  - When $N_{gather}$ is larger than the designed $N_{required}$, the chance of type-II error will be smaller ($\beta_{gather}<\beta_{required}$), sensitivity (statistical power) will be larger $(1-\beta)_{gather}>(1-\beta)_{required}$, that why it calls overpower.
+    - This is because $N\uparrow\beta\downarrow$
+  - $N\uparrow \rightarrow SE\downarrow$, when $N\rightarrow\infty\Rightarrow \mathrm{SE}\rightarrow 0$, from the graph below, we know **everything will be statistically significant.**
+    - I.e. the previous insignificant result (accept $H_0$, label=0, negative) becomes significant (reject $H_0$, label=1, positive)
+    - This means we will make type-1 error.
+  - In summary, overpowered test will decrease chance of type-2 error but increase chance of type-1 error.
+  - Ref: [Optimizesmart](https://www.optimizesmart.com/understanding-ab-testing-statistics-to-get-real-lift-in-conversions/#a20)
+  <div  align="center"><img src=./result_analysis_asset/statistically_and_practically_significant_2.jpeg style = "zoom:25%"></div>
 
+- Underpower:
+  - Contrary to overpower case. Underpowered test will decrease chance of type-1 error but increase chance of type-2 error.
+  - Ref: [Optimizesmart](https://www.optimizesmart.com/understanding-ab-testing-statistics-to-get-real-lift-in-conversions/#a19) 感觉这个不太对，如果overpower +H_0 is true,  then obs value的distribution是要小于原H_0的CI，应该会less chance to have type-1 error.-->
+
+
+
+- Overpower: the test is set with too large power $(1-\beta)$, larger than necessary power.
+  - I.e. $\beta$ is set too small, need gather too much data. 
+  - Con: It wastes the time and resources. For medical/bio tests involving animal or human, it is unethical. 
+  - Note: overpower do NO harm to result. The result is more precise, it is just a matter of wasting.
+  - Ref: [Quality-progress](http://rube.asq.org/quality-progress/2015/07/statistics-roundtable/the-significance-of-power.html), [StackExchange](https://stats.stackexchange.com/questions/9225/what-does-it-mean-for-a-study-to-be-over-powered), 
+- Underpower: the test is set with too small power $(1-\beta)$, smaller than necessary power.
+  - I.e. $\beta$ is set too large, gather too few sample. L
+  - Con: larger chance to get type-2 error.
+  - Note: Sample size has no influence on type-1 error prob. So both overpower and underpower is irrelavant to type-1 error.
+  - Ref: [Quality-progress](http://rube.asq.org/quality-progress/2015/07/statistics-roundtable/the-significance-of-power.html), [StackeExchange](https://stats.stackexchange.com/questions/176384/do-underpowered-studies-have-increased-likelihood-of-false-positives)
+- Note: the statements here [Optimizesmart-blog](https://www.optimizesmart.com/understanding-ab-testing-statistics-to-get-real-lift-in-conversions/) should be incorrect.
+  - Overpower should means we the power is too large at designing stage, not meaning we collect more data than expected.
+  - Even we collect more data than required, if $H_0$ is correct, the distribution of calculated $\Delta\mu^{obs}$ should be smaller/narrower than our design, thus, have lower chance to reject $H_0$ when it is true, i.e. lower type-1 error chance, not larger. 
+    - Note: the criteria of CI should be determined by $N_{required}$ in original design, not the $N_{gathered}$. The webpage cited above seems make mistake on this point.
+  - TBD Refs: [Medium-blog](https://medium.com/@ignazioziano/aint-no-such-thing-as-overpowered-studies-myths-in-the-lab-part-i-5deadc6d2e60), [StackExchange](https://stats.stackexchange.com/questions/176384/do-underpowered-studies-have-increased-likelihood-of-false-positives)
 
 ### Other FAQs
 
@@ -150,7 +181,7 @@ Ref: [Udacity-Abtesting-Lesson1-Lecture3](https://classroom.udacity.com/courses/
       - This causality conclusion is absurd.
     - Note: customer churn = customer leave.
 
-## Knowledges
+## Related knowledges
 
 - A/B/n vs. multi-variate:
   - A/B/n testing: **multiple versions** of an object are compared against each. The purpose is to determine which has the highest conversion rate. [Optimizely](https://www.optimizely.com/optimization-glossary/abn-testing/)
@@ -168,28 +199,6 @@ Ref: [Udacity-Abtesting-Lesson1-Lecture3](https://classroom.udacity.com/courses/
       - [YouTube](https://www.youtube.com/watch?v=fdrnAkLyMxo): ab vs abn vs multivariate.
       - [Optimizely](https://www.optimizely.com/optimization-glossary/abn-testing/): abn vs multivariate
 
-
-
-<!-- - Overpower: 
-  - When $N_{gather}$ is larger than the designed $N_{required}$, the chance of type-II error will be smaller ($\beta_{gather}<\beta_{required}$), sensitivity (statistical power) will be larger $(1-\beta)_{gather}>(1-\beta)_{required}$, that why it calls overpower.
-    - This is because $N\uparrow\beta\downarrow$
-  - $N\uparrow \rightarrow SE\downarrow$, when $N\rightarrow\infty\Rightarrow \mathrm{SE}\rightarrow 0$, from the graph below, we know **everything will be statistically significant.**
-    - I.e. the previous insignificant result (accept $H_0$, label=0, negative) becomes significant (reject $H_0$, label=1, positive)
-    - This means we will make type-1 error.
-  - In summary, overpowered test will decrease chance of type-2 error but increase chance of type-1 error.
-  - Ref: [Optimizesmart](https://www.optimizesmart.com/understanding-ab-testing-statistics-to-get-real-lift-in-conversions/#a20)
-  <div  align="center"><img src=./result_analysis_asset/statistically_and_practically_significant_2.jpeg style = "zoom:25%"></div>
-
-- Underpower:
-  - Contrary to overpower case. Underpowered test will decrease chance of type-1 error but increase chance of type-2 error.
-  - Ref: [Optimizesmart](https://www.optimizesmart.com/understanding-ab-testing-statistics-to-get-real-lift-in-conversions/#a19) 感觉这个不太对，如果overpower +H_0 is true,  then obs value的distribution是要小于原H_0的CI，应该会less chance to have type-1 error.-->
-
-- Overpower: have too large $\beta$, gather too much data, for medical related tests, it is unethical.
-- Underpower: too few sample, larger chance to get type-2 error.
-  - Note: the statements here [Optimizesmart-blog](https://www.optimizesmart.com/understanding-ab-testing-statistics-to-get-real-lift-in-conversions/) should be incorrect.
-    - Overpower should means we the power is large at designing stage, not meaning we collect more data than expected.
-    - Even we collect more data than required, if $H_0$ is correct, the distribution of calculated $\Delta\mu^{obs}$ should be smaller/narrower than our design, thus, have lower chance to reject $H_0$ when it is true, i.e. lower type-1 error chance, not larger. 
-      - Note: the criteria of CI should be determined by $N_{required}$ in original design, not the $N_{gathered}$. The webpage cited above seems make mistake on this point.
 
 ## Notes
 
