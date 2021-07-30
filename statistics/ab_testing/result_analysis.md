@@ -124,6 +124,71 @@ Ref: [Udacity-Abtesting-Lesson5-Lecture6](https://classroom.udacity.com/courses/
 
 Ref: [Udacity-Abtesting-Lesson5-Lecture7](https://classroom.udacity.com/courses/ud257/lessons/4085798776/concepts/41174386370923)
 
+
+## Deep dive: sign test
+
+Ref: [Wiki-Sign test](https://en.wikipedia.org/wiki/Sign_test)
+
+The purpose is to examine the generality (consistence) of our conclusion/assumption. Whether the conclusion we found is a general pattern or affected by some outliers. Or whether the result is affected by some outliers.
+
+"Sign" refers to the sign of difference between experimental group and control group.
+
+- If we want to prove A is larger than B, then, we expect to see the daily $A-B$ have more positive signs. I.e. $p(+)>p(-)$ or 0.5 is significant. 
+- If we use it on quantities have equal value, we expect the $+$ and $-$ should be similar. I.e. $p(+)>p(-)$ or 0.5 is insignificant.
+
+<!-- whether the data of experimental/control group have similar fluctuation. -->
+
+### Example 1. Sanity check
+
+We usually have sign test in the sanity check, to check whether there is a difference on daily sample amount. 
+
+Apparently, the following daily sampling behavior have some problem. And with sign test, we can diagnose the abnormal behavior.
+
+| Group     | Day 1 | Day 2 | Day 3 | Day 4 | Day 5 | 
+| :-------: | :---: | :---: | :---: | :---: | :---: |
+| **Exp**   | 0     | 0     | 0     | 0     | 10    |
+|**Control**| 2     | 2     | 2     | 2     | 2     |
+| Sign      | -     | -     | -     | -     | +     |
+
+The below example is a normal behavior, i.e., supporting the conclusion "sample size is equal" is consistent/no-problem. (Necessary but not sufficient condition?)
+
+| Group     | Day 1 | Day 2 | Day 3 | Day 4 | Day 5 | 
+| :-------: | :---: | :---: | :---: | :---: | :---: |
+| **Exp**   | 1     | 2     | 1     | 2     | 1     |
+|**Control**| 2     | 1     | 2     | 1     | 2     |
+| Sign      | -     | +     | -     | +     | -     |
+
+#### Example 2. Evaluation metric check
+
+Let's say, our found $p^{EG}>p^{CG}$ is significant.
+
+But if the sign test is like the following 2 table, then, our conclusion is problematic. (I.e. the difference is not really significant, it is caused by outliers)
+
+| Group     | Day 1 | Day 2 | Day 3 | Day 4 | Day 5 | 
+| :-------: | :---: | :---: | :---: | :---: | :---: |
+| **Exp**   | 0.4   | 0.3   | 0.4   | 0.3   | 1.0   |
+|**Control**| 0.3   | 0.4   | 0.3   | 0.4   | 0.4   |
+| Sign      | +     | -     | +     | -     | +     |
+
+or even
+
+| Group     | Day 1 | Day 2 | Day 3 | Day 4 | Day 5 | 
+| :-------: | :---: | :---: | :---: | :---: | :---: |
+| **Exp**   | 0.3   | 0.3   | 0.3   | 0.3   | 1.0   |
+|**Control**| 0.4   | 0.4   | 0.4   | 0.4   | 0.4   |
+| Sign      | -     | -     | -     | -     | +     |
+
+The pattern supporting (necessary to) our conclusion should be like the following. (I.e. p(+) > p(-) is significant. 'practically' or 'statistically' is depednent on your needs.)
+
+| Group     | Day 1 | Day 2 | Day 3 | Day 4 | Day 5 | 
+| :-------: | :---: | :---: | :---: | :---: | :---: |
+| **Exp**   | 0.5   | 0.5   | 0.5   | 0.45  | 0.6   |
+|**Control**| 0.4   | 0.4   | 0.4   | 0.4   | 0.4   |
+| Sign      | +     | +     | +     | +     | +     |
+
+
+**personal understanding:** sign test seems to be "necessary but not sufficient" condition for our formal test on evaluation/invariant metrics.
+
 ## Deep dive: practically and statistically significant
 
 ### Meaning of "significant"

@@ -59,7 +59,7 @@ Ref: [TowardsDataScience](https://towardsdatascience.com/a-summary-of-udacity-a-
 
 
 
-## A/B testing deep dives
+## 2. A/B testing deep dives
 
 <!-- - To use A/B testing, you need to determine: 
   - What is your control group (baseline for comparison)?
@@ -68,7 +68,7 @@ Ref: [TowardsDataScience](https://towardsdatascience.com/a-summary-of-udacity-a-
     - Learning effect: it take user something to adapt to the changes (change aversion)
     - Long term effect: it take user a lot of time to response to the change (the user activity is infrequent.) -->
 
-### Situations cannot use A/B testing? 
+### 2.1. Situations cannot use A/B testing? 
 
 Ref: [Udacity-Abtesting-Lesson1-Lecture3](https://classroom.udacity.com/courses/ud257/lessons/4018018619/concepts/40043986740923), [TowardsDataScience](https://towardsdatascience.com/a-summary-of-udacity-a-b-testing-course-9ecc32dedbb1)
 
@@ -99,7 +99,7 @@ Ref: [Udacity-Abtesting-Lesson1-Lecture3](https://classroom.udacity.com/courses/
   - Ref: [Udacity-Abtesting-Lesson1-Lecture6](https://classroom.udacity.com/courses/ud257/lessons/4018018619/concepts/40043986810923)
 
 
-### Overpower and underpower
+### 2.2. Overpower and underpower
 <!-- - Overpower: 
   - When $N_{gather}$ is larger than the designed $N_{required}$, the chance of type-II error will be smaller ($\beta_{gather}<\beta_{required}$), sensitivity (statistical power) will be larger $(1-\beta)_{gather}>(1-\beta)_{required}$, that why it calls overpower.
     - This is because $N\uparrow\beta\downarrow$
@@ -119,7 +119,7 @@ Ref: [Udacity-Abtesting-Lesson1-Lecture3](https://classroom.udacity.com/courses/
 - Overpower: the test is set with too large power $(1-\beta)$, larger than necessary power.
   - I.e. $\beta$ is set too small, need gather too much data. 
   - Con: It wastes the time and resources. For medical/bio tests involving animal or human, it is unethical. 
-  - Note: overpower do NO harm to result. The result is more precise, it is just a matter of wasting.
+  - Note: overpower do **NO harm to result**. The result is **more precise**, it is just a matter of wasting.
   - Ref: [Quality-progress](http://rube.asq.org/quality-progress/2015/07/statistics-roundtable/the-significance-of-power.html), [StackExchange](https://stats.stackexchange.com/questions/9225/what-does-it-mean-for-a-study-to-be-over-powered), 
 - Underpower: the test is set with too small power $(1-\beta)$, smaller than necessary power.
   - I.e. $\beta$ is set too large, gather too few sample. L
@@ -131,6 +131,58 @@ Ref: [Udacity-Abtesting-Lesson1-Lecture3](https://classroom.udacity.com/courses/
   - Even we collect more data than required, if $H_0$ is correct, the distribution of calculated $\Delta\mu^{obs}$ should be smaller/narrower than our design, thus, have lower chance to reject $H_0$ when it is true, i.e. lower type-1 error chance, not larger. 
     - Note: the criteria of CI should be determined by $N_{required}$ in original design, not the $N_{gathered}$. The webpage cited above seems make mistake on this point.
   - TBD Refs: [Medium-blog](https://medium.com/@ignazioziano/aint-no-such-thing-as-overpowered-studies-myths-in-the-lab-part-i-5deadc6d2e60), [StackExchange](https://stats.stackexchange.com/questions/176384/do-underpowered-studies-have-increased-likelihood-of-false-positives)
+
+
+### 2.3. Multi-metric 
+
+It is ok to test multiple metrics in a same round of experiment. There are some points need to be careful about.
+
+
+#### 2.3.1. Sample size of the experiment
+
+Usually, we will set different significance level ($\alpha$), sensitivity ($1-\beta$) and minimum detectable effect $d_{\min}$ for different metric. 
+
+Thus, different metrics will required different sample size.
+
+Use the **largest/maximum** required sample size in the experiment.
+
+This is because overpower will not do no harm to the experiment. (No affect on the chance of type-1 error, decrease the chance of type-2 error.) But underpower will increase the chance of type-2 error.
+
+Ref: [Amazon-blog](https://rstudio-pubs-static.s3.amazonaws.com/347758_9da9522d18a8455fb810c48b11ff9824.html), [Github-blog](https://github.com/baumanab/udacity_ABTesting), [Sample-size-calculator](https://www.calculator.net/sample-size-calculator.html), [Dummies-blog](https://www.dummies.com/education/math/statistics/how-to-determine-the-minimum-size-needed-for-a-statistical-sample/)
+
+#### 2.3.2 Problem: Increased false positive rate (TBD, solution)
+
+If you test too many metrics, there will always be false positive. (I.e. False practically or statistically significant result.)
+
+**Mechanism:** 
+
+- Let's say the false positive rate for one metric is 5%.
+- Then among 100 metrics, the chance of at least 1 false positive result is: $1-0.95^{100} = 0.994$
+- I.e. The chance we have false positive result is increased when we do multi-metric testing.
+
+
+**Solution:** (TBD)
+
+- Bootstrap (?)
+- Run experiment multiple times to see if the result is stable.
+- There are some correction method: like Bonferoni correction.
+
+Note: Also, there will always be false negative, the mechanism is same. Just because positive result is usually more important in application, we strengthen false positive here.
+
+
+#### 2.3.3 Problem: Too long duration
+
+Different metric settings may require different amount of data. It equivalently means different metric settings need different duration. 
+
+However, if the duration difference is too large, it may violate the our original plan on the metric.
+
+For example, for one experiment, we just want to gather data in one day, because user behavior will change day by day. For another experiment, we want to gather data for months.
+
+Then, it is unsuitable to run the two experiment together. The user behavior change will affect the result of the first metric.
+
+**Solution:** Drop the very different metric. Only do experiment on metrics require similar duration/sample-size. 
+(I.e. Don't put together metrics that have very different requirements. Do experiment separately.)
+
 
 ### Other FAQs
 
