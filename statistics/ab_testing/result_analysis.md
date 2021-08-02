@@ -53,6 +53,8 @@ Q: the purple ranges (1) - (6) are different confident interval cases (for $\Del
 
 ## 2. Sanity check
 
+Notes: for sanity check, you only need to define a confidence level $\gamma=1-\alpha$, you only need to verify if the difference are statistically significant. No need to define $\beta, d_{\min}$ for sanity check.
+
 ### 2.1. Choose the invariant metric
 
 #### 2.1.1. Design principle
@@ -88,13 +90,15 @@ Q: the purple ranges (1) - (6) are different confident interval cases (for $\Del
 
 ### 2.2. Check the invariant metric
 
-**If the metric is ratio**, e.g., some conversion rate. Then, similar to the result analysis process, we will:
+#### 2.2.1. The metric is a ratio
+
+If the metric is a rate, E.g., some conversion rate. Then, similar to the result analysis process, we will:
 
 - Calculate the statistics of sample distribution 
   - mean rate: $p_{iv}^{EG}, p_{iv}^{CG}$ 
   - the standard deviation:$\mathrm{SD}_{iv}^{EG}, \mathrm{SD}_{iv}^{CG}$
   - the pooled standard deviation: $s_{pooled} = \sqrt{ \frac{(N^{EG}-1)(\mathrm{SD}_{iv}^{EG})^2 + (N^{CG}-1)(\mathrm{SD}_{iv}^{CG})^2}{N^{EG}+N^{CG} - 2}}$
-- Calculate the statistics of the mean value:
+- Deduct the confidence interval of mean difference:
   - difference of the mean: $\Delta \mu^{obs} = p_s^{EG} - p_s^{CG}$ 
   - the standard error of the $\Delta \mu$: $\mathrm{SE} = \frac{s_{pooled}}{\sqrt{N}}$
   - $\mathrm{CI}_{\Delta \mu} = [ \Delta \mu^{obs} - z_{iv}\cdot \mathrm{SE},\Delta \mu^{obs} + z_{iv}\cdot \mathrm{SE} ]$
@@ -105,17 +109,47 @@ Q: the purple ranges (1) - (6) are different confident interval cases (for $\Del
 
 <!-- Assume the sample should have eqaul chance (i.e. 0.5) to be sent to  -->
 
-**If the metric is absolute value** e.g. number of sample in each group. Then we can convert it to ratio and then compare. 
+#### 2.2.2. The metric is a quantity value
 
-E.g.: the metric is the number of samples $N_{EG},N_{CG}$, and we expect to evenly distribution the samples to $CG$ and $EG$.
 
-- In this case, evenly distribution means the probability of get sample from the pool of EG and CG is equal. 
+If the metric is quantity value, e.g. number of sample in each group. Then we can convert it to ratio and then compare. However, different from two sample test, where we use two-sample test (compare means of two distributions), here, we use one-sample test (compare mean of one distribution with a constant.)
+
+
+
+E.g.: the metric is the number of samples $N_{EG},N_{CG}$, and we expect to evenly distribution the samples to $CG$ and $EG$. 
+
+In this case, evenly distribution means the probability of get sample from the pool of EG and CG is equal, i.e. the probability of a sample sent to EG/CG should be 0.5
+
+Thus, denote $p_{iv}^{EG} := \frac{N_{EG}}{N_{EG}+N_{CG}}$, the null hypothesis should be $H_0: p_s^{EG}=0.5$ (It is also ok to use  $ p_{iv}^{CG}=0.5$, no difference.)
+
+- Calculate the statistics of the sampling process:
+  -  Mean probability of sending sample to EG: $p_{iv}^{EG} := \frac{N_{EG}}{N_{EG}+N_{CG}}$
+  -  Standard deviation of the pool population $SD$: $\mathrm{SD}^{EG}_{iv} = \sqrt{p_{iv}^{EG}(1-p_{iv}^{EG})}$
+- Deduct the confidence interval of the sampling rate:
+  - Standard error of mean probability: $\mathrm{SE}^{EG}_{iv} = \frac{\mathrm{SD}^{EG}_{iv}}{\sqrt{N}}$
+  - $\mathrm{CI_{p_{iv}^{EG}}} = [p_{iv}^{EG}-\mathrm{SE}^{EG}_{iv}, p_{iv}^{EG}+\mathrm{SE}^{EG}_{iv}]$
+- Check **statistical** significance of the invariant metric:
+  - if 0.5 is in $\mathrm{CI_{p_{iv}^{EG}}}$: no statistically significant difference, sanity check passed.
+  - if 0.5 not in $\mathrm{CI_{p_{iv}^{EG}}}$: the invariant metrics is statistically significantly different. There maybe problem in our experimental design.
+
+
+**Why one-sample not two-sample? TBD**, personal understanding: Because the sample will either go to EG or CG. So, the $p_{iv}^{EG}+p_{iv}^{CG} = 1$, they are correlated. I.e. they are 1 experiment, an experiment about whether to sending a sample from pool to EG, not two independent experiments, so don't use two sample test. The probability we are testing is the probability of sending a sample from pool to EG.
+
+
+
+<!-- 
 - Thus, we can set the conversion rate to be the chance the sampling probability of two group from the pool. 
-  - I.e.: $p_s^{EG} = \frac{N_{EG}}{N_{EG}+N_{CG}}, p_s^{CG} = \frac{N_{CG}}{N_{EG}+N_{CG}}$
+  - I.e.: $p_s^{EG} = \frac{N_{EG}}{N_{EG}+N_{CG}}, p_s^{CG} = \frac{N_{CG}}{N_{EG}+N_{CG}}$ -->
 <!-- - Then, follow the "ratio" steps to check if $p_s^{EG}$ and $p_s^{CG}$ are statistically significant.
   - Also, we can check if $p_s^{EG}$ (or $p_s^{CG}) is statistically significantly different from expected sampling rate 0.5, depending on your preference. -->
 
-- Then, we can check if $p_s^{EG}$ (or $p_s^{CG}$) is statistically significantly different from expected sampling rate 0.5, depending on your preference. (one sample test.) (**Remaining Q: can we used two sample test here? between $p_s^{EG}$ and $p_s^{CG}$?**)
+<!-- - Then, we can check if $p_s^{EG}$ (or $p_s^{CG}$) is statistically significantly different from expected sampling rate 0.5, depending on your preference. (one sample test.)  -->
+
+
+<!-- (**Remaining Q: can we used two sample test here? between $p_s^{EG}$ and $p_s^{CG}$?**) -->
+Ref: [Udacity-Abtesting-Lesson5-Lecture6](https://classroom.udacity.com/courses/ud257/lessons/4085798776/concepts/40713087720923)
+
+#### 2.2.3. Other tricks and notes
 
 **Slicing:** besides gather the whole data and check at once. You can also gather the daily data and do the sanity check day by day, to examine potential problem.
 
@@ -143,8 +177,9 @@ The purpose is to examine the generality (consistence) of our conclusion/assumpt
 
 "Sign" refers to the sign of difference between experimental group and control group.
 
-- If we want to prove A is larger than B, then, we expect to see the daily $A-B$ have more positive signs. I.e. $p(+)>p(-)$ or 0.5 is significant. 
-- If we use it on quantities have equal value, we expect the $+$ and $-$ should be similar. I.e. $p(+)>p(-)$ or 0.5 is insignificant.
+- If we want to prove A is larger than B, then, we expect to see the daily $A-B$ have more positive signs. I.e. $H_0: p(+)=0.5$ is rejected ( $p(+)>0.5$ is significant ). 
+- If we use it on quantities have equal value, we expect the $+$ and $-$ should be similar. I.e. $H_0: p(+)=0.5$ is accepted ( $p(+)>0.5$  is insignificant ).
+- This is also a one-sample test, see sec 2.2.2.
 
 <!-- whether the data of experimental/control group have similar fluctuation. -->
 

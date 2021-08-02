@@ -18,39 +18,42 @@
     - There are only **1 variable** in ab-testing. (E.g. Color of button, design of the webpage, etc.)
     - "variants" vs "variable": e.g. $x$-axis is a variable, the values $x_1, x_2, \dots$ on $x$-axis are variants for the $x$ variable.
 
-### 1.2. Process
+### 1.2. AB test process
 
 Ref: [TowardsDataScience](https://towardsdatascience.com/a-summary-of-udacity-a-b-testing-course-9ecc32dedbb1)
 
-0. Brainstorm:
-   - What do you care about? I.e. What is your goal/objective, do you have existing metric/target? 
-     - Used to design evaluation metric.
-   - What is experiment unit and our target population?
-     - Unit (of diversion): the target unit we want to analysis.
-       - E.g.: Per user ID, per cookies, per device, per IP.\
-       - The more close to the individual object in our goal, the less variability the unit is, the better the unit.
-       - "variability": the uncertainty of the unit to the true individual target we want to analysis.
-         - E.g. We want to analyze individual customer; we only have user id, visit cookie, visit device, visit IP; A customer could have different id, cookie, device, ip. 
-         - If according our intuition or research, usually a user usually have only 1 id but several cookie/device/ip. 
-         - Then, user id would have the least variability, i.e., a user id can-represent/is-more-close-to an individual user.
-     - Population:
-       - Filtration: Avoid unwanted data according to you goal.
-         - E.g. we want to analyze buyer rather than non-buyer visitors, then, we would like to exclude the visitor who didn't buy the product.
-       - Subpopulation (study)
-         - The contribution from different subpopulation may be different
-         - Used to analyze the result (maybe we should separate different sub-populations to discuss/do-experiment.)
-   - What is the duration of the experiment?
-     - Our assumption on individual sample is i.i.d.
-       - If the duration is too long, the data may shift during the experiment.
-       - If the duration is too short, then the sampling process may not cover the whole distribution (e.g. different types of users/samples) comprehensively. 
-         - Then, we would have sample bias.
-       - Typically the duration is 1-2 weeks, less than 4 weeks.
-       - Ref: [Invespcro-blog](https://www.invespcro.com/blog/how-long-should-you-run-an-ab-test-for/)
-     - Used/considered when setting parameters to calculate sample size.
-   - Any potential influential factors/bugs, any possible discrepancy between designer and user
-     - Can be verified by designing invariant metric 
-     - Can used to analyze result.
-   
+#### 1.2.0. Brainstorm:
+
+ - What do you care about? I.e. What is your goal/objective, do you have existing metric/target? 
+   - Used to design evaluation metric.
+ - What is experiment unit and our target population?
+   - Unit (of diversion): the target unit we want to analysis.
+     - E.g.: Per user ID, per cookies, per device, per IP.\
+     - The more close to the individual object in our goal, the less variability the unit is, the better the unit.
+     - "variability": the uncertainty of the unit to the true individual target we want to analysis.
+       - E.g. We want to analyze individual customer; we only have user id, visit cookie, visit device, visit IP; A customer could have different id, cookie, device, ip. 
+       - If according our intuition or research, usually a user usually have only 1 id but several cookie/device/ip. 
+       - Then, user id would have the least variability, i.e., a user id can-represent/is-more-close-to an individual user.
+   - Population:
+     - Filtration: Avoid unwanted data according to you goal.
+       - E.g. we want to analyze buyer rather than non-buyer visitors, then, we would like to exclude the visitor who didn't buy the product.
+     - Subpopulation (study)
+       - The contribution from different subpopulation may be different
+       - Used to analyze the result (maybe we should separate different sub-populations to discuss/do-experiment.)
+ - What is the duration of the experiment?
+   - Our assumption on individual sample is i.i.d.
+     - If the duration is too long, the data may shift during the experiment.
+     - If the duration is too short, then the sampling process may not cover the whole distribution (e.g. different types of users/samples) comprehensively. 
+       - Then, we would have sample bias.
+     - Typically the duration is 1-2 weeks, less than 4 weeks.
+     - Ref: [Invespcro-blog](https://www.invespcro.com/blog/how-long-should-you-run-an-ab-test-for/)
+   - Used/considered when setting parameters to calculate sample size.
+ - Any potential influential factors/bugs, any possible discrepancy between designer and user
+   - Can be verified by designing invariant metric 
+   - Can used to analyze result.
+
+#### 1.2.1. Design
+
 1. Choose the evaluation metric and invariant metric.
    - Evaluation metric: your target metric or design one based on your goal.
    - Invariant metric is for sanity check, i.e. "what should be affected during the experiment"

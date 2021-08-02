@@ -6,11 +6,11 @@ Both of them are often used to test mean value of a population.
 Both of them required the mean value follows normal distribution.
 
 - Z-test: 
-  - test is used when sample size is large (n>50)
+  - test is used when sample size is large (n>30)
   - or the variance is known.
 
-- T-test: difference between two population
-  - sample size is small (n<50) and population variance is unknown
+- T-test:
+  - sample size is small (n<30) and population variance is unknown
 
 <div  align="center"><img src=https://miro.medium.com/max/1400/1*XEtoA1-DkbXRdraMi4MxKQ.png style = "zoom:40%"></div>
 
