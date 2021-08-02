@@ -23,12 +23,42 @@
 Ref: [TowardsDataScience](https://towardsdatascience.com/a-summary-of-udacity-a-b-testing-course-9ecc32dedbb1)
 
 0. Brainstorm:
-   - What is your goal/objective?
-   - Do you have existing metric/target?
+   - What do you care about? I.e. What is your goal/objective, do you have existing metric/target? 
+     - Used to design evaluation metric.
+   - What is experiment unit and our target population?
+     - Unit (of diversion): the target unit we want to analysis.
+       - E.g.: Per user ID, per cookies, per device, per IP.\
+       - The more close to the individual object in our goal, the less variability the unit is, the better the unit.
+       - "variability": the uncertainty of the unit to the true individual target we want to analysis.
+         - E.g. We want to analyze individual customer; we only have user id, visit cookie, visit device, visit IP; A customer could have different id, cookie, device, ip. 
+         - If according our intuition or research, usually a user usually have only 1 id but several cookie/device/ip. 
+         - Then, user id would have the least variability, i.e., a user id can-represent/is-more-close-to an individual user.
+     - Population:
+       - Filtration: Avoid unwanted data according to you goal.
+         - E.g. we want to analyze buyer rather than non-buyer visitors, then, we would like to exclude the visitor who didn't buy the product.
+       - Subpopulation (study)
+         - The contribution from different subpopulation may be different
+         - Used to analyze the result (maybe we should separate different sub-populations to discuss/do-experiment.)
+   - What is the duration of the experiment?
+     - Our assumption on individual sample is i.i.d.
+       - If the duration is too long, the data may shift during the experiment.
+       - If the duration is too short, then the sampling process may not cover the whole distribution (e.g. different types of users/samples) comprehensively. 
+         - Then, we would have sample bias.
+       - Typically the duration is 1-2 weeks, less than 4 weeks.
+       - Ref: [Invespcro-blog](https://www.invespcro.com/blog/how-long-should-you-run-an-ab-test-for/)
+     - Used/considered when setting parameters to calculate sample size.
+   - Any potential influential factors/bugs, any possible discrepancy between designer and user
+     - Can be verified by designing invariant metric 
+     - Can used to analyze result.
+   
 1. Choose the evaluation metric and invariant metric.
-   - Evaluation metric is "what do you care about?"
+   - Evaluation metric: your target metric or design one based on your goal.
    - Invariant metric is for sanity check, i.e. "what should be affected during the experiment"
-   - Need to consider about sensitivity and robustness when choosing metric.
+   - When choosing metric, need to consider: 
+     - Sensitivity and robustness. 
+       - E.g. median or mean?
+     - Duration:
+       - Use the short term proxy for metrics need long term. 
 2. Choose: 
    - Significant level ($\alpha$)
    - Sensitivity ($1-\beta$, also called statistical power)
@@ -98,6 +128,11 @@ Ref: [Udacity-Abtesting-Lesson1-Lecture3](https://classroom.udacity.com/courses/
   - Heuristic/expert evaluation: ask expert to evaluate the new feature based on their experience. Ref: [YouTube](https://www.youtube.com/watch?v=TQ5jY1kKUNk), [Wiki](https://en.wikipedia.org/wiki/Heuristic_evaluation) 
   - Ref: [Udacity-Abtesting-Lesson1-Lecture6](https://classroom.udacity.com/courses/ud257/lessons/4018018619/concepts/40043986810923)
 
+
+**Further Q:** Some example questions suitable (CAN) for ab-testing?
+
+- Whether the latency can affect user behavior? (infrastructure A vs B)
+- Which backend-infrastructure/algorithm/ranking/color is better?
 
 ### 2.2. Overpower and underpower
 <!-- - Overpower: 
@@ -232,6 +267,13 @@ Then, it is unsuitable to run the two experiment together. The user behavior cha
     - Causality conclusion: website error make user to stay. (So we should increase the website error?)
       - This causality conclusion is absurd.
     - Note: customer churn = customer leave.
+
+- Two phases of A/B testing: (TBD)
+  - Exploration: use test samples to decide whether we need to make change.
+  - Exploitation: launch the changes and observe the effect.
+
+
+<!-- - Z-score: AB-testing use [Z-test](https://en.wikipedia.org/wiki/Z-test). AB test can use different types of statistical test. see: https://stats.stackexchange.com/questions/178854/a-b-tests-z-test-vs-t-test-vs-chi-square-vs-fisher-exact-test-->
 
 ## Related knowledges
 

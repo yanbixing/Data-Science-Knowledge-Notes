@@ -1,8 +1,11 @@
 # NLP General
 
-## NLP Process
+## 1. Typical Text Processing Procedures
 
-### Tokenization (Tokenizer):
+
+### 1.1. Text preprocessing
+
+#### 1.1.1. Tokenization (Tokenizer)
 
 - A process split string to words.
   - Splitter: whitespace, comma, enter, etc. 
@@ -11,11 +14,19 @@
   - Lemmatization: return the base form of the word.
   - Stop words: words to be filtered out, usually the most common "no-meaning" words (e.g. the, to, of, for, etc.)
 
-### Vectorization (Vectorizer):
+#### 1.1.2. Lemmatization
+
+Return the base form of the word.
+
+#### 1.1.3. Stemming
+
+Return the root of the the word.
+
+### 1.2. Vectorization (Vectorizer):
 
 A process converting string to vector.
 
-#### Related techs:
+#### 1.2.1. Related techs:
 
 - [Bag of words (BOW)](https://en.wikipedia.org/wiki/Bag-of-words_model): break the sentence to words, disregarding grammar or order, only keep word frequency.
   - e.g. string object -> dict object {words:frequency}
@@ -41,9 +52,9 @@ A process converting string to vector.
           - Missing value techs, ref [feature_engineering-Sec 2.1](../general_machine_learning/data_engineering/feature_engineering.md)
           - Smoothing techs, like Laplacian smoothing: For all features, add 1 count to the bag. (To guarantee all features have at least 1 count; then, the total counts increase with the number of features. ) Ref: [Lazyprogrammer blog](https://lazyprogrammer.me/probability-smoothing-for-natural-language-processing/)
 
-## NLP Tasks
+## 2. Typical NLP Tasks
 
-### Part of speech (PoS) Tagging
+### 2.1. Part of speech (PoS) Tagging
 
 Find the grammatical tag (noun, adjective, verb, etc.) of the word.
 
@@ -56,3 +67,28 @@ A classification task. The output is
     - Expression of the likelihood? $L(\mathcal{S}) = \prod^m_i p( {\text{tag}}_i, {\text{word}}_i)$?
   - The transition matrix?
   - P as a function of transition matrix?
+
+#### Other FAQs
+
+- The simplest approach to building a POS tagger?
+  - Use dictionary.
+- How do you builder a POS tagger from scratch?
+  - Prepare the tagged doc and train RNN/Tree/HHM model with data.
+
+
+
+### 2.2. Named entity recognitions (NER)
+
+Ref: [Wiki-NER](https://en.wikipedia.org/wiki/Named-entity_recognition)
+
+Identify entities like person, organization, geography locations, events, etc from the text data. 
+
+#### 2.2.1. Typical models 
+
+Tree, RNN, [Random conditional field](https://en.wikipedia.org/wiki/Conditional_random_field) (Similar to HMM). 
+
+#### 2.2.2. Example application
+
+The algorithm can solve the problems:
+
+- How to identify whether "Apple" refers to the fruit or the company.

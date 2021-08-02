@@ -1,15 +1,44 @@
 # Metric
 
-## 1. Typical metrics in AB testing:
+## 1. Process to select metrics
 
-- Sum and counts
+1. Think in high/concept/object level, what metric/quantity we are caring about.
+2. Turn the object/concept to real definition/function
+3. Examine/adjust the metric. Based on:
+   - Sensitivity and robust ness. By:
+     - Real experiment
+     - A/A test
+     - Retrospective (cohort) analysis
+   - Distribution on the metric
+     - Typically, we want Gaussian/not-skewed distribution (Why? Easy to analysis?)
+
+
+
+## 2. Typical metrics in AB testing:
+
+- Sum and counts.
 - Statistics of distribution (e.g. mean, median, percentiles)
 - Probability and rates (e.g. click through probability/rates)
 - Ratios: division between any two numbers.
 
-## 2. Sensitivity and robustness
+**Note:** 
 
-### Definition
+In AB-testing, all metrics are expressed as rates. (See: in [analytics-toolkit](http://blog.analytics-toolkit.com/2017/statistical-significance-non-binomial-metrics-revenue-time-site-pages-session-aov-rpu/) )
+
+Thus, the absolute value "metrics" (i.e. non-percentage value), like sums, counts, means, medians cannot be used directly. Typically, to use them in AB testing, we will convert them to ratio:
+
+$r_A = \frac{q_A}{q_A+q_B}$, $r_B = \frac{q_B}{q_A+q_B}$
+
+Typically, $H_0$ indicates "A and B have no difference". Thus, $H_0$ can be set as:
+
+$H_0: r_A = r_B$
+
+(TBD: There seems not correct, we can only compare it with 0.5, it is a one sample test, not two sample test, as the r_A and r_B is correlated.)
+
+
+## 3. Sensitivity and robustness
+
+### 3.1. Definition
 
 - Sensitivity: Whether the metric is *sensitive* to the change of the data.
   - English: if a part of the data changes, how much the metric is affected. 
@@ -18,7 +47,7 @@
   - English: if a part of the data become outliers, i.e. have extreme abnormal values, how much the metric is affected.
   - The lower the metric value changes, the higher robustness.
 
-### Trade-off between sensitivity and robustness
+### 3.2. Trade-off between sensitivity and robustness
 
 Generally, there should be a counter effect between sensitivity and robustness. 
   - This is because *outlier* can be viewed as a kind extreme large change of data. 
@@ -35,7 +64,8 @@ Generally, there should be a counter effect between sensitivity and robustness.
 
 Note (personal understanding): although mathematically outlier is a also a kind of change, in terms of the purpose,sensitivity aims to capture small changes in a relatively large part of samples. While the robustness aims to exclude the affect from very extreme individual samples. For example can can design a metric that ignore the outliers and then get average of "normal" samples, then, the sensitivity and robustness may be achieved at same time. (?)
 
-### How to measure/observe the sensitivity and robustness?
+### 3.3. How to measure/observe the sensitivity and robustness?
+
 - Use real experiment, 
   - i.e. change data in the dataset and observe the change of metric.
   - e.g.: "E.g. mean vs median" above.
