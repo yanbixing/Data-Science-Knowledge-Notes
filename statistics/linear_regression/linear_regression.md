@@ -179,6 +179,8 @@ Total least square, also called "orthogonal regression", minimize the sum square
 
 PCA: maximize the variance on the direction of principal component. The direction of the principal component is the direction of the TLS. 
 
+#### Why PCA = TLS?
+
 Intuitive proof (not strict.):
 Note: for PCA we need mean subtraction. I.e. make the center of the data to (0,0). 
 Note: for simplicity, we assume the line always pass (0,0), i.e. it rotates around the origin point, the only thing is to fit is the slope. (That is why the proof is not strict, just intuitive.)
@@ -210,9 +212,6 @@ The proof is not strict. But the slope direction calculated from TLS is exactly 
 
 PCA and SVD see: [matrix_factorization.md](../../general_machine_learning/math_topics/matrix_factorization.md)
 
-
-
-#### Why PCA = TLS?
 
 
 
@@ -262,7 +261,70 @@ $$\mathrm{SE}_{\beta^{(1)}} \sim \frac{1}{\sqrt{m}} \frac{\sigma(\varepsilon)}{\
 
 ### 2.2. Geometric understanding of correlation
 
+The correlation coefficient can be understood as the $\cos$ value of the angle between the two $m$-dim vectors constructed from the mean-subtracted x-coordinates and y-coordinates respectively.
+
+- Note: Mean subtraction is a translation operation; translation operation will not change the covariance and variance, so it will not change correlation.
+
+I.e. 
+
+- Assume we have $m$ samples, the mean-subtracted data is denoted as $\mathcal{S} = \{(x_1, y_1), \dots, (x_m, y_m) \}$, denotes $\boldsymbol{v}_X = (x_1, \dots, x_m)$, $\boldsymbol{v}_Y = (y_1, \dots, y_m)$
+- Then, we have: $r_{xy} = \cos(\boldsymbol{v}_X, \boldsymbol{v}_Y)$
+  
+
+**proof:**
+
+- Note: after mean subtruction $\bar{x}=0$, $\bar{y}=0$
+
+$\begin{aligned} r_{xy} & = \frac{Cov(x,y)}{\sigma(x)\sigma(y)} = \frac{\frac{1}{m} \sum^m_{i=1} (x_i-\bar{x})(y_i-\bar{y}) }{ \sqrt{\frac{1}{m} \sum^m_{i=1} (x_i-\bar{x})^2} \sqrt{\frac{1}{m} \sum^m_{i=1} (y_i-\bar{y})^2} }
+\\ & = \frac{\sum^m_{i=1} (x_i-\bar{x})(y_i-\bar{y}) }{ \sqrt{ \sum^m_{i=1} (x_i-\bar{x})^2} \sqrt{ \sum^m_{i=1} (y_i-\bar{y})^2} }
+\\ & \underset{0 \text{ mean} }{=} \frac{\sum^m_{i=1} x_iy_i }{ \sqrt{ \sum^m_{i=1} x^2_i} \sqrt{ \sum^m_{i=1} y^2_i} } = \frac{\boldsymbol{v}_X \cdot \boldsymbol{v}_Y}{ \|\boldsymbol{v}_X\| \|\boldsymbol{v}_Y\| } = \cos(\boldsymbol{v}_X , \boldsymbol{v}_Y)
+\end{aligned}$
+
+**proof:** translation doesn't change Covariance and Variance.
+- Note: $c$ is a constant, $x$ is a variable, then
+  - $\overline{x+c} = E(x+c) = E(x)+c = \bar{x}
++c $
+
+$\begin{aligned}
+  \mathrm{Cov}(x+c,y) &= \frac{1}{m}\sum^m_{i=1} [(x_i+c) - \overline{x+c} \text{ } ](y_i - \bar{y})\\
+  &= \frac{1}{m}\sum^m_{i=1} [(x_i+c) - (\bar{x}+c) ](y_i - \bar{y})\\
+  &= \frac{1}{m}\sum^m_{i=1} (x_i- \bar{x}) (y_i - \bar{y}) = \mathrm{Cov}(x,y)
+\end{aligned}$
+
+$\begin{aligned}
+  \mathrm{Var}(x+c) &= \frac{1}{m}\sum^m_{i=1} [(x_i+c) - \overline{x+c} \text{ } ]^2\\
+  &= \frac{1}{m}\sum^m_{i=1} [(x_i+c) - (\bar{x}+c) ]^2\\
+  &= \frac{1}{m}\sum^m_{i=1} (x_i- \bar{x})^2 = \mathrm{Var}(x)
+\end{aligned}$
+
 Ref: [ResearchGate](https://www.researchgate.net/publication/256374947_Geometric_interpretation_of_a_correlation)
+
+#### Application Examples
+
+Q: We have a data in three dimension $\mathcal{X} = \{(x_1,y_1,z_1), \dots, (x_m,y_m,z_m)\}$. Given $r_{xy} = \alpha, r_{yz} = \beta$, solve the range of $r_{xz}$.
+A: Use the geometric understand, 
+Denotes $X:=(x_1,\dots, x_m)$,$Y:=(y_1,\dots, y_m)$, $Z:=(z_1,\dots, z_m)$ 
+And denote the angle between $A, B$ as $\theta_{AB}$, then: $\theta_{XY} = \arccos \alpha$, $\theta_{YZ} = \arccos \beta$
+Then, $\theta_{XZ}\in [\theta_{XY} - \theta_{YZ},\theta_{XY} + \theta_{YZ} ]$
+
+<div  align="center"><img src=http://i.imgur.com/XRpz35T.png style = "zoom:60%"></div>
+
+Thus $r_{xz} = \cos\theta_{XZ} \in [ \cos(\arccos\alpha+\arccos\beta), \cos(\arccos\alpha-\arccos\beta) ]$
+Ref: [Blog](http://jakewestfall.org/blog/index.php/2013/09/17/geometric-argument-for-constraints-on-corrxz-given-corrxy-and-corryz/)
+
+
+## 3. FAQ
+
+
+### 3.1. Influence on fitting results
+
+How does the coefficient and t-score (or z-score) changes when the following cases happens?
+
+#### 3.1.1 Duplication of data
+
+
+#### 3.2.2 Swith X and Y
+
 
 ## Deep Dive: Assumptions in linear regression
 
