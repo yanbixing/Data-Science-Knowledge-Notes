@@ -7,6 +7,20 @@
   - i-th sample is denoted as $(\boldsymbol{x}_i, y_i)$.
   - j-th feature of the input of i-th sample is denoted as $\boldsymbol{x}^{(j)}$.
 - $\hat{y_i} :=\hat{y}(x_i) := f(x_i)$: the estimated/prediction value according to estimator $f$.
+- $\sigma(y):=\mathrm{SD}(y):=\sqrt{\mathrm{Var}(y)}$: population standard deviation.
+
+### 0.1. Frequent equations
+
+- Covariance of (x,y)
+$$\begin{aligned} \mathrm{Cov}(x,y) &= E[ (x-\bar{x})(y-\bar{y}) ]\\
+&= E(xy - \bar{x}y-x\bar{y}+\bar{x}\bar{y})\\
+&= E(xy) - E(x)E(y) - E(x)E(y) + E(x)E(y) \\
+& = E(xy) - E(x)E(y)
+\end{aligned}$$
+- Correlation coefficient of (x,y)
+$$\begin{aligned} \mathrm{r_{cov}}(x,y) &:= \frac{\mathrm{Cov}(x,y)}{\sigma(x)\sigma(y)} \\ &= \frac{[ \frac{1}{m}\sum^m_{i=1}(x_i-\bar{x})(y_i-\bar{y}) ]}{ \sqrt{\ \frac{1}{m}\sum^m_{i=1}(x_i-\bar{x})^2} \sqrt{ \frac{1}{m}\sum^m_{i=1}(y_i-\bar{y})^2} }
+\end{aligned}$$
+
 
 ## 1. Basics
 
@@ -15,19 +29,20 @@
 - (Total )Variance of y variable: 
   $$\mathrm{Var}(y):=\mathrm{Var_{tot}}(y) := \frac{1}{m} \sum^m_{i=1} ( y_i - \bar{y} )^2$$
 - Explained variance of y variable: 
-  $$\mathrm{Var_{exp}}(y) := \frac{1}{m} \sum^m_{i=1} ( \hat{y}_i - \bar{y} )^2$$
+  $$\mathrm{Var_{exp}}(y,\hat{y}) := \frac{1}{m} \sum^m_{i=1} ( \hat{y}_i - \bar{y} )^2$$
 - Residual variance of y variable: 
-  $$\mathrm{Var_{res}}(y) := \sum_i \varepsilon^2_i := \frac{1}{m} \sum^m_{i=1} ( \hat{y}_i - y_i )^2$$
-  - $\varepsilon_i$: **residue** of prediction on i-th sample.
-
-
+  $$\mathrm{Var_{res}}(y,\hat{y}) := \frac{1}{m} \sum^m_{i=1} \varepsilon^2_i := \frac{1}{m} \sum^m_{i=1} ( \hat{y}_i - y_i )^2$$
+  - $\varepsilon_i := y_i - f(x_i)$: **residue** of prediction on i-th sample.
+  - $\mathrm{Var_{res}}$ is also call "Residual error"
+    - $\sum^m_{i=1} \varepsilon^2_i$ is called "sum squared error" (SSE)
+  
 
 ### 1.1. OLS: Ordinary least square
 
 A method to fit the linear model.
 $$\boldsymbol{\beta} =\underset{\beta}{\argmin} \left [ \sum^m_{i=1} (y_i - f(x_i))^2 \right ]$$
 
-where $\mathrm{Var_{res}}(y) : = \frac{1}{m} \sum^m_{i=1} (y_i - f(x_i))^2$ and $f(x) = \sum_j \beta^{(j)} x^{(j)}$
+where $\mathrm{Var_{res}}(y) : = \frac{1}{m} \sum^m_{i=1} [y_i - f(x_i)]^2$ and $f(x) = \sum_j \beta^{(j)} x^{(j)}$
 
 E.g.: 
 
@@ -55,7 +70,7 @@ E.g.:
 - Therefore 
   $$ \left\{
     \begin{aligned}
-    &\beta^{(0)}= \bar{y} - b^{(1)} \bar{x} \\
+    &\beta^{(0)}= \bar{y} - \beta^{(1)} \bar{x} \\
     &\beta^{(1)} = \frac{\mathrm{Cov}(x,y) }{ \mathrm{Var}(x) } = r_{\mathrm{cov}}(x,y) \frac{\sigma(y)}{\sigma(x)} 
     \end{aligned}
     \right.
@@ -63,7 +78,19 @@ E.g.:
   - where: $r_{\mathrm{cov}}(x,y):= \frac{\mathrm{Cov}(x,y)}{\sigma(x)\sigma(y)} := r_{xy}$ is the correlation coefficient.
 
 
+for OLS:
+
+$\begin{aligned}
+  \bar{\varepsilon} & = E(y_i) - E[f(x_i)] = \bar{y} - \beta^{(1)}\bar{x}-\beta^{(0)}\\
+  & = \bar{y} - \beta^{(1)}\bar{x} - (\bar{y} - \beta^{(1)} \bar{x} )\\
+  & =0
+\end{aligned}$ 
+
+$\mathrm{Var_{res}}(y) := \sum_i \varepsilon^2_i \underset{OLS}{=} \sum_i (\varepsilon_i - \bar{\varepsilon})^2 = \mathrm{Var}(\varepsilon) $
+
 ### 1.2. R-squared score: $R^2$
+
+R-squared is also called "coefficient of determination" Ref: [Stattrek](https://stattrek.com/regression/linear-regression.aspx?Tutorial=AP)
 
 #### 1.2.1. Definition:
 
@@ -136,6 +163,106 @@ $\begin{aligned}
 
 <font color="#0000dd">**Need to remember:**</font> <mark style="background-color:yellow;"><font color="#0000dd">$\mathrm{Var_{res}}= (1- r^2_{xy} )\mathrm{Var}(y)$</font></mark>
 
+### 1.3. TLS: total least square
+
+Ref: [Blog](https://cerebralmastication.com/2010/09/principal-component-analysis-pca-vs-ordinary-least-squares-ols-a-visual-explination/)
+
+OLS, "O" for ordinary, ordinate, i.e. the y-axis. I.e. it minimizes the squared error on y-axis.
+
+  <div  align="center"><img src=https://www.cerebralmastication.com/wp-content/uploads/2010/09/OLS1-280x300.png style = "zoom:80%"></div>
+
+
+Total least square, also called "orthogonal regression", minimize the sum squared distance between the points and the line.
+
+  <div  align="center"><img src=https://www.cerebralmastication.com/wp-content/uploads/2010/09/pca-280x300.png style = "zoom:80%"></div>
+
+
+PCA: maximize the variance on the direction of principal component. The direction of the principal component is the direction of the TLS. 
+
+Intuitive proof (not strict.):
+Note: for PCA we need mean subtraction. I.e. make the center of the data to (0,0). 
+Note: for simplicity, we assume the line always pass (0,0), i.e. it rotates around the origin point, the only thing is to fit is the slope. (That is why the proof is not strict, just intuitive.)
+
+<div  align="center"><img src=./linear_regression_asset/TLS_and_PCA.jpeg style = "zoom:18%"></div>
+
+For PCA, denote the direction of the line as $\boldsymbol{w}$
+$\begin{aligned}
+  \boldsymbol{w} & = \underset{\boldsymbol{w}}{\argmax} \left[(\boldsymbol{X}\boldsymbol{w})^2\right] = \underset{\boldsymbol{w}}{\argmax}\left[\sum_i (d^{\parallel}_i)^2 \right] 
+\end{aligned}$
+
+And for TLS, denote the direction of the line as $\boldsymbol{u}$
+$\begin{aligned}
+\boldsymbol{u} &= \underset{\boldsymbol{u}}{\argmin}\left[\sum_i (d^{\perp}_i)^2 \right]
+  \\& = \underset{\boldsymbol{u}}{\argmin}\left\{\sum_i [d^2_i - (d^{\parallel}_i)^2 ] \right\}\\
+   &= \underset{\boldsymbol{u}}{\argmax}\left[\sum_i (d^{\parallel}_i)^2 \right]
+\end{aligned}$
+This means TLS maximize the variance of the projections of data on the direction of the fitting line. 
+
+The proof is not strict. But the slope direction calculated from TLS is exactly the principal component direction calculated from PCA. The difference between the two tasks is: for PCA, we only care about direction, but for TLS, we need the line function, we also need the intercept.
+  
+
+- Ref: 
+  - [NYU-pdf](https://cs.nyu.edu/~fergus/teaching/comp_photo/readings/leastSquares.pdf): Similar to above thinking, interpreting TLS as minimize the variance on the perpendicular direction.
+  - [Blog](https://cerebralmastication.com/2010/09/principal-component-analysis-pca-vs-ordinary-least-squares-ols-a-visual-explination/): claim PCA = TLS
+  - [StackExchange](https://stats.stackexchange.com/a/2700): Claim PCA = TLS, and give a further ref
+
+
+
+PCA and SVD see: [matrix_factorization.md](../../general_machine_learning/math_topics/matrix_factorization.md)
+
+
+
+#### Why PCA = TLS?
+
+
+
+## 2. Topics
+
+### 2.1. Hypothesis and regression
+
+In hypothesis testing area, linear regression is often used to identify whether the dependent variable y is related to feature x. If the slope is zero, we will regard x and y as irrelevant.
+
+I.e.  Denote the best estimator for (x,y) as $f(x) = \beta^{(0)} + \beta^{(1)}x$, then:
+
+- $H_0: \beta^{(1)} = 0$
+- $H_1: \beta^{(1)} \not = 0$
+
+The mean value of $\beta^{(1)}$ is the fitted $\beta^{(1)obs}$ from OLS or other methods.
+
+The SE of $\beta^{(1)}$ (SEC: standard error of coefficients) is deducted from the residual error.
+
+the $\mathrm{CI}_{(\beta^{(1)})} = [\beta^{(1)obs} - z\cdot \mathrm{SE}_{\beta^{(1)}}, \beta^{(1)obs} + z\cdot \mathrm{SE}_{\beta^{(1)}}]$
+
+If $0 \in \mathrm{CI}_{(\beta^{(1)})}$, accept $H_0$, x,y is irrelevant; else, reject $H_0$, x,y is relevant.
+
+- Alternatively, you can also use the calculate the z-score of the $\beta^{(1)obs}$: $z^{obs} = \frac{\beta^{(1)obs} - \beta_{H_0}}{\mathrm{SE}(\beta^{(1)})}$, calculated the p-value, and compare it with $\alpha$. 
+  - $\mathrm{p-val} (\beta^{(1)obs})<\alpha \Rightarrow$ Reject $H_0$ (i.e. the obs value fall out of CI under $H_0$)
+  - $\mathrm{p-val} (\beta^{(1)obs})>\alpha \Rightarrow$ Accept $H_0$(i.e. the obs value fall in the CI under $H_0$)
+
+**Note:** fomula of SEC
+
+Ref: [StackExchange](https://stats.stackexchange.com/questions/85943/how-to-derive-the-standard-error-of-linear-regression-coefficient), [Wiki-Linear_regression](https://en.wikipedia.org/wiki/Simple_linear_regression#Normality_assumption)
+
+
+The SE of can be deducted from the residual error: 
+
+
+$$\mathrm{SE}_{\beta^{(1)}} = \frac{1}{\sqrt{m-2}}\sqrt{\frac{\frac{1}{m}\sum^m_{i=1} (y_i - f(x_i))^2 }{\frac{1}{m} (x_i-\bar{x})^2 }} = \frac{1}{\sqrt{m-2}}\sqrt{\frac{\mathrm{Var_{res} }(y,\hat{y})}{\mathrm{Var}(x)}}$$
+
+For OLS $\mathrm{Var_{res} }(y,\hat{y}) = \mathrm{Var}(\varepsilon) := \sigma^2(\varepsilon)$, thus
+$$\mathrm{SE}_{\beta^{(1)}} \sim \frac{1}{\sqrt{m}} \frac{\sigma(\varepsilon)}{\sigma(x)}$$
+ 
+**Memorization tips:** (not strict, just help to memorize)
+
+- $\sigma(\varepsilon)$: higher error in y, the more inaccurate on $\beta^{(1)}$
+- $\sigma(x)$: when x scale increase, the value of $\beta^{(1)}$ shrinks, so as the uncertainty on $\beta^{(1)}$.
+- $\frac{1}{\sqrt{m}}$ similar to mean value, more sample, more precise we can estimate the parameter.
+- $\frac{1}{\sqrt{m-2}}$ 2 points can define a line, so we need sacrifice 2 degree of freedom.
+
+
+### 2.2. Geometric understanding of correlation
+
+Ref: [ResearchGate](https://www.researchgate.net/publication/256374947_Geometric_interpretation_of_a_correlation)
 
 ## Deep Dive: Assumptions in linear regression
 
