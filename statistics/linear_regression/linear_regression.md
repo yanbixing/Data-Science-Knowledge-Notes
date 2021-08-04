@@ -322,8 +322,38 @@ How does the coefficient and t-score (or z-score) changes when the following cas
 
 #### 3.1.1 Duplication of data
 
+For OLS:
+
+  $$ \left\{
+    \begin{aligned}
+    &\beta^{(0)}= \bar{y} - \beta^{(1)} \bar{x} \\
+    &\beta^{(1)} = \frac{\mathrm{Cov}(x,y) }{ \mathrm{Var}(x) } = r_{\mathrm{cov}}(x,y) \frac{\sigma(y)}{\sigma(x)} 
+    \end{aligned}
+    \right.
+  $$
+
+
+- Since: covariance and variance doesn't change when duplicating data:
+  - $\mathrm{Cov}(x,y) = \frac{1}{m}[\sum^m_{i=1} (x_i-\bar{x})(y_i-\bar{y})] = \frac{1}{2m}[2\cdot\sum^m_{i=1} (x_i-\bar{x})(y_i-\bar{y})]$
+  - $\mathrm{Var}(x)= \frac{1}{m} \sum^m_{i=1} ( y_i - \bar{y} )^2= \frac{1}{2m} 2\cdot \sum^m_{i=1} ( y_i - \bar{y} )^2$
+- Thus, coefficients $\beta^{(0)}$ and $\beta^{(1)}$ NOT change when duplicating data.
+  
+  $$\mathrm{SE}_{\beta^{(1)}} \sim \frac{1}{\sqrt{m}} \frac{\sigma(\varepsilon)}{\sigma(x)}$$
+
+- Similar to above, variance doesn't change when duplicating;Population standard deviation doesn't change when duplicating.
+  - $\sigma(\varepsilon)= \sqrt{ \frac{1}{m} \sum^m_{i=1} \varepsilon_i^2 } = \sqrt{ \frac{1}{2m} 2 \cdot \sum^m_{i=1} \varepsilon_i^2 }$
+- Thus, $\mathrm{SE}_{\beta^{(1)}} \sim \frac{1}{\sqrt{m}}$ will drop. I.e. $\mathrm{SE}_{\beta^{(1)}, 2m} = \frac{1}{\sqrt{2}} \mathrm{SE}_{\beta^{(1)},m}$ 
+  - smaller CI, more precise
+
+
+$$z^{obs} = \frac{\beta^{(1)obs} - \beta_{H_0}}{\mathrm{SE}(\beta^{(1)})}$$
+
+- $\beta^{(1)obs}$ will not change, $\mathrm{SE}_{\beta^{(1)}, 2m} = \frac{1}{\sqrt{2}} \mathrm{SE}_{\beta^{(1)},m}$
+- Thus, $z^{obs}_{2m} = \sqrt{2} z^{obs}_m$, z (or t) score increases.
 
 #### 3.2.2 Swith X and Y
+
+
 
 
 ## Deep Dive: Assumptions in linear regression
