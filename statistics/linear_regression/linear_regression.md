@@ -249,8 +249,17 @@ The SE of can be deducted from the residual error:
 $$\mathrm{SE}_{\beta^{(1)}} = \frac{1}{\sqrt{m-2}}\sqrt{\frac{\frac{1}{m}\sum^m_{i=1} (y_i - f(x_i))^2 }{\frac{1}{m} (x_i-\bar{x})^2 }} = \frac{1}{\sqrt{m-2}}\sqrt{\frac{\mathrm{Var_{res} }(y,\hat{y})}{\mathrm{Var}(x)}}$$
 
 For OLS $\mathrm{Var_{res} }(y,\hat{y}) = \mathrm{Var}(\varepsilon) := \sigma^2(\varepsilon)$, thus
+
 $$\mathrm{SE}_{\beta^{(1)}} \sim \frac{1}{\sqrt{m}} \frac{\sigma(\varepsilon)}{\sigma(x)}$$
+
+and $\mathrm{Var_{res} }(y,\hat{y}) = \mathrm{Var_{tot}}(y) -  \mathrm{Var_{exp}}(y,\hat{y}) = (1-r^2_{xy})\mathrm{Var}(y)$
  
+$$\mathrm{SE}_{\beta^{(1)}} \sim \frac{1}{\sqrt{m}} \sqrt{1-r^2_{xy}} \frac{\sigma(y)}{\sigma(x)}$$
+
+Thus, under OLS and $H_0:\beta^{(1)}=0$
+
+$$z^{obs} = \frac{\beta^{(1)obs} - \beta_{H_0}}{\mathrm{SE}(\beta^{(1)})} = \frac{r_{xy} \frac{\sigma(y)}{\sigma(x)} }{\frac{1}{\sqrt{m}} \sqrt{1-r^2_{xy}} \frac{\sigma(y)}{\sigma(x)}} = \sqrt{m} \frac{r_{xy}}{\sqrt{1-r^2_{xy}}}$$
+
 **Memorization tips:** (not strict, just help to memorize)
 
 - $\sigma(\varepsilon)$: higher error in y, the more inaccurate on $\beta^{(1)}$
@@ -332,18 +341,23 @@ For OLS:
     \right.
   $$
 
-
 - Since: covariance and variance doesn't change when duplicating data:
   - $\mathrm{Cov}(x,y) = \frac{1}{m}[\sum^m_{i=1} (x_i-\bar{x})(y_i-\bar{y})] = \frac{1}{2m}[2\cdot\sum^m_{i=1} (x_i-\bar{x})(y_i-\bar{y})]$
   - $\mathrm{Var}(x)= \frac{1}{m} \sum^m_{i=1} ( y_i - \bar{y} )^2= \frac{1}{2m} 2\cdot \sum^m_{i=1} ( y_i - \bar{y} )^2$
 - Thus, coefficients $\beta^{(0)}$ and $\beta^{(1)}$ NOT change when duplicating data.
+
+ $$R^2 = r_{x,y}^2 = \left[\frac{\mathrm{Cov}(x,y)}{\sigma(x)\sigma(y)}\right]^2 = \frac{\mathrm{Cov}^2(x,y)}{\mathrm{Var}(x)\mathrm{Var}(y)}$$
+
+- $\mathrm{Cov}(x,y)$, $\mathrm{Var}(x)$, $\mathrm{Var}(y)$ will not change, thus $R^2$ will not change.
   
   $$\mathrm{SE}_{\beta^{(1)}} \sim \frac{1}{\sqrt{m}} \frac{\sigma(\varepsilon)}{\sigma(x)}$$
 
 - Similar to above, variance doesn't change when duplicating;Population standard deviation doesn't change when duplicating.
   - $\sigma(\varepsilon)= \sqrt{ \frac{1}{m} \sum^m_{i=1} \varepsilon_i^2 } = \sqrt{ \frac{1}{2m} 2 \cdot \sum^m_{i=1} \varepsilon_i^2 }$
 - Thus, $\mathrm{SE}_{\beta^{(1)}} \sim \frac{1}{\sqrt{m}}$ will drop. I.e. $\mathrm{SE}_{\beta^{(1)}, 2m} = \frac{1}{\sqrt{2}} \mathrm{SE}_{\beta^{(1)},m}$ 
-  - smaller CI, more precise
+  - Generally, smaller CI means the result is more precise.
+  - But **here** since we just duplicate the data, the $\beta^{(1)obs}$ doesn't change; when CI is smaller, there is more chance 0 fall out of the CI, i.e. **more chance to reject null hypothesis**, more chance on **type-1 error**.
+  - However, if we don't duplicate data but sample more data, we will have no such issue, i.e. we don't increase the chance of type-1 error. This is because when sampling more data, the $\beta^{(1)obs}$ may also change: be closer to the true value.
 
 
 $$z^{obs} = \frac{\beta^{(1)obs} - \beta_{H_0}}{\mathrm{SE}(\beta^{(1)})}$$
@@ -354,7 +368,35 @@ $$z^{obs} = \frac{\beta^{(1)obs} - \beta_{H_0}}{\mathrm{SE}(\beta^{(1)})}$$
 #### 3.2.2 Swith X and Y
 
 
+Assume:
 
+- Before switch, the function is: $y=\beta^{(0)}+\beta^{(1)}x$
+- After switch, the function is: $x = \alpha^{(0)}+\alpha^{(1)}y$
+
+Note: the covariance and variance are not affected by the switch, this is reasonable, as swithing will not affect the relation X,Y. It will affect OLS params is because OLS minimize error on y-axis, after switching, it minimize error on x-axis. For TLS, the relative position of the line will not change, the slope will be inverse.
+
+$\mathrm{Cov}(x,y) = E[ (x-\bar{x})(y-\bar{y}) ]$ 
+$\mathrm{Var}(x) = E[ (x-\bar{x})^2]$ 
+
+- Since $\mathrm{Cov}$ and $\mathrm{Var}$ not change, correlation coefficient $r_{xy}$ and $R^2$ score will not change. 
+  - The understanding is same, they are metric describing relation between array x and y, not related to axis position.
+
+Under OLS, there is not special relation, the slope is not inverse.
+
+- $\beta^{(1)} = \frac{\mathrm{Cov}(x,y) }{ \mathrm{Var}(x) } = r_{xy}\frac{\sigma(y)}{\sigma(x)}$
+- $\alpha^{(1)} = \frac{\mathrm{Cov}(x,y) }{ \mathrm{Var}(y) } = r_{xy}\frac{\sigma(x)}{\sigma(y)}$
+
+Since for OLS, $\mathrm{SE}_{\beta^{(1)}} \sim \frac{1}{\sqrt{m}} \sqrt{1-r^2_{xy}} \frac{\sigma(y)}{\sigma(x)}$, there is no special relation.
+
+- $\mathrm{SE}_{\beta^{(1)}} \sim \frac{1}{\sqrt{m}} \sqrt{1-r^2_{xy}} \frac{\sigma(y)}{\sigma(x)}$
+- $\mathrm{SE}_{\alpha^{(1)}} \sim \frac{1}{\sqrt{m}} \sqrt{1-r^2_{xy}} \frac{\sigma(x)}{\sigma(y)}$
+
+For t (or z) score, interestingly, they are same.
+
+- $z_{\beta^{(1)}}^{obs} = \frac{\beta^{(1)obs} - \beta_{H_0}}{\mathrm{SE}(\beta^{(1)})} = \frac{r_{xy} \frac{\sigma(y)}{\sigma(x)} }{\frac{1}{\sqrt{m}} \sqrt{1-r^2_{xy}} \frac{\sigma(y)}{\sigma(x)}} = \sqrt{m} \frac{r_{xy}}{\sqrt{1-r^2_{xy}}}$
+- $z_{\alpha^{(1)}}^{obs} = \frac{\alpha^{(1)obs} - \alpha_{H_0}}{\mathrm{SE}(\alpha^{(1)})} = \frac{r_{xy} \frac{\sigma(x)}{\sigma(y)} }{\frac{1}{\sqrt{m}} \sqrt{1-r^2_{xy}} \frac{\sigma(x)}{\sigma(y)}} = \sqrt{m} \frac{r_{xy}}{\sqrt{1-r^2_{xy}}}$
+
+Ref: [YouTube](https://youtu.be/oXBlG8vIZg8), [StackExchange](https://stats.stackexchange.com/questions/22718/what-is-the-difference-between-linear-regression-on-y-with-x-and-x-with-y/22721), [Wiki-t_test](https://en.wikipedia.org/wiki/Student%27s_t-test)
 
 ## Deep Dive: Assumptions in linear regression
 
