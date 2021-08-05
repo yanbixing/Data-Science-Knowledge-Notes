@@ -84,7 +84,7 @@ $\begin{aligned}
 
 #### 3.2.1. Expression of residual variance
 
-$$\mathrm{Var_{res}}(y,\hat{y}):= E(\varepsilon^2) = \mathrm{Var}(\varepsilon) $$
+$$\mathrm{Var_{res}}(y,\hat{y}):= \mathbb{E}(\varepsilon^2) = \mathrm{Var}(\varepsilon) $$
 
 
 **proof:**

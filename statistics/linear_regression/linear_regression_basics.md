@@ -12,10 +12,10 @@
 ### 0.1. Frequent equations
 
 - Covariance of (x,y)
-$$\begin{aligned} \mathrm{Cov}(x,y) &= E[ (x-\bar{x})(y-\bar{y}) ]\\
-&= E(xy - \bar{x}y-x\bar{y}+\bar{x}\bar{y})\\
-&= E(xy) - E(x)E(y) - E(x)E(y) + E(x)E(y) \\
-& = E(xy) - E(x)E(y)
+$$\begin{aligned} \mathrm{Cov}(x,y) &= \mathbb{E}[ (x-\bar{x})(y-\bar{y}) ]\\
+&= \mathbb{E}(xy - \bar{x}y-x\bar{y}+\bar{x}\bar{y})\\
+&= \mathbb{E}(xy) - \mathbb{E}(x)\mathbb{E}(y) - \mathbb{E}(x)\mathbb{E}(y) + \mathbb{E}(x)\mathbb{E}(y) \\
+& = \mathbb{E}(xy) - \mathbb{E}(x)E(y)
 \end{aligned}$$
 - Correlation coefficient of (x,y)
 $$\begin{aligned} \mathrm{r_{cov}}(x,y) &:= \frac{\mathrm{Cov}(x,y)}{\sigma(x)\sigma(y)} \\ &= \frac{[ \frac{1}{m}\sum^m_{i=1}(x_i-\bar{x})(y_i-\bar{y}) ]}{ \sqrt{\ \frac{1}{m}\sum^m_{i=1}(x_i-\bar{x})^2} \sqrt{ \frac{1}{m}\sum^m_{i=1}(y_i-\bar{y})^2} }
