@@ -126,6 +126,8 @@ $$
 
 ### 1.5. Adam
 
+#### 1.5.1. Adam
+
 A combination on "Ada-delta" and "SGD with momentum". I.e.:
 
 - Apply momentum technique on grad.
@@ -157,3 +159,9 @@ $$
  \alpha_t := \sum^{t}_{j=1} \| \mathbf{grad}_j \|^2
 \end{cases}
 $$
+
+#### 1.5.2. Adam vs SGD
+
+- Apply adaptive technique on learning rate: **learning rate scales** according to scale of gradient, avoid too large or too small step size. 
+- Apply momentum on learning rate and gradient: **avoid sudden change (vanishing)** of the gradient and learning rate. Can effective **across local minimums**.
+- Ref: [Medium](https://medium.com/@Biboswan98/optim-adam-vs-optim-sgd-lets-dive-in-8dbf1890fbdc)
