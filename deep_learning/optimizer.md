@@ -1,8 +1,10 @@
 # Optimizer
 
-## 1. Different optimizers
+## 1. Different optimizers (TBD)
 
-Ref: [TowardsDataScience](https://towardsdatascience.com/deep-learning-optimizers-436171c9e23f), [Medium](https://medium.com/@Biboswan98/optim-adam-vs-optim-sgd-lets-dive-in-8dbf1890fbdc)
+TBD: seems not too strict, need further docs.
+
+Ref: [TowardsDataScience](https://towardsdatascience.com/deep-learning-optimizers-436171c9e23f), [Medium](https://medium.com/@Biboswan98/optim-adam-vs-optim-sgd-lets-dive-in-8dbf1890fbdc), [Wiki-Adam](https://en.wikipedia.org/wiki/Stochastic_gradient_descent#Adam)
 
 
 The difference between different optimizer is actually about how we define the size of the step in the gradient descent process.
