@@ -1,4 +1,4 @@
-# Different types of stochastic process
+# Time series models
 
 Ref: [CourseHero-Slides: NYU](https://www.coursehero.com/sitemap/schools/1602-New-York-University/courses/1788428-COURANTG632707/)
 
@@ -268,17 +268,30 @@ Thus, $\text{ARIMA}(0,1,0)$ is a can be understand as a sum (integration) of the
 2. Check if the data is stationary, if not, differentiate the data $D$ times to make it stationary, determine the rough range of $D$.
 3. Use ACF and PACF plot to determine the rough range of $P$ and $Q$.
 4. Calculate the likelihood of the data for different (p,q) or (p,d,q) pairs.
-   - (p,q) for differentiated data or (p,d,q) for un-differentiated data.
+   - (p,q) for differentiated data or $(p,d,q)$ for un-differentiated data.
 5. Check whether the residue is white noise.
 
 
-**FAQ**
+**Note:**
+
+- We use MLE two times:
+   - For each $(p,q)$ pair, we use MLE to solve coefficients $\{\phi_p,\theta_q\}$
+   - When determine the best $(P,Q)$ value, we will see their coefficient-optimized likelihood, and take the largest one. 
+     - To prevent overfitting, we may also use complexity-penalized likelihood, like AIC or BIC.
 
 - Q: How to determine if your time series data is stationary or not?
   - Use hypothesis testing to examine the mean and autocovariance value of the data. E.g. Dickey-Fuller test) Ref: [UIC-Chp4](https://ademos.people.uic.edu/Chapter23.html#41_determining_stationarity_with_an_augmented_dickey-fuller_test)
 
+#### 5.3.2. Likelihood （TBD）
 
-#### 5.3.2 How to prevent overfitting?
+Typically, we will assume $\{X_t\}$ is a stationary Gaussian process (i.e. error/residue is normally distributed), then, we can represent likelihood of the observation $\{X_t\}$ under ARIMA model with the Multivariate Normal Distribution function, as:
+
+$$f(X) = (\frac{1}{\sqrt{2\pi} })^{n} \cdot \sqrt{\det\Sigma}  \cdot \exp \left[ -\frac{1}{2} (X-\mu)^T \Sigma^{-1} (X-\mu) \right] $$
+
+Ref: [CourseHero-Slides: NYU-Lec4](https://www.coursehero.com/sitemap/schools/1602-New-York-University/courses/1788428-COURANTG632707/)
+
+
+#### 5.3.3 How to prevent overfitting?
 
 Penalize the model complexity with metrics like AIC, BIC
 
@@ -289,7 +302,7 @@ Penalize the model complexity with metrics like AIC, BIC
   - $K$: degree of freedom of model
   - $m$: length of the time series data (number of samples)
 
-#### 5.3.3. Cross validation for time series
+#### 5.3.4. Cross validation for time series
 
 Forward Chaining Cross Validation:
 
@@ -299,7 +312,7 @@ Forward Chaining Cross Validation:
 - fold 4 : training [1 2 3 4], test [5]
 - fold 5 : training [1 2 3 4 5], test [6]
 
-#### 5.3.4. Stationarity of ARIMA solution.
+#### 5.3.5. Stationarity of ARIMA solution. (TBD)
 
 **Conclusion:** The solution ($\{\phi_p,\theta_q\}$) of arima model is stationary if **NO** roots $x$ of the equation $\Phi(x)=0$ polynomial lies **on** the boundary of the unit circle.
 
@@ -321,10 +334,43 @@ E.g. In the following figure, if B point appear in the roots $\Phi(x)=0$, the so
   - Additional note:
     - Solutions is invertible if all roots of $\Theta(x) = 0$ are outside of the unit circle
       - Ref: [Youtube-math_et_al](https://www.youtube.com/watch?v=uciHswYSA3k)
-    - Stationarity, causality, invertibility for arima.
-      - Ref: [Bauer-Slides](https://www.bauer.uh.edu/rsusmel/phd/ec2-3.pdf)
 - Q: what is causality? (TBD)
   - Ref: [BerkeleySlides-C153-Lec5-P11](https://www.stat.berkeley.edu/~bartlett/courses/153-fall2010/lectures/5.pdf)
 
 - Q: what is invertibility? (TBD)
   - Ref: [Youtube-math_et_al](https://www.youtube.com/watch?v=uciHswYSA3k)
+
+Other Refs:
+- [Bauer-Slides](https://www.bauer.uh.edu/rsusmel/phd/ec2-3.pdf): Stationarity, causality, invertibility for arima.
+
+
+#### 5.3.6. Sum of two independent arima process:
+
+$\{X_t\}$ and $\{Y_t\}$ are two independent ARIMA process:
+
+$$\begin{aligned}
+  X_t = \text{ARIMA}(p_1,q_1)\\
+  Y_t = \text{ARIMA}(p_2,q_2)
+\end{aligned}$$
+
+The process $\{Z_t\}$ have $Z_t = X_t+Y_t$, then $\{Z_t\}$ is also a ARIMA process, as 
+
+$$Z_t = \text{ARIMA}(P,Q)$$
+
+where:
+
+$$\begin{cases}
+  P\leq p_1 +p_2\\
+  Q\leq \max(p_1+q_2,q_1+p_2)
+\end{cases}$$
+
+Ref: [Origin papar: GrangerMorris1976](http://rainbow.ldeo.columbia.edu/~alexeyk/Papers/GrangerMorris1976.pdf), [SUNY_SB-Slides](http://www.ams.sunysb.edu/~zhu/ams586/SUM.pdf)
+
+**Note:** in real application, we useually take "equal", i.e.:
+$$\begin{cases}
+  P = p_1 +p_2\\
+  Q = \max(p_1+q_2,q_1+p_2)
+\end{cases}$$
+This is because the ARIMA with high order (value) of P,Q incorporate ARIMA with lower P,Q. This is obvious: if you don't need the higher-order term, you can set those $\phi_p, \theta_q$ coefficients to 0, then it is equal to ARIMA model with lower P,Q.
+
+Ref:[NYU-Stern-Slides](http://people.stern.nyu.edu/churvich/Forecasting/Handouts/Chapt3.3.pdf)
