@@ -4,6 +4,7 @@
         "Jaccard",
         "Rademacher",
         "boldsymbol",
+        "deseasonalize",
         "eigen",
         "hyperparams",
         "infty",
