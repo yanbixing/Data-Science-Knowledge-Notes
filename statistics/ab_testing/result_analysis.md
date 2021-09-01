@@ -90,7 +90,7 @@ Notes: for sanity check, you only need to define a confidence level $\gamma=1-\a
 
 ### 2.2. Check the invariant metric
 
-#### 2.2.1. The metric is a ratio
+#### 2.2.1. The metric is a ratio: two sample test
 
 If the metric is a rate, E.g., some conversion rate. Then, similar to the result analysis process, we will:
 
@@ -109,10 +109,10 @@ If the metric is a rate, E.g., some conversion rate. Then, similar to the result
 
 <!-- Assume the sample should have eqaul chance (i.e. 0.5) to be sent to  -->
 
-#### 2.2.2. The metric is a quantity value
+#### 2.2.2. The metric is a quantity value: one-sample test
 
 
-If the metric is quantity value, e.g. number of sample in each group. Then we can convert it to ratio and then compare. However, different from two sample test, where we use two-sample test (compare means of two distributions), here, we use one-sample test (compare mean of one distribution with a constant.)
+If the metric is quantity value, e.g. number of sample in each group. Then we can convert it to ratio and then compare. However, different from  two-sample test (compare means of two distributions), here, we use one-sample test (compare mean of one distribution with a constant.)
 
 
 
@@ -180,6 +180,13 @@ The purpose is to examine the generality (consistence) of our conclusion/assumpt
 - If we want to prove A is larger than B, then, we expect to see the daily $A-B$ have more positive signs. I.e. $H_0: p(+)=0.5$ is rejected ( $p(+)>0.5$ is significant ). 
 - If we use it on quantities have equal value, we expect the $+$ and $-$ should be similar. I.e. $H_0: p(+)=0.5$ is accepted ( $p(+)>0.5$  is insignificant ).
 - This is also a one-sample test, see sec 2.2.2.
+
+Notes:
+
+- Sign test is a binomial distribution, where each individual time of test give binary result, like the coin flips case.
+  - Ab testing is also binomial distribution, each time of test give binary  result.
+- Null hypothesis is usually "number of positive sign is equal to number of negative sign."
+  - Typically use two-tail p-value, since we don't want either "$N(+)>>N(-)$" or "$N(+)<<N(-)$"
 
 <!-- whether the data of experimental/control group have similar fluctuation. -->
 

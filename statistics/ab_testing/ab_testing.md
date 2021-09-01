@@ -3,56 +3,154 @@
 ## 1. AB Testing
 
 - Ref: 
+  - [Udacity-Course](https://classroom.udacity.com/courses/ud257): Google's ab-test course.
   - [TowardsDataScience-blog](https://towardsdatascience.com/a-summary-of-udacity-a-b-testing-course-9ecc32dedbb1), [1p3a-bbs](https://www.1point3acres.com/bbs/thread-470867-1-1.html): Summary of ab-testing.
   - [Medium-blog](https://productcoalition.com/start-here-statistics-for-a-b-testing-5f5c7e02ce1e): somebasic statistics for AB testing.
+  - [TowardsDataScience-blog](https://towardsdatascience.com/what-i-learned-from-udacitys-course-on-a-b-testing-by-google-45f6d3297f42): Summary of ab-testing.
   <!-- - [Optimizesmart-blog](https://www.optimizesmart.com/understanding-ab-testing-statistics-to-get-real-lift-in-conversions/): some good questions/understandings on ab-testing. -->
 
 ### 1.1. Definitions
 
 - A/B testing: A way to compare two versions of a single variable. [Wiki-AB_testing](https://en.wikipedia.org/wiki/A/B_testing)
-    - English: typically, we test the response of the population to two versions of a product, the two versions **only have 1 difference**, all other conditions/design are same. Our purpose is to determine which one is better.
+  - English: typically, we test the response of the population to two versions of a product, the two versions **only have 1 difference**, all other conditions/design are same. Our purpose is to determine which one is better.
 
-- variant: version, variation, variable value.
+
+- Variant: version, variation, variable value.
   - E.g. There are exactly **2 variants**, i.e. A and B, in ab-testing.
   - [Variable](https://en.wikipedia.org/wiki/Variable_(mathematics)): a symbol that can change value.
     - There are only **1 variable** in ab-testing. (E.g. Color of button, design of the webpage, etc.)
     - "variants" vs "variable": e.g. $x$-axis is a variable, the values $x_1, x_2, \dots$ on $x$-axis are variants for the $x$ variable.
 
+
+- Control vs Experimental Group: Except the condition we want to change, all other conditions are same.
+
+
+### 1.2. Brainstorm: what need to be considered and why?
+
+Ref: 
+
+#### 1.2.1. Objective
+
+**Q to consider**: What do you care about? I.e. What is your goal/objective, do you have existing metric/target? 
+
+**Purpose**: Used to design evaluation metric.
+
+**Technique**: we can split/break the process into different channel (parallel)/steps (sequential) to gain deeper insights on the process.
+
+
+#### 1.2.2. Unit (of diversion & analysis)(TBD, not fully understand)
+
+**Q to consider**: What is experiment **unit**.
+
+- Unit of diversion: the experimental unit, the individual subject in your experiment .
+  - E.g.: Per user ID, per cookies, per device, per IP. 
+- Unit of analysis: the denominator of the evaluation metric.
+  - Could be same with unit of diversion, could also be different from the unit of diversion.
+  - Different unit of analysis will result in different variability of metric.
+- Variability of the metric = the variance of the metric.
+  - Analytical variability: the variance calculated under certain assumption, i.e. the variance we used to estimate the required sample (different metric have different distribution assumption.)
+  - Empirical variability: the variance calculated with real experimental data.
+  - If the empirical variability is different from analytical variability, it may be due to the unit of diversion is different from unit of analysis.
+  
+
+**Purpose**: Used to design evaluation metric.
+
+<!-- **Why important**: The more close to the individual object in our goal, the less variability the unit is, the better the unit.
+
+- "variability": the uncertainty of the unit to the true individual target we want to analysis.
+   - E.g. We want to analyze individual customer; we only have user id, visit cookie, visit device, visit IP; A customer could have different id, cookie, device, ip. 
+   - If according our intuition or research, usually a user usually have only 1 id but several cookie/device/ip. 
+   - Then, user id would have the least variability, i.e., a user id can-represent/is-more-close-to an individual user. 哪里来的？好像不对。-->
+
+**Technique**: 
+
+- Different unit/metric-definition serve different purpose. 
+Thus, we need to consider unit according to our purpose. E.g.
+  - Click-through-rate (CTR) $ = \frac{\text{Number of Clicks (on button)}}{\text{Number of Views (on page)}}$
+    - Characterize whether the design of of the button can attract user to click. 
+    - Usually used to compare buttons on a same page.
+  - Click-through-probability(CTP) $ = \frac{\text{Number of Customer who click}}{\text{Number of Customer who view}}$.
+    - Check if we can keep/attract our customers. 
+    - Usually used to compare different webpages.
+
+- Different unit may result in different **sample size.**
+Thus, we need to consider unit for proper **duration**. 
+  - Different unit will have different distribution, having different click-through-prop ($p_0$) and different variance, thus result in different variability of metric.
+  - Different variability of metric result in different sample size requirement.
+  - Thus, change unit of diversion to unit of analysis may reduce the required sample size.
+    - However, such change may not make sense intuitively.
+  
+
+**Ref**: 
+  - [Udacity-Lesson4-Lec17](https://classroom.udacity.com/courses/ud257/lessons/4001558669/concepts/39700990240923): variability and sample size
+  - [Udacity-Lesson4-Lec17](https://classroom.udacity.com/courses/ud257/lessons/4001558669/concepts/39700990250923): change unit of diversion to unit of analysis may reduce required sample size.
+  - [Udacity-Lesson3-Lec22](https://classroom.udacity.com/courses/ud257/lessons/4028708543/concepts/39546791350923): definition of variability.
+  - [Udacity-Lesson40Lec8](https://classroom.udacity.com/courses/ud257/lessons/4001558669/concepts/39700990110923), [Blog](https://www.bellodata.com/archives/2332): definition of unit of analysis and diversion
+  - [TowardsDataScience-blog](https://towardsdatascience.com/a-summary-of-udacity-a-b-testing-course-9ecc32dedbb1), [TowardsDataScience-blog](https://towardsdatascience.com/what-i-learned-from-udacitys-course-on-a-b-testing-by-google-45f6d3297f42): Summary of unit of analysis vs diversion
+  - [Blog](http://napitupulu-jon.appspot.com/posts/variability-abtesting-udacity.html): variability of metric.
+  - [Medium-blog](https://regularization.medium.com/udacity-a-b-testing-lesson-3-choosing-and-characterizing-metrics-edd261db8879): analytical vs empirical variability.
+  - [Blog](https://qianqianshan.com/post/a-b-testing/),[Blog](https://arjan-hada.github.io/A/B-testing.html), [Blog](https://bangdasun.github.io/2019/08/08/56-ab-test-learning-notes-3/): The empirical variability of the metric may then not be consistent with the analytical variance if the unit of analysis is different with unit of diversion.
+
+
+
+#### 1.2.3. Target population
+
+**Q to consider**: who are our target population? 
+
+**Purpose**: Avoid noise or inaccuracy. I.e. If our change aims to certain kinds of user, we don't want to expose it to other users. Or the result may be inaccurate.
+
+**Technique**: 
+- Filtration: Avoid unwanted data according to you goal.
+  - E.g. we want to analyze buyer rather than non-buyer visitors, then, we would like to exclude the visitor who didn't buy the product.
+- Subpopulation (study)
+  - The contribution from different subpopulation may be different
+  - Used to analyze the result (maybe we should separate different sub-populations to discuss/do-experiment.)
+
+#### 1.2.4. Duration
+
+**Q to consider**:  What is the **duration** of the experiment?
+
+**Purpose:** Avoid noise or inaccuracy. I.e. Our assumption on individual sample is i.i.d. Thus:
+
+ - If the duration is too long, the  <mark style="background-color:yellow;"><font color="#0000dd">data may shift</font></mark> during the experiment.
+ - If the duration is too short, then the <mark style="background-color:yellow;"><font color="#0000dd">samples may not cover/represent the whole population</font></mark> (different kinds of users) comprehensively.
+   - Then, we would have <mark style="background-color:yellow;"><font color="#0000dd">sample bias.</font></mark>
+ - Typically the duration is 1-2 weeks, less than 4 weeks.
+   - Ref: [Invespcro-blog](https://www.invespcro.com/blog/how-long-should-you-run-an-ab-test-for/)
+   <!-- - Used/considered when setting parameters to calculate sample size. -->
+
+**Technique:** Duration
+
+- Duration is proportional to sample size, surely can be changed by changing required sample size.
+  - By tuning parameter like $\alpha, \beta, d_{\min}$
+  - By changing unit of diversion, as described above.
+- Duration can also be changed by changing traffic.
+  - **Traffic (exposure)**: the rate we expose experimental (B) version to users.
+    - By setting different traffic, we can control the duration of the experiment.
+    - Why we need limit traffic: experimental version may damage to user/website, we want to control its influence.
+    - When need/needn't to limit traffic: 
+      - Need to limit traffic: if new/different content/condition is added, like adding new external links on the page, using slower backend algorithm.
+      - Needn't to limit traffic: the change is subtle, will not affect user's experience, like changing the button color, change ranking order, etc.
+        - Ref: [Udacity-Lesson4-Lec22](https://classroom.udacity.com/courses/ud257/lessons/4001558669/concepts/40222885720923)
+    - Ref: [Udacity-Lesson4-Lec20](https://classroom.udacity.com/courses/ud257/lessons/4001558669/concepts/39700990290923)
+
+
 ### 1.2. AB test process
 
-Ref: [TowardsDataScience](https://towardsdatascience.com/a-summary-of-udacity-a-b-testing-course-9ecc32dedbb1)
 
-#### 1.2.0. Brainstorm:
 
- - What do you care about? I.e. What is your goal/objective, do you have existing metric/target? 
-   - Used to design evaluation metric.
- - What is experiment unit and our target population?
-   - Unit (of diversion): the target unit we want to analysis.
-     - E.g.: Per user ID, per cookies, per device, per IP.\
-     - The more close to the individual object in our goal, the less variability the unit is, the better the unit.
-     - "variability": the uncertainty of the unit to the true individual target we want to analysis.
-       - E.g. We want to analyze individual customer; we only have user id, visit cookie, visit device, visit IP; A customer could have different id, cookie, device, ip. 
-       - If according our intuition or research, usually a user usually have only 1 id but several cookie/device/ip. 
-       - Then, user id would have the least variability, i.e., a user id can-represent/is-more-close-to an individual user.
-   - Population:
-     - Filtration: Avoid unwanted data according to you goal.
-       - E.g. we want to analyze buyer rather than non-buyer visitors, then, we would like to exclude the visitor who didn't buy the product.
-     - Subpopulation (study)
-       - The contribution from different subpopulation may be different
-       - Used to analyze the result (maybe we should separate different sub-populations to discuss/do-experiment.)
- - What is the duration of the experiment?
-   - Our assumption on individual sample is i.i.d.
-     - If the duration is too long, the data may shift during the experiment.
-     - If the duration is too short, then the sampling process may not cover the whole distribution (e.g. different types of users/samples) comprehensively. 
-       - Then, we would have sample bias.
-     - Typically the duration is 1-2 weeks, less than 4 weeks.
-     - Ref: [Invespcro-blog](https://www.invespcro.com/blog/how-long-should-you-run-an-ab-test-for/)
-   - Used/considered when setting parameters to calculate sample size.
+
+     
+
+
  - Any potential influential factors/bugs, any possible discrepancy between designer and user
    - Can be verified by designing invariant metric 
    - Can used to analyze result.
 
 #### 1.2.1. Design
+
+
+Ref: [TowardsDataScience](https://towardsdatascience.com/a-summary-of-udacity-a-b-testing-course-9ecc32dedbb1)
 
 1. Choose the evaluation metric and invariant metric.
    - Evaluation metric: your target metric or design one based on your goal.
@@ -76,8 +174,7 @@ Ref: [TowardsDataScience](https://towardsdatascience.com/a-summary-of-udacity-a-
 4. Collect data for experimental group and control group. (?)
    - Duration: how long the experiment will run
    - Exposure: what fraction of user you want to expose to experimental group.
-   - Learning effect: the result is not stable at first, as the user may not get used to it. After the user get used to it, then the result will be stable. 
-     - How to detect? Run on small group of users to see their response.
+   - Learning effect (see below.)
 5. Analyze the result and draw the conclusion.
    - Sanity check (?)
    - Analysis:
@@ -94,48 +191,63 @@ Ref: [TowardsDataScience](https://towardsdatascience.com/a-summary-of-udacity-a-
 
 ## 2. A/B testing deep dives
 
-<!-- - To use A/B testing, you need to determine: 
-  - What is your control group (baseline for comparison)?
-  - How much time the user need to adapt/response to changes?
-    - Change aversion/novelty effect
-    - Learning effect: it take user something to adapt to the changes (change aversion)
-    - Long term effect: it take user a lot of time to response to the change (the user activity is infrequent.) -->
+
+### 1.0. Basics
+
+- Each individual observation in A/B testing follows Bernoulli distribution: each individual test give independent binary outcome. See: [bernoulli_distribution.md](../probability_distributions/bernoulli_distribution.md).
+  - We run A/B testing multiple rounds, the results of each round follow binominal distribution. See: [binominal_distribution.md](../probability_distributions/binominal_distribution.md). 
+- The testing should be released to the whole/general population, not a particular subpopulation/cohort. I.e. the test people should represent the whole population.
+- The conclusion applies to the specific tested change, cannot be generalized. I.e. we can determine if current change can improve the metric, we cannot generalize the conclusion to similar changes. I.e. if this change works, it doesn't means other changes can also work.
+  - E.g. I want to test whether the items I recommend is complete. (Incorrect)
+  - Explanation: With A/B testing, I can only know whether a specific item should be recommended, we cannot know if there are other items should be recommended.
+- What we test is metric, i.e. we need specific metric to describe the target fact we want to test.
+
 
 ### 2.1. Situations cannot use A/B testing? 
 
 Ref: [Udacity-Abtesting-Lesson1-Lecture3](https://classroom.udacity.com/courses/ud257/lessons/4018018619/concepts/40043986740923), [TowardsDataScience](https://towardsdatascience.com/a-summary-of-udacity-a-b-testing-course-9ecc32dedbb1)
 
-1. Changes that bring **new experience**:
+<!-- 0. The duration is too long or too short.
+   - Reason: 
+     - If the duration is too long, <mark style="background-color:yellow;"><font color="#0000dd">the user property/behavior may change over time.</font></mark>
+     - If the duration is too short, <mark style="background-color:yellow;"><font color="#0000dd">the responses we collect may not represent the whole population.</font></mark> -->
+1. Changes that bring <mark style="background-color:yellow;"><font color="#0000dd">**new experience**</font></mark>:
+   - I.e. For A/B test, the change should be insensible.
    - Large impact changes: brand name changing, logo changing
-     - It may takes time for user to **adapt** to the changes. Specifically:
-        - Change aversion: people don't like new things will resist to use new services at the beginning. 
-        - Novelty effect: people like new things will overact to try new services at the beginning. 
+     - Learning effect: it may takes time for user to <mark style="background-color:yellow;"><font color="#0000dd">**adapt**</font></mark> to the changes. Specifically: 
+       - Change aversion: people don't like new things will resist to use new services at the beginning. 
+       - Novelty effect: people like new things will overact to try new services at the beginning. 
+     - How to detect? Run on small group of users to see their response. The result is not stable at first, as the user may not get used to it. After the user get used to it, then the result will be stable.
+     - Ref: [Udacity-Lesson4-Lec23](https://classroom.udacity.com/courses/ud257/lessons/4001558669/concepts/39700990310923)
    - New services: adding premium service.
-     - **No baseline**: A/B testing is to test the metrics of version A with version B. You may have a baseline metric value.
-2. Changes that have **long term effect**. I.e. we cannot get the response from user instantly. 
+     - <mark style="background-color:yellow;"><font color="#0000dd">**No baseline**</font></mark>: A/B testing is to test the metrics of version A with version B. You may have a baseline metric value.
+2. Changes that have **long term effect**. 
+   - I.e. For A/B test, we should be able to get user's response instantly. 
+   - Reason: The responses we collect <mark style="background-color:yellow;"><font color="#0000dd">may not represent the whole population.</font></mark>
    - Eg. Two colors of house-rental promotion letter.
-   - Reason: People don't buy house often. The effect of our change can only be gather after a long time. I.e. It is **hard to comprehensively collect data** within the experimental period.
+     - Explaination: People don't buy house often. The effect of our change can only be gather after a long time. I.e. It is <mark style="background-color:yellow;"><font color="#0000dd">**hard to comprehensively collect data**</font></mark> within the experimental period.
   <!-- - Long term effect. E.g. the user activity is infrequent, or it takes user long time to adapt
   - Cannot comprehensively collect data. -->
 
 - Then, what should we do when we cannot use A/B testing?
-  - Retrospective analysis: use historical results (like logs) to analysis the user behavior.
-    - Retrospective vs prospective:
-      - Prospective examine the **difference on result values** under different feature values.
-      - Retrospective examine the **difference on feature values** under different result values. 
-      - Ref: [theclassroom](https://www.theclassroom.com/ethical-issues-research-design-8084192.html), [Wiki-Retrospective_cohort_analysis](https://en.wikipedia.org/wiki/Retrospective_cohort_study)
-  - User experience research: gather opinion from user.
-    - Survey: gather opinion from a lot of users.
-    - Focus group: gather opinion from smaller amount of representative users.
-    - Ref: [ResearchGate-Paper](https://www.researchgate.net/profile/Arnold-Vermeeren/publication/221248254_User_experience_evaluation_methods_Current_state_and_development_needs/links/09e4150c5d003a175b000000/User-experience-evaluation-methods-Current-state-and-development-needs.pdf)
-  - Heuristic/expert evaluation: ask expert to evaluate the new feature based on their experience. Ref: [YouTube](https://www.youtube.com/watch?v=TQ5jY1kKUNk), [Wiki](https://en.wikipedia.org/wiki/Heuristic_evaluation) 
-  - Ref: [Udacity-Abtesting-Lesson1-Lecture6](https://classroom.udacity.com/courses/ud257/lessons/4018018619/concepts/40043986810923)
+   - Retrospective analysis: use historical results (like logs) to analysis the user behavior.
+     - Retrospective vs prospective:
+       - Prospective examine the **difference on result values** under different feature values.
+       - Retrospective examine the **difference on feature values** under different result values. 
+       - Ref: [theclassroom](https://www.theclassroom.com/ethical-issues-research-design-8084192.html), [Wiki-Retrospective_cohort_analysis](https://en.wikipedia.org/wiki/Retrospective_cohort_study)
+   - User experience research: gather opinion from user.
+     - Survey: gather opinion from a lot of users.
+     - Focus group: gather opinion from smaller amount of representative users.
+     - Ref: [ResearchGate-Paper](https://www.researchgate.net/profile/Arnold-Vermeeren/publication/221248254_User_experience_evaluation_methods_Current_state_and_development_needs/links/09e4150c5d003a175b000000/User-experience-evaluation-methods-Current-state-and-development-needs.pdf)
+   - Heuristic/expert evaluation: ask expert to evaluate the new feature based on their experience. Ref: [YouTube](https://www.youtube.com/watch?v=TQ5jY1kKUNk), [Wiki](https://en.wikipedia.org/wiki/Heuristic_evaluation) 
+   - Ref: [Udacity-Abtesting-Lesson1-Lecture6](https://classroom.udacity.com/courses/ud257/lessons/4018018619/concepts/40043986810923)
 
 
 **Further Q:** Some example questions suitable (CAN) for ab-testing?
 
 - Whether the latency can affect user behavior? (infrastructure A vs B)
 - Which backend-infrastructure/algorithm/ranking/color is better?
+  - Caution: we can know which specific version is better. But we generalize the conclusion, like "the faster algorithm, the better" is NOT correct.
 
 ### 2.2. Overpower and underpower
 <!-- - Overpower: 
@@ -178,13 +290,14 @@ It is ok to test multiple metrics in a same round of experiment. There are some 
 
 #### 2.3.1. Sample size of the experiment
 
-Usually, we will set different significance level ($\alpha$), sensitivity ($1-\beta$) and minimum detectable effect $d_{\min}$ for different metric. 
+For different metrics, we usually set different significance level ($\alpha$), sensitivity ($1-\beta$) and minimum detectable effect $d_{\min}$. Thus, <font color="#0000dd">different metrics usually require different sample size.</font>
 
-Thus, different metrics will required different sample size.
+Use the <mark style="background-color:yellow;"><font color="#0000dd">**largest/maximum**</mark></font> required sample size in the experiment.
 
-Use the **largest/maximum** required sample size in the experiment.
+Because: overpower will not do no harm to the experiment. (No affect on the chance of type-1 error, decrease the chance of type-2 error.) But underpower will increase the chance of type-2 error.
+- Note: also, the calculated "sample size" is actually <mark style="background-color:yellow;"><font color="#0000dd">"minimum required sample size"</mark></font>
+  - Ref: [sample_size_calculator](https://www.calculator.net/sample-size-calculator.html), [Dummies-blog](https://www.dummies.com/education/math/statistics/how-to-determine-the-minimum-size-needed-for-a-statistical-sample/)
 
-This is because overpower will not do no harm to the experiment. (No affect on the chance of type-1 error, decrease the chance of type-2 error.) But underpower will increase the chance of type-2 error.
 
 Ref: [Amazon-blog](https://rstudio-pubs-static.s3.amazonaws.com/347758_9da9522d18a8455fb810c48b11ff9824.html), [Github-blog](https://github.com/baumanab/udacity_ABTesting), [Sample-size-calculator](https://www.calculator.net/sample-size-calculator.html), [Dummies-blog](https://www.dummies.com/education/math/statistics/how-to-determine-the-minimum-size-needed-for-a-statistical-sample/)
 
@@ -223,8 +336,6 @@ Then, it is unsuitable to run the two experiment together. The user behavior cha
 
 
 ### Other FAQs
-
-- Learning effect?
 
 - What to do if I don't trust the results? (? TBD)
   - Solution1: Run a separate experiment (Repeat).

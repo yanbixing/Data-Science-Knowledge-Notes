@@ -2,7 +2,7 @@
 
 Ref: [StatTrek](https://stattrek.com/hypothesis-test/hypothesis-testing.aspx)
 
-## Two types of hypothesis
+## 1. Two types of hypothesis
 
 Normally, there are two kinds of hypothesis:
 
@@ -27,15 +27,15 @@ Example: toss a coin, observe the probability of head up $p(H)$.
 - Null hypothesis: $p(H) = 0.5$
 - Alternative hypothesis: $p(H) \neq 0.5$
 
-## Type 1 and type 2 error
+## 2. Type 1 and type 2 error
 
-### Definition:
+### 2.1. Definition:
 
   - Type 1 error: reject null hypothesis when it is true.
   - Type 2 error ($\beta$, sensitivity): accept null hypothesis when it is false.
     - null hypothesis is false = alternative hypothesis is true. 
 
-### Probability representation:
+#### 2.1.1. Probability representation:
 
   - Type 1 error: $\alpha = p(\text{reject } H_0| H_0 \text{ is true})$, also called **significant level**.
     - English: if the null hypothesis is correct, the probability we observe a value more extreme than the experiment result.
@@ -43,7 +43,7 @@ Example: toss a coin, observe the probability of head up $p(H)$.
     - English: if the alternative hypothesis is correct, the probability we observe a value more extreme than the experiment result.
     <div  align="center"><img src=https://dp8v87cz8a7qa.cloudfront.net/45396/5bd20d03240611540492547.png style = "zoom:50%"></div>
 
-### Metric representation:
+#### 2.1.2. Metric representation:
 
 Definition:
 
@@ -69,7 +69,7 @@ Note:
 
 Ref: [Wiki-FPR&FNR](https://en.wikipedia.org/wiki/False_positives_and_false_negatives#False_positive_and_false_negative_rates), [OptimizeSmart](https://www.optimizesmart.com/understanding-ab-testing-statistics-to-get-real-lift-in-conversions/)
 
-#### Effect of sample size
+### 2.2. Effect of sample size
 
 Ref: [Udacity-Ab_test](https://classroom.udacity.com/courses/ud257/lessons/4018018619/concepts/40043987050923)
 
@@ -130,7 +130,9 @@ When the sample size is small, the chance to make type-1 error is small, as long
 
 Note: $\alpha \downarrow = \mathrm{CI} \uparrow$
 
-## P-value
+## 3. P-value
+
+### 3.1. Definition and understanding
 
 [p-value](https://en.wikipedia.org/wiki/P-value): under the null hypothesis, the probability that we obtain results more extreme than current observation.
 
@@ -147,3 +149,18 @@ Note: $\alpha \downarrow = \mathrm{CI} \uparrow$
 
 
 Region of acceptance: the range that support the null hypothesis.
+
+
+### Concept differentiation: P-val vs $\alpha$
+
+Ref: [Blog](https://blog.minitab.com/en/adventures-in-statistics-2/understanding-hypothesis-tests-significance-levels-alpha-and-p-values-in-statistics)
+
+The idea/process is similar, the usage/purpose is different
+
+P-val: given distribution and a observation, we want to get p-val, i.e.,the prob that a observation is extreme than current observation.
+
+<div  align="center"><img src=https://blog.minitab.com/hubfs/Imported_Blog_Media/sig_level_05.png style = "zoom:60%"></div>
+
+$\alpha$: given distribution and $\alpha$, we want to get the confidence interval, i.e. the range we expect the observation to fall into.
+
+<div  align="center"><img src=https://blog.minitab.com/hubfs/Imported_Blog_Media/sig_level_05.png style = "zoom:60%"></div>
