@@ -27,8 +27,6 @@
 
 ### 1.2. Brainstorm: what need to be considered and why?
 
-Ref: 
-
 #### 1.2.1. Objective
 
 **Q to consider**: What do you care about? I.e. What is your goal/objective, do you have existing metric/target? 
@@ -50,6 +48,8 @@ Ref:
 - Variability of the metric = the variance of the metric.
   - Analytical variability: the variance calculated under certain assumption, i.e. the variance we used to estimate the required sample (different metric have different distribution assumption.)
   - Empirical variability: the variance calculated with real experimental data.
+    - E.g. CI determined from empirical variability: Plot the data and determine the CI from the plot. 
+      <div  align="center"><img src=https://miro.medium.com/max/1400/1*6uaJHE1bHZJxb3oFlkFVMA.png style = "zoom:40%"></div>
   - If the empirical variability is different from analytical variability, it may be due to the unit of diversion is different from unit of analysis.
   
 
@@ -308,7 +308,7 @@ If you test too many metrics, there will always be false positive. (I.e. False p
 **Mechanism:** 
 
 - Let's say the false positive rate for one metric is 5%.
-- Then among 100 metrics, the chance of at least 1 false positive result is: $1-0.95^{100} = 0.994$
+- Then among 100 metrics, the chance of at least 1 false positive result is: $1-(1-\alpha)^{N} = 1-0.95^{100} = 0.994$
 - I.e. The chance we have false positive result is increased when we do multi-metric testing.
 
 
