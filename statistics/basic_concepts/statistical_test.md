@@ -75,9 +75,9 @@ We sample $n$ samples from a population with size $N$. Then, define:
   - population mean/var can be viewed as the ground true mean/var of the population.
   - population mean/var can be viewed as the parameter to generate the population
   $$\begin{cases}
-  \mu = \frac{\sum^N_i X_i}{N}\\
-  \sigma^2 = \frac{\sum^N_i (X_i-\mu)^2 }{N}
-\end{cases}$$
+    \mu = \frac{\sum^N_i X_i}{N}\\
+    \sigma^2 = \frac{\sum^N_i (X_i-\mu)^2 }{N}
+  \end{cases}$$
 
 - sample mean ($\bar{X}$)/variance($s$): the estimation of population mean and variance with samples from the population.
   - divisor 1/n will underestimate the variance; divisor 1/(n-1) is an unbiased estimation of population variance.

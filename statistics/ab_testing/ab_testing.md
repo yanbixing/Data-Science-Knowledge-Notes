@@ -66,10 +66,10 @@
 
 - Different unit/metric-definition serve different purpose. 
 Thus, we need to consider unit according to our purpose. E.g.
-  - Click-through-rate (CTR) $ = \frac{\text{Number of Clicks (on button)}}{\text{Number of Views (on page)}}$
+  - ${\text{Click-through-rate (CTR)}}= \frac{\text{Number of Clicks (on button)}}{\text{Number of Views (on page)}}$
     - Characterize whether the design of of the button can attract user to click. 
     - Usually used to compare buttons on a same page.
-  - Click-through-probability(CTP) $ = \frac{\text{Number of Customer who click}}{\text{Number of Customer who view}}$.
+  - ${\text{Click-through-probability(CTP)}}= \frac{\text{Number of Customer who click}}{\text{Number of Customer who view}}$
     - Check if we can keep/attract our customers. 
     - Usually used to compare different webpages.
 
