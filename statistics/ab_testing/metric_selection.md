@@ -38,6 +38,29 @@ $H_0: r_A = r_B$
 
 ## 3. Sensitivity and robustness
 
+### 3.0 Personaly understanding
+
+
+
+For same (independent variable x, dependent variable y) pair, sensitivity and robustness have tradeoff relation. I.e. :
+
+- high sensitivity means when x changes, y changes a lot, i.e. "y" is sensitive to x; 
+- high robustness means when x changes y not changes, i.e. "y" is robust (resistant) to x. 
+
+Ref: Sec 3.1 and later contents can prove those mathematical definition。
+
+However, in real application scenario, we usually check the "robustness" of metric to "uncertainty" (unknown/unobserved features). And check "sensitivity" of metric to "input variable". 
+
+So, in interview, like [FB-1p3a-solution](https://www.1point3acres.com/bbs/thread-592882-1-1.html) for "whether the metric you defined/selected is *meaningful* to our target goal?" We can answer like:
+
+- Use A/B test to check whether our defined metric is sensitive to the target metric (the property we want to describe).
+- Use A/A test to check whether our defined metric is robust to the uncertainty in data (the target metric or the property we want to describe).
+
+
+
+Ref: [Sensitivity_Analysis](https://en.wikipedia.org/wiki/Sensitivity_analysis)
+
+
 ### 3.1. Definition
 
 - Sensitivity: Whether the metric is *sensitive* to the change of the data.
@@ -50,9 +73,11 @@ $H_0: r_A = r_B$
 ### 3.2. Trade-off between sensitivity and robustness
 
 Generally, there should be a counter effect between sensitivity and robustness. 
-  - This is because *outlier* can be viewed as a kind extreme large change of data. 
-  - If the metric is easily affected by change of particular data, then it should have higher sensitivity but lower robustness.
-  - If the metric is hardly affected by change of particular data, then it should have lower sensitivity but higher robustness.
+
+- This is because *outlier* can be viewed as a kind extreme large change of data. 
+- If the metric is easily affected by change of particular data, then it should have higher sensitivity but lower robustness.
+- If the metric is hardly affected by change of particular data, then it should have lower sensitivity but higher robustness.
+
 - E.g. mean vs median
   - Typically:
     - mean: have higher sensitivity lower robustness .
@@ -60,7 +85,6 @@ Generally, there should be a counter effect between sensitivity and robustness.
   - Exp: data: $[1,1,2,3,3] \rightarrow [1,1,2,3, {\color{red}{93}}]$
     - mean: $2 \rightarrow \textcolor{red}{20}$
     - median: $2 \rightarrow 2$
-
 
 Note (personal understanding): although mathematically outlier is a also a kind of change, in terms of the purpose,sensitivity aims to capture small changes in a relatively large part of samples. While the robustness aims to exclude the affect from very extreme individual samples. For example can can design a metric that ignore the outliers and then get average of "normal" samples, then, the sensitivity and robustness may be achieved at same time. (?)
 

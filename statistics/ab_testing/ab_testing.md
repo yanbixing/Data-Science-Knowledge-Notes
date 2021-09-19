@@ -366,13 +366,14 @@ Then, it is unsuitable to run the two experiment together. The user behavior cha
   - Examine potential problems in the A/B-testing plan.
   - I.e. If the conclusions are different (or the metric values are significantly different) for the two same tests:
     - The metric may be not robust (stable) enough.
+      - Ref: [TowardsDataScience](https://towardsdatascience.com/a-summary-of-udacity-a-b-testing-course-9ecc32dedbb1)
     - There may be problems in setting of parameters $\alpha, \beta, d_{min}$ and/or sample size $N$.
     - There may be other problems in the experiment process.
 
 - How to split the samples to experimental/control group? (TBD)
   - Usually Equally split.
   
-- Correlation vs causality (TBD)
+- Correlation vs causation (TBD)
   - The a/b test only give whether there is correlation between the result and condition.
   - However, there is correlation between the result and condition doesn't necessarily mean there is a causality between the result and condition.
   - E.g. Test result: User who response to website error churn less
@@ -381,6 +382,11 @@ Then, it is unsuitable to run the two experiment together. The user behavior cha
     - Causality conclusion: website error make user to stay. (So we should increase the website error?)
       - This causality conclusion is absurd.
     - Note: customer churn = customer leave.
+  - How to distinguish? (My idea, no links yet.)
+    - Study on the mechanism, the see what is the connection between the experimental condition and results
+      - Method: survey, focus group, expert etc.
+    - Cohort analysis: 似乎不行, 因为也是correlation
+    - Casual inference: difference in difference? 这是啥？ (TBD)
 
 - Two phases of A/B testing: (TBD)
   - Exploration: use test samples to decide whether we need to make change.
