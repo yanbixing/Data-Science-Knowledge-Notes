@@ -121,8 +121,11 @@ We can always change our perspective. E.g. Treat the minority as anomaly data, t
 
 ### 4.1. Anomaly Detection
 
+Ref: [Wiki-Anomaly_detection](https://en.wikipedia.org/wiki/Anomaly_detection)
+
 - Cluster-based: clusters (majority) vs. noise(minority) 
 - Density-based: high-density (majority) vs. low-density (minority)
+  - KNN (density $\propto \frac{1}{\text{Area of k NN points}}$) or other method.
 - Bayesian Network: high-probability (majority)  vs. low-probability (minority)
   - Introduction: [Bayesian Network](https://en.wikipedia.org/wiki/Bayesian_network) is a inference model/classifier. [Naive Bayes](https://stackoverflow.com/questions/12298150/what-is-the-difference-between-a-bayesian-network-and-a-naive-bayes-classifier) can be understand as a most simple case.
   - How it works: given a sample, the model will give its occurrence probability. Normal sample will have a high one while abnormal sample will have low one.

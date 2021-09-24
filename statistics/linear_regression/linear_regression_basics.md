@@ -185,6 +185,25 @@ Ref: [Duke_U](http://people.duke.edu/~rnau/testing.htm)
      - The confidence interval is not accurate.
    - Check:
      - Plot the distribution of error, check if it is a normal distribution.
+     - Different kinds of hypothesis testing, Ref: [Wiki-Normality_test](https://en.wikipedia.org/wiki/Normality_test)
+       - Most methods check [kurtosis](https://en.wikipedia.org/wiki/Kurtosis) and skewness
+       - [D'Agostino's K-squared test](https://en.wikipedia.org/wiki/D%27Agostino%27s_K-squared_test), [Jarque–Bera test](https://en.wikipedia.org/wiki/Jarque%E2%80%93Bera_test)
+       - [kurtosis](https://en.wikipedia.org/wiki/Kurtosis) [kəˈtəʊsɪs]:
+         - ${\displaystyle \operatorname {Kurt} [X]=\operatorname {E} \left[\left({\frac {X-\mu }{\sigma }}\right)^{4}\right]={\frac {\operatorname {E} \left[(X-\mu )^{4}\right]}{\left(\operatorname {E} \left[(X-\mu )^{2}\right]\right)^{2}}}={\frac {\mu _{4}}{\sigma ^{4}}},}$
+         - Describe the "sharpness","peakedness" of the peak. 
+           - Normal distribution, Kurt = 3
+       - [skewness](https://en.wikipedia.org/wiki/Skewness) ['skjuːnɪs]:
+         - ${\displaystyle {\tilde {\mu }}_{3}=\operatorname {E} \left[\left({\frac {X-\mu }{\sigma }}\right)^{3}\right]={\frac {\mu _{3}}{\sigma ^{3}}}={\frac {\operatorname {E} \left[(X-\mu )^{3}\right]}{(\operatorname {E} \left[(X-\mu )^{2}\right])^{3/2}}}={\frac {\kappa _{3}}{\kappa _{2}^{3/2}}}}$
+         - Describe the symmetry of the shape, i.e. whether the shape is tilt [tɪlt], i.e. the length difference between different tail.
+           - Normal distribution, skewness = 0
+         - Positive skew = right skew = right tail is longer.
+           - Mean>median>mode
+           - Understanding: 
+             - long tail in right, the sample in right have larger weight, will drag the mean to right. 
+             - The original center point (median) will be sparser so the height will drop, the left side density (height) will increase, the right side will decrease, so the median will right shift compare to mode.
+         - Negative skew = left skew = left tail is longer.
+           - Mean< median < mode
+         - <div  align="center"><img src=https://upload.wikimedia.org/wikipedia/commons/c/cc/Relationship_between_mean_and_median_under_different_skewness.png style = "zoom:40%"></div>
    - Fix:
      - Non-linear transformation of features.
    

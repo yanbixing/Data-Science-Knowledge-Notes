@@ -1,6 +1,8 @@
 # Model comparison (Model selection?)
 
-## 1. Model comparison
+## 1. Model details
+
+### 1.1. Linear models
 
 - LR (Logistic Regression) vs SVM
   - SVM is more fair on **boundary**.
@@ -21,6 +23,16 @@
 
 - LR (Logistic Regression) vs Linear regression.
   - The loss is different.
+
+
+
+### 1.2. Clustering methods
+
+- KNN
+- DBSCAN
+- GMM
+
+
 
 ## 2. Pro/Con Summary
 

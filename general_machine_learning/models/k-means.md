@@ -13,11 +13,11 @@ K-means is an unsupervised clustering method.
 - $d(\boldsymbol{x}_i,\boldsymbol{x}_j)$: the distance between $\boldsymbol{x}_i, \boldsymbol{x}_j$
 
 
-## Training
+## 1. Training
 
 Ref: [wiki-K_means](https://en.wikipedia.org/wiki/K-means_clustering#Standard_algorithm_(naive_k-means))
 
-### Algorithm
+### 1.1. Algorithm
 
 - Objective: Given certain $K$, minimize sum of distance from centroids to corresponding data points. i.e.:
   $$\text{minimize } \sum^K_{k=1}\sum_{x_i \in \mathcal{s}_k}d(\boldsymbol{x}_i, \boldsymbol{c}_k)$$
@@ -27,7 +27,7 @@ Ref: [wiki-K_means](https://en.wikipedia.org/wiki/K-means_clustering#Standard_al
   - M-step: $\boldsymbol{c}_k =  \frac{1}{|\mathcal{s}_k|}\sum_{\boldsymbol{x}_i \in \mathcal{s}_k} \boldsymbol{x_i} $
     - i.e.: Move the centroid to the center of corresponding group ($\{\boldsymbol{c}_k\}$ is updated.)
 
-### Centroids Initialization
+### 1.2. Centroids Initialization
 
 - Forgy: randomly choose $K$ points from the dataset and use them as the initial centroid position
   - Idea: the method = Initialize EM-algorithm with a randomized M-step state, then, start with E-step.
@@ -44,7 +44,7 @@ Ref: [wiki-K_means](https://en.wikipedia.org/wiki/K-means_clustering#Standard_al
     - The probability of this point chosen as next centroid is proportional to the square of the distance
   
 
-## Parameter tunning
+## 2. Parameter tunning
 
 <!-- In the above part, we can find the optimized position of centroids given the number of centroids. Then, how to know how many centroids should we take? -->
 Different $K$ corresponds to different optimized centroids distribution, then, which $K$ value is the best?
@@ -67,7 +67,7 @@ The metrics used to select K is as following.
   - Maximize silhouette score, i.e. the larger silhouette, the better clustering result (the more similar for points in a same cluster.)
 
 
-## Gaussian Mixture Model (GMM)
+## 3. Gaussian Mixture Model (GMM)
 
 In short, a more advance K-means:
 
@@ -77,6 +77,10 @@ In short, a more advance K-means:
   - Solve with EM algorithm
     - $\boldsymbol{Z}$ refers to the label distribution $\{\boldsymbol{s}_k\}$
     - $\boldsymbol{X}$ refers to the dataset $\mathcal{S}$.
+
+## 4. Other clustering methods
+
+
 
 ## Deep Dive: Expectation–maximization (EM) algorithm 
 
