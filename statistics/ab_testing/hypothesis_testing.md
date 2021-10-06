@@ -150,6 +150,12 @@ Note: $\alpha \downarrow = \mathrm{CI} \uparrow$
 
 Region of acceptance: the range that support the null hypothesis.
 
+**two-tail and one-tail**: E.g. observation is $x_0$, p-value is 5%.
+
+- One-tail: the probability we observe $x>x_0$ is 5%
+- Two-tail: the probability we observe ($x>x_0$ or $x<-x_0$) is 5%
+  - I.e. the probability we observe $x>x_0$ is 2.5%
+
 
 ### Concept differentiation: P-val vs $\alpha$
 

@@ -72,7 +72,27 @@
 
 ### 2.2. Tree models
 
+Ref: [Medium-blog](https://medium.datadriveninvestor.com/random-forest-pros-and-cons-c1c42fb64f04)
+
+General pros vs other models:
+
+- Can be used for both classification or regression tasks.
+- Can be used on both categorical and numerical feature.
+- Implicitly perform feature selection, i.e. not split on non-important feature.
+- Not influenced by outliers far from boundary ('deep' outliers, my terminology)
+  - SVM and logistic regression will give huge punishment to those 'deep' outliers, the boundary will be dragged towards those outliers to reduce punishment/loss.
+  - Tree only cares about entropy/'degree-of-mixing', 'deep' outliers will have same influence with 'shallow' outliers.
+- Tree are good at handle complex non-linear relationship
+  - non-kernel/simple svm or logistic model only handle linear-separable data.
+- Tree are easily to balance variance-tradeoff (by controls the depth/min_samples), no need to re-train, can just prune or grow, as each step is greedy. 
+  - SVM or logistic when change model (regularization, input features), usually need to re-train.
+
+General cons vs other models:
+
+- More expensive to handle tilt boundary. Since it only split features, i.e. the boundary is perpendicular/vertical to axis.
+
 #### 2.2.1. Decision tree
+
 
 ##### 2.2.1.1. Pros
 
@@ -98,6 +118,7 @@
 #### 2.2.2. Bagged Trees (TBD)
 
 Train multiple trees on different bootstrap sample set.
+
 ##### 2.2.2.1. Pros
 
 - reduces variance in comparison to regular decision trees
@@ -112,19 +133,29 @@ Train multiple trees on different bootstrap sample set.
 - Not as easy to visually interpret.
 - Not reduce variance if the features are correlated
 
-#### 2.2.3.Random Forest (TBD)
+#### 2.2.3.Random Forest
+
+Ref: [Medium blog](https://medium.datadriveninvestor.com/random-forest-pros-and-cons-c1c42fb64f04)
 
 Bagging + subset of features (column random sampling)
 
 ##### 2.2.3.1. Pros
 
 - Further decorrelates trees (relative to bagged trees)
-  - important when dealing with mulitple features which may be correlated
+  - important when dealing with multiple features which may be correlated
 - reduced variance (relative to regular trees)
+
+
 
 ##### 2.2.3.2. Cons
 
-Not as easy to visually interpret
+- Not as easy to visually interpret
+- More like "black box", have little control on model training process (random sample random feature).
+
+Other general cons:
+
+- Computationally intensive for large datasets (A lot of different models)
+
 
 #### 2.2.4. Boosted Trees (TBD)
 

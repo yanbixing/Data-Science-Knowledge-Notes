@@ -58,18 +58,39 @@ The metrics used to select K is as following.
 - $D^*(K)$:
   - Elbow method, i.e., manually identify the elbow point on $(K,D^*(K))$ plot. [Ref: Wiki-Elbow_method](https://en.wikipedia.org/wiki/Elbow_method_(clustering))
 - AIC/BIC: '$K$-regularized' $D^*$ score (i.e. add a punishment on $K$)
-  - $AIC/BIC := D^*(K) + \Re(K)$
   - Minimize AIC/BIC
-- Silhouette score: [Ref: Wiki-Silhouette](https://en.wikipedia.org/wiki/Silhouette_(clustering))
-  - ${\text{silhouette score }} \approx \frac{ { \textbf{inter } \text{distance}} }{ { \textbf{intra } \text{distance}} }$
+  - $AIC/BIC := D^*(K) + \Re(K)$
+    - AIC punishment on K is not related to sample size; AIC punishment on K is not related to sample size, the more samples, the larger weight.
+    - For very large sample set, AIC is usually better, especially , since BIC will have very high punishment on number of parameter, select very bad (underfitting) model.
+    - Personal understanding: For K-means, BIC may be better, since the more sample the larger $D^*$, BIC will scale the punishment with the scale of $D^*$.
+    - Ref:[Wiki-AIC_vs_BIC](https://en.wikipedia.org/wiki/Akaike_information_criterion#Comparison_with_BIC)
+  - Details:
+    - $\mathrm {AIC} := -2\ln({\hat {L}}) + 2n_{param} \underset{K-means}{ = } D^*(K) + 2Kn_{\dim}$ 
+    - $\mathrm {BIC} :=-2\ln({\hat {L}}) + \ln(m)n_{param}\underset{K-means}{ = } D^*(K) + \ln(m)Kn_{\dim}$
+      - $n_{param}:=$the number of estimated parameters
+        - $n_{\dim}:=$ dimension of the clustering space
+        - For k-means, $n_{param} = Kn_{\dim}$
+      - $\hat {L}:=$ maximum value of the likelihood function for the model
+        - For k-means maximize likelihood = minimize $D^*(K)$
+      - $m:=$ number of samples
+      
+      - Ref: [Wiki - AIC](https://en.wikipedia.org/wiki/Akaike_information_criterion), [Wiki - BIC](https://en.wikipedia.org/wiki/Bayesian_information_criterion), [StackOverflow-AIC_to_KmeansAIC](https://stats.stackexchange.com/questions/271516/akaike-information-criterion-for-k-means), [StackOverflow-KmeansAIC_in_R](https://stackoverflow.com/questions/15839774/how-to-calculate-bic-for-k-means-clustering-in-r)
+  
+- Silhouette score: [Ref: Wiki-Silhouette](https://en.wikipedia.org/wiki/Silhouette_(clustering)), [Howto: Dzone](https://dzone.com/articles/kmeans-silhouette-score-explained-with-python-exam)
+  - ${\text{silhouette score }} := \frac{\textbf{inter } \text{distance} - \textbf{intra } \text{distance}}{\max(\textbf{inter } \text{distance}, \textbf{intra } \text{distance})} \underset{\approx }{\propto} \frac{ { \textbf{inter } \text{distance}} }{ { \textbf{intra } \text{distance}} }$
     - "inter-distance": the average distance between points in **different** centroids
     - "intra-distance": the average distance between points within a **same** centroids
   - Maximize silhouette score, i.e. the larger silhouette, the better clustering result (the more similar for points in a same cluster.)
 
 
-## 3. Gaussian Mixture Model (GMM)
 
-In short, a more advance K-means:
+## 3. Other clustering methods
+
+### 3.1. Gaussian Mixture Model (GMM)
+
+#### 3.1.1. Algorithm: GMM vs K-means
+
+In short, a more advanced K-means:
 
 - Assign each centroid with a gaussian distribution $\boldsymbol{\mu}_k \rightarrow \boldsymbol{\theta}_k = (\boldsymbol{\mu}_k, \boldsymbol{\Sigma}_k)$
 - The label of a data point is not a single label anymore. Instead, it becomes a $K$-dim vector denotes the probability the point belongs to $k$-th centroids.
@@ -78,9 +99,84 @@ In short, a more advance K-means:
     - $\boldsymbol{Z}$ refers to the label distribution $\{\boldsymbol{s}_k\}$
     - $\boldsymbol{X}$ refers to the dataset $\mathcal{S}$.
 
-## 4. Other clustering methods
+#### 3.1.2. Tunning (TBD)
+
+- n_components: number of centroids.
+- covariance_type: a param to control the shape of GMM, through covariance matrix.
+  - 'spherical': each component/centroid have its own single **variance**.
+    - I.e. the shape of cluster is spherical.
+    - Diff vs k-mean: points label is determined by probability, which is related to the parameter. Not necessarily the closest centroid.
+  - 'diag': each component/centroid have its own **diagonal** covariance matrix
+    - I.e. the axis of ellipse are toward to coordinate, cannot be tilt.
+  - 'tied': all components **share the same** covariance matrix
+    - I.e. all the eclipses have a same shape/axis_tilt_direction.
+  - 'full': each component/centroid have **its own** covariance matrix.
+    - I.e. the shape/axis_tilt_direction/param of the eclipses are full determined by data.
+  
+  - <div  align="center"><img src=https://scikit-learn.org/stable/_images/sphx_glr_plot_gmm_covariances_001.png style = "zoom:60%"></div>
 
 
+
+#### 3.1.3 Pro and Cons:
+
+
+- Pros:
+  - More flexible than K-mean: Can be eclipse shape, not necessarily spherical.
+  - Can give probability interpretation. Not necessarily belong to a single cluster.
+- Cons:
+  - More complex model, harder to tune, harder to select.
+    - K-means are already determined by initialization and number of Ks. The flexibility in shape will give more uncertainty on final result.
+- Also, see: [sklearn-mixture_models](https://scikit-learn.org/stable/modules/mixture.html#mixture)
+
+
+### 4.2 DBSCAN:
+
+#### 4.2.1. Algorithm:
+
+Ref: [sklearn-Clustering-DBSCAN](https://scikit-learn.org/stable/modules/clustering.html#dbscan), [sklearn-DBSCAN](https://scikit-learn.org/stable/modules/generated/sklearn.cluster.DBSCAN.html)
+
+Idea: 
+
+- Points that within certain distance (eps) will be considered as in a same cluster (label). (The two points within eps are considered as neighbours.)
+  - For a point, if its number_of_neighbours > min_samples, it will be considered as a "core point"
+  - For a point that have neighbour, but number_of_neighbours < min_samples, it will be considered as a non-core point, but still belong to the cluster.
+- If a cluster don't have "core point", then the cluster will be considered as noise.
+  - Formally: "Any sample that is not a core sample, and is at least eps in distance from any core sample, is considered an outlier by the algorithm."
+  - Roughly (intuitive but NOT correct): If the number of samples in a cluster is not enough (below min_samples), then these points will be considered as noise.
+
+#### 4.2.2 Tunning:
+
+Param:
+
+  - eps: the minimum distance between two samples to be considered belong to a same cluster.
+    - eps $\downarrow$, (result) complexity $\uparrow$, model variance $\uparrow$
+  - min_samples: the minimum num of samples a cluster must have, below which, will be considered as noise.
+    - min_samples $\downarrow$, (result) complexity $\uparrow$, model variance $\uparrow$
+
+
+#### Pro and Cons:
+
+- Pros:
+  - Arbitrary shape, not necessarily spherical like k-means or eclipse like GMM
+  - No need to predetermine number of cluster i.e. K. 
+    - In practice, determine distance threshold are more easy/intuitive than determine number of clusters.
+  - Not affected by initialization. The "solution" is fixed/definite/unique given fixed param and data.
+    - Because DBSCAN don't have "centroid", it works based on distance between points, which is always fixed.
+    - Ref: [Dummies](https://www.dummies.com/programming/big-data/data-science/how-to-create-an-unsupervised-learning-model-with-dbscan/)
+  - In practice, usually faster, because no need to iterate.
+    - Worst time complexity: O(n²). [Wiki-DBSCAN](https://en.wikipedia.org/wiki/DBSCAN#Complexity)
+- Cons:
+  - No "centroid" concept, usually a lot of "core points".
+  - Sensitive to scale, the eps should varies when you normalize the scale of date.
+  - Take more storage space than KNN.
+    - KNN model-storage complexity: O(K)
+    - DBSCAN model-storage complexity: O(n)(need to remember all points).[Wiki-DBSCAN](https://en.wikipedia.org/wiki/DBSCAN#Complexity)
+
+#### Misc
+
+- non-parametric. Ref: [Wiki-DBSCAN](https://en.wikipedia.org/wiki/DBSCAN)
+
+  
 
 ## Deep Dive: Expectation–maximization (EM) algorithm 
 

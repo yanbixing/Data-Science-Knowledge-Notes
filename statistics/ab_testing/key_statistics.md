@@ -32,17 +32,25 @@ Ref: [Medium blog](https://productcoalition.com/start-here-statistics-for-a-b-te
 (Note: Binominal distribution is a different concept. Don't misuse them. See [bernoulli_distribution.md](../probability_distributions/bernoulli_distribution.md) & [binominal_distribution.md](../probability_distributions/binominal_distribution.md))
 
 
-### 1.2. Pooled standard deviation $s_{pooled}$
+### 1.2. Pooled standard deviation $SD_{pooled}$
 
 Pooled standard deviation is the standard deviation of multiple populations with different mean but **same standard deviation**. 
 
 In ab test, $s_{pooled}$ is used to describe the population standard deviation the whole group combining experimental and experimental group. (I.e. SD when we considering EG and CG as a whole)
-$$s_{pooled} = \sqrt{\frac{(N_{EG}-1)s^2_{EG} + (N_{CG}-1)s^2_{CG}}{N_{EG}+N_{CG} - 2}}$$
+
+$$\begin{aligned}
+      SD_{pooled}(X) &= \sqrt{\frac{(N^{EG}-1)(\mathrm{SD}^{EG})^2 + (N^{CG}-1)(\mathrm{SD}^{CG})^2}{N^{EG}+N^{CG} - 2}}\\
+      &\approx \sqrt{\frac{(\mathrm{SD}^{EG})^2+(\mathrm{SD}^{CG})^2}{2}} \leftarrow \text{if } N^{EG} \approx N^{CG}\\
+      &\approx \sqrt{p_{pooled} q_{pooled}} \leftarrow \text{if } p^{EG} \approx p^{CG}
+    \end{aligned}$$
+
+<!-- $$SD_{pooled} = \sqrt{\frac{(N_{EG}-1)s^2_{EG} + (N_{CG}-1)s^2_{CG}}{N_{EG}+N_{CG} - 2}} \approx \sqrt{ \frac{SD^2_1+SD^2_2}{2} }$$ -->
 where:
 - $s_{EG}$: SD of the experimental group.
 - $s_{CG}$: SD of the control group.
 - $N_{EG}$: size of the experimental group.
 - $N_{CG}$: size of the control group.
+- $p_{pooled} := \frac{n^{EG}_+ + n^{CG}_+}{N^{EG} + N^{CG}}$
 
 Ref: [Wiki-Pooled_variance](https://en.wikipedia.org/wiki/Pooled_variance)
 
@@ -71,3 +79,25 @@ Thus, the "standard deviation" for $\Delta \mu$ is standard error for mean, i.e.
 $$SE = \frac{SD}{\sqrt{N}}$$
 
 Note: $\because$ $SD \underset{\sim}{\perp} N$ $\therefore$ $SE\underset{\sim}{\propto} \frac{1}{\sqrt{N}}$
+
+
+## 1.4. Pooled SE
+
+- Ref: 
+  - [StatisticsHowTo](https://www.statisticshowto.com/find-pooled-sample-standard-error/): 
+    - When we are talking about a population, we talk about standard deviations.
+    - When we talk about a sample we call it a standard error.
+
+**Equation:**
+
+$$\begin{aligned}
+  \mathrm{SE}(\Delta \mu) &= SD_{pooled}(X)\sqrt{\frac{1}{N^{EG}} + \frac{1}{N^{CG}}}\\
+  & \approx \sqrt{p_{pooled} q_{pooled}}\sqrt{\frac{1}{N^{EG}} + \frac{1}{N^{CG}}} \leftarrow \text{refer to pooled SD}
+\end{aligned}$$
+
+
+## 1.5. Real example
+
+Ref: [Udacity_ABtest_Lesson1_Concepts19](https://classroom.udacity.com/courses/ud257/lessons/4018018619/concepts/40043987020923)
+
+<div  align="center"><img src=./result_analysis_asset/confidence_interval_calculation.png style = "zoom:20%"></div>

@@ -265,7 +265,9 @@ Such method is called <mark style="background-color:yellow;">**kernel trick**</m
 
 - <mark style="background-color:yellow;">Replace inner product with kernel function</mark>
   - <mark style="background-color:yellow;">without explicitly representing data in higher dimension</mark>.
+  - Kernel function: function that map two vectors from a same space to a non-negative real number. I.e. ${\displaystyle K:{\mathcal {X}}\times {\mathcal {X}}\to \mathbb {R} \geq 0 }$. Ref: [Wiki-Positive_definite_kernel](https://en.wikipedia.org/wiki/Positive-definite_kernel)
 - <mark style="background-color:yellow;">the effect (training and prediction process) exactly same with projecting data to higher dimension</mark>
+- I.e. Mathematically: $\boldsymbol{\kappa}(\boldsymbol{x}_i,\boldsymbol{x}_j) =\langle \boldsymbol{\phi}(\boldsymbol{x}_{i}), \boldsymbol{\phi}(\boldsymbol{x}_j) \rangle$, $\boldsymbol{\phi}(\boldsymbol{x})$ means project $\boldsymbol{x}$ to higher dimension.
 
 
 **Note:** <mark style="background-color:yellow;">**kernel trick** relies on the <font color="#0000dd">appearance of **inner product**</font>, that is why among common ML algorithms, kernel trick can be **only used in SVM** but **CANNOT be used in other algorithms**</mark>. 
@@ -287,6 +289,53 @@ Ref: [Wiki: Radial basis function kernel](https://en.wikipedia.org/wiki/Radial_b
 $$\kappa(\boldsymbol{x}_i,\boldsymbol{x}_j)=\exp \left(-{\frac {\|\boldsymbol {x}_i -\boldsymbol {x}_j \|^{2}}{2\sigma ^{2}}}\right)$$
 
 Project data to infinite higher dimension.
+
+### 3.4. Drawbacks of kernel
+
+Ref: [Quora]( https://www.quora.com/What-is-the-disadvantage-of-kernel-based-learning)
+- Hard to choose the right kernel:
+  - Kernel selection is tricky
+- Hard to interpret: 
+  - Different to understand what is learned. 
+    - (DT can understand from feature split point)
+- Hard to generalized to multi-classification task
+  - SVM on multi-classification need one-vs-all framework, however, different class may have different shape of boundary, may require different kernels
+    - (DT don't need to change model, one tree-grow algo can solve multi-class problem.)
+- Not significant reduce computation complexity.
+  - Kernel method is introduced to reduce computation complexity. Simulate higher dimension inner product with computation in lower dimension kernel function. However, the computation complexity is still high, as SVM is also not good for data with large scale.
+    - Ref: [StackExchange](https://stats.stackexchange.com/questions/73944/what-are-the-limitations-of-kernel-methods-and-when-to-use-kernel-methods)
+  - SVM is hard to use for large scale.
+    - Ref:[StackOverflow](https://stackoverflow.com/questions/23056460/does-the-svm-in-sklearn-support-incremental-online-learning/43801000#43801000): Although we can use batches for SVM with some recent method like "subgradient descend" or "coordinate descend", but it is complexer than neural network.
+- Not as well as deep learning
+  - In terms of industrial application, kernel is tricky and complex, but not perform as well as deep learning. So, usually not worth to invest too much time in real application.
+
+## 3.4. Pro and Cons of SVM
+
+### 3.4.1. Pros
+
+Ref: [Medium-blog](https://dhirajkumarblog.medium.com/top-4-advantages-and-disadvantages-of-support-vector-machine-or-svm-a3c06a2b107)
+
+- works relatively well when there is a clear margin of separation between classes.
+- more effective in high dimensional spaces.
+- effective in cases where the number of dimensions is greater than the number of samples.
+- relatively memory efficient
+- SVM solution is stable
+  - Ref: [Blog](http://theprofessionalspoint.blogspot.com/2019/03/advantages-and-disadvantages-of-svm.html)
+
+### 3.4.2 Cons
+
+Ref: [Medium-blog](https://dhirajkumarblog.medium.com/top-4-advantages-and-disadvantages-of-support-vector-machine-or-svm-a3c06a2b107)
+
+- Not good at large scale data
+- Not suitable to noisy data
+- Not suitable to case num_feature>num_data (which usually happens in NLP and CV)
+- No probabilistic explaination
+- Cosume more memory
+- Require feature scaling
+- Long training time
+- Hard to interpret
+  - Ref: [Blog](http://theprofessionalspoint.blogspot.com/2019/03/advantages-and-disadvantages-of-svm.html)
+
 
 
 ## D-1. Deep Dive: why margin is $\tfrac {2}{\|\boldsymbol {w} \|}$?

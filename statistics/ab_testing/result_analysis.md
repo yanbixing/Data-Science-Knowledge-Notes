@@ -2,15 +2,22 @@
 
 ## 1. Evaluation metric analysis
 
-### 1.1. Statistics computation from samples.
+### 1.1. CI calculation
 
 - Calculate the statistics of sample distribution 
-  - mean rate: $p^{EG}, p^{CG}$ 
-  - the standard deviation:$\mathrm{SD}^{EG}, \mathrm{SD}^{CG}$
-  - the pooled standard deviation: $s_{pooled} = \sqrt{\frac{(N^{EG}-1)(\mathrm{SD}^{EG})^2 + (N^{CG}-1)(\mathrm{SD}^{CG})^2}{N^{EG}+N^{CG} - 2}}$
+  - mean rate: $p^{EG}(X), p^{CG}(X)$, or for simplicity:
+      $$p_{pooled} = \frac{n^{EG}_+ + n^{CG}_+}{N^{EG} + N^{CG}}$$
+  - the standard deviation:$\mathrm{SD}^{EG}(X), \mathrm{SD}^{CG}(X)$
+  - the pooled standard deviation: 
+    $$\begin{aligned}
+      SD_{pooled}(X) &= \sqrt{\frac{(N^{EG}-1)(\mathrm{SD}^{EG})^2 + (N^{CG}-1)(\mathrm{SD}^{CG})^2}{N^{EG}+N^{CG} - 2}}\\
+      &\approx \sqrt{\frac{(\mathrm{SD}^{EG})^2+(\mathrm{SD}^{CG})^2}{2}} \leftarrow \text{if } N^{EG} \approx N^{CG}\\
+      &\approx \sqrt{p_{pooled} q_{pooled}} \leftarrow \text{if } p^{EG} \approx p^{CG}
+    \end{aligned}$$
+
 - Calculate the statistics of the mean value:
   - difference of the mean: $\Delta \mu^{obs} = p_s^{EG} - p_s^{CG}$ 
-  - the standard error of the $\Delta \mu$: $\mathrm{SE} = \frac{s_{pooled}}{\sqrt{N}}$
+  - the standard error of the $\Delta \mu$: $\mathrm{SE}(\Delta \mu) = SD_{pooled}(X)\sqrt{\frac{1}{N^{EG}} + \frac{1}{N^{CG}}} $
   - $\mathrm{CI}_{\Delta \mu} = [\Delta \mu^{obs} - z\cdot \mathrm{SE},\Delta \mu^{obs} + z\cdot \mathrm{SE}]$ 
     - $z=z(\alpha)$, i.e. width of CI is determined by $\alpha$
 - Check **practical** significance of the evaluation metric:
@@ -20,9 +27,15 @@
     - if $0$ is in $\mathrm{CI}_{\Delta \mu}$: not statistically significant.
     - if $0$ not in $\mathrm{CI}_{\Delta \mu}$: statistically significant.
 
-### 1.2. Examples
+**Example**
+
+<div  align="center"><img src=./result_analysis_asset/confidence_interval_calculation.png style = "zoom:20%"></div>
+
+### 1.2. CI analysis
 
 We use from cases from an Udacity course as the example. Link: [Udacity-Ab_test](https://classroom.udacity.com/courses/ud257/lessons/4018018619/concepts/40043987150923) or [Udacity-Ab_test(Youtube)](https://youtu.be/6pGDwrJHitw)
+
+
 
 Q: the purple ranges (1) - (6) are different confident interval cases (for $\Delta \mu$), analyze the decision we should take.
 

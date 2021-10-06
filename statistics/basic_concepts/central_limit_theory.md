@@ -2,10 +2,10 @@
 
 - $\{X_1,X_2,\dots,X_n\}$ are random samples from an i.i.d. (identical independent distribution.) Denote its variable name as X, i.e. $X\sim$ the i.i.d.
 - $\mu^{true}:=E(X)$, i.e. the true mean value of the distribution.
-- $\mathrm{SD}^2:=Var(X)$, i.e. the true variance of the distribution.
+- $\mathrm{SD(X)}^2:=Var(X)$, i.e. the true variance of the distribution.
 - $\mu^{obs}:= \frac{1}{N}\sum^N_{i=1} X_i$,i.e. the mean value calculated from the sample.
 
-Then, when n is very large, the distribution of $\mu^{obs}$ is a normal distribution around $\mu^{true}$, with the standard error $\mathrm{SE} = \frac{SD}{\sqrt{n}}$. 
+**CLT**: Then, when n is very large, the distribution of **their mean value** $\mu^{obs}$ is a normal distribution around $\mu^{true}$, with the standard error $\mathrm{SE}(\mu) = \frac{SD(X)}{\sqrt{n}}$. 
 
 (English: No matter what the $X$'s distribution is, its sample mean is always normal distribution.)
 

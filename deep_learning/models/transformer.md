@@ -71,6 +71,27 @@ Ref: [Github blog](http://jalammar.github.io/illustrated-transformer/)
 
 ### 0.2. Positional Encoding
 
+#### 0.2.1 Motivation
+
+In RNN, we will
+- input word1 ($x_1$) into the RNN, generate $h_1$; 
+- input word2 ($x_2$) and $h_1$ into RNN, generate $h_2$;
+- ...Finally, during the process, we will generate $y_1, y_2$, or use $y_{-1}$ or use $h_{-1}$
+So, the order of the words matter. The output is affected by order of words.
+
+However, Transformer, we will input the whole sentence together, the attentions of each words are calculated parallelly, then how to know position of word? Ref:  we have a matrix representation of our sequence. [Medium-blog: "However, these representations are not encoding the fact that words appear in different positions." ](https://medium.com/dissecting-bert/dissecting-bert-part-1-d3c3d495cdb3)
+
+- Personal Understanding: 
+  - Since transformer is parallelly input, it is faster than RNN (Under same model complexity/size. But, BERT is usually larger...)
+  - CNN is also parallelly input. The way CNN differentiate pixel at different position is kernel: still process info locally (several pixels) not globally (the whole picture/doc). 
+    - However, BERT process the whole doc (globally) at same time, thus, we need position encoding to differentiate words at different loc.
+
+Positional encoding is brought to solve the problem. For each embedding, we will add a positional embedding (vector) to its current embedding. Then, for same words at different position, the embedding will be different, and thus, we can bring positional info to the transformer.
+
+
+
+#### 0.2.2 Details
+
 The positional embedding is a embedding only depends on position. (It can be either predefined or learnable. Ref: [Arxiv](https://arxiv.org/abs/2010.04903))
 
 **Purpose:** Add position info to the word embedding. Same word at different position will have different embedding, different info.

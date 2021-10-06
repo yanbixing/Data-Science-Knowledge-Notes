@@ -186,8 +186,8 @@ Ref: [Duke_U](http://people.duke.edu/~rnau/testing.htm)
    - Check:
      - Plot the distribution of error, check if it is a normal distribution.
      - Different kinds of hypothesis testing, Ref: [Wiki-Normality_test](https://en.wikipedia.org/wiki/Normality_test)
-       - Most methods check [kurtosis](https://en.wikipedia.org/wiki/Kurtosis) and skewness
-       - [D'Agostino's K-squared test](https://en.wikipedia.org/wiki/D%27Agostino%27s_K-squared_test), [Jarque–Bera test](https://en.wikipedia.org/wiki/Jarque%E2%80%93Bera_test)
+       - Most methods check [kurtosis](https://en.wikipedia.org/wiki/Kurtosis) and [skewness](https://en.wikipedia.org/wiki/Skewness).
+         - E.g. [D'Agostino's K-squared test](https://en.wikipedia.org/wiki/D%27Agostino%27s_K-squared_test), [Jarque–Bera test](https://en.wikipedia.org/wiki/Jarque%E2%80%93Bera_test)
        - [kurtosis](https://en.wikipedia.org/wiki/Kurtosis) [kəˈtəʊsɪs]:
          - ${\displaystyle \operatorname {Kurt} [X]=\operatorname {E} \left[\left({\frac {X-\mu }{\sigma }}\right)^{4}\right]={\frac {\operatorname {E} \left[(X-\mu )^{4}\right]}{\left(\operatorname {E} \left[(X-\mu )^{2}\right]\right)^{2}}}={\frac {\mu _{4}}{\sigma ^{4}}},}$
          - Describe the "sharpness","peakedness" of the peak. 

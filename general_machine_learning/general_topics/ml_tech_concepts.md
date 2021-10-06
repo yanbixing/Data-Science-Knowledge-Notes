@@ -47,7 +47,7 @@ Ref: [StackExchange]( https://stats.stackexchange.com/questions/14099/using-k-fo
 
 #### Overfitting vs Underfitting
 
-Ref: [TowardsDataScience](https://towardsdatascience.com/overfitting-vs-underfitting-a-complete-example-d05dd7e19765), [AnalyticsIndiaMagazine](https://analyticsindiamag.com/tackling-underfitting-and-overfitting-problems-in-data-science/)
+Ref: [EliteDataScience](https://elitedatascience.com/overfitting-in-machine-learning),[TowardsDataScience](https://towardsdatascience.com/overfitting-vs-underfitting-a-complete-example-d05dd7e19765), [AnalyticsIndiaMagazine](https://analyticsindiamag.com/tackling-underfitting-and-overfitting-problems-in-data-science/)
 
 - Overfitting:
   - Definition: model describes random error/noise instead of underlying relationship. When a model is excessively complex.

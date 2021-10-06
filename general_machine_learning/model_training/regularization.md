@@ -9,6 +9,11 @@ $$L = l(y,h) + \Re(h)$$
 - L1 $\Re$ (Lasso): $\Re(h(x;w)) =  \lambda\sum_i|w_i|$
 - L2 $\Re$ (Ridge): $\Re(h(x;w)) =  \lambda\sum_i w^2_i$ 
 
+Note:
+
+- When saying "Lasso" or "Ridge", we means "Lasso Regression" or "Ridge Regression", "Lasso Regression" or "Ridge Regression" is a regularization technique, NOT the "regression model" in typical ML scenario.
+- Ref: [TowardsDataScience](https://towardsdatascience.com/ridge-and-lasso-regression-a-complete-guide-with-python-scikit-learn-e20e34bcbf0b), [Wiki-Ridge](https://en.wikipedia.org/wiki/Tikhonov_regularization)
+
 ### 1.2 property
 
 #### 1.2.1 Similarity

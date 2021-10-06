@@ -73,8 +73,8 @@ Thus, using proper metric may alleviate the effect on data imbalance on evaluati
 To solve the imbalance, of course one way is to balance the dataset.
 
 - Modify the dataset
-  - Oversampling, Downsampling
-    - Give more weight to the sample during training, this is similar to over-/down-sampling
+  - Oversampling, Downsampling, reweighing
+    - Reweighing: Give more weight to the sample during training, this is similar to over-/down-sampling
   - Synthetic (like SMOTE): generate new data according to existing data.
   
 - Decompose to smaller equally distributed subcategory
@@ -103,11 +103,14 @@ Some model may prefer majority, the boundary will be **affected by the density/a
 
 When the data is sparse, the boundary may be very irregular, thus **hard to fit** (e.g. Logistic regression, Linear regression), require very complex/high-variance. Tree models win in this point
 
-- Decision tree split space with if-else condition, thus **easier** to control **non-linearity/complexity/variance** than other classifiers, can **force the data to be separated**.
+- Easy to **force the data to be separated**: Decision tree split space with if-else condition, thus **easier** to control **non-linearity/complexity/variance** than other classifiers, can **force the data to be separated**.
   - The complexity/variance of tree model can solely tuned by depth, while other models require trick feature engineering.
-- Deeper understanding:
-  - Decision tree rely on entropy. So, for bad separability data, imbalance (sparsity of minority data.) will still affect the model. 
-  - However, it is because the variance of the model is high, so the data is usually separable for the model (**force** the data to be separated.), thus, the model are less affected.
+  - Deeper understanding:
+    - Decision tree rely on entropy. So, for bad separability data, imbalance (sparsity of minority data.) will still affect the model. 
+    - However, it is because the variance of the model is high, so the data is usually separable for the model (**force** the data to be separated.), thus, the model are less affected.
+
+- **Less affected by misclassified 'far/deep' outliers**: Loss is entropy, only care about how mixed the sample is; do **NOT consider/affected-by sample's distance to boundary**, so "deep" outliers (misclassification far from boundary) contribute equally to "shallow" ones, will not significant affect the boundary. 
+  - However, regression/SVM, deep outlier will drag the boundary towards the outlier, which usually bad.
 
 ### 3.3. Less complex model/regularization
 
@@ -127,7 +130,7 @@ Ref: [Wiki-Anomaly_detection](https://en.wikipedia.org/wiki/Anomaly_detection)
 - Density-based: high-density (majority) vs. low-density (minority)
   - KNN (density $\propto \frac{1}{\text{Area of k NN points}}$) or other method.
 - Bayesian Network: high-probability (majority)  vs. low-probability (minority)
-  - Introduction: [Bayesian Network](https://en.wikipedia.org/wiki/Bayesian_network) is a inference model/classifier. [Naive Bayes](https://stackoverflow.com/questions/12298150/what-is-the-difference-between-a-bayesian-network-and-a-naive-bayes-classifier) can be understand as a most simple case.
+  - Introduction: [Bayesian Network](https://en.wikipedia.org/wiki/Bayesian_network) is a inference model/classifier. [Naive Bayes](https://stackoverflow.com/questions/12298150/what-is-the-difference-between-a-bayesian-network-and-a-naive-bayes-classifier) can be understand as a most simple case. (Naive Bay and other generative models can give the probability of (X,Y) pairs.)
   - How it works: given a sample, the model will give its occurrence probability. Normal sample will have a high one while abnormal sample will have low one.
 - Auto-encoder: low reconstruction error (majority) vs. high reconstruction error (minority)
   - Introduction: 

@@ -17,9 +17,19 @@
 #### 2.2.1 Precision and Recall related
 
 - $\text{precision} = \frac{TP}{TP+FP}$ <br> English: Among the predicted positive, how many are correct (condition positive $P$ ).
+  - When to use: 
+    - we don't want FP, i.e., .false positive is harmful to user.
+    - E.g. Spam filter false positive will cause user miss important info.
+
+
 - $\text{recall} = \frac{TP}{TP+FN} = TPR = \text{sensitivity}$
 English: Among the condition positive ($P$), how may are correct (predicted positive).
+  - When to use:
+    - We don't want FN i.e. False negative is harmful to user.
+    - E.g. Cancer identifier, false negative will cause the user miss the best treatment period.
+
 - $\text{f1} = \frac{1}{\frac{ \frac{1}{\text{precision}} + \frac{1}{Recall} }{2}} = \frac{2\cdot \text{precision} \cdot \text{recall}}{\text{precision} + \text{recall}}$<br>English: The harmonic mean of precision and recall
+
 - $\text{accuracy} = \frac{TP+TN}{P+N} $ 
   - For balanced dataset, $\text{accuracy}\overset{P=N}{\rightarrow} \frac{1}{2} (\frac{TP}{P} + \frac{TN}{N}) = \frac{1}{2}(TPR+TNR)$
   - $TNR = \frac{TN}{N}$
@@ -32,9 +42,13 @@ Area Under (ROC) Curve (ROC Curve: receiver operating characteristic )
 - ROC Curve
   <div  align="center"><img src=https://upload.wikimedia.org/wikipedia/commons/6/6b/Roccurves.png style = "zoom:40%"></div>
 
-  $FPR = \frac{FP}{FP+TN} = \frac{FP}{N}$
+  $FPR = \frac{FP}{FP+TN} = \frac{FP}{N} = \text{significant level}= \alpha =  \text{type I error} $
+  - Ref: [Wiki-FPR](https://en.wikipedia.org/wiki/False_positive_rate#Comparison_with_other_error_rates):"false positive rate is mathematically equal to the type I error rate"
 
-  $TPR = \frac{TP}{TP+FN} = \frac{TP}{P} = \text{recall} = \text{sensitivity}$
+  $TPR = \frac{TP}{TP+FN} = \frac{TP}{P} = \text{recall} = \text{sensitivity}= 1-\beta$
+  - $\beta:$ type II error rate
+  - Ref: [Wiki-Sensitivity](https://en.wikipedia.org/wiki/Sensitivity_and_specificity): Sensitivity (True Positive Rate)
+
   <br>
 
 - **personal understanding on AUC ROC**:
@@ -57,7 +71,7 @@ Explanation: the moving on ROC curve is actually the moving of threshold.
 - AUC vs. Precision-Recall:
   - AUC:
     - Pro: 
-      - Not affected by class imbalance.
+      - **Not affected by class imbalance**.
       Explain: The AUC of random guesser is always 0.5, regardless of balance or not.
       - More comprehensive
       Explain: Have all $TP, FP, TN, FN$

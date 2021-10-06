@@ -2,17 +2,33 @@
 
 ## 0. Basic concepts
 
-### Number of split points (Complexity of finding split point?): 
+### 0.1. Misc knowledge
 
-- Brute force, N data points then there is N-1 split points, check each of them one by one.
-- This complexity is usually used for regression tree.
+- How to split a numerical feature:
+  - Brute force, N data points then there is N-1 split points, check each of them one by one.
+  <!-- - This complexity is usually used for regression tree. -->
+- How to treat multiclass-classification: 
+  - No difference, still split feature to maximize the information gain.
+  - The prediction of the leaf nodes is determined by its majority samples when training.
+    - E.g. leaf node:
+      - Binary classification: {1: 10 samples, 0: 1 sample} => leaf node is y=1
+      - Multi-class: {c1:10, c2:1, c3:1}=> leaf node is c1.
+  - Ref: [TowardsDataScience](https://towardsdatascience.com/decision-tree-algorithm-for-multiclass-problems-using-python-6b0ec1183bf5)
 
-Multiclass-classification: each leaf nodes is a class. (majority voting)
+### 0.2. Loss function: 
 
-### Loss function: 
-
-- Classification: entropy, Gini
-- Regression: square loss.
+- Classification: 
+  - Entropy: $\sum_j p_j \log p_j$$
+    - "information gain" (mutual info, i.e. entropy - conditional entropy) 
+  - Gini impurity: $1-\sum_j p^2_j$
+    - Why usually use gini to replace entropy
+      - Gini($\times 2$)'s shape is almost same to entropy, so use Gini will **not sacrifice performance**.
+      - Gini (power and minus) is more computationally cheap than entropy (logarithm), the **speed should be faster**.
+        <div  align="center"><img src=https://quantdare.com/wp-content/uploads/2020/11/entropy_and_gini.png style = "zoom:60%"></div>
+    - Ref: [QuantDare](https://quantdare.com/decision-trees-gini-vs-entropy/)
+- Regression: 
+  - variance: $\frac{1}{N^2} (\sum_{i \in p}\sum_{j \in p} (y_i - y_j)^2 - [\sum_{i \in c1}\sum_{j \in c1}(y_i - y_j)^2 + \sum_{i \in c2}\sum_{j \in c2}] (y_i - y_j)^2 )$
+    - Ref: [Wiki-DTLearning](https://en.wikipedia.org/wiki/Decision_tree_learning#Variance_reduction)
 
 <!-- ### Difference between "bagging", "random forest" and "boosting":
 
@@ -27,9 +43,10 @@ Multiclass-classification: each leaf nodes is a class. (majority voting)
 - Stacking: use different types of model (rather than data) to get a weighted decision.
 - Refs: [Cornell U](http://www.cs.cornell.edu/courses/cs578/2005fa/CS578.bagging.boosting.lecture.pdf), [Quora](https://www.quora.com/What-does-Bagging-reduces-the-variance-while-retaining-the-bias-mean), [Linkdin](https://www.linkedin.com/pulse/bias-variance-bagging-boosting-dummies-i-sray-agarwal/) -->
 
-### Entropy:
 
-#### Notation:
+### 0.3. Entropy-related concepts:
+
+#### 0.3.0. Notation:
 
 - $\mathcal{S}$ is a sampleset with $m$ sample $(x,y)$ = $(x,Y)$
   - $y$ denotes the label of the sample, there assume it is 1-dim label $Y$.
@@ -38,25 +55,39 @@ Multiclass-classification: each leaf nodes is a class. (majority voting)
   - $\mathcal{X_i}$ denotes all possible values for $X_i$
   - $p(x_i)$ is an abbreviation of $p(X=C_k)$
 
-#### Entroy
+#### 0.3.1. Entroy
+
 $$H(\mathcal{S}):= H(Y) = \sum^K_{k=1} -p(C_k)\log_2 p(C_k)$$
 
 **Note:** Entropy is maximized when each class have an equal probability (i.e. $\frac{1}{c}$) and minimized when all samples fall into a single category.
 
 **Note:** There is a negative sign **"-"** in the equation.
 
-#### Conditional Entropy:
+#### 0.3.2. Conditional Entropy:
 
 $$H(Y|X_i) = -\sum_{X_i\in \mathcal{X_i} }\sum_{Y\in \mathcal{Y} } p(X_i, Y) \log_2 p(Y|X_i) $$
 where:
 $$p(Y|X_i) = \frac{p(X_i, Y)}{p(X_i)}$$
 
 
-#### "Information gain" 
+#### 0.3.3. "Information gain" 
 
 Actually, the typical term "information gain" used in decision tree cases is the expectation of information gain, i.e. mutual information:
 
 $$\underset{X_i \in \mathcal{X_i}}{\mathbb{E}}[ IG(Y,X_i) ] = MI(Y;X_i) = E(Y) - E(Y|X_i)$$
+
+### 0.4. Tree Pruning: How to?
+
+Ref: [Blog](https://www.displayr.com/machine-learning-pruning-decision-trees/)
+
+- Pre-prune = early stoppingSet max depth
+  - Set min_leaf_size
+  - Set min_impurity_decrease
+
+- Post-pune:
+  - Delete the split that produce minimum info gain
+  - Delete the splits have smallest size
+  - Reduce max_depth
 
 ## 1. Decision Tree:
 
@@ -91,6 +122,7 @@ Bias-variance tradeoff is dependent on depth of the tree.
   - Easy to interpret (verbalizable)
   - Easy to implement (can be realized with if-else)
   - Can handle both numerical and categorical data
+    - Numerical How: Brute force, N data points then there is N-1 split points, check each of them one by one.
   - Performs well on large dataset.
     - (?) Why?
   - Extremely fast
@@ -111,6 +143,12 @@ Bias-variance tradeoff is dependent on depth of the tree.
 ## 2. Bagging and Random Forest
 
 ### 2.1. Bagging: bootstrap aggregating
+
+Bagging include two process/concepts, i.e. bagging = bootstrapping + aggregating:
+
+- bootstrapping: gather different training dataset by drawn with replacement from the training sample pool.
+- aggregation: train different models on different dataset and ensemble/aggregate their result.
+
 
 #### 2.1.1. Training: 
 
@@ -170,7 +208,7 @@ Compare to plain decision tree model:
 - NOT reduce bias.
 
 
-### 2.3. Bagging&RF Summary
+### 2.3. Bagging & RF Summary
 
 #### 2.3.1 Similarity
 both models trains multiple trees on bootstrap samples and reduce variance via model ensemble.
@@ -530,3 +568,4 @@ $$\begin{aligned}
   \\
   &=\sum^K_{k=1} p(C_k|X_i)\log \left({\frac { p(C_k|X_i) }{ p(C_k) }}\right)
 \end{aligned}$$ -->
+
