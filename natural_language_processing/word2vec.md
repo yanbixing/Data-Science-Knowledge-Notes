@@ -1,8 +1,8 @@
 # Word2Vec
 
-## 0. Basics
+## 1. Basics
 
-### what is embedding?
+### 1.1. what is embedding?
 
 A process to convert word to vector
 
@@ -10,9 +10,111 @@ Typically, map from one word one dimension (token, one-hot encoding) to less dim
 
 Ref: [Blog](https://machinelearningmastery.com/what-are-word-embeddings/):?(TBD)
 
+### 1.2. How word2vec embedding comes?
 
-## 1. Introduction
+For example, in your word2vec model:
+
+- your vocabulary size (input layer size, receiving the one-hot encoding) $V=$10k 
+- your hidden layer size $n$ is 300, 
+
+Then you will have a weight matrix $\boldsymbol{W}_{V\times n}$ ($\boldsymbol{h}_{1\times n}:=\boldsymbol{x}_{1\times V} \boldsymbol{W}_{V\times n}$, i.e. ,the ref use row vector) 
+
+<div  align="center">
+  <img src= http://mccormickml.com/assets/word2vec/word2vec_weight_matrix_lookup_table.png style = "zoom:40%">
+</div>
+
+Why? Because for each one-hot encoding of j-th term $\tau_j$ , there is only one "1" in the vector, i.e. $\boldsymbol{x}_{\tau_j} = [0,\dots,\underset{\text{j-th}}{1},0,\dots]$. So $[\boldsymbol{x}_{\tau_j}]_{1\times V} \boldsymbol{W}_{V\times n}$ will output the j-th row in $\boldsymbol{W}_{V\times n}$, a vector with dimension $n$.
 
 
-## 2. Training
+Ref: [Blog](http://mccormickml.com/2016/04/19/word2vec-tutorial-the-skip-gram-model/), [Medium](https://becominghuman.ai/how-does-word2vecs-skip-gram-work-f92e0525def4), [Zhihu](https://zhuanlan.zhihu.com/p/27234078)
 
+
+## 2. Model
+
+
+Word2Vec has two architectures/ways-to-implement, continuous bag-of-word model (CBOW) and skip-gram (SG).
+
+
+<div  align="center">
+  <img src= http://idli.group/assets/2017-01-22-Natural%20Language%20Processing%20using%20Word2Vec/word2vec.png style = "zoom:60%">
+</div>
+
+Ref: 
+
+- [Medium](https://medium.com/analytics-vidhya/word2vec-cbow-skip-gram-algorithmic-optimizations-921d6f62d739), [Wiki-Word2Vec](https://en.wikipedia.org/wiki/Word2vec#CBOW_and_skip_grams), [StackOverflow](https://stackoverflow.com/questions/38287772/cbow-v-s-skip-gram-why-invert-context-and-target-words),[TowardsDataScience](https://towardsdatascience.com/an-implementation-guide-to-word2vec-using-numpy-and-google-sheets-13445eebd281), [Blog](http://idli.group/Natural-Language-Processing-using-Vectoriziation.html): two ways to implement, and the difference.
+- [TowardsDataScience](https://towardsdatascience.com/an-implementation-guide-to-word2vec-using-numpy-and-google-sheets-13445eebd281): an implementation guide of skip n-gram
+- [GoogleSlides](https://docs.google.com/presentation/d/1yQWN1CDWLzxGeIAvnGgDsIJr5xmy4dB0VmHFKkLiibo/edit?usp=sharing): a summary slide
+
+
+### 2.1. Skip-gram (SG)
+
+
+Skip-gram means using a word to predict the background words.
+
+In real application, there will be a window to define "background words". 
+
+#### 2.1.1. Training sample preparation
+
+E.g. In the following example, the yellow one is the input word and the green words will be the target we would like to predict.
+
+<div  align="center">
+  <img src=https://miro.medium.com/max/1400/1*jkxbwD55_8M3XBRb1bGm7A.png style = "zoom:60%">
+</div>
+
+In vector representation, each term will be represented with a one-hot encoding vector, with the size of the vocabulary size $V$, like the j-th word in i-th doc will be represented as: 
+
+- $t_{i,j} = [0,\dots,0, p_{idx(t_{i,j})} = 1,0,\dots,0]^T_{(V \times 1)}$
+  - "T" means this is a column vector
+- Then the training samples will be like $(t_{i,j}, t_{i,j-2})$, $(t_{i,j}, t_{i,j-1})$, $(t_{i,j}, t_{i,j+1})$,$(t_{i,j}, t_{i,j+1})$, etc
+
+#### 2.1.2. Model details:
+
+For simplicity, 
+
+- we denote the input with letter $x$, $x_{i,j} := t_{i,j} $; 
+- on output side, we still use letter $t$ as the ground true label. 
+- The model output probability distribution of different words is denoted with letter $\hat{y}$, $\hat{y}(x_{ij}) = [p_1,\dots,p_V]^T_{(V \times 1)}$
+
+In word2vec model, the implemented is like this:
+
+<div  align="center">
+  <img src=http://mccormickml.com/assets/word2vec/skip_gram_net_arch.png style = "zoom:60%">
+</div>
+
+The input will be $x_{i,j}$, the output will be $\hat{y}(x_{ij})$, if the training sample is $(x_{i,j}, t_{i,j+1})$, the loss contribution of the sample is like: 
+$$E = [t_{i,j+1}-\hat{y}(x_{i,j})]^2 = [t_{i,j+1}-\hat{y}(x_{i,j})]^T[t_{i,j+1}-\hat{y}(x_{i,j})]$$
+
+Ref: [TowardsDataScience](https://towardsdatascience.com/an-implementation-guide-to-word2vec-using-numpy-and-google-sheets-13445eebd281),[Blog](http://mccormickml.com/2016/04/19/word2vec-tutorial-the-skip-gram-model/), [TowardsDataScience](https://towardsdatascience.com/nlp-101-word2vec-skip-gram-and-cbow-93512ee24314), [GoogleSlides](https://docs.google.com/presentation/d/1yQWN1CDWLzxGeIAvnGgDsIJr5xmy4dB0VmHFKkLiibo/edit?usp=sharing)
+
+
+#### 2.1.3. Main parameters 
+
+- window_size: the width of the window
+- n: dimension of the embedding
+
+Ref: [TowardsDataScience](https://towardsdatascience.com/an-implementation-guide-to-word2vec-using-numpy-and-google-sheets-13445eebd281)
+
+
+### 2.2. Continuous Bag-of-Word (CBOW) (TBD)
+
+CBOW means use the background words to predict the target word.
+
+Ref: [GoogleSlides](https://docs.google.com/presentation/d/1yQWN1CDWLzxGeIAvnGgDsIJr5xmy4dB0VmHFKkLiibo/edit?usp=sharing),[TowardsDataScience](https://towardsdatascience.com/nlp-101-word2vec-skip-gram-and-cbow-93512ee24314)
+
+### 2.3. Comparision between two archetecture
+
+Ref: [StackOverflow](https://stackoverflow.com/questions/38287772/cbow-v-s-skip-gram-why-invert-context-and-target-words), [TowardsDataScience](https://towardsdatascience.com/nlp-101-word2vec-skip-gram-and-cbow-93512ee24314)
+Skip-gram: works well with small amount of the training data, represents well even rare words or phrases.
+
+CBOW: several times faster to train than the skip-gram, slightly better accuracy for the frequent words
+
+Ref: [Medium](https://medium.com/analytics-vidhya/word2vec-cbow-skip-gram-algorithmic-optimizations-921d6f62d739)
+
+1. CBOW is comparatively faster to train than skip-gram (as CBOW has to train only one softmax).
+2. CBOW is better for frequently occurring words (because if a word occurs more often it will have more training words to train).
+3. Skip-gram is slower but works well for the smaller amount of data then CBOW.
+4. Skip-gram works well for less frequently occurring words than CBOW.
+5. CBOW is a simpler problem than the Skip-gram (because in CBOW we just need to predict the one focus word given many context words).
+
+
+## Deep Dive: Comparison between different embeddings (TBD)

@@ -22,13 +22,13 @@ The pdf of exponential distribution is:
 
 ## 2. Key statistics
 
-$x\sim f(x;\lambda )$
+$X\sim Exp(\lambda )$: random variable $X$ follow exponential distribution.
 
-- mean: $\mathbb{E}(x) = \frac{1}{\lambda}$
-- variance: $\mathrm{Var}(x) = \frac{1}{\lambda^2}$
-  - SD: $\sigma(x) = \frac{1}{\lambda}$
-- median: $\mathrm{mid}(x) = \frac{\ln 2}{ \lambda}$
-- mode: $\mathrm{mod}(x) = 0$
+- mean: $\mathbb{E}(X) = \frac{1}{\lambda}$
+- variance: $\mathrm{Var}(X) = \frac{1}{\lambda^2}$
+  - SD: $\sigma(X) = \frac{1}{\lambda}$
+- median: $\mathrm{mid}(X) = \frac{\ln 2}{ \lambda}$
+- mode: $\mathrm{mod}(X) = 0$
 
 ## 3. Example question
 

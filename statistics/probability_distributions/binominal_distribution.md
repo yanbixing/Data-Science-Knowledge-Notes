@@ -20,7 +20,7 @@ Ref: [Wiki-Binominal_distribution](https://en.wikipedia.org/wiki/Binomial_distri
 
 ## Binominal distribution statistics
 
-$X \sim B(n, p)$
+$X \sim B(n, p)$: a random variable $X$ follow binominal distribution.
 
 - Mean: $E(X) = np$
 - Variance: $Var(X) = npq$
