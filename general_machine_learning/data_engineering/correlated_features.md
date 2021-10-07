@@ -37,7 +37,7 @@ $$\begin{aligned}
   R_{j}^{2} := R^2(x^{*(j)},\hat{x}^{(j)} )
 \end{aligned}$$
 
-**Analysis method:** the higher VIF the more collinearity.
+**Analysis method:** the higher VIF the more collinearity. Typically, $VIF > 10$ will be considered as high collinearity.
 
 - the higher (multi-)collinearity
 - the better $x^{*(j)}$ can be fitted with other variable ($\hat{x}^{(j)} = \sum_{i\neq j} \alpha^{(i)} x^{(i)}$)
@@ -59,8 +59,10 @@ $$\begin{aligned}
 
 $$\begin{cases}
   Var_{tot}(y^*) : = \frac{1}{m} \sum^m_{i=1}(y_i^*-\bar{y^*}_i)^2\\
-  Var_{res}(y^*,\hat{y}) : = \frac{1}{m} \sum^m_{i=1}(y_i^*-\hat{y}_i)^2
+  Var_{res}(y^*,\hat{y}) : =RSS:= \frac{1}{m} \sum^m_{i=1}(y_i^*-\hat{y}_i)^2
 \end{cases}$$
+
+Note: "RSS" = residue sum square.
 
 **For some cases like simple linear regression**, explained variance equal to the difference between total variance and residue variance:
 
