@@ -351,3 +351,37 @@ For t (or z) score, interestingly, they are same.
 - $z_{\alpha^{(1)}}^{obs} = \frac{\alpha^{(1)obs} - \alpha_{H_0}}{\mathrm{SE}(\alpha^{(1)})} = \frac{r_{xy} \frac{\sigma(x)}{\sigma(y)} }{\frac{1}{\sqrt{m}} \sqrt{1-r^2_{xy}} \frac{\sigma(x)}{\sigma(y)}} = \sqrt{m} \frac{r_{xy}}{\sqrt{1-r^2_{xy}}}$
 
 Ref: [YouTube](https://youtu.be/oXBlG8vIZg8), [StackExchange](https://stats.stackexchange.com/questions/22718/what-is-the-difference-between-linear-regression-on-y-with-x-and-x-with-y/22721), [Wiki-t_test](https://en.wikipedia.org/wiki/Student%27s_t-test)
+
+
+## Deep-dive-1. $R^2$, $Var_{tot/res/exp}$ and $r$
+
+Ref:[Wiki-R_squared](https://en.wikipedia.org/wiki/Coefficient_of_determination), [Wiki-R_squared: explained_var](https://en.wikipedia.org/wiki/Coefficient_of_determination#As_explained_variance), [Wiki-R_squared: squared_corr](https://en.wikipedia.org/wiki/Coefficient_of_determination#As_squared_correlation_coefficient)
+
+The formal definition of $R^2$ is as following:
+
+$$\begin{aligned}
+  R^{2}(y^*,\hat{y}) := 1 - \frac{Var_{res}(y^*,\hat{y})}{Var_{tot}(y^*)} = 1-\frac{\sum_i(y_i^*-\hat{y}_i)^2}{\sum_i(y_i^*-\bar{y}_i)^2}
+\end{aligned}$$
+
+$$\begin{cases}
+  Var_{tot}(y^*) : = \frac{1}{m} \sum^m_{i=1}(y_i^*-\bar{y^*}_i)^2\\
+  Var_{res}(y^*,\hat{y}) : = \frac{1}{m} \sum^m_{i=1}(y_i^*-\hat{y}_i)^2
+\end{cases}$$
+
+**For some cases like simple linear regression**, explained variance equal to the difference between total variance and residue variance:
+
+$$Var_{exp}(y^*,\hat{y}) = Var_{tot}(y^*) -  Var_{res}(y^*,\hat{y}) $$
+
+$$\begin{aligned}
+  R^{2}(y^*,\hat{y}) = \frac{Var_{exp}(y^*,\hat{y})}{Var_{tot}(y^*)}
+\end{aligned}$$
+
+
+**For simple linear regression:**
+
+$$\begin{aligned}
+  R^{2}(y^*,\hat{y}) = r^2(y^*,\hat{y}))
+\end{aligned}$$
+where $r$ is correlation coefficient.
+
+
