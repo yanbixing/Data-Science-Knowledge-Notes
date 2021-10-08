@@ -22,12 +22,16 @@ Ref: [Wiki-Bernoulli_trial](https://en.wikipedia.org/wiki/Bernoulli_trial)
 
 - $X\sim Bernoulli(p)$ means X is a variable follow bernoulli distribution. I.e. At each sampling, the possibility for $X=1$ is $p$ and the possibility for $X=0$ is $(1-p)$.
 
-- The possibility mass function of Bernoulli distribution:
+- The possibility mass function (pmf) of Bernoulli distribution:
+  $$Pr(X) = \begin{cases}
+    p & X=1\\ 1-p & X=0
+  \end{cases}$$
+  - The illustration of pmf is like:
     <div  align="center"><img src=http://probabilitycourse.com/images/chapter3/bernoulli(p)%20color.png style = "zoom:30%"></div> 
 
-  - The x axis is the outcome 0,1 of a bernoulli trial.
-  - The y axis is the possibility of outcome 0, 1.
-  - Ref: [Probabilitycourse](https://www.probabilitycourse.com/chapter3/3_1_5_special_discrete_distr.php)
+    - The x axis is the outcome 0,1 of a bernoulli trial.
+    - The y axis is the possibility of outcome 0, 1.
+    - Ref: [Probabilitycourse](https://www.probabilitycourse.com/chapter3/3_1_5_special_discrete_distr.php)
 
 - Note:
 

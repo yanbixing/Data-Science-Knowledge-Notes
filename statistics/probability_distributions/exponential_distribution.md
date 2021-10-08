@@ -4,25 +4,23 @@ Ref: [Wiki-Exponential_distribution](https://en.wikipedia.org/wiki/Exponential_d
 
 ## 1. Basics
 
-The pdf of exponential distribution is:
+- $X\sim Exp(\lambda )$: random variable $X$ follow exponential distribution.
 
- $f(x;\lambda )={\begin{cases}\lambda e^{-\lambda x}&x\geq 0,\\0&x<0.\end{cases}}$
+- The pdf of exponential distribution is:
+  $$f(x;\lambda )={\begin{cases}\lambda e^{-\lambda x}&x\geq 0,\\0&x<0.\end{cases}}$$
+  <div  align="center"><img src=https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Exponential_probability_density.svg/600px-Exponential_probability_density.svg.png style = "zoom:50%"></div> 
 
-<div  align="center"><img src=https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Exponential_probability_density.svg/600px-Exponential_probability_density.svg.png style = "zoom:50%"></div> 
-
- The cdf (cumulative distribution function) is
-
- $F(x;\lambda) = \begin{cases}
-1-e^{-\lambda x} & x \ge 0, \\
-0 & x < 0.
-\end{cases}$
-
-<div  align="center"><img src=https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Exponential_cdf.svg/600px-Exponential_cdf.svg.png style = "zoom:50%"></div> 
+ - The cdf (cumulative distribution function) is
+  $$F(x;\lambda) = \begin{cases}
+  1-e^{-\lambda x} & x \ge 0, \\
+  0 & x < 0.
+  \end{cases}$$
+  <div  align="center"><img src=https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/Exponential_cdf.svg/600px-Exponential_cdf.svg.png style = "zoom:50%"></div> 
 
 
 ## 2. Key statistics
 
-$X\sim Exp(\lambda )$: random variable $X$ follow exponential distribution.
+
 
 - mean: $\mathbb{E}(X) = \frac{1}{\lambda}$
 - variance: $\mathrm{Var}(X) = \frac{1}{\lambda^2}$

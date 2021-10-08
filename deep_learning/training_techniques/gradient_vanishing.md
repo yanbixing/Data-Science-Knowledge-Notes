@@ -2,8 +2,6 @@
 
 ## 1. Origin: Backpropagation
 
-
-
 $\boldsymbol{Z}^{(1)} = \boldsymbol{W}^{(1)} \boldsymbol{X}+\boldsymbol{b}^{(1)} $
 $\boldsymbol{A}^{(1)}  = g(\boldsymbol{Z}^{(1)} )$
 $\boldsymbol{Z}^{(2)}  = \boldsymbol{W}_2\boldsymbol{A}^{(1)} +\boldsymbol{b}^{(2)} $
