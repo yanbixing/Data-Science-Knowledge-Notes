@@ -1,6 +1,7 @@
 # Overfitting
 
 - dropout: prevent you from too much focus on particular feature
+  - The larger dropout ratio, the less importance/influence of an individual neural, the less variance, the less model complexity.
 - Reduce model complexity
 - More data / Data augmentation
 - Early stopping

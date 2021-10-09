@@ -13,6 +13,7 @@ Ref: [Youtube](https://www.youtube.com/watch?v=-5hESl-Lj-4), [CSDN](https://blog
 - Why BN could solve the problem?
   - BN is equivalent to another mapping process/layer, this process will learn to transform the input data into the the most suitable scale.
     - I.e.$x_{output} = \gamma x_{input} + \beta $, the $(\gamma, \beta)$ is learned during training.
+      - Support Ref: [MLMastery](https://machinelearningmastery.com/batch-normalization-for-training-of-deep-neural-networks): "These parameters are learned by..."
   - <div  align="center"><img src=./techniques_asset/batch_normalization_fig_1.png style = "zoom:30%"></div> 
 - Effect of BN:
   - Accelerate the training. (Of course, it is BN's target)
@@ -22,3 +23,23 @@ Ref: [Youtube](https://www.youtube.com/watch?v=-5hESl-Lj-4), [CSDN](https://blog
   
   <!-- - Outliers: when the value is larger than the most suitable scale learned by BN, it will be suppressed by non-linearity of NN. Make the network robust. -->
 
+
+### FAQ
+
+- Relation between mini-batch size and batch normalization.
+  - The batch normalization should have better result, since the mini-batch is more closer to the population.
+  - Ref: [StackExchange](https://datascience.stackexchange.com/questions/41873/batch-normalization-vs-batch-size)
+
+## Appendix
+
+### Apd 1. Batch-size related concept
+
+Full batch learning: for each step, use the full dataset to update the parameter.
+Mini-batch learning: for each step, use subset of dataset to update parameter.
+Online learning:  for each step, use only 1 sample to update the parameter.
+
+Ref: [kaggle-notebook](https://www.kaggle.com/residentmario/full-batch-mini-batch-and-online-learning), [StackExchange](https://stats.stackexchange.com/questions/110078/full-batch-vs-online-learning-vs-mini-batch)
+
+
+Larger batch size, training time longer, generalize better (each step are smoother.)
+Smaller batch size, converge (training time) faster, but the direction of step may be not stable.

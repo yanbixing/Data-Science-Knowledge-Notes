@@ -252,8 +252,13 @@ The weak leaner used in boost is usually **tree stump** or shallow tree.
 
 #### 3.0.3 Classification Tree vs Regression Tree
 
-- Regression tree: next stump fit the the residue (GB directly on residue, AdaBoost reweighing based on residue).
-- Classification tree: misclassified samples are given more weight (Ada directly reweighing, GB focus on classification.)
+- Regression tree: next stump fit the the residue 
+  - AdaBoost reweighing based on a user-defined function $w_{i,t} = R[y_i,F_{t-1}(x_i))$, usually related to residue.
+  - GB is directly trained  on residue: $y^* - \hat{y}$.
+- Classification tree: misclassified samples are given more weight 
+  - Ada reweighing sample, weight value is still based on a user-defined function $w_{i,t} = R[y_i,F_{t-1}(x_i))$, 
+  - GB is still directly trained on residue: $y^* - \mathrm{Pr}(y=1)$.
+    - Ref: [Blog](https://blog.paperspace.com/gradient-boosting-for-classification/), [TowardsDataScience](https://towardsdatascience.com/gradient-boosting-classification-explained-through-python-60cc980eeb3d) : GB for classification tasks.
 
 #### 3.0.4  Bias-variance tradeoff
 
@@ -339,7 +344,11 @@ $$r_{MSE}(x) = - \frac{1}{2} \frac{\partial (y-F_{t-1})^2}{\partial F_{t-1}}= (y
 The idea is simple: if we can find a function to fit the residue. Adding it to our previous function will make our prediction more precise.
 
 **Note**: limitation: the choice of loss must be differentiable.
-Why <font color="#0000dd">**pseudo residue**</font> is the negative gradient of loss
+Why <font color="#0000dd">**pseudo residue**</font> is the negative gradient of loss.
+
+**Note:** for classification tasks, we could still the pseudo residue formula from the RMSE concept: $r_{cls}:=y^* - \mathrm{Pr}(y=1)$. 
+Like a kind of "probability residue"，i.e. we translate label to probability and fit the probability in an regression way. $y^* = 1 \Rightarrow \mathrm{Pr}(y=1) = 1, y^* = 0 \Rightarrow \mathrm{Pr}(y=1) = 0,$
+- Ref: [Blog](https://blog.paperspace.com/gradient-boosting-for-classification/), [TowardsDataScience](https://towardsdatascience.com/gradient-boosting-classification-explained-through-python-60cc980eeb3d) : GB 
 
 ### 3.2.1 Prediction Function
 
@@ -358,7 +367,7 @@ Similar to AdaBoost:
 0. start with a constant value function: 
    - $F_0 = \underset{F_0}{\argmin}(\sum_i R(y_i,F_0))$
 1. Get a new training set $\mathcal{S}_t = \{...(x_i,r_{t-1,i})...\}$ by <font color="#0000dd">calculating the pseudo reside</font>:
-   - $r_{t-1,i}:=r_{t-1}(x_i)$ after $(t-1)$-th step and form a 
+   - $r_{t-1,i}:=r_{t-1}(x_i)$ the residue calculated from true target value $y^*$ and model prediction after $(t-1)$-th step $F_{t-1}$.
 2. Fit the model $h_t(x)$ to $\mathcal{S_t}$
 3. Calculate the learner weight $\alpha_t$ by minimizing the loss, i.e.:
     - $$\alpha_t = \underset{\alpha_t}{\argmin}R_t(\alpha_t) $$ 
