@@ -18,7 +18,8 @@
       - Less common: optimize metrics based on the score given by the model, like likelihood. Then, the far-from-boundary points has non-zero contribution to the score and thus will affect the position of boundary.
   - SVM can be used for not-linear separable data, with kernel. LR doesn't.
   - LR has probability interpretation. SVM doesn't.
-  - LR is strictly convex. SVM doesn't
+  - LR is strictly convex. SVM is convex, not strictly convex. 
+    - See:[math_topics/convex_optimization.md](../math_topics/convex_optimization.md)
   - Refs: [Medium blog](https://medium.com/@george.drakos62/support-vector-machine-vs-logistic-regression-94cc2975433f), [StackExchange](https://stats.stackexchange.com/questions/95340/comparing-svm-and-logistic-regression), [Blog-GDCoder](https://gdcoder.com/support-vector-machine-vs-logistic-regression/)
 
 - LR (Logistic Regression) vs Linear regression.

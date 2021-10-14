@@ -241,6 +241,7 @@ The k-th tree is build using information learned from all previous k−1k−1 tr
 #### 3.0.1 What is "Boosting"
 
  Combines weak "learners" into a single strong learner in an **iterative** fashion. [Wiki - Gradient Boost](https://en.wikipedia.org/wiki/Gradient_boosting)
+ Boost is also an ensemble method. [MS-ML](https://docs.microsoft.com/en-us/azure/machine-learning/algorithm-module-reference/boosted-decision-tree-regression)
 
 #### 3.0.2 What is a "Weak Learner"
 

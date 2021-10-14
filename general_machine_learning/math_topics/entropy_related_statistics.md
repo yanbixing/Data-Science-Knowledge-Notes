@@ -26,13 +26,24 @@ $$H(P) := - \sum_{x\in\mathcal{X}} P(x)\log P(x)$$
 
 ### 1.2. Cross Entropy
 
-evaluate two distributions on a same dataset.
+Evaluate two distributions on a same dataset.
+
 $$H(P,Q):=-\sum _{x\in {\mathcal {X}}}P(x)\,\log Q(x)$$ 
 
 - Cross Entropy measures: evaluate the uncertainty of using an estimated distribution $Q$ to identify events with true distribution $P$.
   - i.e. Expected number of bits needed to identify a $\boldsymbol{x}$ from $\mathcal{X}$, with the estimated distribution $Q$ rather than ground true distribution $P$.
 - $P$ and $Q$ defined on the same probability space $\mathcal{X}$
 - Ref: [Wiki-Cross_Entropy](https://en.wikipedia.org/wiki/Cross_entropy)
+
+
+
+Application Note:
+
+- Usually used as the **loss for classification task** (works for both binary and **multi-label** classification). Ref: [StackExchange](https://stats.stackexchange.com/questions/207794/what-loss-function-for-multi-class-multi-label-classification-tasks-in-neural-n)
+
+- In deep learning, to keep the result sum to 1, usually we use a use a **softmax layer** to normalize the output. Ref [StackExchange](https://stats.stackexchange.com/questions/207794/what-loss-function-for-multi-class-multi-label-classification-tasks-in-neural-n)
+
+Also see: [model_training/loss.md](../model_training/loss.md)
 
 ### 1.3. KL Divergence
 

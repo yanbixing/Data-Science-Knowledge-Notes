@@ -17,13 +17,17 @@
   - Use $-b$ for convenience.
   - Distance between the origin and the hyperplane is $\tfrac {b}{\|\boldsymbol {w} \|}$. Distance between the two margin hyperplane is $\tfrac {2}{\|\boldsymbol {w} \|}$ . Ref: [StackExchange](https://math.stackexchange.com/questions/1305925/why-is-the-svm-margin-equal-to-frac2-boldsymbolw), [Wiki - SVM](https://en.wikipedia.org/wiki/Support-vector_machine#SVM_and_the_hinge_loss) 
   <div  align="center"><img src=https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/SVM_margin.png/617px-SVM_margin.png style = "zoom:40%"></div>
-- Margin
+- Margin [StackExchange](https://stats.stackexchange.com/questions/155330/svm-functional-margin-and-geometric-margin)
   - Functional margin: $y \cdot f(x)$
     - $y \in \{-1,+1\}$, $\hat{y} \in R$
     - We want to maximize margin
       - the higher correct score of the data points, the better classifier
+    - Understanding: 
+      - The value is the score ("distance") from data point to the boundary when define the distance between margin and boundary is 1. 
+        - I.e. The number of "margin-boundary distance" between the boundary and the point
+      - Positive means the point is on the correct side, negative means the point is on the incorrect side.
   - Geometric margin: $d_m = \frac{2}{\| \boldsymbol{w} \|}$
-    - This is the distance between the f(x) = +1 and the f(x) = -1 hyperplane, no matter the margin is hard or soft.
+    - This is the distance between the $f(x) = +1$ and the $f(x) = -1$ hyperplane, no matter the margin is hard or soft.
 
 
 
@@ -31,7 +35,11 @@
 
 ### 1.1. Hard-margin
 
-All the sample must be predict correctly, no data-points are allow within margin, that is called hard margin. ($\Rightarrow y_{i}(\boldsymbol {w} ^{T}\boldsymbol {x}_i -b) \geq 1$)
+Hard margin: all the sample must be predict correctly, no data-points are allowed within margin, that is called hard margin.  ($\Rightarrow y_{i}(\boldsymbol {w} ^{T}\boldsymbol {x}_i -b) \geq 1$)
+
+
+
+ ($\Rightarrow y_{i}(\boldsymbol {w} ^{T}\boldsymbol {x}_i -b) \geq 1$)
 
 Since we tend to maximize the geometric margin $d_m=\frac{2}{\|\boldsymbol{w}\|}$. ($\Rightarrow {\text{minimize }} \|\boldsymbol{w}\|$)
 
@@ -42,6 +50,15 @@ $$\begin{aligned}
 \end{aligned}$$
 
 The problem is a typical [constrained optimization problem](../math_topics/constrained_optimization_problem.md).
+
+English for "How hard margin SVM works"
+
+- Maximize the geometric margin: $d_m=\frac{2}{\|\boldsymbol{w}\|}$$
+  - I.e. Minimize the the magnitude/size of the weight vector for the prediction function $\|\boldsymbol{w}\|$)
+- Under hard margin condition that no points exists within the margin.
+  - I.e. functional margin of all points should be larger than 1, i.e.: $ y_{i}(\boldsymbol {w} ^{T}\boldsymbol {x}_i -b) \geq 1$
+
+
 
 ### 1.2. Soft-margin
 
@@ -59,6 +76,13 @@ Under certain degree of penalty on misclassification (parameter $c$), we still a
     l(\mathcal{S},\boldsymbol{w},b) &= \lambda \|\boldsymbol {w} \|^{2} + \left[{\frac {1}{M}}\sum _{i=1}^{M}\max \left(0,1-y_{i}(\boldsymbol {w} ^{T}\boldsymbol {x}_i -b)\right)\right]\\
     &= \frac{1}{2} \|\boldsymbol {w} \|^{2} + \left[{\frac {c}{M}}\sum _{i=1}^{M}\max \left(0,1-y_{i}(\boldsymbol {w} ^{T}\boldsymbol {x}_i -b)\right)\right]
 \end{aligned}$
+
+English for "How soft margin SVM works"
+
+- Maximize the geometric margin: $d_m=\frac{2}{\|\boldsymbol{w}\|}$
+  - I.e. Minimize the the magnitude/size of the weight vector for the prediction function $\|\boldsymbol{w}\|^2$)
+- Under soft margin penalty: a hinge loss that punish points within margin.
+  - I.e.punish points whose functional margin smaller than 1. $ y_{i}(\boldsymbol {w} ^{T}\boldsymbol {x}_i -b) \leq 1$
 
 
 #### 1.2.2 Training
@@ -273,6 +297,14 @@ Such method is called <mark style="background-color:yellow;">**kernel trick**</m
 **Note:** <mark style="background-color:yellow;">**kernel trick** relies on the <font color="#0000dd">appearance of **inner product**</font>, that is why among common ML algorithms, kernel trick can be **only used in SVM** but **CANNOT be used in other algorithms**</mark>. 
 
 ### 3.3. Typical kernel functions
+
+#### 3.3.0. How to choose right kernel
+
+- Try from linear kernel first, to the polynomial kernel, then Gaussian kernel.
+  - I.e. Try from the "mapped dimension" from low to high. Can use parameter to control the dimension of the mapped space.
+  - [StackOverflow](https://stackoverflow.com/questions/16964975/how-to-choose-the-right-kernel-functions), [Quora](https://www.quora.com/How-do-I-select-SVM-kernels)
+- Experimentally: GridSearchCV I.e. GridSearch + CrossValidation
+  - [StackExchange](https://stats.stackexchange.com/questions/18030/how-to-select-kernel-for-svm)
 
 #### 3.3.1 Polynomial kernel
 

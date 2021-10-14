@@ -9,13 +9,26 @@
   - From balanced binary-label data, we randomly remove points from one label, making it sparse.
 
 
-## 1. Metrics
+## 1. Data
+
+To solve the imbalance, of course one way is to balance the dataset.
+
+- Modify the dataset
+  - Oversampling, Downsampling, reweighing
+    - Reweighing: Give more weight to the sample during training, this is similar to over-/down-sampling
+  - Synthetic (like SMOTE): generate new data according to existing data.
+  
+- Decompose to smaller equally distributed subcategory
+  - This method only works when there are possible sub-population/sub-groups in the majority
+  - Then, this method change the problem from binary-classification to multi-classification, i.e. (minority + majority) -> [label1+(label2+label3+...)]
+
+## 2. Metrics
 
 The imbalance usually make the common evaluation metric, like accuracy or precision, is not a good/fair metric anymore.
 
 Thus, using proper metric may alleviate the effect on data imbalance on evaluation part.
 
-### 1.1. Mechanism
+### 2.1. Mechanism
 
 - For most common metrics, like, $precision = \frac{TP}{PredictP}=\frac{TP}{TP+FP}$, 
   - the PredictedP not only varies from model-to-model, but also capped by the number of ground true P & N
@@ -40,7 +53,7 @@ Thus, using proper metric may alleviate the effect on data imbalance on evaluati
 
 - **Note:** for a trained model, the "constant"/"inherent"/invariant metric is P(f(x)|y), i.e. metrics with ground true P or ground true N as denominator.
 
-### 1.2. Solutions:
+### 2.2. Solutions:
 
 
 - Recall, FPR (Single base-rate-invariant metrics)
@@ -68,18 +81,7 @@ Thus, using proper metric may alleviate the effect on data imbalance on evaluati
   - Pro: Although F1 is not base-rate invariant, it is more comprehensive and intuitive than single precision or recall.
   - Con: Has no TN info.
 
-## 2. Data
 
-To solve the imbalance, of course one way is to balance the dataset.
-
-- Modify the dataset
-  - Oversampling, Downsampling, reweighing
-    - Reweighing: Give more weight to the sample during training, this is similar to over-/down-sampling
-  - Synthetic (like SMOTE): generate new data according to existing data.
-  
-- Decompose to smaller equally distributed subcategory
-  - This method only works when there are possible sub-population/sub-groups in the majority
-  - Then, this method change the problem from binary-classification to multi-classification, i.e. (minority + majority) -> [label1+(label2+label3+...)]
 
 ## 3. Model
 
@@ -153,3 +155,13 @@ Ref: [Wiki-Anomaly_detection](https://en.wikipedia.org/wiki/Anomaly_detection)
   Usually used on time series (sequential) data, similar to anomaly detection, but focus on the different between neighbouring points.
 
   Ref: [Wiki-Change_detection](https://en.wikipedia.org/wiki/Change_detection)
+
+
+
+## Deep Dive: Mechanism of SMOTE
+
+Ref: [MLMastery](https://machinelearningmastery.com/smote-oversampling-for-imbalanced-classification/), [CSDN-blog](https://blog.csdn.net/Frank_LJiang/article/details/104427978)
+
+- Select a random minority point.
+- Find the k (typically k = 5) neighbours of the point and select one of the neighbours randomly.
+- Selected a random point between the point and its neighbour as the synthetic example. (Linearly interpolation)

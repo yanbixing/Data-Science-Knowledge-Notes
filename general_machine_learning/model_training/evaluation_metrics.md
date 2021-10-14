@@ -39,7 +39,7 @@ English: Among the condition positive ($P$), how may are correct (predicted posi
 
 Area Under (ROC) Curve (ROC Curve: receiver operating characteristic )
 
-- ROC Curve
+##### ROC Curve
   <div  align="center"><img src=https://upload.wikimedia.org/wikipedia/commons/6/6b/Roccurves.png style = "zoom:40%"></div>
 
   $FPR = \frac{FP}{FP+TN} = \frac{FP}{N} = \text{significant level}= \alpha =  \text{type I error} $
@@ -68,7 +68,17 @@ Explanation: the moving on ROC curve is actually the moving of threshold.
  Ref: [Blog](https://blog.csdn.net/elecjack/article/details/79972097)
 <br>
 
-- AUC vs. Precision-Recall:
+##### Threshold determination:
+
+TPR the higher the better (the more correct prediction), FPR the lower the better (the less mis-predictions).
+
+- Maximize "G-mean": $\underset{c}{\text{maximaze}} \sqrt{TPR(c)*(1-FPR(c))}$
+  - Ref: [TowardsDataScience](https://towardsdatascience.com/optimal-threshold-for-imbalanced-classification-5884e870c293)
+- Self-defined metric like: $\underset{c}{\text{maximaze}} [ TPR(c)-FPR(c) ]$
+  - Ref:[StackExchange](https://stats.stackexchange.com/questions/123124/how-to-determine-the-optimal-threshold-for-a-classifier-and-generate-roc-curve)
+
+
+### 2.3. AUC vs. Precision-Recall:
   - AUC:
     - Pro: 
       - **Not affected by class imbalance**.
@@ -105,7 +115,7 @@ Explanation: the moving on ROC curve is actually the moving of threshold.
     <div align="center"><img src=https://miro.medium.com/max/1112/1*aUZ7H-Lw74KSucoLlj1pgw.png height="100" > </div>
 
 
-### Deep Dive "Base rate invariant" metrics
+#### Deep Dive: "Base rate invariant" metrics
 
 - [Base_rate](https://en.wikipedia.org/wiki/Base_rate): generally refers to the (base) class probabilities unconditioned on featural evidence, i.e. p(y)
 

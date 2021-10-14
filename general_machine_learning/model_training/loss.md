@@ -1,13 +1,36 @@
 # Loss
 
-## 1. L1 and L2 Loss
+## 1. Classification Losses
+
+### 1.1. Cross Entropy
+
+
+Also see [entropy_related_statistics.md](../math_topics/entropy_related_statistics.md)
+
+Evaluate two distributions on a same dataset. 
+
+$$H(P,Q):=-\sum _{x\in {\mathcal {X}}}P(x)\,\log Q(x)$$ 
+
+- Cross Entropy measures: evaluate the uncertainty of using an estimated distribution $Q$ to identify events with true distribution $P$.
+  - i.e. Expected number of bits needed to identify a $\boldsymbol{x}$ from $\mathcal{X}$, with the estimated distribution $Q$ rather than ground true distribution $P$.
+- $P$ and $Q$ defined on the same probability space $\mathcal{X}$
+- Ref: [Wiki-Cross_Entropy](https://en.wikipedia.org/wiki/Cross_entropy)
+
+Application Note:
+
+- Usually used as the **loss for classification task** (works for both binary and **multi-label** classification). Ref: [StackExchange](https://stats.stackexchange.com/questions/207794/what-loss-function-for-multi-class-multi-label-classification-tasks-in-neural-n)
+
+- In deep learning, to keep the result sum to 1, usually we use a use a **softmax layer** to normalize the output. Ref [StackExchange](https://stats.stackexchange.com/questions/207794/what-loss-function-for-multi-class-multi-label-classification-tasks-in-neural-n)
+
+
+## 2. Regression Losses: L2 Loss (MSE) and L1 Loss (MAE) 
 
 ### 1.1. Form
 
 - Loss function:
-  - L1 loss: $l(y,h) = \sum^m_{i=1}(y_i - h(x_i))^2$
+  - L2 loss: $l(y,h) = \sum^m_{i=1}(y_i - h(x_i))^2$
     - Also called MSE, Mean Square Error
-  - L2 loss: $l(y,h) = \sum^m_{i=1}|y_i - h(x_i)|$
+  - L1 loss: $l(y,h) = \sum^m_{i=1}|y_i - h(x_i)|$
     - Also called MAE, Mean Absolute Error
 
 ### 1.2. Property
@@ -44,9 +67,9 @@ L2 is better, since it will consider more about outliers.
 - Ref: [Quora](https://www.quora.com/How-would-a-model-change-if-we-minimized-absolute-error-instead-of-squared-error-What-about-the-other-way-around)
 
 
-## 2. Deep Dive: difference bettween L1/L2 as loss v.s. regularization
+### 1.3. Difference bettween L1/L2 as loss v.s. regularization
 
-### 2.1. L1 and L2 as loss:
+#### 1.3.1. L1 and L2 as loss:
 
 - Keypoint: Loss is about punishment on outliers
   - L2: 
@@ -60,7 +83,7 @@ L2 is better, since it will consider more about outliers.
 - Summary:
   <div  align="center"><img src=http://www.chioka.in/wp-content/uploads/2013/12/L1-vs-L2-properties-loss-function.png style = "zoom:100%"></div>
 
-### 2.2. L1 and L2 as regularization:
+#### 1.3.2. L1 and L2 as regularization:
 
 - Keypoint: Regularization is about punishment on weight values.
   - L2: 
@@ -79,3 +102,5 @@ L2 is better, since it will consider more about outliers.
   <div  align="center"><img src=http://www.chioka.in/wp-content/uploads/2013/12/L1-vs-L2-properties-regularization.png style = "zoom:100%"></div>
 
 - Ref: [Blog](http://www.chioka.in/differences-between-l1-and-l2-as-loss-function-and-regularization/)
+
+
