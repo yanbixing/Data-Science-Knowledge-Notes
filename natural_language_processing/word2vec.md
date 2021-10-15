@@ -138,27 +138,36 @@ Ref: [Medium](https://medium.com/analytics-vidhya/word2vec-cbow-skip-gram-algori
 
 ## Deep Dive: Static vs Contextualized embeddings (TBD)
 
-some links may help to understand difference between different embedding techniques:
-Link for “static” word embedding (like word2vec, glove, fasttext) vs “contextualized” word embedding (elmo, bert). 
-	https://www.quora.com/What-are-the-main-differences-between-the-word-embeddings-of-ELMo-BERT-Word2vec-and-GloVe
-Link for Word2vec vs Glove.
-	https://www.quora.com/How-is-GloVe-different-from-word2vec
-Link for Word2vec vs Fasttext.
-	https://medium.com/swlh/a-quick-overview-of-the-main-difference-between-word2vec-and-fasttext-b9d3f6e274e9#:~:text=In%20this%20sense%20Word2vec%20is%20very%20similar%20to%20Glove%20%E2%80%94%20both,smallest%20unit%20to%20train%20on.&text=The%20key%20difference%20between%20FastText,the%20use%20of%20n%2Dgrams.&text=N%2Dgram%20feature%20is%20the,%2Dof%2DVocabulary)%20issue.
+### static vs contextualized:
+- “static”: word’s embedding not change with context;
+- “contextualized”: word’s embedding changes with context. e.g.:
+ - Sentence1: I eat an apple.
+ - Sentence2: Apple iphone.
+ - Static: vectors of “apple” is same in sentence 1 and 2.
+ - Contextualized: vectors of “apple” are different in sentence 1 and 2.
 
-Basically, for “static”, word’s embedding not change with context; for “contextualized”, word’s embedding changes with context. e.g.:
+Ref:
+- [Quora](https://www.quora.com/What-are-the-main-differences-between-the-word-embeddings-of-ELMo-BERT-Word2vec-and-GloVe): “static” word embedding (like word2vec, glove, fasttext) vs “contextualized” word embedding (elmo, bert). 
 
-Sentence1: I eat an apple.
-Sentence2: Apple iphone.
-Static: vectors of “apple” is same in sentence 1 and 2.
-Contextualized: vectors of “apple” are different in sentence 1 and 2.
+### Differentiate different static embeddings
 
-For static embeddings
-Word2vec is the most basic one.
-Glove considers concurrence, so having better linearity.
-Fasttext considers character n-gram, having better ability to handle out-of-vocabulary words.
-For contextualized embeddings:
-BERT uses Transformer, ELMO uses LSTM. (In plain english, BERT is a more deep/“advanced” model than ELMO.)
+- Word2vec is the most basic one.
+- Glove considers **concurrence**, so having **better linearity**.
+- Fasttext considers **character n-gram**, having better ability to handle **out-of-vocabulary words**.
+
+Ref:
+- [Quora](https://www.quora.com/How-is-GloVe-different-from-word2vec): Word2vec vs Glove.
+- [Medium](https://medium.com/swlh/a-quick-overview-of-the-main-difference-between-word2vec-and-fasttext-b9d3f6e274e9): Word2vec vs Fasttext
+
+### Differentiate different contextualized embeddings:
+
+- BERT uses Transformer,
+- ELMO uses LSTM. 
+  - (In english, BERT is a more deep/“advanced” model than ELMO.)
+
+Ref:
+- [Quora](https://www.quora.com/What-are-the-main-differences-between-the-word-embeddings-of-ELMo-BERT-Word2vec-and-GloVe): “static” word embedding (like word2vec, glove, fasttext) vs “contextualized” word embedding (elmo, bert). 
+
 
 
 ## Possible interview questions:

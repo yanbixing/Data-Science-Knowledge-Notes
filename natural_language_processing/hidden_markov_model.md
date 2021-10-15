@@ -167,12 +167,12 @@ Then, we can update $\theta$ with the two auxiliary quantities $\gamma$ and $\xi
 
 ### Summary:
 
-- E-step: update the probability of different hidden states $s_{(h)}$.
+- E-step: update the **probability of different hidden states**  $P_{(s_{(h)}| \theta)}(s_{(h)})$.
   - Compute two auxiliary quantities $\alpha, \beta$ via forward, backward process.
     - The two auxiliary quantity will be used to compute another axuliary quantities $\gamma, \xi$ which will be used to update $\theta$
   - Compute the auxiliary quantity $\gamma$, which could represent the the probability hidden states given $\theta^{(r)}$
 
-- M-step: update the parameter $\theta$.
+- M-step: **update the parameter** $\theta$.
   - Compute another auxiliary quantity $\xi$ for update $\theta$
   - Update $\theta$ ($\theta^{(r)} \rightarrow \theta^{(r+1)}$) with the auxiliary quantities $\gamma, \xi$
 
@@ -198,9 +198,15 @@ Also see: [ML-K-means](../general_machine_learning/models/k-means.md)
 
 EM algorithm is usually applied on optimization problem with latent(unobserved) variables. (Latent variable is an intermediate quantity that is not parameter.)
 
-Usually the problem is expressed as: get the optimal parameter via $\theta^* = \underset{\theta}{\argmax} p(s_y|\theta)$, where:
+Usually the problem is expressed as: get the optimal parameter via $\theta^* = \underset{\theta}{\argmax} p(s_{(y)}|\theta)$, where:
 
-$$p(s_y|\theta) = \sum_{s_{(h)}} p(s_y|s_{(h)},\theta) p(s_{(h)}|\theta)$$
+$$\begin{aligned}
+  p(s_y|\theta) &=\sum_{s_{(h)}} p(s_y, s_{(h)}|\theta) \\
+  &= \sum_{s_{(h)}} p(s_{(y)}|s_{(h)},\theta) p(s_{(h)}|\theta)
+\end{aligned}$$
+
+
+<!-- &= \sum_{s_{(h)}} p(s_{(h)}|s_{(y)},\theta) p(s_{(y)}|\theta)\\ -->
 
 <!-- To solve the problem, we need to express $p(s_y|\theta)$ an explicit function only dependent on $\theta$: $P_{(s_{(y)}|\theta)}(\theta)$ -->
 
@@ -289,10 +295,38 @@ The EM algorithm simplify this problem in such way:
 
 ### EM Algorithm Summary
 
-- E-step: we get expression of likelihood $p(s_y|\theta)$ as the an **expectation** of likelihood considering hidden states $p(s_y|s_{(h)},\theta)$ 
-  - First, we update the probability distribution of different hidden states cases, i.e. $P^{(r)}_{(s_{(h)}| \theta)}(s_{(h)})$, with current $\theta$ value, i.e. $\theta^{(r)}$.
+- E-step: we get expression of likelihood $p(s_y|\theta)$ as the an **expectation** of likelihood considering hidden states $p(s_{(y)}|s_{(h)},\theta)$ 
+  - First, we update the **probability distribution of different hidden states cases**, i.e. $P^{(r)}_{(s_{(h)}| \theta)}(s_{(h)})$, with current $\theta$ value, i.e. $\theta^{(r)}$.
   - Second, update the likelihood function $P^{(r+1)}_{(s_{(y)}|\theta)}(\theta)$ with the updated distribution.
 - M-step: we update the parameter $\theta$ with the updated likelihood function as $\theta^{(r+1)} = \underset{\theta}{\argmax} P^{(r+1)}_{(s_{(y)}|\theta)}(\theta)$
+
+
+### Better understanding approach - Coordinate Descent
+
+Ref: [Wiki: EM-AsCoordinateDescent ](https://en.wikipedia.org/wiki/Expectation%E2%80%93maximization_algorithm#As_a_maximization%E2%80%93maximization_procedure)
+
+
+$$\begin{aligned}
+  p(s_y|\theta) &=\sum_{s_{(h)}} p(s_y, s_{(h)}|\theta) \\
+  &= \sum_{s_{(h)}} p(s_{(y)}|s_{(h)},\theta) p(s_{(h)}|\theta)\\
+  &:= F( p(s_{(h)}), \theta )
+\end{aligned}$$
+
+Explaination on $p(s_{(h)})$ rather than $s_{(h)}$:
+
+- Given a certain hidden states sequence $s_{(h)}$, we can calculate the possibility of such sequence and possibility of outcome $s_{(y)}$ given such $s_{(h)}$.
+- However, different $s_{(h)}$ have different probability, given the **prob distribution of different hidden states sequences** $p(s_{(h)})$, we can get the **expectation of possibility** of $s_{(y)}$, as a function of parameter, that is why we call the step calculate $p(s_{(h)})$ as "E-step"
+- So, the probability of the observed variable $s_{(y)}$ can be understood as a function of 
+  - probability distribution of hidden states $p(s_{(h)})$
+  - parameters (i.e. transition matrix $A$ and outcome matrix $B$)
+
+In the coordinate-descent understanding, we can think $(p(s_{(h)},\theta )$ as two coordinates, in E/M step, we optimize the two coordinates iteratively.
+
+- E-step: $p^{(r)}(s_{(h)}) = \underset{p(s_{(h)})}{\argmax}F( p(s_{(h)}), \theta^{(r)} )$
+  - After get $p^{(r)}(s_{(h)})$, we can get $F( p^{(r)}(s_{(h)}), \theta )$
+  - $F( p^{(r)}(s_{(h)}), \theta )$ is **the expectation of the possibility we observe $s_{(y)}$**
+  - that is why this step is called "E"
+- M-step: $\theta^{(r+1)} = \underset{\theta}{\argmax}F( p^{(r)}(s_{(h)}), \theta )$
 
 
 <!-- ### wgt EM
