@@ -128,7 +128,9 @@ Note: the num_col of final $\boldsymbol{z}$ is 8 times of an individual attentio
  style = "zoom:40%"></div> 
 
 
-## 1. Transformer structure
+## 1. General transformer introduction
+
+### 1.1.  structure
 
 The transformer is actually an encoder-decoder system. 
 
@@ -152,7 +154,7 @@ Decoder is similar. But decoder also receive attention info from the encoder to 
 
 
 
- ## 2. How transformer works (TBD)
+ ### 1.2 How transformer works (TBD)
 
 **How the whole sentence is put into a BERT model?**
 
@@ -169,3 +171,20 @@ Note (TBD): different words will go through **same** attention and feed forward 
 Note: actually, in BERT, the info (embedding) from encoder is fed to the "encoder-decoder" layers of the decoder.
 
 <div  align="center"><img src=http://jalammar.github.io/images/t/transformer_resideual_layer_norm_3.png style = "zoom:40%"></div> 
+
+
+## 2. BERT Specifics
+
+### 2.1. Training
+
+- Training method: Masked Language modeling
+  - Mask some positions in the document(replace the word with a [mask] token), and predict the possibility of different token with the context words.
+  - Ref: [TowardsDataScience](https://towardsdatascience.com/bert-explained-state-of-the-art-language-model-for-nlp-f8b21a9b6270)
+  <div  align="center"><img src=https://miro.medium.com/max/1400/0*ViwaI3Vvbnd-CJSQ.png style = "zoom:60%"></div> 
+- Loss: **cross entropy** on the masked position, other positions are ignored.
+  - Here, CrossEntropy = $1\cdot \log \hat{p}(\tau_{masked}) $
+    - $H(p^*(\tau),\hat{p}(\tau)) = \sum_{\tau}p^*(\tau)\log \hat{p}(\tau)$
+      - $p^*(\tau)$: the one-hot encoding of the masked token:at the position of the ground true token $\tau_masked$ the value is 1, at position of other tokens the value is 0.
+      - $\hat{p}(\tau)$: prob distribution of different possible tokens
+      - CrossEntropy ref: [entropy_related_statistics.md](../../general_machine_learning/math_topics/entropy_related_statistics.md),[Wiki-CrossEntropy](https://en.wikipedia.org/wiki/Cross_entropy)
+  - Ref: , [TowardsDataScience](https://towardsdatascience.com/masked-language-modelling-with-bert-7d49793e5d2c),[Huggingface](https://discuss.huggingface.co/t/bertformaskedlm-s-loss-and-scores-how-the-loss-is-computed/607)
