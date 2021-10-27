@@ -201,8 +201,8 @@ Ref: [Wiki-Eigenvalues_and_eigenvectors](https://en.wikipedia.org/wiki/Eigenvalu
 Then, how to use the eigenvector? 
 
 For a symetric matrix, the matrix usually can be decomposed as:
-- $\mathbf{A} = \mathbf{U} \mathbf{\Lambda}\mathbf{U}^T$ where: 
-  - $\mathbf{U} = [u_1, u_2, u_3...]$ is a symetric orthonmal matrix composed from eigenvectors.
+- $\mathbf{A} = \mathbf{V} \mathbf{\Lambda}\mathbf{V}^T$ where: 
+  - $\mathbf{V} = [v_1, v_2, v_3...]$ is a symetric orthonmal matrix composed from eigenvectors.
   - $\mathbf{\Lambda} = \begin{bmatrix} \lambda_{1} & & \\
         & \ddots & \\
         & & \lambda_{m}
@@ -285,8 +285,8 @@ Ref: [Wiki-Eigendecomposition_of_a_matrix](https://en.wikipedia.org/wiki/Eigende
 
 For real-symmetric matrix:
 
-- $\mathbf{A} = \mathbf{U} \mathbf{\Lambda}\mathbf{U}^T$ where: 
-  - $\mathbf{U} = [\mathbf{u}_1, \mathbf{u}_2, \mathbf{u}_3...]$ is a symetric orthonmal matrix composed from eigenvectors.
+- $\mathbf{A} = \mathbf{V} \mathbf{\Lambda}\mathbf{V}^T$ where: 
+  - $\mathbf{V} = [\mathbf{v}_1, \mathbf{v}_2, \mathbf{v}_3...]$ is a symetric orthonmal matrix composed from eigenvectors.
   - $\mathbf{\Lambda} = \begin{bmatrix} \lambda_{1} & & \\
         & \ddots & \\
         & & \lambda_{m}
@@ -304,3 +304,45 @@ Therefore, we have $\left\{ \begin{aligned} \mathbf{U}^T\mathbf{A}\mathbf{U}= \m
 
 ### DD2.4. There are and only are k linear-independent eigenvectors.
 Proof: Ref: [CSDN-blog](https://blog.csdn.net/Banach_I/article/details/51078451)
+
+
+## Deep Dive 3. Solve SVD/PCA
+
+### 3.1. Power iteration
+
+#### 3.1.1 Power iteration to get 1 principle axis $v_1$
+
+- Given diagonalizable matrix $\boldsymbol{A}$ (for PCA $ \boldsymbol{A}= \boldsymbol{X}^T\boldsymbol{X}$), power iteration will return the largest eigenvalue $\lambda_1$ and the corresponding eigenvector $\boldsymbol{v}_1$.
+
+
+- Algorithm:
+  - Power iteration starts with random vector $b_0$, 
+  - iteration the following until eigenvalue $\mu _{{k}}$ converge:
+    - $\boldsymbol{b}_{k+1}={\frac {A\boldsymbol{b}_{k}}{\|A\boldsymbol{b}_{k}\|}}$
+    - $\mu _{{k}}={\frac  {\boldsymbol{b}_{{k}}^{{*}}A\boldsymbol{b}_{{k}}}{\boldsymbol{b}_{{k}}^{{*}}\boldsymbol{b}_{{k}}}}$
+  - then $\boldsymbol{v}_1 = \boldsymbol{b}_k$, and $\lambda_1 = \mu_k$
+    - Note: The eigen value is the diagonal element in $\boldsymbol{\Lambda}$, the eigen vector is the column vector of $\boldsymbol{V}$.
+
+- Ref:
+  - [Wiki-Power_iteration](https://en.m.wikipedia.org/wiki/Power_iteration): definition
+  - [TowardsDataScience](https://towardsdatascience.com/simple-svd-algorithms-13291ad2eef2): implementation
+
+#### 3.1.2. Algorithm to get all principle axes $V$
+
+- Algorithm
+  - Get the first principle axis (eigenvector) $\boldsymbol{v}_1$ and diagonal element (eigenvalue) $\lambda_1$ of matrix $\boldsymbol{A_1}:=\boldsymbol{A} = \boldsymbol{X^T}\boldsymbol{X}:=\boldsymbol{X}^T_1\boldsymbol{X}_1$
+  - Iterate the following process:
+    - $[\boldsymbol{X}_{k+1}]_{m\times n} = [\boldsymbol{X}_{k}]_{m\times n} - [[\boldsymbol{X}_{k}]_{m\times n}[\boldsymbol{v}_k]_{n\times 1}]_{m \times 1}[\boldsymbol{v}_k^T]_{1\times n}$ 
+      - $[[\boldsymbol{X}_{k}]_{m\times n}[\boldsymbol{v}_k]_{n\times 1}]_{m \times 1}$ is the project value of different i-th sample $\boldsymbol{x}_{(k),i}$ on the principle component $\boldsymbol{v}_k$
+      - i.e. $\boldsymbol{x}_{(k+1),i} = \boldsymbol{x}_{(k),i} - v_{(k),i} \boldsymbol{v}^T_k$
+        - where $v_{(k),i} := \boldsymbol{x}_{(k),i}\boldsymbol{v}_k$ is the projection value (coordinate value in the new $\boldsymbol{V}$ coordinates system.)
+        - Note: $\boldsymbol{x}$ is row vector, $\boldsymbol{v}$ is col vector
+  - Get the $\boldsymbol{V}$ and $\boldsymbol{\Lambda}$:
+    - $\mathbf{V} = [\mathbf{v}_1, \mathbf{v}_2, \mathbf{v}_3...]$ is a symetric orthonmal matrix composed from eigenvectors.
+    - $\mathbf{\Lambda} = \begin{bmatrix} \lambda_{1} & & \\
+          & \ddots & \\
+          & & \lambda_{m}
+          \end{bmatrix}$ is a diagonal matrix with eigenvalues.
+
+- Ref:
+  - [Stanford-Slides](http://theory.stanford.edu/~tim/s15/l/l8.pdf):application
