@@ -6,7 +6,7 @@ $\boldsymbol{Z}^{(1)} = \boldsymbol{W}^{(1)} \boldsymbol{X}+\boldsymbol{b}^{(1)}
 $\boldsymbol{A}^{(1)}  = g(\boldsymbol{Z}^{(1)} )$
 $\boldsymbol{Z}^{(2)}  = \boldsymbol{W}_2\boldsymbol{A}^{(1)} +\boldsymbol{b}^{(2)} $
 $\boldsymbol{A}^{(2)}  = g(\boldsymbol{Z}^{(2)} )$
-$\boldsymbol{Z}^{(3)}  = \boldsymbol{W}^{(3)}\boldsymbol{A}^{(2)} +\boldsymbol{b}^{(3)} $
+$\boldsymbol{Z}^{(3)}  = \boldsymbol{W}^{(3)}\boldsymbol{A}^{(2)} +\boldsymbol{b}^{(3)}$
 $\boldsymbol{A}^{(3)}  = g(\boldsymbol{Z}^{(3)} )$
 $R^{(3)} = L(\boldsymbol{A}^{(3)}, \boldsymbol{Y} ) = R(\boldsymbol{W}^{(i)}, \boldsymbol{b}^{(i)})$
 
@@ -36,7 +36,10 @@ Gradient exploding: If $W$ is slightly larger than 1, then $\prod^{n-k+1}_{j=n}W
 Gradient vanishing/exploding originates from **chain rule**: for very deep grad, there will be a product of weights from each layer.
 
 
-## 2. Solution: skip connection
+## 2. Solution: 
+
+### 2.1. skip connection
+
 Without skip connection, when vanishing happens, i.e. $\prod^{n-k+1}_{j=n}W^{(j)} \rightarrow 0$
 
 $$ \frac{\partial R^{(n)}}{\partial W^{(n-k)}} =  \frac{dR^{n}}{dA^{(n)}} \prod^{n-k}_{i=n}g'(Z^{(i)})\prod^{n-k+1}_{j=n}W^{(j)}\frac{\partial Z^{(n-k)}}{\partial W^{(n-k)}} \rightarrow 0$$
@@ -59,3 +62,24 @@ $$ \begin{aligned}
 
 - I.e. skip connection directly pass the gradient from $n$-th to  $(n-k)$-th layer
 - I.e. as long as the grad in $n$-th layer is non-zero, the grad in $(n-k)$-th layer will also be non-zero
+
+
+### 2.2. Change activation function: 
+
+Changing activation function could alleviate the gradient vanishing. Especially when you use sigmoid.
+
+Use ReLu, tanh rather than sigmoid
+
+**Personal understanding**: the gradient is product of later weight and derivative of the activation function, if the derivative of activation function is small, then gradient will also vanish.
+
+LeakyRelu > ReLu: Relu (x<0) grad = 0
+ReLu > tanh: Relu constant grad, grad=1 (x>0); tanh grad $\in [0,1]$ (see ref)
+tanh > sigmoid: tanh have sharper shape.
+
+
+- Ref: 
+  - [TowardsDataScience](https://towardsdatascience.com/comparison-of-activation-functions-for-deep-neural-networks-706ac4284c8a): Derivative of different activation function. 
+  - [TowardsDataScience](https://towardsdatascience.com/the-vanishing-gradient-problem-69bf08b15484): confirm changing activation can reduce grad vanishing 
+  - [StackExchange](https://stats.stackexchange.com/questions/126238/what-are-the-advantages-of-relu-over-sigmoid-function-in-deep-neural-networks): confirm changing activation can reduce grad vanishing 
+  - [Blog](https://www.machinecurve.com/index.php/2019/09/04/relu-sigmoid-and-tanh-todays-most-used-activation-functions/#in-short-the-relu-sigmoid-and-tanh-activation-functions): confirm changing activation can reduce grad vanishing 
+  
