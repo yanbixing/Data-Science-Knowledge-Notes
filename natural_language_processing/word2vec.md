@@ -28,6 +28,15 @@ Why? Because for each one-hot encoding of j-th term $\tau_j$ , there is only one
 
 Ref: [Blog](http://mccormickml.com/2016/04/19/word2vec-tutorial-the-skip-gram-model/), [Medium](https://becominghuman.ai/how-does-word2vecs-skip-gram-work-f92e0525def4), [Zhihu](https://zhuanlan.zhihu.com/p/27234078)
 
+- Which matrix to use: there are two weight matrix, 
+  - e.g. 
+    - input: 10k dim
+    - Weight: $W_{1, (300\times10k)}$, map 10k-dim input to 300-dim hidden
+    - Weight: $W_{2, (10k\times300)}$, map 300-dim hidden back to 10k-dim output
+    - output: 10k dim
+  - ans: first one. 
+  - why? Because it map 10k one-hot input to 300-dim hidden, to 300 row/col corresponds to each of 10 tokens. The hidden states is the embedding, so use the first matrix $W_{1, (300\times10k)}$,.
+
 
 ### 1.3. How does the word2vec training work? (Intuitive)
 
@@ -123,9 +132,24 @@ Ref: [GoogleSlides](https://docs.google.com/presentation/d/1yQWN1CDWLzxGeIAvnGgD
 ### 2.3. Comparision between two archetecture
 
 Ref: [StackOverflow](https://stackoverflow.com/questions/38287772/cbow-v-s-skip-gram-why-invert-context-and-target-words), [TowardsDataScience](https://towardsdatascience.com/nlp-101-word2vec-skip-gram-and-cbow-93512ee24314)
-Skip-gram: works well with small amount of the training data, represents well even rare words or phrases.
+- Skip-gram: works well with small amount of the training data, represents well even rare words or phrases.
 
-CBOW: several times faster to train than the skip-gram, slightly better accuracy for the frequent words
+- CBOW: several times faster to train than the skip-gram, slightly better accuracy for the frequent words
+- Why? (TBD)
+  - From the prediction-input view
+    - CBOW input context, predict the masked/missing word
+      - For same context: *"yesterday is a _ day"*
+      - CBOW prefer to predict high frequent "happy" rather than rare "delightful"
+      - So CBOW will give better embedding for frequent words
+    - For skip-gram
+      - Since we use word to predict output
+      - Both happy and delight would guess same context
+      - So, skip-gram typically have better quality in rare words
+  - From the algorithm view:
+    - CBOW input are averaged during the process, so embedding tends to be better on statistical level, so favor frequent term.
+    - skip-gram not have averaging process, so the embedding should be able to better reflect background, thus better embedding on word level.
+  - Ref: [StackExchange](https://stats.stackexchange.com/questions/180548/why-is-skip-gram-better-for-infrequent-words-than-cbow)
+
 
 Ref: [Medium](https://medium.com/analytics-vidhya/word2vec-cbow-skip-gram-algorithmic-optimizations-921d6f62d739)
 

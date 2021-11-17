@@ -188,3 +188,16 @@ Note: actually, in BERT, the info (embedding) from encoder is fed to the "encode
       - $\hat{p}(\tau)$: prob distribution of different possible tokens
       - CrossEntropy ref: [entropy_related_statistics.md](../../general_machine_learning/math_topics/entropy_related_statistics.md),[Wiki-CrossEntropy](https://en.wikipedia.org/wiki/Cross_entropy)
   - Ref: , [TowardsDataScience](https://towardsdatascience.com/masked-language-modelling-with-bert-7d49793e5d2c),[Huggingface](https://discuss.huggingface.co/t/bertformaskedlm-s-loss-and-scores-how-the-loss-is-computed/607)
+
+#### 2.2. Embedding
+  
+- Word embedding:
+  - concatenation or element-wise sum of embedding from different layers (usually last four layers.)
+- Sentence embedding:
+  - element-wise superposition (sum) and mean of
+  - embedding for all tokens from all layers
+- Ref: [Blog](https://mccormickml.com/2019/05/14/BERT-word-embeddings-tutorial/#33-creating-word-and-sentence-vectors-from-hidden-states)
+
+#### 2.3 Out-of-vocabulary word processing
+
+BERT use character level token, so usually is able to handle OOV words.

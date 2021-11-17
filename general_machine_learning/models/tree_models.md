@@ -25,6 +25,8 @@
       - Gini($\times 2$)'s shape is almost same to entropy, so use Gini will **not sacrifice performance**.
       - Gini (power and minus) is more computationally cheap than entropy (logarithm), the **speed should be faster**.
         <div  align="center"><img src=https://quantdare.com/wp-content/uploads/2020/11/entropy_and_gini.png style = "zoom:60%"></div>
+    - "Gini gain": original Gini impurity - weighted Gini impurities
+      - [StackExchange](https://datascience.stackexchange.com/questions/56013/how-does-decision-tree-with-gini-impurity-calculate-root-node)
     - Ref: [QuantDare](https://quantdare.com/decision-trees-gini-vs-entropy/)
 - Regression: 
   - variance: $\frac{1}{N^2} (\sum_{i \in p}\sum_{j \in p} (y_i - y_j)^2 - [\sum_{i \in c1}\sum_{j \in c1}(y_i - y_j)^2 + \sum_{i \in c2}\sum_{j \in c2}] (y_i - y_j)^2 )$

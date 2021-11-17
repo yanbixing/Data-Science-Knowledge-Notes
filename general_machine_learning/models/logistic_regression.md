@@ -87,8 +87,32 @@ Note: $\theta^{(N+1)} := b$, $\boldsymbol{x}^{(N+1)}_m := 1$
 
 Note: Follow the direction of the gradient, the function value changes has a same sign with the gradient.
 
-Ref: [StackExchange](https://math.stackexchange.com/questions/477207/derivative-of-cost-function-for-logistic-regression)
+Note - Deduction:
 
+$\begin{aligned}
+   \frac{\partial J(\theta)}{\partial \boldsymbol{\theta}^{(i)}}& = \partial_{\boldsymbol{\theta}^{(i)}} \left[ \frac{1}{M} \sum^M_{m=1} H_m(P_{(Y| S)}, P_{(\hat{y} | S)}) \right]\\
+   & = - \partial_{\boldsymbol{\theta}^{(i)}} \left\{ \frac{1}{M} \sum_{y_m = +1} \log h_\theta(\boldsymbol{x}_m) + \sum_{y_m = 0} \log [ 1-h_\theta(\boldsymbol{x}_m) ] \right\}\\
+   &=  -\frac{1}{M} \left[\sum_{y_m = +1} \partial_{\boldsymbol{\theta}^{(i)}} \log h_\theta(\boldsymbol{x}_m) + \sum_{y_m = 0} \partial_{\boldsymbol{\theta}^{(i)}} \log [ 1-h_\theta(\boldsymbol{x}_m) ] \right] \\
+   &=-\frac{1}{M}  \left[ \sum_{y_m = +1} \frac{1}{h_\theta(\boldsymbol{x}_m)} \partial_{\boldsymbol{\theta}^{(i)}} h_\theta(\boldsymbol{x}_m) - \sum_{y_m = 0} \frac{1}{1-h_\theta(\boldsymbol{x}_m)} \partial_{\boldsymbol{\theta}^{(i)}}h_\theta(\boldsymbol{x}_m) \right]
+ \end{aligned}$
+
+
+ $\begin{aligned}
+   \partial_{\boldsymbol{\theta}^{(i)}}h_\theta(\boldsymbol{x}_m) &= \partial_{\boldsymbol{\theta}^{(i)}} \frac{1}{1+\exp(\boldsymbol{\theta}^T\boldsymbol{x})} \\
+   &= \frac{1}{[1+\exp(\boldsymbol{\theta}^T\boldsymbol{x})]^2}  \exp(\boldsymbol{\theta}^T\boldsymbol{x}) \boldsymbol{x}^{(i)}\\
+   &= \frac{1}{1+\exp(\boldsymbol{\theta}^T\boldsymbol{x})}   \frac{\exp(\boldsymbol{\theta}^T\boldsymbol{x})}{1+\exp(\boldsymbol{\theta}^T\boldsymbol{x})}   \boldsymbol{x}^{(i)} \\
+   &= h_\theta(\boldsymbol{x}_m) [ 1 - h_\theta(\boldsymbol{x}_m) ]\boldsymbol{x}^{(i)}
+ \end{aligned}$
+
+Therefore: 
+
+ $\begin{aligned}
+   \frac{\partial J(\theta)}{\partial \boldsymbol{\theta}^{(i)}}& = - \frac{1}{M} \left[  \sum_{y_m = +1} [ 1 - h_\theta(\boldsymbol{x}_m) ]\boldsymbol{x}^{(i)} - \sum_{y_m = 0} h_\theta(\boldsymbol{x}_m) \boldsymbol{x}^{(i)} \right] \\
+   &=\frac{1}{M} \left[   \sum_{y_m = +1} [ h_\theta(\boldsymbol{x}_m) - 1 ]\boldsymbol{x}^{(i)} + \sum_{y_m = 0} [h_\theta(\boldsymbol{x}_m)-0] \boldsymbol{x}^{(i)} \right]\\
+   &=\frac{1}{M} \sum_{m} [ h_\theta(\boldsymbol{x}_m) - y_m ]\boldsymbol{x}^{(i)}
+ \end{aligned}$
+
+ Ref: [StackExchange](https://math.stackexchange.com/questions/477207/derivative-of-cost-function-for-logistic-regression)
 
 <!-- ## Properties
 

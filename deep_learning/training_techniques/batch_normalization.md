@@ -13,8 +13,9 @@ Ref: [Youtube](https://www.youtube.com/watch?v=-5hESl-Lj-4), [CSDN](https://blog
 - Why BN could solve the problem?
   - BN is equivalent to another mapping process/layer, this process will learn to transform the input data into the the most suitable scale.
     - I.e.$x_{output} = \gamma x_{input} + \beta $, the $(\gamma, \beta)$ is learned during training.
+    - How to train? **Personal understanding**: BN layer is similar to a diagonalized weight layer, the i-th diagonal element is $\gamma_i$. Since there is only diagonal element, so, there is a one-to-one scaling mapping for each neural.
       - Support Ref: [MLMastery](https://machinelearningmastery.com/batch-normalization-for-training-of-deep-neural-networks): "These parameters are learned by..."
-  - <div  align="center"><img src=./techniques_asset/batch_normalization_fig_1.png style = "zoom:30%"></div> 
+  - <div  align="center"><img src=./techniques_asset/batch_normalization_fig_2.png style = "zoom:30%"></div> 
 - Effect of BN:
   - Accelerate the training. (Of course, it is BN's target)
   - Regularization: 

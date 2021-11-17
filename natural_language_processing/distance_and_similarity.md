@@ -111,3 +111,10 @@ Most common form of edit distance:
 - All operations have **equal weight**: 1
 
 Ref: [Wiki - Levenshtein distance](https://en.wikipedia.org/wiki/Levenshtein_distance)
+
+
+## 4. Doc similarity
+
+- Embedding doc and calculate similarity
+- Statistics (mean, mean(max())) on word-word similarity
+- Ref?

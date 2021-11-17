@@ -38,12 +38,15 @@ Ref: [Wiki-LDA](https://en.wikipedia.org/wiki/Latent_Dirichlet_allocation)
 
 LDA model assumes:
 
-- On word level, each **document** $d_i$ would have its a probability distribution on **topic**: $F(\boldsymbol{\theta}_i)$ for $d_i$ .
-  - e.g.: Document $i$ have 10 words in total. 3 words have topic $t_1$, 6 words have topic $t_2$
-    - The topic distribution $F(\boldsymbol{\theta}_i) = \{t_1: 0.3, t_2: 0.7\}$
+- On word level, different **doc** $d_i$ has different **topic** probability distribution $F(\boldsymbol{\theta}_i)$ 
+  - $F$ is a function whose input is a vector $\boldsymbol{\theta}$ and output is probability for each topic
+    - different doc $d_i$ has different $\boldsymbol{\theta}_i$, thus has different topic distribution $F(\boldsymbol{\theta}_i)$ .
+  - e.g. of "topic distribution": 
+    - Assume document $i$ have 10 words in total. 3 words have topic $t_1$, 6 words have topic $t_2$
+    - Then, the topic distribution of $d_i$ is $F(\boldsymbol{\theta}_i) = \{t_1: 0.3, t_2: 0.7\}$
 - The parameters $\boldsymbol{\theta}$ of all documents (over the corpus) i.e. $\{\boldsymbol{\theta}_1, \boldsymbol{\theta}_2, ...\boldsymbol{\theta}_m\}$, follows a [Dirichlet distribution](https://en.wikipedia.org/wiki/Dirichlet_distribution) $\operatorname {Dir} ({\boldsymbol {\alpha }})$. 
   
-- Each **topic** $k$ have a probability distribution on **word** $G(\boldsymbol{\varphi}_k)$
+- Each **topic** $k$ have a **word** probability distribution $G(\boldsymbol{\varphi}_k)$
 - The parameters $\boldsymbol{\varphi}$ of all topics i.e. $\{\boldsymbol{\varphi}_1, \boldsymbol{\varphi}_2, ...\boldsymbol{\varphi}_K\}$, follows a Dirichlet distribution $\operatorname {Dir} ({\boldsymbol {\beta }})$. 
 
 **Note:**

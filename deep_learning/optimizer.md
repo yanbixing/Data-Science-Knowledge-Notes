@@ -17,9 +17,9 @@ The difference between different optimizer is actually about how we define the s
 
 
 
-### 1.1. SGD
+### 1.1. GD
 
-For most basic SGD, 
+For most basic GD, 
 
 - the learning rate $lr$ is constant. 
 - The step size is proportional to the gradient.
@@ -30,7 +30,10 @@ $$\begin{aligned}
     \Delta w^{(i)}_t & =  -\mathrm{lr} \cdot  \mathbf{grad}^{(i)}_t 
 \end{aligned}$$
 
-### 1.2. SGD with momentum
+- Batch GD: GD with batch sample.
+- SGD: stochastic GD, extreme case of batch GD, GD with only one sample.
+
+### 1.2. GD with momentum
 
 
 #### 1.2.0. Momentum
@@ -40,7 +43,7 @@ apply "momentum" to a variable refers that, the variable's value at time $t$ wil
 
 Advantage: avoid sudden change of the variable. I.e. the variable will change smoothly/gradually.
 
-#### 1.2.3 SGD with momentum
+#### 1.2.3 GD with momentum
 
 SGD with momentum means we add momentum to gradient, define it as **"velocity"**
 

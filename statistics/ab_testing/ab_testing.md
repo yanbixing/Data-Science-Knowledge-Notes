@@ -385,9 +385,23 @@ Then, it is unsuitable to run the two experiment together. The user behavior cha
   - How to distinguish? (My idea, no links yet.)
     - Study on the mechanism, the see what is the connection between the experimental condition and results
       - Method: survey, focus group, expert etc.
-    - Cohort analysis: 似乎不行, 因为也是correlation
-    - Casual inference: difference in difference? 这是啥？ (TBD)
+    - Cohort analysis: isolate the effect of change. I.e. Exclude all other influencing factors.
+    - Casual inference: difference in difference
+    
 
+- How to do casual inference?
+  - Difference in difference [Wiki](https://en.wikipedia.org/wiki/Difference_in_differences): studying the differential effect of a treatment on a 'treatment group' versus a 'control group'
+    - Personal understanding: time split + condition split
+    - Process:
+      - Split use to two groups, experimental group and control group.
+      - At t=0, both group no change, check if the two groups are same (should be same)
+        - Similar to AA test, make sure the two group have same property.
+      - At t=1, apply change to experimental group, on change on control, check the difference.
+        - Similar to AB test, observe the effect on change.
+    - Note: a key assumption for diff-in-diff is we assume the experimental group should be same with control group if no change applied. The purpose of the t=0 ("AA-test") part is used to support such assumption.
+      - This idea is similar to cohort analysis, i.e. isolating the effect of change.
+  - Pre-post analysis:compare metric before- and after- lanuch. ( the data is collected at different time) Ref:[Blog](https://www.clickz.com/how-to-get-started-with-a-pre-post-analysis/55953/)
+      - "Difference in diference" is a kind of pre-post analysis. [Blog](https://www.publichealth.columbia.edu/research/population-health-methods/difference-difference-estimation)
 - Two phases of A/B testing: (TBD)
   - Exploration: use test samples to decide whether we need to make change.
   - Exploitation: launch the changes and observe the effect.

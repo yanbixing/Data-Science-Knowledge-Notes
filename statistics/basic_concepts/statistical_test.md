@@ -57,15 +57,6 @@ Ref:
 - [Medium-blog](https://medium.com/dataseries/hypothesis-testing-in-machine-learning-what-for-and-why-ad6ddf3d7af2): Z or t test Figure.
 
 
-<!-- ### Basics
-
-- T-test
-  - One sample vs two sample:
-    - one sample: test whether the mean of a distribution has a specified value.
-    - two sample: test whether the means of two population are equal. -->
-
-
-
 ## Deep dive: 1/N vs 1/(n-1) - population vs sample
 
 ### Unbiased estimation of variance

@@ -17,7 +17,7 @@ where $f(x) = \sum^n_{j=1} \beta^{(j)} x^{(j)} +\beta^{(0)} = \sum^n_{j=0} \beta
 
 ####  1.1.1. Matrix representation
 
-Define:
+Denote:
 - $\begin{aligned}
     \boldsymbol{Y}_{m\times 1} &= \begin{bmatrix}
            y_{1} \\
@@ -34,7 +34,7 @@ Define:
          \end{bmatrix}= \begin{bmatrix}
            x_{1}^{(0)}&\dots&x_{1}^{(n)} \\
            \vdots&\dotsb&\vdots \\
-           x_{m}&\dots&x_{m}^{(n)}
+           x_{m}^{(0)}&\dots&x_{m}^{(n)}
          \end{bmatrix}
   \end{aligned}$
 
@@ -62,6 +62,34 @@ $$\begin{aligned}
 \end{aligned}$$
 
 Further deduction: [PurdueU-stat512](https://www.stat.purdue.edu/~boli/stat512/lectures/topic3.pdf), [PSU-stat462](https://online.stat.psu.edu/stat462/node/132/)
+
+#### 1.1.1 What if $\boldsymbol{X}^T\boldsymbol{X}$ NOT invertible?
+
+When $\boldsymbol{X}^T\boldsymbol{X}$ is invertible,this means the the solution (on coefficient $\boldsymbol{\beta}$) is unique (there is only one solution.)
+
+When $\boldsymbol{X}^T\boldsymbol{X}$ is NOT invertible, this means the solution is not unique, usually happens when number of sample $M$ < num features $N$.
+
+- Solution:
+  - Regularization (L1/L2)
+    - $\boldsymbol{\beta}^* = \underset{\boldsymbol{\beta}}{\argmin} \left[ R(\boldsymbol{\beta}) + \lambda \|\beta\|^2 \right]$
+    - I.e. Add punishment on weight to make the solution unique. L1 also works.
+  - Pseudo inversion
+    - $\boldsymbol{\beta}^* = \underset{\boldsymbol{\beta} \in \mathcal{B} }{\argmin} \| \boldsymbol{\beta}\|^2 $ where $ \mathcal{B} = \{ \text{ all } \boldsymbol{\beta}' = \underset{\boldsymbol{\beta}}{\argmin} R(\boldsymbol{\beta}) \} $
+    - I.e. Choose the solution have least size among all solutions.
+  - Other non-academic method:
+    - Feature elimination
+    - PCA dimension reduction
+    - Ref: [1p3a](https://www.1point3acres.com/bbs/thread-520357-1-1.html): make sense, the problem happens when $N>M$, i.e. weight is more free than sample can limit, so reduce dimension of feature which reduce the degree of freedom of solution may also work.
+
+- Ref: 
+  - [Berkeley-slide](https://www.stat.berkeley.edu/~aditya/resources/LectureFOUR.pdf): not invertible means no unique solution
+    - [UCLA-slide](http://web.cs.ucla.edu/~chohsieh/teaching/CS260_Winter2019/notes_linearregression.pdf): not invertible usually $M<N$
+  - [CMU-slide](https://www.cs.cmu.edu/~epxing/Class/10715/lectures/lecture2-LR.pdf): solution: regularization and statistical interpretation.
+    - [Princeton-slide](https://www.cs.princeton.edu/~bee/courses/scribe/lec_09_11_2013.pdf): Matrix representation of solution of Ridge regression, generally invertible.
+  - [UCLA-slide](http://web.cs.ucla.edu/~chohsieh/teaching/CS260_Winter2019/notes_linearregression.pdf): solution: pseudo inverse, detailed process, employ SVD technique.
+    - [MathOverflow](https://mathoverflow.net/questions/384919/is-the-pseudoinverse-the-same-as-least-squares-with-regularization): pseudo inverse looks similar to ridge regression but different.
+  
+  
 
 ### 1.2. Gradient descent solution
 
