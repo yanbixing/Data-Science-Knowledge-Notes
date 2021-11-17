@@ -75,15 +75,44 @@ Can generate next word with prev word, iteratively.
 - input all text, generate new sequence according to hidden state
 
 
-## 4. Topic Modeling
+## 4. Topic Modeling (Unsupervised)
 
 - Given text, find potential topics
 - LSI: i.e. SVD
   - doc-term matrix decompose to 
-    - $U$: doc-topic
+    - $U$: doc-topic matrix
+      - $U_{iz} = p(d_i|\tau_z)$: the probability of document $i$ given topic $\tau_z$
     - $V$: topic-term matrix
+      - $V_{jz} = p(w_j|\tau_z)$: the probability of term $j$ given topic $\tau_z$
       - We can use term to represent topic
-    - $\Sigma$ is the weight/importance of topic in the corpus (TBD)
+    - $\Sigma$ is the prior-prob of topic in the corpus
+      - $\sigma_z = p(\tau_z)$: the prior probability of the k topics in the corpus.
+    - Ref: [LSA.md](./latent_dirichlet_allocation.md)
+- LDA: (generative model)
+  - Hyper param: $\alpha$, $\beta$, $K$
+  - Param to be learned: $\theta$,$\phi$
+  - Mechanism:
+    - Given $\alpha$, $\beta$, we can generate 
+      - topic distribution param for each doc: $\boldsymbol{\theta}_{i}\sim \operatorname {Dir} (\boldsymbol{\alpha} )$
+        - Then, we can generate topic from topic distribution for doc: $\tau_{i,j} \sim F(\boldsymbol{\theta}_i)$ 
 
+      - word distribution param for each topic: $\boldsymbol{\varphi}_{k}\sim \operatorname {Dir} (\boldsymbol{\beta} )$ for each topic $k$
+        - Then, we can generate word from word distribution for topic: $w_{i,j} \sim G(\boldsymbol{\varphi}_{\tau_{i,j}})$ 
+  - Training: Gibbs sampling
+    - Initialize: Randomly assign topic to all words, get initial topic distribution for doc $F(\boldsymbol{\theta}_i)$ and word distribution for topic $G(\boldsymbol{\varphi}_{\tau_{i,j}})$ 
+    - Iteration over all doc i on all position j:
+      - Remove the word $w_{ij}$ from the doc (and corpus) (also its corresponding topic $\tau_k$ is removed.).
+      - Recalculate the topic distribution for doc as $F'(\boldsymbol{\theta}_i)$ and word distribution for topic as $G'(\boldsymbol{\varphi}_{\tau_{i,j}})$ 
+      - Add the word $w_{ij}$ back and label it with new topic $\tau'_k$ according to $F'(\boldsymbol{\theta}_i)$, $G'(\boldsymbol{\varphi}_{\tau_{i,j}})$
+- Evaluation metric: 
+  - Classical: perplexity
+    - Measure the uncertainty of prediction on each position
+    - "Likelihood" is the likelihood of each doc
+      - For LSA, use its probability interpretation
+  - New: coherence
+    - Measure the dis-similarity (distance) between different topics, the larger the better
+    - Use the word representation for each topic.
+- Note: Supervised topic modeling is like a multi-classification task, like multi-label version sentiment analysis.
+      
 
 ## Short/Long Text Similarity
