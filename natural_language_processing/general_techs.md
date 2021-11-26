@@ -54,7 +54,10 @@ A process converting string to vector.
 
 ## 2. Typical NLP Tasks
 
-### 2.1. Part of speech (PoS) Tagging
+
+### 2.1. Text classification
+
+### 2.2. Part of speech (PoS) Tagging
 
 Find the grammatical tag (noun, adjective, verb, etc.) of the word.
 
@@ -77,7 +80,7 @@ A classification task. The output is
 
 
 
-### 2.2. Named entity recognitions (NER)
+### 2.3. Named entity recognitions (NER)
 
 Ref: [Wiki-NER](https://en.wikipedia.org/wiki/Named-entity_recognition)
 
@@ -92,3 +95,12 @@ Tree, RNN, [Random conditional field](https://en.wikipedia.org/wiki/Conditional_
 The algorithm can solve the problems:
 
 - How to identify whether "Apple" refers to the fruit or the company.
+
+
+
+### 2.4. Language modeling
+
+### 2.5 Topic Modeling
+
+
+### 2.6

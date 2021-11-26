@@ -346,3 +346,29 @@ Proof: Ref: [CSDN-blog](https://blog.csdn.net/Banach_I/article/details/51078451)
 
 - Ref:
   - [Stanford-Slides](http://theory.stanford.edu/~tim/s15/l/l8.pdf):application
+
+
+## Interview Qs:
+
+### Included in above:
+
+- What is PCA
+  - Usually used to reduce dimension. Project to data to different principle components.
+  - Principle components is the direction have largest variance.
+
+- Algo to get the first component.
+  - Power iteration:
+  
+
+- Algo to get all components.
+  - Use power iteration to get the direction of the 1st principle component.
+  - Subtract the samples' projection on the first component.
+  - Use power iteration to get the direction of 2nd principle component.
+  - ...iterate the process until k.
+
+### Not included in above:
+
+- Why do we maximize variance during PCA? (Intuitive understanding.)
+  - Variance is a metric of the "variability" of your data. Other direction are more flat than the principle component. So the principle component is the direction we keep the most info.
+    - Ref[StackOverflow](https://stackoverflow.com/questions/12395542/why-do-we-maximize-variance-during-principal-component-analysis)
+  - My understanding: we often use $R^2 = \frac{Var_{explained}}{Var_{total}}$ to measure the quality of fitting, the more variance our fitting line take (the less residue variance), the more comprehensive info/pattern in data our fitting line can get. So the variance is proportional the the amount of info. The principle axis have the largest amount of info.
