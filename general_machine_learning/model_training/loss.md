@@ -5,6 +5,7 @@
 ### 1.1. Cross Entropy
 
 
+
 Also see [entropy_related_statistics.md](../math_topics/entropy_related_statistics.md)
 
 Evaluate two distributions on a same dataset. 
@@ -22,15 +23,51 @@ Application Note:
 
 - In deep learning, to keep the result sum to 1, usually we use a use a **softmax layer** to normalize the output. Ref [StackExchange](https://stats.stackexchange.com/questions/207794/what-loss-function-for-multi-class-multi-label-classification-tasks-in-neural-n)
 
+#### 1.1.1 Application: cross entropy is log-loss (Deduction TBD)
+
+
+Cross entropy is also called log-loss, logistic-loss. Ref:[sklearn-log_loss](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.log_loss.html)
+
+
+Negative log likelihood (NLL):
+$$NLL = - \sum_i \log p(\hat{y}_i = y_i)$$
+
+Cross entropy ($k$ denotes the label of k-th class):
+$$CE = - \sum_k p(y_i = k)\log p(\hat{y}_i = y_i)$$
+
+**Interpretation of minimize CE**: 
+
+- Minimize CE = Minimize NLL = maximize the likelihood = MLE estimation, 
+  
+**prof**:
+
+- $M:=$ number of samples in $\mathcal{S}$
+- $m_k$ denote the number of samples with k-th class
+
+  $$\begin{aligned}
+    NLL &= - \sum_i \log p(\hat{y}_i = y_i)\\
+    &= - \sum_k m_k \log p(\hat{y}_i = y_i) (?TBD) \\
+    &= - M \sum_k p(y_i = k)\log p(\hat{y}_i = y_i)
+    &= CE
+  \end{aligned}$$
+
+<!-- $$\begin{aligned}
+      NLL(\mathcal{S}|\theta) & = - \sum^M_{i=1} \log[ p(\hat{y}_i = y_i|\boldsymbol{x}_i) ]\\
+      & \underset{LR}{=} - \sum^M_{i=1} H_i(P_{(Y| S)}, P_{(\hat{y} | S)})\\
+      & = M\cdot J(\theta)
+  \end{aligned}$$ -->
+
+
+
 
 ## 2. Regression Losses: L2 Loss (MSE) and L1 Loss (MAE) 
 
 ### 1.1. Form
 
 - Loss function:
-  - L2 loss: $l(y,h) = \sum^m_{i=1}(y_i - h(x_i))^2$
+  - L2 loss: $l(y,h) = \frac{1}{m} \sum^m_{i=1}(y_i - h(x_i))^2$
     - Also called MSE, Mean Square Error
-  - L1 loss: $l(y,h) = \sum^m_{i=1}|y_i - h(x_i)|$
+  - L1 loss: $l(y,h) = \frac{1}{m} \sum^m_{i=1}|y_i - h(x_i)|$
     - Also called MAE, Mean Absolute Error
 
 ### 1.2. Property

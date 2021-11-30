@@ -12,7 +12,9 @@
 - Information gain
 - Mutual info
 
-### 2.2. TP,FP,TN,FN-based
+### 2.2. TP,FP,TN,FN-based (confusion matrix based)
+
+Confusion matrix: the matrix of (TP FP TN FN). Ref: [Wiki-Confusion_matrix](https://en.wikipedia.org/wiki/Confusion_matrix)
 
 #### 2.2.1 Precision and Recall related
 
@@ -34,6 +36,10 @@ English: Among the condition positive ($P$), how may are correct (predicted posi
   - For balanced dataset, $\text{accuracy}\overset{P=N}{\rightarrow} \frac{1}{2} (\frac{TP}{P} + \frac{TN}{N}) = \frac{1}{2}(TPR+TNR)$
   - $TNR = \frac{TN}{N}$
 - Ref: [Blog](https://www.springboard.com/blog/machine-learning-interview-questions/)
+- Note: precision-recall tradeoff: when you decrease the threshold, more sample will be classified as positive, 
+  - $\text{recall} = \frac{TP \uparrow}{P \times} \uparrow$
+  - $\text{precision} = \frac{TP}{TP+FP} = \frac{1}{1+\frac{FPR}{TPR}} = \frac{1}{1+\frac{1}{k_{roc}}}$
+    - $k_{roc}:=\frac{TPR}{FPR}$, for **typical** ROC curve (model better than random guess) , when decrease threshold, $k_{roc}$ drop from $\infty \rightarrow 1$, i.e. $\text{precision} = \frac{1}{1+\frac{1}{k_{roc}\downarrow}\uparrow}\downarrow$
 
 #### 2.2.2 AUC
 
@@ -48,9 +54,13 @@ Area Under (ROC) Curve (ROC Curve: receiver operating characteristic )
   $TPR = \frac{TP}{TP+FN} = \frac{TP}{P} = \text{recall} = \text{sensitivity}= 1-\beta$
   - $\beta:$ type II error rate
   - Ref: [Wiki-Sensitivity](https://en.wikipedia.org/wiki/Sensitivity_and_specificity): Sensitivity (True Positive Rate)
-
   <br>
 
+- Ranking/Probability interpretation:
+  - AUC provides an aggregate measure of performance across all possible classification thresholds
+  - AUC is as the probability that the model ranks a random positive example more highly than a random negative example.
+  - Ref: [Google_ML-AUC](https://developers.google.com/machine-learning/crash-course/classification/roc-and-auc), [CSDN-blog](https://blog.csdn.net/u013385925/article/details/80385873)
+  <br>
 - **personal understanding on AUC ROC**:
 With the sacrifice of incorrect positive prediction, how much correct positive prediction we can can get.
 The high AUC, the higher "sacrifice" efficiency of incorrect prediction, the better model performance.
@@ -81,13 +91,13 @@ TPR the higher the better (the more correct prediction), FPR the lower the bette
 ### 2.3. AUC vs. Precision-Recall:
   - AUC:
     - Pro: 
-      - **Not affected by class imbalance**.
+      - **Not affected by class imbalance**. Ref:[TowardsDataScience?(TBD)](https://towardsdatascience.com/metrics-for-imbalanced-classification-41c71549bbb5)
       Explain: The AUC of random guesser is always 0.5, regardless of balance or not.
       - More comprehensive
       Explain: Have all $TP, FP, TN, FN$
   - Precision-Recall
     - Con:
-      - Sensitive to class imbalance.
+      - Sensitive to class imbalance. I.e. for same model, precision score changes when ratio (amount) of positive/negative changes.
         - For random guesser, 
           - $TP = \frac{1}{2}P$, $FN = \frac{1}{2}P$, $FP = \frac{1}{2}N$, $TN = \frac{1}{2}N$
           - $\text{precision} = \frac{TP}{TP+FP} = \frac{0.5P}{0.5P+0.5N} = \frac{P}{P+N}$

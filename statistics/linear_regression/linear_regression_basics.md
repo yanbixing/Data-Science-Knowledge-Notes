@@ -158,6 +158,8 @@ Ref: [Duke_U](http://people.duke.edu/~rnau/testing.htm)
        - E.g. the function fitted with x=[0,1] have much higher error in x=[1,2].
    - Check:
      - Plot error (residue) vs x, fit with non-linear function.
+     - ? check error distribution?
+     - ? check extrapolation error (extraploate)
    - Fix:
      - Introduce non-linear transformation of the features.
 

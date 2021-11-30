@@ -202,15 +202,33 @@ Thus, under OLS and $H_0:\beta^{(1)}=0$
 $$z^{obs} = \frac{\beta^{(1)obs} - \beta_{H_0}}{\mathrm{SE}(\beta^{(1)})} = \frac{r_{xy} \frac{\sigma(y)}{\sigma(x)} }{\frac{1}{\sqrt{m}} \sqrt{1-r^2_{xy}} \frac{\sigma(y)}{\sigma(x)}} = \sqrt{m} \frac{r_{xy}}{\sqrt{1-r^2_{xy}}}$$
 
 
+## 4. Statistical interpretation on OLS
 
-## 3. FAQs
+If the **error is normally distributed**, the **least square estimator** is identical to the **MLE estimators** for **linear model**. Ref:[Wiki-Least_sqaures](https://en.wikipedia.org/wiki/Least_squares)
+
+**Deduction**: [StackExchange](https://stats.stackexchange.com/questions/143705/maximum-likelihood-method-vs-least-squares-method)
+
+- When assuming error is normally distributed, we have:
+  $$y=w^T X +\epsilon \quad\text{ where }\epsilon\thicksim N(0,\sigma^2)$$
+- The probability of one individual sample $(x_i,y_i)$ is:
+  $$P(y|w, X)=\mathcal{N}(y|w^TX, \sigma^2I) = \frac{1}{ \sqrt{2\pi\sigma^2}}\exp(-\frac{(y_i-wx_i)^2)}{2\sigma^2})$$
+- The probability for the whole dataset is:
+  $$\begin{aligned}
+  &L(y^{(1)},\dots,y^{(N)};w, X^{(1)},\dots,X^{(N)}) \\ =& \prod_{i=1}^N \mathcal{N}(y^{(i)}|w^TX^{(i)}, \sigma^2I) \\ =& 
+  \frac{1}{(2\pi)^{\frac{N}{2}}\sigma^N}exp(-\frac{\sum_{i=1}^N(y_i-wx_i)^2}{2\sigma^2}).
+  \end{aligned}$$
+- $\because MSE = \frac{1}{N} \sum_{i=1}^N(y_i-wx_i)^2$
+  - So, maximize the likelihood is equal to minimize the mean square error (MSE).
 
 
-### 3.1. Influence on fitting results
+## 5. FAQs
+
+
+### 5.1. Influence on fitting results
 
 For OLS, how are the coefficient and t-score (or z-score) affected when the following cases happens?
 
-#### 3.1.1 Data is duplicated
+#### 5.1.1 Data is duplicated
 
 Not change:
 
@@ -293,7 +311,7 @@ Since $\beta^{(1)obs}$ will not change, $\mathrm{SE}_{\beta^{(1)}, 2m} = \frac{1
 
 Thus, $z^{obs}_{2m} = \sqrt{2} z^{obs}_m$, z (or t) score increases.
 
-#### 3.2.2 Swith X and Y
+#### 5.2.2 Swith X and Y
 
 
 **Assume**:

@@ -32,7 +32,7 @@ Note:
 #### 1.2.2 Difference
 
 - Generally
-  - L1 $\Re$ has more zero weight. 
+  - L1 $\Re$ has more zero weight. (make weight more sparse)
     - = eliminate the features = feature selection / dimension reduction
   - L2 $\Re$ tends to make weight small but non-zero.
 - For identical features ($x_i = x_j$)
@@ -207,6 +207,8 @@ $$ R(h) \leq \hat{R}_\mathcal{S}(h) + PosCorrF(\frac{VC\dim(\mathcal{H})}{m})$$
   - More samples make empirical risk approximate generalization risk.
 
 #### 2.2.3 Bias-variance tradeoff ?
+
+Definition:  bias–variance tradeoff is the property of a model that the variance of the parameter estimated across samples can be reduced by increasing the bias in the estimated parameters. [Wiki-Variance_bias_tradeoff](https://en.wikipedia.org/wiki/Bias%E2%80%93variance_tradeoff)
 
 The **trade-off** relation is **never** mathematically proved. [On the Bias-Variance Tradeoff, Ch.4, P15](https://arxiv.org/abs/1912.08286) The concept is just an intuitive understanding:
 

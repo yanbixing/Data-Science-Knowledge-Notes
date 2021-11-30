@@ -496,6 +496,19 @@ Ref: [Wiki_Coordinate_descent](https://en.wikipedia.org/wiki/Coordinate_descent)
       & := \underset{\boldsymbol{w}^{(i)}}{\argmin}l(\boldsymbol{w}^{(1)}_{t+1}...,\boldsymbol{w}^{(i)}, ..., \boldsymbol{w}^{(N)}_{t})
     \end{aligned}$$
 
+
+## D-4 Probabilistic output: Platt scaling
+
+SVM output score $f(x)$, distance to the boundary with the unit of margin-to-boundary (margin-margin width is 2). I.e. The score means how many margin-boundary length is there from the point to the boundary. The sign is determine by whether the sample is positive or negative sample.
+
+The range of the value is $(-\infty,+\infty)$, the get a probabilistic understanding, we need to transform it to $[0,1]$, so the most common method is to apply a sigmoid function to it (similar to transform linear regression to logistic regression.)
+
+$$P(y=x|x) = \frac{1}{1+\exp(Af(x)+B)}$$
+
+A,B can be learned by the algorithm. 
+
+**Personal understanding**, you can think $score = f(x)$ as the input feature for a 1-dim logistic model, then problem is equivalent to fit a 1-dim logistic model whose input is the score, output is the label
+
 ## FAQ:
 
 ### Quick QA

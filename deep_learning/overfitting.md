@@ -39,6 +39,10 @@ Behavior:
 
 ## 2. Underfitting:
 
+Def: model cannot adequately capture the underlying structure of the data.
+
+[Wiki-Overfitting](https://en.wikipedia.org/wiki/Overfitting)
+
 ### 2.1. Definition and detection
 
 Behavior: 

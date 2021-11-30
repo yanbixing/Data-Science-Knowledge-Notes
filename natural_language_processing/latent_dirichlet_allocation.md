@@ -96,9 +96,12 @@ An illustration on how the word $w_{i,j}$ is generated:
 
 #### 1.3.1 Params and Hyperparams:
 
-- $\varphi, \theta, Z$ are the parameters/coefficients to be fit in the training process. (like the weight coefficients in the LR.)
+- (TBD? not fully understand yet)$\varphi, \theta, Z$ are the parameters/coefficients to be fit in the training process. (like the weight coefficients in the LR.)
+  - Ref: 
+    - [Medium](https://medium.com/@lettier/how-does-lda-work-ill-explain-using-emoji-108abf40fa7d): param are phi and theta? Why? "Phi is the ‘parts-versus-topics’ matrix, and theta is the ‘composites-versus-topics’ matrix."
 - $\alpha, \beta(\eta), K$ are the hyperparameter need to be set manually. (Like the regularization strength in the LR.)
   - Other hyperparameter includes: decay
+  - Ref: [Medium](https://medium.com/@lettier/how-does-lda-work-ill-explain-using-emoji-108abf40fa7d)
 
 #### 1.3.2. Training Algorithm: (Collapsed) Gibbs sampling
 
@@ -228,3 +231,13 @@ Other refs: [Quora](https://www.quora.com/Whats-the-difference-between-Latent-Se
 ## Notes:
 
 - [Dirichlet distribution](https://en.wikipedia.org/wiki/Dirichlet_distribution): a kind of multivariate probability distribution.
+
+
+## Remaing Qs (TBD):
+
+- what is the trained parameter, $\theta, \phi$, matrix?
+  - doc-topic, topic-word matrix?
+  - Ref:[Medium-blog](https://medium.com/@lettier/how-does-lda-work-ill-explain-using-emoji-108abf40fa7d)
+- how they are used to predict topics in new document?
+  - Calculate the prob of topic given the words in the new doc?
+  - Ref:[TowardsDataScience](https://towardsdatascience.com/latent-dirichlet-allocation-lda-9d1cd064ffa2)

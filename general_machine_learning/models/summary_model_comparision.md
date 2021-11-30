@@ -1,18 +1,18 @@
-# Model comparison (Model selection?)
+# Model comparison (Model selection?) (TBD)
 
 ## 1. Model details
 
 ### 1.1. Linear models
 
-- LR (Logistic Regression) vs SVM
-  - SVM is more fair on **boundary**.
+- SVM vs LR (Logistic Regression)
+  - SVM is more fair on **boundary**: There are infinity hyperplanes to separate the classes, SVM have the most proper from the intuition/geometric understanding.
       <div  align="center"><img src=https://cdn-images-1.medium.com/max/800/1*ru8OP1r2755a4B42AQEcnA.png style = "zoom:80%"></div>
 
     - SVM focuses on near-boundary points, not affected by high-confidence predictions (far-from-boundary points).
       - LR or linear regression may be affected by high-confidence predictions.
       - This also means, compare to LR, SVM is less affected by imbalanced data.
-    - SVM have unique solution. 
-      - Logistic regression or linear regression may have multiple optimized boundaries
+    <!-- - SVM have unique boundary solution
+      - Logistic regression or linear regression may have multiple optimized boundaries. -->
     - **Detailed Explanation**: For LR or linear regression, we can have two strategy (kinds of metric) to get tune the parameter 
       - Most common strategy: optimize metrics based on the final binary result, like precision or recall.  Then, e.g., for linear-separable data, as long as the boundary stands in the gap, separate the data well, the score will be 100%. Thus, there will be multiple "optimized" boundaries.
       - Less common: optimize metrics based on the score given by the model, like likelihood. Then, the far-from-boundary points has non-zero contribution to the score and thus will affect the position of boundary.
@@ -29,8 +29,10 @@
 
 ### 1.2. Clustering methods
 
-- KNN
-- DBSCAN
+- K-means:
+  - 
+- DBSCAN:
+  - 
 - GMM
 
 
@@ -78,6 +80,9 @@ Ref: [Medium-blog](https://medium.datadriveninvestor.com/random-forest-pros-and-
 General pros vs other models:
 
 - Can be used for both classification or regression tasks.
+  - While logistic/SVM can only handle classification.
+- Naturally can be used for multi-label classification
+  - While logistic/SVM need to use one-vs-all.
 - Can be used on both categorical and numerical feature.
 - Implicitly perform feature selection, i.e. not split on non-important feature.
 - Not influenced by outliers far from boundary ('deep' outliers, my terminology)
@@ -91,6 +96,7 @@ General pros vs other models:
 General cons vs other models:
 
 - More expensive to handle tilt boundary. Since it only split features, i.e. the boundary is perpendicular/vertical to axis.
+
 
 #### 2.2.1. Decision tree
 
@@ -171,6 +177,14 @@ Similar to bagging, but learns sequentially and builds off previous trees
 
 Unlike bagging and random forests, can overfit if number of trees is too large.
 
+##### 2.2.4.3. Comparison
+
+- Compared to Bagging or RF: more suitable to fit stable data.
+  - Noisy data is easy to have high variance error (model fit too much on detail/noise), so should focus on reduce variance 
+  - Stable data is easy to have high bias error (mode is not complex enough to fit the shape), so should focus on reduce bias.
+- Sequentially trained, slower.
+  - Bagging can be parallelized, much faster.
+
 
 ### 2.4. Naive Bayes  (TBD)
 
@@ -183,7 +197,6 @@ Unlike bagging and random forests, can overfit if number of trees is too large.
 - Computationally fast
 - Simple to implement
 - Works well with high dimensions
-- 
 
 #### 2.4.2. Cons:
 
@@ -191,5 +204,7 @@ Unlike bagging and random forests, can overfit if number of trees is too large.
 - Cannot learn interactions between features. But:
   - converge quicker than discriminative models like logistic regression
   - need less training data.
+- Not perform well on imbalanced data, because the predicted probability is proportional to the prior probability of a label.
+  - Ref: [StackOverflow](https://stackoverflow.com/questions/42791002/is-naive-bayes-sensitive-to-the-number-of-training-observations)
 
 ### 2.5. Neural Network (TBD)

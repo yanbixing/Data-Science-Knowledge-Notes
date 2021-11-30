@@ -18,7 +18,7 @@
 
 Both generative/discriminative purpose is to get $p(y|x)$, generative get it indirectly via joint distribution (that is why it is called generative: ), discriminative directly fit the p(y|x).
 
-- Generative: calculate $p(y|x)$ from the joint distribution $p(x,y)$ 
+- Generative: from the **joint distribution** $p(x,y)$, compute $p(y|x)$ from bayes theorem.
   - Idea: $p(y|x) = \frac{p(x,y)}{p(x)} = \frac{p(x|y)p(y)}{p(x)}$
   - Why call it generative: you can generate samples with the joint distribution.
   - Algorithm: 

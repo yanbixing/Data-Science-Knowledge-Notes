@@ -216,6 +216,15 @@ Sparse value means a lot of values are 0.
 
 Ref: [KDnuggets-Blog](https://www.kdnuggets.com/2021/01/sparse-features-machine-learning-models.html)
 
+Why sparse is good for deep learning? (TBD)
+
+Ref: [Quora](https://www.quora.com/What-are-the-advantages-of-using-sparse-representation-in-machine-learning-especially-in-deep-learning-models)
+
+- less memory
+- compressible
+- less computational resources
+- less model complexity, more stable.
+
 
 
 ## Deep Dive: Hashing

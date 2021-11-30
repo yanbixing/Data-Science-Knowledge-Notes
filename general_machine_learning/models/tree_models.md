@@ -4,16 +4,34 @@
 
 ### 0.1. Misc knowledge
 
-- How to split a numerical feature:
+- How to split tree on a numerical feature:
   - Brute force, N data points then there is N-1 split points, check each of them one by one.
+  - Ref: [displar-blog](https://www.displayr.com/how-is-splitting-decided-for-decision-trees/), [YouTube](https://www.youtube.com/watch?v=5O8HvA9pMew), [StakeExchange](https://stats.stackexchange.com/questions/314418/decision-tree-where-and-how-to-split-an-attribute-on-numerical-dataset)
+  - E.g. (Note: there are n+1 split points in the figure, however, the first and last split points is non-sense, equivalent to no split, so there are n-1 split points.)
+    <div  align="center"><img src=https://i.stack.imgur.com/owgCD.png style = "zoom:60%"></div>
   <!-- - This complexity is usually used for regression tree. -->
 - How to treat multiclass-classification: 
-  - No difference, still split feature to maximize the information gain.
-  - The prediction of the leaf nodes is determined by its majority samples when training.
-    - E.g. leaf node:
-      - Binary classification: {1: 10 samples, 0: 1 sample} => leaf node is y=1
-      - Multi-class: {c1:10, c2:1, c3:1}=> leaf node is c1.
+  - No difference: still split feature to maximize the information gain.
+    - Difference: when calculating info-gain, instead of binary-class formula, need to use multi-class formula.
+    - info_gain = entropy - conditional_entropy, both terms is naturally able to be multi-class.
+      - Entropy: $H(P) := - \sum_{x\in\mathcal{X}} P(x)\log P(x)$
+      - Conditional Entropy: $H(Y|X) = -\sum_{\boldsymbol{x}\in \mathcal{\boldsymbol{x}} }\sum_{\boldsymbol{y}\in \mathcal{Y} } p(\boldsymbol{x}, \boldsymbol{y}) \log_2 p(\boldsymbol{y}|\boldsymbol{x}) $
+  - No difference: still do binary split on each nodes, and the prediction/label of the nodes is determined by its majority samples.
+    - Difference: the label is not 0 or 1, can be either 0,1,2,.. (multi-class), depending on the majority class in the node.
+      - E.g. leaf node:
+        - Binary classification: {1: 10 samples, 0: 1 sample} => leaf node is y=1
+        - Multi-class: {c1:10, c2:1, c3:1}=> leaf node is c1.
+      - E.g.
+        <div  align="center"><img src=https://miro.medium.com/max/1400/1*7bfIT0ygXnSzseE_AntIqg.png style = "zoom:60%"></div>
   - Ref: [TowardsDataScience](https://towardsdatascience.com/decision-tree-algorithm-for-multiclass-problems-using-python-6b0ec1183bf5)
+- How to grow regression tree?
+  - Maximize the "Sum Squared Error"-gain or "Sum absolute error"-gain
+    - Minimize the Sum of "Sum Squared Error" on children/leaf nodes.
+    - I.e. Minimize $S = \sum_{c\in leaves(T)} \sum_{i\in C} (y_i - \bar{y}_C)^2$ 
+    - The output of a leaf node is the mean value of sample contained in that node, i.e. $\bar{y}_C$
+  - Ref:
+    - [CMU-stats-pdf](https://www.stat.cmu.edu/~cshalizi/350-2006/lecture-10.pdf)
+    - [Sklearn-regression tree](https://scikit-learn.org/stable/modules/generated/sklearn.tree.DecisionTreeRegressor.html)
 
 ### 0.2. Loss function: 
 
@@ -82,7 +100,8 @@ $$\underset{X_i \in \mathcal{X_i}}{\mathbb{E}}[ IG(Y,X_i) ] = MI(Y;X_i) = E(Y) -
 
 Ref: [Blog](https://www.displayr.com/machine-learning-pruning-decision-trees/)
 
-- Pre-prune = early stoppingSet max depth
+- Pre-prune = early stopping
+  - Set max depth
   - Set min_leaf_size
   - Set min_impurity_decrease
 

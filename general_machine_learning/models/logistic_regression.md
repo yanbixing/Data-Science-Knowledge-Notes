@@ -21,7 +21,7 @@
 ## 1.  Basics
 
 ### 1.1. Prediction (score) function: 
-$$h_\theta(\boldsymbol{x}) = \frac{1}{1+\exp(\boldsymbol{\theta}^T\boldsymbol{x})}$$
+$$h_\theta(\boldsymbol{x}) = \frac{1}{1+\exp(-\boldsymbol{\theta}^T\boldsymbol{x})}$$
 - Probability interpretation: 
   - Since:
       $$P_{(\hat{y}=v|\boldsymbol{x})}(\boldsymbol{x}) :=\left\{ \begin{array}{ll} h_\theta(\boldsymbol{x}) & v=1\\ 1-h_\theta(\boldsymbol{x}) & v = 0 \end{array} \right.$$

@@ -47,6 +47,8 @@ Also see: [model_training/loss.md](../model_training/loss.md)
 
 ### 1.3. KL Divergence
 
+
+
 $$\begin{aligned}
   D_{\mathrm{KL} }(P\parallel Q) &:=\sum _{x\in {\mathcal {X}}}P(x)\log \left({\frac {P(x)}{Q(x)}}\right) \\
   &= H(P,Q) - H(P)
@@ -59,6 +61,9 @@ $$\begin{aligned}
   - *"relative entropy of $P$ with respect to Q"*
   - *"information gain achieved if $P$ would be used instead of $Q$ which is currently used."*
 - Ref: [Wiki-KL_divergence](https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence), [Wiki-Cross_entropy](https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence#Cross_entropy)
+
+Note: 
+- $D_{\mathrm{KL} }(P\parallel Q)$ is read as "KL divergence of $P$ from $Q$" Ref: [Wiki-KL_Divergence](https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence#Definition)
 
 ### 1.4. Conditional Entropy
 

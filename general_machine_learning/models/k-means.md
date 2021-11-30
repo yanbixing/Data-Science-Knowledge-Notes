@@ -26,6 +26,7 @@ Ref: [wiki-K_means](https://en.wikipedia.org/wiki/K-means_clustering#Standard_al
     - i.e.: Assign sample $\boldsymbol{x}_i$ to its closest centroid $k$ for all samples ($\{\mathcal{s}_k\}$ is updated)
   - M-step: $\boldsymbol{c}_k =  \frac{1}{|\mathcal{s}_k|}\sum_{\boldsymbol{x}_i \in \mathcal{s}_k} \boldsymbol{x_i} $
     - i.e.: Move the centroid to the center of corresponding group ($\{\boldsymbol{c}_k\}$ is updated.)
+  - The algorithm has converged when the assignments no longer change. Then we can stop the iteration.
 
 ### 1.2. Centroids Initialization
 
@@ -88,18 +89,36 @@ The metrics used to select K is as following.
 
 ### 3.1. Gaussian Mixture Model (GMM)
 
-#### 3.1.1. Algorithm: GMM vs K-means
+#### 3.1.1. What is GMM?
 
-In short, a more advanced K-means:
+A Gaussian mixture model is a probabilistic model that assumes **all the data points are generated from a mixture of a finite number of Gaussian distributions with unknown parameters.** 
 
-- Assign each centroid with a gaussian distribution $\boldsymbol{\mu}_k \rightarrow \boldsymbol{\theta}_k = (\boldsymbol{\mu}_k, \boldsymbol{\Sigma}_k)$
+One can think of mixture models as generalizing k-means clustering to incorporate information about the covariance structure of the data as well as the centers of the latent Gaussians. (???TBD)
+
+Ref: [Sklearn-GMM](https://scikit-learn.org/stable/modules/mixture.html)
+
+#### 3.1.2. Algorithm: GMM vs K-means (TBD)
+
+
+ Kmeans can be viewed as a special case of GMM by :
+- "Hard assign" the point to the closest point, rather than consider probablity
+  - Ref: [Zhihu](https://zhuanlan.zhihu.com/p/71574416) <协方差矩阵(covariance matrix)趋于0? >, [CSDN](https://blog.csdn.net/qq_39638957/article/details/88744877): 
+- Hard set the centroid have single variance rather than covariance matrix, i.e. set the shape to be spherical.
+  - Ref: [Sklearn-GMM](https://scikit-learn.org/stable/modules/mixture.html#mixture)
+
+Or GMM can be viewed as kind of more advanced K-means, by:
+
+- Assign each centroid with a gaussian distribution $\boldsymbol{\mu}_k  \rightarrow \boldsymbol{\theta}_k = (\boldsymbol{\mu}_k, \boldsymbol{\Sigma}_k)$ (then the shape can be ellipse, not-spherical)
 - The label of a data point is not a single label anymore. Instead, it becomes a $K$-dim vector denotes the probability the point belongs to $k$-th centroids.
 - The objective change from "minimize sum distance" $\rightarrow$ "maximize likelihood"
   - Solve with EM algorithm
     - $\boldsymbol{Z}$ refers to the label distribution $\{\boldsymbol{s}_k\}$
     - $\boldsymbol{X}$ refers to the dataset $\mathcal{S}$.
+- Usually, GMM use K-means to find starting points.
+  - [Wiki-Kmeans](https://en.wikipedia.org/wiki/K-means_clustering#Gaussian_mixture_model), [TowardsDataScience](https://towardsdatascience.com/gaussian-mixture-models-vs-k-means-which-one-to-choose-62f2736025f0))
 
-#### 3.1.2. Tunning (TBD)
+
+#### 3.1.3. Tunning (TBD)
 
 - n_components: number of centroids.
 - covariance_type: a param to control the shape of GMM, through covariance matrix.
@@ -117,11 +136,12 @@ In short, a more advanced K-means:
 
 
 
-#### 3.1.3 Pro and Cons:
+#### 3.1.4 Pro and Cons:
 
 
 - Pros:
   - More flexible than K-mean: Can be eclipse shape, not necessarily spherical.
+    - Ref: [Wiki-Kmeans](https://en.wikipedia.org/wiki/K-means_clustering)
   - Can give probability interpretation. Not necessarily belong to a single cluster.
 - Cons:
   - More complex model, harder to tune, harder to select.
@@ -195,9 +215,9 @@ Ref: [Wiki-EM_algorithm](https://en.wikipedia.org/wiki/Expectation%E2%80%93maxim
     - GMM: parameters for centroids, i.e., $\boldsymbol{\theta} = (\boldsymbol{\mu}, \boldsymbol{\Sigma})$
     - HMM: parameters for hidden states, i.e., $\boldsymbol{\theta} = (\boldsymbol{A}, \boldsymbol{B}, \boldsymbol{\pi})$
 - Algorithm: 
-  - E-step: Calculate $P(Z|X,\theta)$, i.e.:
-    - "E" for "Expectation of Z" : update distribution of label $\boldsymbol{Z}$ assigned to each data point in $\boldsymbol{X}$ based on current parameter $\boldsymbol{\theta}$
-  - M-step: Calculate $\boldsymbol{\theta} = \underset{\boldsymbol{\theta}}{\argmin}P(\boldsymbol{X},\boldsymbol{Z}|\boldsymbol{\theta})$
+  - E-step: Calculate $P(Z_t|X,\theta_t)$ and then  $L({\boldsymbol {\theta }};\mathbf {X} )_{|\boldsymbol{Z} = \boldsymbol{Z}_t}$, i.e.:
+    - "E" for "Expectation of Z" : update distribution of label $\boldsymbol{Z}_t$ of each hidden state based based on current parameter $\boldsymbol{\theta}_t$ and observable $\mathbf{X}$, so that we can get the expected log-likelihood function $${\displaystyle L({\boldsymbol {\theta }};\mathbf {X} )=p(\mathbf {X} \mid {\boldsymbol {\theta }})=\int p(\mathbf {X} ,\mathbf {Z} \mid {\boldsymbol {\theta }})\,d\mathbf {Z} =\int p(\mathbf {X} \mid \mathbf {Z} ,{\boldsymbol {\theta }})p(\mathbf {Z} \mid {\boldsymbol {\theta }})\,d\mathbf {Z} }$$.
+  - M-step: Calculate $\boldsymbol{\theta}_{t+1} = \underset{\boldsymbol{\theta}}{\argmin} L({\boldsymbol {\theta }};\mathbf {X} )_{|\boldsymbol{Z} = \boldsymbol{Z}_t}$
     - "M" for "Maximize likelihood": update the parameter $\boldsymbol{\theta}$ by maximize the likelihood of current label distribution.
 - Further understanding:
   - EM algorithm can be understand as a generalized coordinate descent:
