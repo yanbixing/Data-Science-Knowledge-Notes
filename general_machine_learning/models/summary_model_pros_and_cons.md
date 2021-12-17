@@ -1,5 +1,7 @@
 # Classification Model Pros and Cons (Generalized)
 
+**VERY COMMON INTERVIEW QUESTIONS**
+
 ## Logistic Regression
 
 - Pros
@@ -49,6 +51,7 @@ Train multiple trees using bootstrapped data to reduce variance and prevent over
   - Unlike bagging and random forests, can overfit if number of trees is too large
 
 ### Random Forest
+
 - Pros
   - Decorrelates trees (relative to bagged trees)
   - important when dealing with mulitple features which may be correlated

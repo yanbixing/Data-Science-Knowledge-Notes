@@ -414,33 +414,7 @@ Note: AdaBoost has the concept of residue, but just not often mentioned.Ref: [sk
 <!-- <font color="#dd0000"> AdaB = GB when square loss??? </font> -->
 
 
-### 3.4 XGBoost 
-XGBoost is actually an engineering implementation (and plus) of Gradient Boost idea.
-<!-- XGB use more regularized model formalizatioin to control overfitting, which gives better performance<font color="#dd0000"> (???) </font> -->
 
-- Base learner:
-  - GB: typically only use tree classifier.
-  - XGB: besides tree classifier, there are other types of linear classifiers (linear booster)
-- Regularization:
-  - GB: no explicit regularization term.
-  - XGB: have explicit regularization term 
-    - linear classifiers: L1, L2 regularization
-    - tree: number of leave nodes, IG (score) at leave nodes
-- Order of derivative:
-  - GB: pseudo residue, i.e. first-order derivative
-  - XGB: both first- and second- order of derivative
-- Feature (Column) Subsampling and parallelization
-  - GB: use full features and only one sequence
-  - XGB: use subset of features, can parallelize multiple GB sequences, further reduce variance.
-- Missing value:
-  - GB: No default strategy for missing value.
-  - XGB: Has strategy (can learn) to deal with missing value.
-
-Ref:[ZhiHu Blog1](https://zhuanlan.zhihu.com/p/42740654), [ZhiHu Blog2](https://zhuanlan.zhihu.com/p/81368182), [CSDN Blog1](https://blog.csdn.net/jamexfx/article/details/93780308), [CSDN Blog2](https://blog.csdn.net/qq_28031525/article/details/70207918)
-
-Terminology:
-
-- CART: Classification and Regression Trees, i.e. Decision Tree.
 
 ### 3.3 Model comparison & Summary
 
