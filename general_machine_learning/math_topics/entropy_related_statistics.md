@@ -218,7 +218,49 @@ Assume We have two labels (0,1), and 1 input feature $x\in [-1, 1]$:
   - Likelihood is discussed in the perspective of likelihood of (appearance of) dataset $\mathcal{S}$
   - Ref: [Wiki-MLE](https://en.wikipedia.org/wiki/Maximum_likelihood_estimation)
 
-#### 3.1.1 Cross Entropy and NNL in logistic regression.
+
+#### 3.1.1 Cross Entropy and NNL
+
+- Definition:
+  - "NNL loss": NNL of the whole dataset
+  - "cross entropy loss": average of sample's cross entropy between true label distribution and predicted label distribution
+
+- maximizing the likelihood w.r.t. parameter $\theta$ is the same as minimizing the cross-entropy.
+  - I.e. Typically, in ML, <mark style="background-color:yellow;"><font color="#0000dd">**Minimize CE = Minimize NLL = MLE**</font></mark> 
+  - Ref: [Wiki-CE](https://en.wikipedia.org/wiki/Cross_entropy#Relation_to_log-likelihood)
+
+
+
+**Proof: (TBD on CE part)**
+
+
+- Notation:
+  - $\mathcal{S}$ denotes the training set with $M$ samples $\{...s_i...\}$
+    - $s_i =(\boldsymbol{x}_i,y_i)$ is an individual sample point.
+    - $S$ denotes the "axis"/"variable"/"name" of $\mathcal{X}\times\mathcal{Y}$ space. 
+  - $\theta$ is an $(N+1)$-dim vector contains the "weights" and the "intercept" of the features.
+  - $\mathcal{C}$ denotes different classes $\{c_1,c_2...c_K\}$
+    - $M_{c_k}$ denotes the number of samples labelled with $c_k$
+  - **Likelihood of the dataset** given parameter $\theta$ is:
+    $$p(\mathcal{S}|\theta) = \prod^M_{i=1} p(\hat{y}_i = y_i|X=\boldsymbol{x}_i)$$
+  - **Cross Entropy** is denoted with $H(P,Q)$
+- Then:
+  $$\begin{aligned}
+      NLL(\mathcal{S}|\theta) & := - \sum^M_{i=1} \log[ p(\hat{y}_i = y_i|\boldsymbol{x}_i) ] = -\log p(\mathcal{S}|\theta)\\
+      & = - \sum_{c_k \in \mathcal{C}]} \sum_{y_j = c_k \forall j} \log[ p(\hat{y}_j = c_k|\boldsymbol{x}_j) ]\\
+      & = - M \sum_{c_k \in \mathcal{C}}  \frac{1}{M}\sum_{y_j = c_k \forall j} \log[ p(\hat{y}_j = c_k|\boldsymbol{x}_j) ]\\
+      & = - M \sum_{c_k \in \mathcal{C}}  \frac{M_{c_k}}{M} \frac{1}{M_{c_k}} \sum_{y_j = c_k \forall j} \log[ p(\hat{y}_j = c_k|\boldsymbol{x}_j) ]
+      \\
+      & = - M \sum_{c_k \in \mathcal{C}}  \frac{M_{c_k}}{M}  \log\left\{ \left[ \prod_{y_j = c_k \forall j}  p(\hat{y}_j = c_k|\boldsymbol{x}_j) \right]^\frac{1}{M_{c_k}} \right\}\\
+      & = - M \sum_{c_k \in \mathcal{C}}  P(c_k) \log Q(c_k)\\
+      & =: M \cdot 
+  \end{aligned}$$
+
+- Therefore: <mark style="background-color:yellow;"><font color="#0000dd">**Minimize CE = Minimize NLL = MLE**</font></mark>
+
+Ref: [Wiki-CE](https://en.wikipedia.org/wiki/Cross_entropy#Relation_to_log-likelihood), [StackExchange](https://stats.stackexchange.com/questions/198038/cross-entropy-or-log-likelihood-in-output-layer), [Quora](https://www.quora.com/What-are-the-differences-between-maximum-likelihood-and-cross-entropy-as-a-loss-function)
+
+<!-- #### 3.1.1 Cross Entropy and NNL in logistic regression.
 
 Typically, cross entropy and NNL are not comparable as they are conceptually different. (CE consider two distribution; NLL consider the probability of a dataset.)
 
@@ -234,7 +276,6 @@ But <mark style="background-color:yellow;">in the case of Logistic regression</m
     - $s_i =(\boldsymbol{x}_i,y_i)$ is an individual sample point.
     - $S$ denotes the "axis"/"variable"/"name" of $\mathcal{X}\times\mathcal{Y}$ space. 
   - $\theta$ is an $(N+1)$-dim vector contains the "weights" and the "intercept" of the features.
-  <!-- - $v$: an independent binary variable: $v \in \{0,1\}$  -->
 - Likelihood of the dataset given parameter $\theta$ is:
   $$p(\mathcal{S}|\theta) = \prod^M_{i=1} p(\hat{y}_i = y_i|X=\boldsymbol{x}_i)$$
 - Then:
@@ -246,7 +287,8 @@ But <mark style="background-color:yellow;">in the case of Logistic regression</m
   - Note: the core fact here is, 
     - for individual sample, the NLL equals to the cross entropy
     - this fact holds when the label is binary $\{0,1\}$, not generally holds.
-  - Minimize NLL = MLE
+  - <mark style="background-color:yellow;"><font color="#0000dd">**Minimize CE = Minimize NLL = MLE**</font></mark>
   - Thus, also, **in LR**, the training strategy "minimize the average cross-entropy loss" can also be viewed as MLE
 
-Backup refs: [StackExchange](https://stats.stackexchange.com/questions/198038/cross-entropy-or-log-likelihood-in-output-layer), [Quora](https://www.quora.com/What-are-the-differences-between-maximum-likelihood-and-cross-entropy-as-a-loss-function)
+Backup refs: [StackExchange](https://stats.stackexchange.com/questions/198038/cross-entropy-or-log-likelihood-in-output-layer), [Quora](https://www.quora.com/What-are-the-differences-between-maximum-likelihood-and-cross-entropy-as-a-loss-function) -->
+<!-- 似乎不只是logistic regression, 在DL里也是一样，CE就是NNL -->

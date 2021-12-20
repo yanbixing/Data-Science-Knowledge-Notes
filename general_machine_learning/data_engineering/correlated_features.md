@@ -85,14 +85,16 @@ Ref:[Wiki-R_squared](https://en.wikipedia.org/wiki/Coefficient_of_determination#
 
 ## 2. Impact on different models
 
-- The **variance/uncertainty in parameter is high**. E.g.:
-  - $y^* = x^{(1)} + x^{(2)} + \varepsilon$ is the true generative function, $x_1$ and $x_2$ are two features with same value, $\varepsilon$ is noise.
-  - $\hat{y} = \beta^{(1)} x^{(1)} + \beta^{(2)} x^{(2)}$ then $(\beta^{(1)}, \beta^{(2)})$ could take $(1,1),(2,0),(0,2),\dots$
-- When the parameters can be assigned randomly, i.e. not stable, **small change in training data may cause large change in parameter**. (consistent with the statement "variance" is high.)
-- Also, if coefficients is not stable, 
-  - it will be **harder to interpret the model** and thus hard to detect problems in model.
-  - it will be **harder to select the correct model**.
-  - it will **weaken the performance/power of your model**.
+Generally, for all kinds of models, the correlated feature will cause the model is unstable. (E.g. For parametric model, the parameter value can be assigned randomly, for non-parametric model, like tree, the correlated feature during can be exchanged/replaced randomly.)
+
+- <mark style="background-color:yellow;"><font color="#0000dd">**parameter/model is unstable**</font></mark>: when the parameters can be assigned randomly, i.e. small change in training data may cause large change in parameter. (consistent with the statement "variance" is high.)
+  - Reason: when features are correlated, the **variance/uncertainty in parameter is high**. E.g.:
+    - $y^* = x^{(1)} + x^{(2)} + \varepsilon$ is the true generative function, $x_1$ and $x_2$ are two features with same value, $\varepsilon$ is noise.
+    - $\hat{y} = \beta^{(1)} x^{(1)} + \beta^{(2)} x^{(2)}$ then $(\beta^{(1)}, \beta^{(2)})$ could take $(1,1), (2,0),(0,2),\dots$
+- Also, because coefficients is not stable: 
+  - it will be <mark style="background-color:yellow;"><font color="#0000dd">**harder to interpret the model**</font></mark> and thus hard to detect problems in model.
+  - it will be <mark style="background-color:yellow;"><font color="#0000dd">**harder to select the correct model**</font></mark>.
+  - it will <mark style="background-color:yellow;"><font color="#0000dd">**weaken the performance/power of your model**</font></mark>.
 
 Refs: [Blog-mintlab](https://blog.minitab.com/en/adventures-in-statistics-2/what-are-the-effects-of-multicollinearity-and-when-can-i-ignore-them), [Blog-StatisticsByJim](https://statisticsbyjim.com/regression/multicollinearity-in-regression-analysis)
 
@@ -104,9 +106,23 @@ Refs: [Blog-mintlab](https://blog.minitab.com/en/adventures-in-statistics-2/what
   - In the training process, the correlated features will be preferred to be optimized.
   - In the prediction process, the correlated features give power (e.g. $x \rightarrow x^2$) influence.
 
-
-
 [naive_bayes_model-Sec 3.1](../models/naive_bayes_model.md)
+
+## 2.2. Influence on Logistic Regression (TBD)
+
+Same with "general": model is unstable. (TBD)
+E.g. 
+
+- assume $y^* = 2x_1$ but we have correlated features $x_1 = x_2$. Then:
+  - $\hat{y} = x_1+x_2$, $\hat{y} = 0.5x_1+1.5x_2$... are all good estimator.
+
+Ref: [StackExchange](https://stats.stackexchange.com/questions/250376/feature-correlation-and-their-effect-of-logistic-regression/250386)
+
+
+
+
+
+
 
 ## 3. Solution methods:
 

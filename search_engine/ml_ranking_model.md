@@ -84,3 +84,41 @@ RankNet, LambdaRank, etc.
 ### 2.3 Listwise approach (TBD)
 
 Take the entire list, optimize its order.
+
+
+## Draft: github summary
+
+
+[Github](https://everdark.github.io/k9/notebooks/ml/learning_to_rank/learning_to_rank.html)
+
+### 1. Pointwise Ranking
+
+Func to learn: score function $f(q,d)$
+
+training input feature: $(q_1,d_1) \dots (q_i,d_i) \dots$
+training output label: click-or-not (binary) or similarity (continuous)
+
+loss to train: cross entropy
+
+
+### 2. Pairwise Ranking
+
+- Func to learn: still scoring function $f(q,d)$
+- training input feature:  $(q_1,d_{1,1},d_{1,2}) \dots (q_i,d_{i,1},d_{i,2}) \dots$
+- training output target: (pairwise) binary label
+  - E.g. if d1 ranking higher then 1; d2 ranking higher then 0
+  - The problem become a binary classification
+  - Note (personal feeling): 
+    - we still rely on $s_i = f(q,d_i)$ as "basic unit", but rather than directly using as click-prob, we think it as a kind of ranking score, the higher the better.
+    - The model is $Pr(i \succ j) : = g(q,d_i,d_j) : = g(s_i,s_j)$
+    - The 0,1 label is understand as $Pr(i \succ j) \equiv \frac{1}{1 + exp^{-(s_i - s_j)}}$ i.e. the probability that i have higher ranking than j.
+    - E.g. we can just def model $g(q,d_i,d_j) := \frac{1}{1 + exp^{-(f(q,d_i) - f(q,d_j))}}$
+      - Then input is (q,d_i,d_j), output is binary.
+- Loss (TBD)
+  - with above idea, i.e. binary classification, we can still use cross entropy.
+  - How to use pairwise loss? is that a "lambdaloss"? What is the relation between pairwise ranking and pairwise loss, seems pair wise ranking need triplet loss rather than pairwise loss?
+    - (TBD)
+    - Ref: [Github-blog](https://gombru.github.io/2019/04/03/ranking_loss/): good ranking loss explanation, also check OneNote.
+- Method according to ran
+
+
