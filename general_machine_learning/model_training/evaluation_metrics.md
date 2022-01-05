@@ -125,6 +125,62 @@ TPR the higher the better (the more correct prediction), FPR the lower the bette
     <div align="center"><img src=https://miro.medium.com/max/1112/1*aUZ7H-Lw74KSucoLlj1pgw.png height="100" > </div>
 
 
+### 2.4. Multi-label classification
+
+There are four different averaging strategy to create multi-label evaluation metric from single-label metrics: Macro-, micro-, weighted-, and sample- averaging.
+
+Ref:[TowardsDataSicne](https://towardsdatascience.com/evaluating-multi-label-classifiers-a31be83da6ea)
+
+#### 2.4.1. Macro averaging
+
+Macro averaging is averaging over different classes.
+
+e.g.: assume there are $k = K$ classes
+
+$\mathrm{prec}(\text{macro}) = \sum^K_{k=1} \mathrm{prec}(C_k)$
+where
+- $\mathrm{prec}(C_k) = \frac{TP_k}{TP_k+FP_k}$
+- $TP_k$ number of TP for k-th label.
+
+
+#### 2.4.2. Micro averaging
+
+Micro averaging is calculated from sample-level confusion matrix value (TP,FP, TN, FN), following the definition of metric. e.g.:
+
+$\mathrm{prec}(\text{micro}) = \frac{ \sum^K_{k=1} TP_k}{\sum^K_{k=1}TP_k+\sum^K_{k=1}FP_k}$
+
+#### 2.4.3. Weighted averaging
+
+Weight averaging is a weighted version of "macro averaging", i.e. still calculated from class level data but consider its weight in dataset.
+
+$\mathrm{prec}(\text{weighted}) = \sum^K_{k=1}\frac{n_{C_i}}{N} \mathrm{prec}(C_i)$
+
+
+#### 2.4.4. Sample averaging
+
+Calculate metric for each sample and do average. 
+
+Note: for each individual sample the there only 1 sample, for each class k the confusion matrix value (TP,FP,TN,FN) will be either 0,1.
+
+$\mathrm{prec}(\text{sample}) =\sum^N_{i=1} \mathrm{prec}(x_i) $
+
+$\mathrm{prec}(x_i) = \frac{ \sum^K_{k=1} TP_{k,i}}{\sum^K_{k=1}TP_{k,i}+\sum^K_{k=1}FP_{k,i}}$
+
+Note: Confusion matrix value on class level is the sum of confusion matrix value on sample level,i.e. $TP_k = \sum_i TP_{k,i}$
+
+#### 2.4. Deep Dive: How to handle 0/0? (TBD)
+
+Ref: [StackExchange](https://stats.stackexchange.com/questions/8025/what-are-correct-values-for-precision-and-recall-when-the-denominators-equal-0)
+
+It is possible that we have 0 $TP$ and 0 $FP$ if our classifier predictor all negative. 
+
+Then the precision will be $0/0 = nan$ (e.g. [FastAI-Forum](https://forums.fast.ai/t/nan-values-when-using-precision-in-multi-classification/59767))
+
+How to handle it? Depends on your definition. E.g. when you have nan
+- If you use ```np.mean```, it will give you nan
+- If you use ```np.nanmean```, it will give you mean value ignore nan
+- Ref: [StackOverflow](https://stackoverflow.com/questions/19852586/get-mean-value-avoiding-nan-using-numpy-in-python)
+
 #### Deep Dive: "Base rate invariant" metrics
 
 - [Base_rate](https://en.wikipedia.org/wiki/Base_rate): generally refers to the (base) class probabilities unconditioned on featural evidence, i.e. p(y)
@@ -145,6 +201,10 @@ TPR the higher the better (the more correct prediction), FPR the lower the bette
       - thus it is a good metric for performance comparison.
 
 
+
+
+
+
 ## 3. Ranking
 
 - Precision@k (recall@k, accuracy@k)
@@ -152,5 +212,33 @@ TPR the higher the better (the more correct prediction), FPR the lower the bette
 ## 4. Clustering
 
 - Silhouette score
+
+
+## 5. Interview questions
+
+### 5.1. Confusion matrix calculation
+
+Q: Calculate precision from the given facts:
+- Positive cases 1% over all cases; 
+- True positive rate 99%, 
+- True negative rate 99%
+
+Ans: 50%
+
+Solution:
+
+- $prec = \frac{TP}{TP+FP}$, to get precision we need to get TP and FP
+- Denote the sample size as $S$
+  - The we have $P=0.01S, N=0.99S$
+- Then:
+  - $TPR = \frac{TP}{P} = 0.99$
+    - $\Rightarrow TP = 0.99\cdot P = 0.0099S$
+  - $TNR = \frac{TN}{N} = 0.99 $
+    - $\Rightarrow FPR := \frac{FP}{N} = \frac{N-TN}{N} = 1-0.99=0.01$ 
+    - $\Rightarrow FP = 0.01N = 0.0099S$
+- So: $prec = \frac{TP}{TP+FP} = \frac{0.0099S}{0.0099S+0.0099S} = 0.5$
+
+Ref:[1p3a](https://www.1point3acres.com/bbs/thread-805418-1-1.html):  Interview-L
+
 
 

@@ -357,8 +357,7 @@ Proof: Ref: [CSDN-blog](https://blog.csdn.net/Banach_I/article/details/51078451)
   - Principle components is the direction have largest variance.
 
 - Algo to get the first component.
-  - Power iteration:
-  
+  - Power iteration (TBD)
 
 - Algo to get all components.
   - Use power iteration to get the direction of the 1st principle component.

@@ -7,8 +7,8 @@
 ####  Algo: 
 
 - breaking the string to words (bag-of-words representation, a multi-column/dict object)
--  use feature_hasher on the bag-of-words representation.
--  Ref. [feature_engineering.md-Sec1.2.3.5](../general_machine_learning/data_engineering/feature_engineering.md)
+- use feature_hasher on the bag-of-words representation.
+- Ref. [feature_engineering.md-Sec1.2.3.5](../general_machine_learning/data_engineering/feature_engineering.md)
 
 #### Pro and Con
 

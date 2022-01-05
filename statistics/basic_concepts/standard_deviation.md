@@ -1,6 +1,7 @@
 # Standard Deviation
 
 ## SD vs SE: different kinds of "standard deviation"
+
 - SD: standard deviation of the **population**
   - We have a sample set with N samples: $\mathcal{S} = \{x_1,\dots, x_N\}$
     - $SD:=$ the standard deviation of theses samples. 

@@ -55,24 +55,24 @@ Note:
 ##### L2 is better
 
 - When 
-  - Most feature are **correlated** with **label** 
+  - Most feature are **correlated**with **label** 
     - (i.e. most features are useful, the data has little noise.)
-  - Features are **correlated** with **each other**
+  - Features are <mark style="background-color:yellow;"><font color="#0000dd">**correlated**</font></mark>  with **each other**
   <!-- - The noise in features is small -->
 
 
 - Explanation: In the extreme case “linearly related”: 
-  - **L2** will distribute weights among different features <br> $\sim\rightarrow$ the result is an **weighted average/vote of all correlated positions** <br> $\sim\rightarrow$ even some position are missing/inaccurate, the result is stable. <br> $\sim\rightarrow$ less model variance?
+  - **L2** will distribute weights among different features <br> $\sim\rightarrow$ the result is an <mark style="background-color:yellow;"><font color="#0000dd">**weighted average/vote of all correlated positions** </font></mark><br> $\sim\rightarrow$ even some position are missing/inaccurate, the result is stable. <br> $\sim\rightarrow$ less model variance?
   - L1 will assign weight to the largest scale feature <br> $\sim\rightarrow$ the result is solely dependent on that feature <br>$\sim\rightarrow$ the result is not stable. <br> $\sim\rightarrow$ higher model variance?
 
 ##### L1 is better
 
 - When 
   - Features is not correlated with label
-    - i.e.: a few features are not useful, data is **noisy**
+    - i.e.: a few features are not useful, data is <mark style="background-color:yellow;"><font color="#0000dd">**noisy**</font></mark>
   - Features is independent with each other
   
--  Explanation: **L1** can **remove useless/noise feature**. But L2 will still keep them. <br> **Note**: usually weight can be also viewed as feature importance. Reduce weight = reduce reliance on the feature = reduce feature importance.
+-  Explanation: <mark style="background-color:yellow;"><font color="#0000dd">**L1** can **remove useless/noise feature**</font></mark>. But L2 will still keep them. <br> **Note**: usually weight can be also viewed as feature importance. Reduce weight = reduce reliance on the feature = reduce feature importance.
 
 
 ### 1.3 Understanding

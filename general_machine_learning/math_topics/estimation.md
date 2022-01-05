@@ -56,3 +56,44 @@ $$\begin{aligned}
 
 
 Ref:[Github blog](https://wiseodd.github.io/techblog/2017/01/01/mle-vs-map/), [NYU slides](https://github.com/davidrosenberg/mlcourse/blob/gh-pages/Lectures/06b.MLE.pdf)
+
+
+## 4. Interview Qs
+
+Typical MLE Q workflow:
+
+- Get the expression of likelihood of observation w.r.t. the parameter.
+- Use derivative = 0 to get the parameter maximize the likelihood.
+
+### 4.1 Unbiased estimation of $p_H$ for tossing a coin
+
+**Q**: When you toss a coin $N$ times, head appears $n_H$ times, what is the unbiased estimation of the probability that head appears?
+
+**Solution:** 
+
+Perspective 1: MLE understanding 
+
+- The probability of such observation should follow binomial distribution, denote head prob as $p$, we can get the prob of such observation:
+  - $ P(n_H; N, p) = \binom{N}{n_H} p^{n_H} (1-p)^{N-n_H}$
+- Unbiased estimation can be get by MLE. 
+  - $\hat{p} = \underset{p}{\argmax}P(n_H; N, p) = \underset{p}{\argmin} NNL$
+  - $NNL = -\log P(n_H; N, p)  = - [n_H \log p + (N-n_H)\log(1-p) ] $
+- Use derivative to solve, i.e. $\partial_p NNL =0$
+  - $\frac{n_H}{p} - \frac{N-n_H}{1-p} \Rightarrow n_H - n_H p = Np-n_hp \Rightarrow p = \frac{n_H}{N}$
+- Thus, $\hat{p} = \frac{n_H}{N}$$
+
+Perspective 2: cross-entropy understanding
+
+- Given:
+  - the estimated prob distribution ($\hat{P}$) of head $\hat{P}_H := \hat{p}$ and tail $\hat{P}_T := 1 - \hat{p}$ 
+  - the true observed prob distribution ($P^*$) of head $P^*_H = \frac{n_H}{N}$ and tail $P^*_T = \frac{N-n_H}{N}$
+  - Definition of CE: $H(P,\hat{P}):=-\sum _{x\in {\mathcal {X}}}P^*(x)\,\log \hat{P}(x)$
+- The CE for the observed result is:
+  $\begin{aligned}
+    H(P,\hat{P}) = & - (P^*_H\log\hat{P}_H  + P^*_N\log\hat{P}_N) \\
+    =& -\left[ \frac{n_H}{N} \log \hat{p}+\frac{N-n_H}{N}\log(1-\hat{p}) \right]
+  \end{aligned}$
+- Minimize CE will give us the $\hat{p}$:
+  - $\hat{p} = \underset{\hat{p}}{\argmin} CE$
+  - Note: $CE$ is exactly $N\cdot NNL$ in the MLE understanding, so the the solution is same
+- Thus, $\hat{p} = \frac{n_H}{N}$

@@ -1,4 +1,4 @@
-# Binominal Distribution
+# Binomial Distribution
 
 Ref: [Wiki-Binominal_distribution](https://en.wikipedia.org/wiki/Binomial_distribution)
 
@@ -6,7 +6,8 @@ Ref: [Wiki-Binominal_distribution](https://en.wikipedia.org/wiki/Binomial_distri
 
 - Binominal distribution describe, doing $n$ times bernoulli trials, the **possibility** that there are exactly **$X$ times success**. (In each bernoulli trial, the possibility of 1 is p.)
 - $X \sim B(n, p)$ means variable X follow binominal distribution. The total times of the bernoulli trial is $n$, the possibility of 1 (success) in each time of bernoulli trial is $p$.
-  $${\displaystyle f(k,n,p)=\Pr(k;n,p)=\Pr(X=k)={\binom {n}{k}}p^{k}(1-p)^{n-k}}$$
+  $$f(k,n,p)=\Pr(k;n,p)=\Pr(X=k)={\binom {n}{k}}p^{k}(1-p)^{n-k}$$
+  $${\binom {n}{k}}:=\frac{n!}{k!(n-k)!}$$
   - The possibility mass function for binominal distribution is like: 
     <div  align="center"><img src=http://probabilitycourse.com/images/chapter3/binomial(n=10,p=0.3)%20color.png style = "zoom:30%"></div> 
 

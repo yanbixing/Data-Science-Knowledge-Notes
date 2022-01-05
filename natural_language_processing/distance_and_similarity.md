@@ -118,3 +118,48 @@ Ref: [Wiki - Levenshtein distance](https://en.wikipedia.org/wiki/Levenshtein_dis
 - Embedding doc and calculate similarity
 - Statistics (mean, mean(max())) on word-word similarity
 - Ref?
+
+
+## Deep Dive 1.: Other common distance
+
+Asked in interview (L) Ref: []
+
+### DD1.1. L1 distance
+
+Ref:[TowardsDataScience](https://towardsdatascience.com/3-distances-that-every-data-scientist-should-know-59d864e5030a)
+
+$$D_{L1}(\boldsymbol{u},\boldsymbol{v}) = \sum_i |\boldsymbol{u}^{(i)} = \boldsymbol{v}^{(i)}|  $$
+
+Geometric understanding, L1 measure the shortest distance between two points if we are only able to move along axis direction.
+
+
+<div  align="center"><img src=https://miro.medium.com/max/1400/1*88uZae0Utf7kavhQFvMqaw.png style = "zoom:40%"></div>
+
+
+Note: L2 distance is just the Euclidean Distance $D_{L1}(\boldsymbol{u},\boldsymbol{v}):=D_{euc}(\vec{\mu}, \vec{\nu}) = \sqrt{\sum_i(\mu_i - \nu_i)^2}$, the size of a vector or the shorted distance between two points.
+
+
+<div  align="center"><img src=https://miro.medium.com/max/1524/1*J2bK-UKhrW1Ill5EyAxXOQ.png style = "zoom:40%"></div>
+
+
+### DD1.2. Standardized Euclidean distance (Mahalanobis distance)
+
+
+
+Ref: [Wiki-Mahalanobis_distance](Wiki-https://en.wikipedia.org/wiki/Mahalanobis_distance)
+Note: Mahalanobis is the inventor of the standardized Euclidean distance.
+
+$$ D_{s-euc}({\vec {x}},{\vec {y}}):={\sqrt {({\vec {x}}-{\vec {y}})^{\mathsf {T}}\mathbf {S} ^{-1}({\vec {x}}-{\vec {y}})}}={\sqrt {\sum _{i=1}^{N}{\frac {(x_{i}-y_{i})^{2}}{s_{i}^{2}}}}}$$
+
+where $s_i$ is the standard deviation of the dataset.
+
+Standardized Euclidean distance is the Euclidean distance when the standard deviation on each direction is normalized to 1. 
+
+**Application Example:** Note that, when define z score, we use 
+
+$$Z = \frac{ | \mu^{obs} - \mu^{hypo} |}{SE(\mu)} = \frac{ | \bar{X} - \mu^{hypo} |}{ \frac{SD(X)}{\sqrt{N}} }$$
+
+It mean how many standardized deviation is there between $\mu^{obs} \to \mu^{hypo}$
+
+This is just the 1D Standardized Euclidean distance 
+

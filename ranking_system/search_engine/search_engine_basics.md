@@ -20,3 +20,5 @@ One of the way to index documents, can quickly match doc to words in search quer
 
 
 Note: for typical keyphrase extraction, we create a database map doc to terms
+
+
