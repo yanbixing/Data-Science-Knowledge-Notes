@@ -24,7 +24,7 @@ k-nearest neighbors (KNN) algorithm: given a data point $\boldsymbol{x}$, the pr
   - There are algorithms/implementation to accelerate the process by partition the space to regions ( e.g. [Approximate Nearest Neighbors: "ANNOY" by spotify](https://github.com/spotify/annoy) )
 
 
-## Parameter Tunning
+## Parameter Tunning (Bias-Variance-Tradeoff)
 
 - $K \uparrow \Rightarrow$ model variance $\downarrow$, i.e.:
   - Large $K$: high bias low variance, prone to underfitting

@@ -28,7 +28,7 @@ Ref: [Wiki-Exponential_distribution](https://en.wikipedia.org/wiki/Exponential_d
 - median: $\mathrm{mid}(X) = \frac{\ln 2}{ \lambda}$
 - mode: $\mathrm{mod}(X) = 0$
 
-## 3. Example question
+## 3. Example questions
 
 Ref: [1p3a](https://www.1point3acres.com/bbs/thread-479597-1-1.html)
 

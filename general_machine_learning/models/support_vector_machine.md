@@ -16,6 +16,7 @@
 - Prediction (score) function: $f(\boldsymbol{x}) = \boldsymbol{w}^T\boldsymbol{x} - b$
   - Use $-b$ for convenience.
   - Distance between the origin and the hyperplane is $\tfrac {b}{\|\boldsymbol {w} \|}$. Distance between the two margin hyperplane is $\tfrac {2}{\|\boldsymbol {w} \|}$ . Ref: [StackExchange](https://math.stackexchange.com/questions/1305925/why-is-the-svm-margin-equal-to-frac2-boldsymbolw), [Wiki - SVM](https://en.wikipedia.org/wiki/Support-vector_machine#SVM_and_the_hinge_loss) 
+  - Since distance between the two margin hyperplane is $\tfrac {2}{\|\boldsymbol {w} \|}$, score $f(x)$ means how many "half margin" ($\tfrac {1}{\|\boldsymbol {w} \|}$) is there between point $x$ and the decision boundary. (softmargin, if large than 1, no punishment, else, the closer, the larger punishment)
   <div  align="center"><img src=https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/SVM_margin.png/617px-SVM_margin.png style = "zoom:40%"></div>
 - Margin [StackExchange](https://stats.stackexchange.com/questions/155330/svm-functional-margin-and-geometric-margin)
   - Functional margin: $y \cdot f(x)$

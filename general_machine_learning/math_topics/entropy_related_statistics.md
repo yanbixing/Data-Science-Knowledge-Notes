@@ -54,7 +54,7 @@ $$\begin{aligned}
   &= H(P,Q) - H(P)
 \end{aligned}$$
 
-- KL Divergence measures: how one probability distribution is different from a second, reference probability distribution.
+- KL Divergence measures: **how one probability distribution is different from a second, reference probability distribution.**
   - i.e. Expected number of bits difference between using $Q$ and using $P$ to identify a event $\boldsymbol{x}$ from $\mathcal{X}$ where the ground true distribution is $P$.
 - $P$ and $Q$ defined on the same probability space $\mathcal{X}$
 - KL Divergence equals value "cross entropy - entropy", so it is also called **"relative entropy"** or **"information gain"**:
@@ -95,7 +95,7 @@ Note:
 
 <!-- $$MI(Y;X_i) = \sum_{x \in \mathcal{X_i}} \sum _{y\in \mathcal{Y}} p_{(Y,X_i)}(y,x) \log \left( \frac{p_{(Y,X_i)}(y,x)}{p_{Y}(y)p_{X_i}(x)} \right)$$ -->
 
-Ref: [Wiki-Multual_information](https://en.wikipedia.org/wiki/Mutual_information) [Wiki-Marginal_distribution](https://en.wikipedia.org/wiki/Marginal_distribution)
+Ref: [Wiki-Multual_information](https://en.wikipedia.org/wiki/Mutual_information), [Wiki-Marginal_distribution](https://en.wikipedia.org/wiki/Marginal_distribution)
 
 <!-- ## Deep: KL Divergence, IG and MI -->
 

@@ -20,8 +20,9 @@
   - Ref: [JavaPoint](https://www.javatpoint.com/unique-key-in-sql), [Wiki-Unique_key](https://en.wikipedia.org/wiki/Unique_key)
 - Foreign Key: A foreign key is a column or group of columns that provides a link between data in two tables. 
   - It is a column (or columns) that references a column (most often the primary key) of another table.
-  - Ref: 
-    - [GeeksForGeeks](https://www.geeksforgeeks.org/difference-between-primary-key-and-foreign-key/)
+    - Ref: [GeeksForGeeks](https://www.geeksforgeeks.org/difference-between-primary-key-and-foreign-key/)
+  - It acts as a cross-reference between tables because it **references the primary key of another table**, thereby establishing a link between them.
+    - Ref: [Techopedia](https://www.techopedia.com/definition/7272/foreign-key)
 
 ### Comparison: 
 

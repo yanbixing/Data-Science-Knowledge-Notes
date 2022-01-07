@@ -1,5 +1,16 @@
 # Feature selection
 
+## Interview Qs:
+
+- [1p3a](https://www.1point3acres.com/bbs/thread-765338-1-1.html): Frequent ML interview Qs:
+  - PCA vs L1 regularization, Which is better for business presentation?
+    - L1, because L1 is **more explainable**.
+      - <mark style="background-color:yellow;"><font color="#0000dd">PCA will "mix" the different features together, we cannot get the importance of original features</font></mark>.
+      - L1 will not really throw any feature, for unimportant feature, its weight will be 0, easy to show most important features.
+    - Note: **In business**, besides accuracy, we also **care about which feature is more important**, i.e. whether the model is **explainable**.
+      
+
+
 ## 1. Naive (heuristics)
 
 Use background knowledge to select/engineer features.
@@ -48,6 +59,9 @@ Regularization can reduce the effective number of features, is a kind of implici
 Typically useful when dimension is very high, hard to reduce it manually (rely on metric) or determine exact dimension we want.
 
 
+## 6. Embedding techniques
+
+Specially for certain type very high dim sparse input, like text.
 
 
 ## Deep Dive 1: Feature relation statistics

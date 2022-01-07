@@ -1,5 +1,15 @@
 # Tree models
 
+## Interview Qs:
+
+- Whether the training set are same during training?
+  - Ref: [1p3a](https://www.1point3acres.com/bbs/thread-765338-1-1.html): MLE frequent Q-12.
+    - Ans-Ref: [Zhihu](https://zhuanlan.zhihu.com/p/81340270)-"SampleChoice" Part
+  - Bagging: no -> bootstrap randomly draw samples with replacement.
+  - Boosting: yes and no -> samples are same but weight/value different
+    - AdaBoost: reweigh the samples, weight changes
+    - GradientBoost: training pseudo residue, rather than labe.
+
 ## 0. Basic concepts
 
 ### 0.1. Misc knowledge

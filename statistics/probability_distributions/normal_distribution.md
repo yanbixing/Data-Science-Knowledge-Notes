@@ -8,7 +8,7 @@ $$f(x)=\frac {1}{\sigma {\sqrt {2\pi }}}e^{-{\frac {1}{2}}\left({\frac {x-\mu }{
 
 ## 2. Key statistics
 
-$X\sim \mathcal{N}(\mu,\sigma)$: random variable $X$ follow normal distribution.
+$X\sim \mathcal{N}(\mu,\sigma^2)$: random variable $X$ follow normal distribution.
 
 - mean: $\mathbb{E}(X) = \mu$
 - variance: $\mathrm{Var}(X) = \sigma^2$

@@ -1,5 +1,28 @@
 # Logistic Regression
 
+## Interview Qs:
+
+- How to derive loss functions? (MLE)
+  - Ref: [1p3a](https://www.1point3acres.com/bbs/thread-765338-1-1.html): frequent MLE interview Q.
+  - Keypoint: Maximum likelihood estimation
+  - Deduction
+  $$\begin{aligned}
+    &\Pr(\mathcal{\mathcal{S}}) = \prod^M_{i=1} \Pr( f(x_i) = y^*_i))\\
+     &\theta^* = \underset{\theta}{\argmax}P(\mathcal{S})= \underset{\theta}{\argmax}\log P(\mathcal{S}) = \underset{\theta}{\argmax} \sum^M_{i=1}\log \Pr ( f(x_i) = y^*_i)
+  \end{aligned}$$
+  $$\because P(f(x_i)=y^*_i) \begin{cases}
+  f(x_i)& y_i^*=1\\
+  [1-f(x_i)]& y_i^*=0
+  \end{cases}$$
+  $$\begin{aligned}
+    \therefore \theta^* &= \underset{\theta}{\argmax} \underset{i \forall y^*_i = 1}{\sum} f(x_i) + \underset{i \forall y^*_i = 0}{\sum}[1-f(x_i)]\\
+    &= \underset{\theta}{\argmax} \{ m_{y^* = 1} f(x_i) + m_{y^*=0}[1-f(x_i)]\}\\
+    &= \underset{\theta}{\argmin}\left \{ - [m_{y^* = 1} f(x_i) + m_{y^*=0}(1-f(x_i))] \right\}\\
+    &= \underset{\theta}{\argmin}\left \{ - M [\frac{m_{y^* = 1}}{M} f(x_i) + \frac{m_{y^*=0}}{M}(1-f(x_i))] \right\}\\
+    &= \underset{\theta}{\argmin}\left \{ - \left[\frac{m_{y^* = 1}}{M} f(x_i) + \frac{m_{y^*=0}}{M}(1-f(x_i))\right] \right\}\\
+    &= \underset{\theta}{\argmin} \text{ Cross Entropy}
+  \end{aligned}$$
+
 ## 0. Notations
 
 - $\mathcal{S}$ denotes the training set with $M$ samples $\{...s_i...\}$

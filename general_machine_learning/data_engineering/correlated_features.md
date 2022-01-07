@@ -98,6 +98,10 @@ Generally, for all kinds of models, the correlated feature will cause the model 
 
 Refs: [Blog-mintlab](https://blog.minitab.com/en/adventures-in-statistics-2/what-are-the-effects-of-multicollinearity-and-when-can-i-ignore-them), [Blog-StatisticsByJim](https://statisticsbyjim.com/regression/multicollinearity-in-regression-analysis)
 
+Other Refs: 
+
+- [StackExchange](https://stats.stackexchange.com/questions/250376/feature-correlation-and-their-effect-of-logistic-regression/250386): Influence on logistic model. Same with above.
+
 
 ## 2.1. Influence on Naive Bayes
 
@@ -117,11 +121,6 @@ E.g.
   - $\hat{y} = x_1+x_2$, $\hat{y} = 0.5x_1+1.5x_2$... are all good estimator.
 
 Ref: [StackExchange](https://stats.stackexchange.com/questions/250376/feature-correlation-and-their-effect-of-logistic-regression/250386)
-
-
-
-
-
 
 
 ## 3. Solution methods:

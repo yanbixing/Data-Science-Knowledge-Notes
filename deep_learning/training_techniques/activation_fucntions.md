@@ -46,7 +46,20 @@ Usually used in multi-class classification tasks, as a individual layer. I.e. us
 
 $$ \begin{equation} {\displaystyle \sigma (\mathbf {z} )_{i}={\frac {e^{z_{i}}}{\sum _{j=1}^{K}e^{z_{j}}}}\ \ \ \ {\text{ for }}i=1,\dotsc ,K{\text{ and }}\mathbf {z} =(z_{1},\dotsc ,z_{K})\in \mathbb {R} ^{K}.} \end{equation}$$
 
-### 2.1. softmax layer vs sigmoid layer
+### 2.1. why softmax?
+
+- Normalize **sum** of all output  **to 1**. 
+  - Make output can be  **interpretable as probability**. 
+  - Same with linear (e.g. standard) normalization ($x_i/\sum_j x_j$)
+- Will **"highlight"** (enlarge) the larger values and suppress smaller values.
+  - Make the **high score choice more obvious/distinct**.
+  - Linear (e.g. standard) normalization cannot do this, the output prob is proportional to score.
+- Such "highlight" is also a kind of **non-linearity**
+  - Non-linearity is usually **helpful to NN**. 
+  - Linear (e.g. standard) normalization have no such advantage.
+- Ref: [StackOverflow](https://stackoverflow.com/questions/17187507/why-use-softmax-as-opposed-to-standard-normalization)
+
+### 2.2. softmax layer vs sigmoid layer
 
 In terms of the value, for a individual/single output-position/neuron:
 

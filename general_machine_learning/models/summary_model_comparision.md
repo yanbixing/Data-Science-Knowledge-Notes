@@ -208,3 +208,87 @@ Unlike bagging and random forests, can overfit if number of trees is too large.
   - Ref: [StackOverflow](https://stackoverflow.com/questions/42791002/is-naive-bayes-sensitive-to-the-number-of-training-observations)
 
 ### 2.5. Neural Network (TBD)
+
+
+## 3. Model comparison (TBD)
+
+### 3.1. Classifers
+
+- SVM vs logistic
+  - SVM boundary more fair, more generalized. 
+  - SVM's boundary only affected by near boundary data.
+  - While logistic affected by points far from boundary, sensitive to imbalance.
+  - SVM can be used for non-linear (Kernel); LR hard.
+LR have probabilistic interpretation, SVM not.
+
+- Tree vs SVM/logistic
+  - Tree both regression and classification, SVM/logistic only regression
+  - Tree can naturally handle multi-class (node majority), SVM/logistic need to use one-vs-all
+  - Tree easy to handle non-linear data, SVM/logsitic need kernal or feature engineering
+    - Tree no need feature engineering, can direct split on space.
+    - However, SVM/logistic can handle tilt boundary, tree is more expensive, since tree split features, boundary perpendicular to axis
+  - Tree just care about mixing status of sample on both sides, don't care about the distance (especially misclassified sample/outlier) to the boundary, while distance to boundary affect logistic and slightly affect 
+
+- Bagging/Boosting vs DT:
+  - Harder to interpret than DT, more like black-box
+  - More accurate, can handle more complex data.
+    - DT easy to overfit, while Bagging/Boosting not. (reduce variance / start from low var.)
+  - DT unstable, sensitive to node splits, while Bagging/Boosting not (ensemble)
+
+- Bagging vs Boosting:
+  - Bagging: 
+    - Can be parallelized, faster
+      - The ensemble is independent.
+    - reduce variance, better for noisy data
+      - Noisy data should reduce variance, or model will fit noise.
+    - The training set (samples) is different for each batch
+  - Boosting: 
+    - Sequentially grow, slower
+      - The ensemble is not independent.
+    - reduce bias, better for confident data.
+      - For no noise data, should reduce bias, or model cannot be complex enough to fit the data.
+    - The training set (samples) is same for each batch, but sample weight/label-value may change
+      - AdaBoost: The weight change
+      - GradientBoost: The label value changes.
+
+- RF vs Bagging: further decorrelate the tree with column sampling
+- Ada vs Gradient boosting:
+  - Ada reweigh sample according to loss
+  - Gradient directly train on the sample on the pseudo residue calculated from loss.
+    - Pseudo residue = negative gradient of loss
+    - Usually more efficient because directly train on pseudo residue.
+    - Note: 
+      - for classification task, we can also use the idea, understand label as probability,
+      - The probability of true label is 1, the other label is 0, and the output we give is the probability of the sample
+
+
+		
+- Naïve bayes
+  - Pro: 
+    - Easy to understand, 
+    - Simple
+    - Fast
+    - Computational cheap
+  - Cons: 
+    - Assume feature is independent, which is not true
+      - Cannot learn interaction between features
+    - Sensitive to imbalance (there is a class prior in bayes theorem)
+      - Although not proportional to, because there is an argmax learning process, but do affect the prediction
+
+### 3.2. Clustering
+
+- GMM vs K-means
+  - GMM an advanced version of k-means
+  - Can give probability interpretation, not just one label but prob for all labels.
+  - Not spherical, eclipse, can fit more complex data.
+- DBSCAN vs K-means
+  - Pro:
+    - Arbitrary shape
+    - No need determine K
+    - Not affected by initialization
+    - Usually faster
+  - Cons:
+    - No centroid concept
+    - Sensitive to scale
+    - Take more storage space (need to remember all points like KNN)
+
