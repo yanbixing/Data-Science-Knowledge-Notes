@@ -52,18 +52,18 @@ Definition:
 
 Representation
 
-- $\alpha = FPR = \frac{FP}{FP+TN}$ 
+- $\alpha = FPR = \frac{FP}{N}= \frac{FP}{FP+TN}$ 
   - reject $H_0$: predicted label is P
   - $H_0$ is true: true label is N 
   - $\therefore$ $\alpha = \frac{FP}{GroundN} = FPR$
-- $\beta = FNR = \frac{FN}{TP+FN}$
+- $\beta = FNR = \frac{FN}{P}= \frac{FN}{TP+FN}$
   - Accept $H_0$: predicted label is N
   - $H_1$ is true: true label is P
   - $\therefore$ $\beta = \frac{FN}{GroundP} = FNR$
   
 Note:
 
-- $\mathrm{Sensitivity} := 1 - \beta = 1- \frac{FN}{TP+FN} = \frac{TP}{TP+FN} = TPR = Recall$
+- $\mathrm{Sensitivity} := 1 - \beta = 1- \frac{FN}{TP+FN} = \frac{TP}{TP+FN} = TPR = \mathrm{Recall}$
 - Sensitivity is also called "power" or "statistical power".
 
 

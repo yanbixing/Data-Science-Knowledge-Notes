@@ -138,6 +138,8 @@ A similar problem to "P>>N" problem is called "Curse of Dimensionality". Ref:
 
 **Curse of Dimensionality:** As dimension increases, the space volume increase exponentially, data become more sparse (dissimilar, hard to use clustering).
 
+**Personal understanding**: besides clustering hard, classification should also be hard, since: when dissimilar, not only cluster is hard to use, decision plane have more freedom and thus easy to overfit.
+
 - English: for **high dimensional** data, **everything is separated** (dissimilar) **hard to apply clustering**.
 - Solution: solution on COD is exactly similar to "P>>N", i.e., dimension reduction.
 
