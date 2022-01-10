@@ -232,3 +232,20 @@ Backup refs: [StackExchange](https://stats.stackexchange.com/questions/198038/cr
 
 ## Backup Refs
 [Zhihu](https://zhuanlan.zhihu.com/p/34670728), [Github page](https://ml-cheatsheet.readthedocs.io/en/latest/logistic_regression.html) 
+
+## Other interview Q collection
+
+- L: (TBD) not sure, just from interview experience.
+  - When analyze the coefficient, besides the absolute estimated value, we can also get standard error and p-value.
+  - P-val is the possibility that observe a value more extreme than current value under null hypothesis (i.e. $w=0$). 
+    - So, the smaller p-value, the less possible null hypothesis is true.
+    - Also, we can understand from another perspective: "**the smaller p-val, the more reliable the coefficient is the observed value.**"
+
+- L: (TBD) evaluate whether model is good.
+  - Besides typically evaluation metrics, we can also use "deviance" to measure the goodness of fitting of a logistic model.
+    - Seems "deviance" is just cross entropy (?) See the refs.
+  - Ref:
+    - [BookDown](https://bookdown.org/egarpor/SSS2-UC3M/logreg-deviance.html): Understanding on deviance.
+    - [Stanford-Stats191](https://web.stanford.edu/class/stats191/notebooks/Logistic.html): Seems for binary classification, "deviance" has the exactly same form with cross entropy. 
+    - [RiceU-Slide](https://www.clear.rice.edu/comp540/Chapter10.pdf): Seems for tree, binomial NNL = "deviance" = cross entropy. 
+    - [StackExchange](https://stats.stackexchange.com/questions/371476/calculate-binomial-deviance-binomial-log-likelihood-in-the-test-dataset): seems the binomial deviance is cross entropy.

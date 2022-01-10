@@ -1,11 +1,11 @@
 # Collaborative filtering (CF)
 
-Predict a user's preference by other people's reference.
+## 0. Task description
+
+With CF RecSys, our task is usually to predict a user's preference based other people's preference.
 
 Ref: [Textbook: Recommender Systems: An Introduction](https://www.google.com/books/edition/Recommender_Systems/eygTJBd_U2cC?hl=en&gbpv=0)
 
-
-## 0. RecSys Basics
 
 ### 0.0. Notations
 
@@ -27,23 +27,7 @@ The rating of i-th user on j-th item, i.e. $r_{ij}:=X_{ij}$, is missing, how to 
   <img src=./collaborative_filtering_asset/recsys_problem.png style = "zoom:25%">
 </div>
 
-### 0.2. Evaluation metrics
-
-1. Precision/Recall/F1@K: the precision/recall/F1 if we only consider the top K items.
-2. Ranking-metrics: metrics that related to the order of the items.
-3. MSE/RMSE: used when our focus on score, rather than the correctness of the item ranking. I.e. we want to get more accurate rating score, then we should minimize the (root-) mean-squared-error.
-
-### 0.3. Other types of RecSys
-
-- Content-based similarity-based RecSys: 
-  - calculated item-item similarity based on the item features
-  - estimate the user's rating on current item based on user's historical rating on similar items, 
-    - usually use item-item similarity as weight and take the weighted average of user's historical ratings.
-  
-- Content-based model-based RecSys:
-  - Directly fit model with item and user features as input and rating score as output.
-
-## 1. CF basics
+## 1. Basics
 
 The way of collaborative filtering is to estimate the missing rating purely based on other users' rating on other items, i.e. purely rely on user behavior, regardless of other features like user properties or item properties.
 

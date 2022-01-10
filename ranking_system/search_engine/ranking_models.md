@@ -1,4 +1,4 @@
-# ML ranking model (TBD)
+# Ranking models (Learning to Rank)
 
 ## 0. Task description
 
@@ -177,10 +177,6 @@ For both pointwise and pairwise ranking, we can use both classical ML or DL, sin
 
 
 ### 0. MyQs TBD ??????
-
-
-
-
 
 
 
