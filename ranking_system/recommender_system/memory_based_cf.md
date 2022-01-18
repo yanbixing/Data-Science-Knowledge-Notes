@@ -184,5 +184,12 @@ SVD:
 Note: the rating score part in the function, like $r_{in}$, is still fetched from the original matrix. The factorized matrix is just used to simplify the similarity part, like $\mathrm{sim}(\boldsymbol{u}_m,\boldsymbol{u}_i)$.
 
 
+## 3. prediction
 
+  How to give the score for new user or new item? Would there be problem when we add one row or one column?
 
+  Actually, no problem at all.
+
+  The matrix is training data, we can think the similarity-based CF like a kind of memory based algo. Just compare the new user's rating vector with existing rows, we can calculate similarity score and calculate his preference on different items.
+
+  It is the same for new items, as long as we have its user (column) representation, we can calculate its similarity with other items and make prediction.

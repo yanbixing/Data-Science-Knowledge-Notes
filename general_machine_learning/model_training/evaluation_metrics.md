@@ -12,7 +12,12 @@
 - Information gain
 - Mutual info
 
-### 2.2. TP,FP,TN,FN-based (confusion matrix based)
+#### 2.1.1. Cross Entropy
+
+
+
+
+### 2.2. Confusion matrix based
 
 Confusion matrix: the matrix of (TP FP TN FN). Ref: [Wiki-Confusion_matrix](https://en.wikipedia.org/wiki/Confusion_matrix)
 
@@ -45,7 +50,7 @@ English: Among the condition positive ($P$), how may are correct (predicted posi
 
 Area Under (ROC) Curve (ROC Curve: receiver operating characteristic )
 
-##### ROC Curve
+##### 2.2.2.1.  ROC Curve
   <div  align="center"><img src=https://upload.wikimedia.org/wikipedia/commons/6/6b/Roccurves.png style = "zoom:40%"></div>
 
   $FPR = \frac{FP}{FP+TN} = \frac{FP}{N} = \text{significant level}= \alpha =  \text{type I error} $
@@ -56,11 +61,28 @@ Area Under (ROC) Curve (ROC Curve: receiver operating characteristic )
   - Ref: [Wiki-Sensitivity](https://en.wikipedia.org/wiki/Sensitivity_and_specificity): Sensitivity (True Positive Rate)
   <br>
 
-- Ranking/Probability interpretation:
+##### 2.2.2.2. Ranking/Probability interpretation:
+
   - AUC provides an aggregate measure of performance across all possible classification thresholds
   - AUC is as the probability that the model ranks a random positive example more highly than a random negative example.
   - Ref: [Google_ML-AUC](https://developers.google.com/machine-learning/crash-course/classification/roc-and-auc), [CSDN-blog](https://blog.csdn.net/u013385925/article/details/80385873)
   <br>
+
+##### 2.2.2.3. Characteristics of AUC (TBD)
+
+- AUC is **threshold-invariant**
+  - AUC is not affect by the value of threshold.
+  - (Pro) 
+  - (Con)
+- AUC is scale-invariant
+  - AUC only care about the relative ranking of different sample, don't care about absolution score value
+  - (Con) Cannot select good model when we need to calibrate the score
+    - "calibration" is needed usually when score is probability, we hope to prediction the correct probability, rather than relative ranking.
+    - when calibration is needed, usually it is better to use **cross entropy** rather than AUC, cross entropy is **also threshold invariant but not scale-invariant**.
+
+
+##### 2.2.2.4. TBD
+
 - **personal understanding on AUC ROC**:
 With the sacrifice of incorrect positive prediction, how much correct positive prediction we can can get.
 The high AUC, the higher "sacrifice" efficiency of incorrect prediction, the better model performance.

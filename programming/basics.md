@@ -6,7 +6,7 @@ Ref: [Medium-blog](https://medium.com/@shaistha24/functional-programming-vs-obje
 
 - Definition
   - Functional emphasis function
-  - OOP based on "object"	
+  - OOP based on "object"
 - Data
   - Functional programming use immutable data
   - OOP support both mutable data and immutable
@@ -16,9 +16,7 @@ Ref: [Medium-blog](https://medium.com/@shaistha24/functional-programming-vs-obje
   - OOP follow imperative programming model
     - Imperative [ɪmˈperətɪv]: 强制的, 命令的
 
-
-
-#### 1.1. Mutable vs immutable
+### 1.1. Mutable vs immutable
 
 Ref: [ImaginaryCloud-blog](https://www.imaginarycloud.com/blog/functional-programming-vs-oop/#mut)
 
@@ -29,7 +27,7 @@ Ref: [ImaginaryCloud-blog](https://www.imaginarycloud.com/blog/functional-progra
   - E.g. numbers, booleans, frozensets, strings, and tuples object in python. 
   - Pro: fixed once created, can be used for multi-thread applications, not changed
 
-#### 1.2. Declarative vs Imperative
+### 1.2. Declarative vs Imperative
 
 Ref: [ImaginaryCloud-blog](https://www.imaginarycloud.com/blog/functional-programming-vs-oop/#imperative), [StackOverflow](https://stackoverflow.com/questions/1784664/what-is-the-difference-between-declarative-and-imperative-paradigm-in-programmin)
 

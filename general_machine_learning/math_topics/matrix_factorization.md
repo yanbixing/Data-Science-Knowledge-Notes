@@ -308,9 +308,9 @@ Proof: Ref: [CSDN-blog](https://blog.csdn.net/Banach_I/article/details/51078451)
 
 ## Deep Dive 3. Solve SVD/PCA
 
-### 3.1. Power iteration
+### DD3.1. Power iteration
 
-#### 3.1.1 Power iteration to get 1 principle axis $v_1$
+#### DD3.1.1 Power iteration to get 1 principle axis $v_1$
 
 - Given diagonalizable matrix $\boldsymbol{A}$ (for PCA $ \boldsymbol{A}= \boldsymbol{X}^T\boldsymbol{X}$), power iteration will return the largest eigenvalue $\lambda_1$ and the corresponding eigenvector $\boldsymbol{v}_1$.
 
@@ -327,7 +327,7 @@ Proof: Ref: [CSDN-blog](https://blog.csdn.net/Banach_I/article/details/51078451)
   - [Wiki-Power_iteration](https://en.m.wikipedia.org/wiki/Power_iteration): definition
   - [TowardsDataScience](https://towardsdatascience.com/simple-svd-algorithms-13291ad2eef2): implementation
 
-#### 3.1.2. Algorithm to get all principle axes $V$
+#### DD3.1.2. Algorithm to get all principle axes $V$
 
 - Algorithm
   - Get the first principle axis (eigenvector) $\boldsymbol{v}_1$ and diagonal element (eigenvalue) $\lambda_1$ of matrix $\boldsymbol{A_1}:=\boldsymbol{A} = \boldsymbol{X^T}\boldsymbol{X}:=\boldsymbol{X}^T_1\boldsymbol{X}_1$
@@ -346,6 +346,39 @@ Proof: Ref: [CSDN-blog](https://blog.csdn.net/Banach_I/article/details/51078451)
 
 - Ref:
   - [Stanford-Slides](http://theory.stanford.edu/~tim/s15/l/l8.pdf):application
+
+
+## Deep Dive 4: Solve matrix factorization
+
+### DD4.1. Reduce "reconstruction error" with GD
+
+- Problem formulation:
+  - For $\boldsymbol{X}_{m\times n} \sim \boldsymbol{W}_{m\times \tau}\boldsymbol{H}_{\tau \times n}$, the element $w_{ik}$, $h_{kj}$ can be all treated as unknown parameter.
+  - The loss functions is $\mathrm{SSE} = \sum_{(i,j)} ( r_{ij} - \sum_k w_{ik}h_{kj} )$
+  - Then, $\boldsymbol{W}_{m\times \tau}\boldsymbol{H}_{\tau \times n} = \underset{\boldsymbol{W}_{m\times \tau}\boldsymbol{H}_{\tau \times n} }{\argmin} \mathrm{SSE}$
+  - [JMLR-Paper](https://www.jmlr.org/papers/volume10/takacs09a/takacs09a.pdf): P629
+
+
+- Solving:
+  - Use GD could solve this problem 
+    - ([JMLR-Paper](https://www.jmlr.org/papers/volume10/takacs09a/takacs09a.pdf) P629), 
+  - Can use regularization and early-stopping to reduce overfitting 
+    - ([JMLR-Paper](https://www.jmlr.org/papers/volume10/takacs09a/takacs09a.pdf) P630), 
+  - since its GD, can also apply methods like momentum.
+    - ([JMLR-Paper](https://www.jmlr.org/papers/volume10/takacs09a/takacs09a.pdf) P632)
+
+
+Note: For missing value $(i_na,j_na)$, we just skip/ignore it when calculate the SSE expression. So, after MF, we can use the $\hat{\boldsymbol{X}}_{m\times n} =\boldsymbol{W}_{m\times \tau}\boldsymbol{H}_{\tau \times n}$  to restore a no-missing value matrix, as the prediction, without assuming the value of missing values.
+
+And actually, we shouldn't fill missing value when doing MF. Or the filling 0s will be thought as the lowest rating score.
+
+The reason we assume 0 in collaborative filtering is because we use similarity there and 0 give no similarity on missing value. It is a math trick.
+
+
+
+
+
+
 
 
 ## Interview Qs:

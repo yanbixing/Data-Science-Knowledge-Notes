@@ -1,5 +1,38 @@
 # Entropy related statistics
 
+## ToBeSummarized
+
+- What is KL Divergence? (MyInterviewExp-L)
+  - KL divergence of $P,Q$ is the difference between the estimated distribution $Q$ with the true distribution $P$
+
+
+- KL Divergence $D_{\mathrm{KL} }(P\parallel Q)$ vs Cross Entropy $H(P,Q)$
+  - Similarity:
+    - Both KL Divergence and Cross Entropy measures the difference between the estimated distribution $Q$ with the true distribution $P$
+      - Actually, $D_{\mathrm{KL} }(P\parallel Q) = H(P,Q) - H(P)$
+      - I.e. Given same $P$, 
+  - Difference:
+    - KL Divergence can be understand as the **"distance"** between two distribution, **strictly "equal"** to the difference between two distribution.
+      - Because: KL Divergence of two same distribution is zero.
+      - $D_{\mathrm{KL} }(P\parallel P) = 0$
+      - I.e. KL Divergence have geometric understanding "distance between two distribution", but cross entropy not.
+    - Cross Entropy is **just proportional** but **not equal** to the difference of two distribution.
+      - Because: Cross entropy of two same distribution is just the entropy of the distribution, it is non zero.
+      - $H(P,P) = H(P) \neq 0$
+    - Ref: [Wiki-KL_Divergence-Motivation](https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence#Motivation)
+  - **Personal Summary**: 
+    - Both KL Divergence and Cross Entropy describes the difference between two distributions.
+    - However, cross entropy of two same distributions is just the entropy of the distribution, non-zero, so it is not proper to define it as the difference between two distribution.
+    - So, we define KL Divergence as cross entropy subtract the entropyis a "Calibrated" version of cross entropy,  
+
+- Mutual info vs KL Divergence
+  - Mutual info measures the difference between the [true joint probability $\Pr_{(X,Y)}$] and [joint probability if assuming the variables are independent i.e. (product of independent probability) $\Pr_X \otimes \Pr_Y$]
+  - KL divergence measure the difference/"distance" between two different probability $\Pr_P$ vs. $\Pr_Q$
+
+- Then, where KL Divergence is utilized?
+  - TBD?
+
+
 ## 0. Notations
 
 - $\boldsymbol{x}$: an $N$-dim vector. Can be understood as a certain item/event.
@@ -45,7 +78,7 @@ Application Note:
 
 Also see: [model_training/loss.md](../model_training/loss.md)
 
-### 1.3. KL Divergence
+### 1.3. KL Divergence (Relative entropy)
 
 
 
@@ -54,8 +87,12 @@ $$\begin{aligned}
   &= H(P,Q) - H(P)
 \end{aligned}$$
 
-- KL Divergence measures: **how one probability distribution is different from a second, reference probability distribution.**
-  - i.e. Expected number of bits difference between using $Q$ and using $P$ to identify a event $\boldsymbol{x}$ from $\mathcal{X}$ where the ground true distribution is $P$.
+- KL Divergence is also called "relative entropy".
+  - Measures: Average number of extra bits (info) to represent/identify an event (whose true distribution $P$) using the distribution $Q$.
+    - Ref: [MLMastery](https://machinelearningmastery.com/cross-entropy-for-machine-learning/)
+  - I.e. How the estimated probability distribution $Q$ is different from the true/reference probability distribution $P$.
+    - Ref: [Wiki-KL_divergence](https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence)
+  <!-- - i.e. Expected number of bits difference between using $Q$ and using $P$ to identify a event $\boldsymbol{x}$ from $\mathcal{X}$ where the ground true distribution is $P$. -->
 - $P$ and $Q$ defined on the same probability space $\mathcal{X}$
 - KL Divergence equals value "cross entropy - entropy", so it is also called **"relative entropy"** or **"information gain"**:
   - *"relative entropy of $P$ with respect to Q"*
@@ -75,6 +112,7 @@ $$p(\boldsymbol{y}|\boldsymbol{x}) = \frac{p(\boldsymbol{x}, \boldsymbol{y})}{p(
   - i.e. Expected number of bits required to identify an event $(\boldsymbol{x},\boldsymbol{y})$ from event set $(\mathcal{X},\mathcal{Y})$ when $\boldsymbol{x}$ is known
 
 ### 2. Entropy based concepts
+
 
 #### 2.1. Mutual information (MI)
 

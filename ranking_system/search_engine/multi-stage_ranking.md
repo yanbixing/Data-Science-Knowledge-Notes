@@ -1,6 +1,6 @@
-# Ranking System Basics
 
-## 1. Multi-stage Ranking
+
+## Multi-stage Ranking
 
 Systems are often broken down in multiple stages for different objectives. eEach stage also have different performance and latency constraints.
 
@@ -15,9 +15,9 @@ Ref: [Medium-blog](https://medium.com/better-ml/multi-stage-ranking-e0dacd81ac4)
 
 <div  align="center"><img src= https://miro.medium.com/max/1320/1*UjeqczvHxNhxxxdD2jBi9g.png style = "zoom:60%"> </div>
 
-### 1.1. Basic workflow
+## 1. Basic workflow
 
-#### 1.1.1. Retrieval model
+### 1.1. Retrieval model
 
 - Task: Rank a list of candidates based on predicted **match score** $s_{1,i} = f_1(q, d_i)$ 
   - Purpose: Select the items **could possibility match** the query.
@@ -29,7 +29,7 @@ Ref: [Medium-blog](https://medium.com/better-ml/multi-stage-ranking-e0dacd81ac4)
 - Training data: usually human judged relevance data.
   - PersonalUnderstanding: the "relevance" data here is more like binary label, like "match-or-not".
 
-#### 1.1..2. Relevance ranking model
+### 1.2. Relevance ranking model
 
 - Task: Rank a list of candidates based on predicted **relevance score** $s_{2,i} = f_2(q, d_i)$ 
   - Puprose: Select the items **highly relevant** to the query.
@@ -53,7 +53,7 @@ Ref: [Medium-blog](https://medium.com/better-ml/multi-stage-ranking-e0dacd81ac4)
 
 <div  align="center"><img src= https://miro.medium.com/max/1400/1*WEeOQet8QnkcuQaAvLxoow.png style = "zoom:60%"> </div>
 
-#### 1.1.3. Click ranking model
+### 1.3. Click ranking model
 
 - Task: Rank a list of candidates based on predicted **click probability** $s_{3,i} = f_3(q, d_i)$ 
   - Purpose: **precisely** prioritize the items with higher **click prob** **to user**.
@@ -63,7 +63,7 @@ Ref: [Medium-blog](https://medium.com/better-ml/multi-stage-ranking-e0dacd81ac4)
 - Training data: log of user click.
 
 
-### 1.2. Pro and Cons
+## 2. Pro and Cons
 
 Pros:
 
