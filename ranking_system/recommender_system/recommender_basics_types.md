@@ -133,31 +133,14 @@ Include info from both user-item rating score matrix and features. Approaches:
   - E.g. Add feature-based user-user similarity or item-item similarity to the CF model
 - Use CF-based method in content-based model
   - Methods/Features depending on the whole corpus would be a general collaborative method E.g. 
-    - Use MF to reduce user's rating history as 
-    - Reduce dimension of other input features
-    - Tfidf score vector of purchase history
+    - Directly introduce the rating/prob from CF as a feature
+    - Use CF-related tech, like MF, to reduce the dimension user's rating history and other sparse features.
+    - Use CF-related concept to engineering the features, like use Tfidf score to highlight unique items.
 
 Ref: [TowardsDataScience](https://towardsdatascience.com/recommendation-systems-a-review-d4592b6caf4b)
 
 
 
-## 3. Evaluation metrics
-
-- Offline metrics:
-  - Ranking metrics:
-    - Precision/Recall/F1@K: the precision/recall/F1 if we only consider the top K items.
-    - Other common ranking metrics: 
-      - MAP(mean average precision): order-sensitive version of precision@k
-      - MRR (mean reciprocal ranking): mean of inverse of the rank of first correct item, the higher ranking of first correct item, the higher score
-      - DCG@K (discounted cumulative gain): the higher relevance score of top-k items, the higher score.
-    - Ref: [GithubBlog-LTR](https://everdark.github.io/k9/notebooks/ml/learning_to_rank/learning_to_rank.html)
-  - MSE/RMSE: used when our focus on score, rather than the correctness of the item ranking. I.e. we want to get more accurate rating score, then we should minimize the (root-) mean-squared-error.
-- Online metrics:
-  - User engagement
-  - Video Watched
-  - Session watch time
-    - Bounce rate?
-  - Typically combined with A/B testing, to determine whether to launch the new model or not.
 
 
 ## Frequent Questions

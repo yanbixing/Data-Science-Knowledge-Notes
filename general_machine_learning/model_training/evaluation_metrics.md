@@ -12,10 +12,54 @@
 - Information gain
 - Mutual info
 
-#### 2.1.1. Cross Entropy
+#### 2.1.1. Cross Entropy (TBD)
 
 
+#### 2.1.1.2 CE vs AUC
 
+**Conclusion:** For model output probability, CE is a better metric than AUC.
+
+Similarity:
+
+- Both CE and AUC are **threshold-invariant**.
+  - I.e. the value of CE and AUC are independent from the choice of threshold.
+
+Difference:
+
+- CE is better than AUC if you need to calibrated your score, usually **when your score represent "probability"**.
+  - AUC is **scale-invariant**.
+    - I.e. when you change (stretch, compress, transform) the scale of the score, the metric value doesn't change 
+    - I.e. **AUC** only cares about the ranking distribution of positive and relative samples, **NOT dependent (care about) on the absolute value of score**.
+      - AUC is the prob that a random positive sample have higher ranking/score than a random negative sample.
+    - This is not good when your score have specific meaning, like probability.
+  - CE's value is dependant on the absolute value of the score. A
+    - CE is positively correlated with to the difference between two distribution.
+    - I.e. **CE is minimized when the estimated/predicted probability distribution is same with real probability distribution.**
+    - Additional Notes:
+      - $D_{KL} = P\log \frac{P}{Q} = CE + P\log P$ exactly measure the difference between two distribution. ($D_{KL} = 0 $ as $P=Q$, for two same distribution, KL-Divergence is 0.)
+      - $M \cdot CE = NNL \Rightarrow$ minimize CE = Maximize likelihood (MLE)
+      - Ref: [entropy_related_statistics.md](../math_topics/entropy_related_statistics.md)
+- But CE is affected by class imbalance while AUC not.
+
+Ref:
+[Educative-GMLI-Ads-Metrics](https://www.educative.io/courses/grokking-the-machine-learning-interview/N0P4R1v8mXL): CE better than AUC when your output means "probability".
+
+#### 2.1.1.3 CE and class imbalance (TBcleaned)
+
+- E.g.You model always predict 0.7
+- Case 1, 99 positive, 1 negative
+  - CE
+    - $100CE = NNL = -(99\cdot \log0.7 + 1\log0.3)$
+  - AUC
+    - TPR = TP/P = 99/99 = 100%
+    - FPR = FP/N = 1/1 = 100%
+
+- Case 2, 50 positive, 50 negative
+  - CE
+    - $100CE = NNL = -(50\cdot \log0.7 + 50\log0.3)$
+  - AUC
+    - TPR = TP/P = 50/50 = 100%
+    - FPR = FP/N = 50/50 = 100%
 
 ### 2.2. Confusion matrix based
 
@@ -51,34 +95,45 @@ English: Among the condition positive ($P$), how may are correct (predicted posi
 Area Under (ROC) Curve (ROC Curve: receiver operating characteristic )
 
 ##### 2.2.2.1.  ROC Curve
-  <div  align="center"><img src=https://upload.wikimedia.org/wikipedia/commons/6/6b/Roccurves.png style = "zoom:40%"></div>
 
-  $FPR = \frac{FP}{FP+TN} = \frac{FP}{N} = \text{significant level}= \alpha =  \text{type I error} $
-  - Ref: [Wiki-FPR](https://en.wikipedia.org/wiki/False_positive_rate#Comparison_with_other_error_rates):"false positive rate is mathematically equal to the type I error rate"
+<div  align="center"><img src=https://upload.wikimedia.org/wikipedia/commons/6/6b/Roccurves.png style = "zoom:40%"></div>
 
-  $TPR = \frac{TP}{TP+FN} = \frac{TP}{P} = \text{recall} = \text{sensitivity}= 1-\beta$
-  - $\beta:$ type II error rate
-  - Ref: [Wiki-Sensitivity](https://en.wikipedia.org/wiki/Sensitivity_and_specificity): Sensitivity (True Positive Rate)
-  <br>
+$FPR = \frac{FP}{FP+TN} = \frac{FP}{N} = \text{significant level}= \alpha =  \text{type I error} $
+- Ref: [Wiki-FPR](https://en.wikipedia.org/wiki/False_positive_rate#Comparison_with_other_error_rates):"false positive rate is mathematically equal to the type I error rate"
+
+$TPR = \frac{TP}{TP+FN} = \frac{TP}{P} = \text{recall} = \text{sensitivity}= 1-\beta$
+- $\beta:$ type II error rate
+- Ref: [Wiki-Sensitivity](https://en.wikipedia.org/wiki/Sensitivity_and_specificity): Sensitivity (True Positive Rate)
+<br>
 
 ##### 2.2.2.2. Ranking/Probability interpretation:
 
-  - AUC provides an aggregate measure of performance across all possible classification thresholds
-  - AUC is as the probability that the model ranks a random positive example more highly than a random negative example.
-  - Ref: [Google_ML-AUC](https://developers.google.com/machine-learning/crash-course/classification/roc-and-auc), [CSDN-blog](https://blog.csdn.net/u013385925/article/details/80385873)
-  <br>
+- AUC provides an aggregate measure of performance across all possible classification thresholds
+- AUC is as the probability that the model ranks a random positive example more highly than a random negative example.
+- Ref: [Google_ML-AUC](https://developers.google.com/machine-learning/crash-course/classification/roc-and-auc), [CSDN-blog](https://blog.csdn.net/u013385925/article/details/80385873)
+<br>
 
 ##### 2.2.2.3. Characteristics of AUC (TBD)
 
 - AUC is **threshold-invariant**
   - AUC is not affect by the value of threshold.
   - (Pro) 
-  - (Con)
-- AUC is scale-invariant
+  - (Con) Cannot describe the metric TPR/FPR trade-off relation at different threshold
+    - E.g. the following two models have exactly AUC, but different TPR/FPR behavior.
+    <div  align="center"><img src=https://www.researchgate.net/publication/8636163/figure/fig3/AS:202684352208900@1425335123112/Two-ROC-curves-A-and-B-with-equal-area-under-the-ROC-curve-However-these-two-ROC_W640.jpg style = "zoom:60%"></div>
+- AUC is **scale-invariant**
   - AUC only care about the relative ranking of different sample, don't care about absolution score value
   - (Con) Cannot select good model when we need to calibrate the score
     - "calibration" is needed usually when score is probability, we hope to prediction the correct probability, rather than relative ranking.
     - when calibration is needed, usually it is better to use **cross entropy** rather than AUC, cross entropy is **also threshold invariant but not scale-invariant**.
+  
+- AUC is invariant to class imbalance.
+
+
+Ref:
+- [GoogleML-AUC](https://developers.google.com/machine-learning/crash-course/classification/roc-and-auc): AUC understanding, pro and cons
+- [Image](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkNYtFoC0doRVIkeoZ8tld0tKFHdJ4pS0IIg&usqp=CAU): Same AUC, different TPR/FPR tradeoff
+- [ResearchGage](https://www.researchgate.net/publication/8636163_Receiver_Operating_Characteristic_ROC_Curve_Practical_Review_for_Radiologists/figures?lo=1) and [Imaage](https://www.researchgate.net/publication/8636163/figure/fig3/AS:202684352208900@1425335123112/Two-ROC-curves-A-and-B-with-equal-area-under-the-ROC-curve-However-these-two-ROC_W640.jpg): Same AUC, different TPR/FPR tradeoff
 
 
 ##### 2.2.2.4. TBD
@@ -111,6 +166,7 @@ TPR the higher the better (the more correct prediction), FPR the lower the bette
 
 
 ### 2.3. AUC vs. Precision-Recall:
+
   - AUC:
     - Pro: 
       - **Not affected by class imbalance**. Ref:[TowardsDataScience?(TBD)](https://towardsdatascience.com/metrics-for-imbalanced-classification-41c71549bbb5)

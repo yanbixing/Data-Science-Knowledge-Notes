@@ -1,4 +1,4 @@
-# RecSys Typical problems
+# RecSys Typical problems (TBD)
 
 [Wiki-RecSys-CF](https://en.wikipedia.org/wiki/Recommender_system#Collaborative_filtering)
 
@@ -10,21 +10,40 @@ For new user and new items, there is few data to rely on to make recommendation.
 
 Solution: 
 
-- Multi-arm bandit:
-  - Consider exploration vs exploitations tradeoff in new items.
-  - Personal understanding: Optimize the system gradually at the same time while collect the user behavior data.
-- Content/feature based:
-  - Explore further info like text, social networks to get similarities.
+- Representative based (?TBD)
+  - Idea: Try to find the group the user belong to (with the limited info), and use the group average to infer the user's preference.
+    - Sounds to me like K-means
+  - Pro: consistent with CF idea.
+  - Con: cannot work with absolutely zero info, still inaccurate while few interactions.
+- Content based:
+  - Idea: rather than user behavior, explore other content features like text, social networks to get the similarities.
+  - Pro: better the only user behavior info
+  - Con: feature exploration is time-spending and tricky.
+- Multi-arm bandit methods:
+  - Idea: you need do more tests to understand new user better; random ranking/sampling is comprehensive but will harm CTR (loss), use MAB method can help you to reduce loss while collecting data.
+  - Treat the problem as a MAB problem: i.e. when the system is unknown to us, 
+    - on one hand, we need test different actions to "explore" the rule/feature/parameter in the system; 
+    - on the other hand, we will "exploit" the past observation to find the best actions to maximize the reward.
+  - I.e. Optimize the system gradually: 
+    - like online learning: we will update system while collecting user behavior
+    - like randomization: the low-rank samples also have a chance to be put on top to gather more comprehensive data.
+  - Pro: Reduce loss while exploration
+  - Con: Need more design and engineering work to implement such process to the system.
+- Deep learning:
+  - There are some DL methods can help to reduce cold-start (sparse feature) problem, like dropout, can reduce our reliance on particular feature.
+
 
 <!-- - Representative based:
   - Find subset of items and users that similar to the new item. -->
 
 Ref:
 
-  - [Wiki-RecSys-CF](https://en.wikipedia.org/wiki/Recommender_system#Collaborative_filtering)
-  - [PersonalBlog](https://kojinoshiba.com/recsys-cold-start/)
+- [Wiki-RecSys-CF](https://en.wikipedia.org/wiki/Recommender_system#Collaborative_filtering)
+- [PersonalBlog](https://kojinoshiba.com/recsys-cold-start/): different strategy/methods to solve cold start
 
 Other ref: [Wiki-ColdStart](https://en.wikipedia.org/wiki/Cold_start_(recommender_systems))
+
+
 
 ### 1.2. Scalability (TBD)
 

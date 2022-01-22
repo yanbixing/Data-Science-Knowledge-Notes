@@ -158,10 +158,118 @@ Ref: [Wiki-Anomaly_detection](https://en.wikipedia.org/wiki/Anomaly_detection)
 
 
 
-## Deep Dive: Mechanism of SMOTE
+## Deep Dive 1. Mechanism of SMOTE
 
 Ref: [MLMastery](https://machinelearningmastery.com/smote-oversampling-for-imbalanced-classification/), [CSDN-blog](https://blog.csdn.net/Frank_LJiang/article/details/104427978)
 
 - Select a random minority point.
 - Find the k (typically k = 5) neighbours of the point and select one of the neighbours randomly.
 - Selected a random point between the point and its neighbour as the synthetic example. (Linearly interpolation)
+
+
+## Deep Dive 2. Model recalibration
+
+- Ref:
+  - [Educative-Ads-Training_data_collection](https://www.educative.io/courses/grokking-the-machine-learning-interview/xomqq0RVlmJ)
+  - [Medium](https://nojeshua.medium.com/model-calibration-when-subsampling-negatives-548eb8790223): model calibration when subsampling negative
+  - [TowardsDataScience](https://towardsdatascience.com/how-to-calibrate-undersampled-model-scores-8f3319c1ea5b): Visualization of density change when subsampling (?TBD)
+  - [PersonalBlog](https://andrewpwheeler.com/2020/07/04/adjusting-predicted-probabilities-for-sampling/): Predicted prob vs actual prob after balance data (?TBD)
+
+### DD2.1. Distribution change introduce by data balancing
+
+For imbalance data, we often do try to upsampling the data so that model have fair performance on both negative and positive labels. 
+
+However, when you down sampling the minority of upsampling the majority, the probability distribution is changed.
+
+E.g.
+
+Assume we have 1 LR model: $\hat{y} = h(x)$ and the LR model can "perfectly" fit the data. I.e. $\hat{y} := \hat{p} := h(x) = p^*$
+
+With original model, the $f_0(x)=0.5$ decision boundary is at $x=3$
+```
+########################################################################
+
++       +       +       +       +       +      +     +   [ x = 4 ], p=1
+
++        -        +       -      +     -      +     -    [ x = 3 ], p=0.5 *
+
+  -       -        +        -       +      -      -      [ x = 2 ], p~0.3
+
+-     -      -    -      +    -     -     -    -    -    [ x = 1 ], p=0.1
+
+  -    -   -   -   -   -    -    -    -   -   -   -   -  [ x = 0 ], p=0
+
+-------------------------------------------------------- [ x =-1 ], p=0
+
+########################################################################
+```
+
+After we upsampling positive sample 3 times, the $f_1(x)=0.5$ decision boundary is at $x=2$
+
+```
+########################################################################
+
++++     +++     +++      +++      +++     +++     +++    [ x = 4 ], p=1
+
++++      -      +++       -       +++      -      +++    [ x = 3 ], p =0.75
+
+  -        -      +++       -      +++     -       -     [ x = 2 ], p~0.5 *
+
+  -      -      -    -     +++    -     -     -     -    [ x = 1 ], P~0.3
+
+-    -   -   -   -   -    -    -    -   -   -    -    -  [ x = 0 ], p=0
+
+-------------------------------------------------------- [ x =-1 ], p=0
+		
+########################################################################
+```
+
+### DD2.2. Problem for probability interpretation
+
+
+Then $f_0$ and $f_1$ will give different score, e.g.:
+
+- $f_0(x=2.5) < 0.5 $
+- $f_1(x=2.5) > 0.5 $
+
+If you assign same threshold to both model, then, the prediction will be different.
+
+#### DD2.1.1 Score interpretation
+
+If you simply understand the model output as "score", i.e. use the score interpretation to process the model output. That is fine, because you can easily tune the threshold to make the model same. 
+
+E.g. If you assign 0.75 threshold to $f_1$. Then both $f_0$ and $f_1$ give same prediction.
+
+- $f_0(x=2.5) < 0.5  \Rightarrow 0$
+- $f_1(x=2.5) = 0.5 < 0.75 \Rightarrow 0$
+
+**Personal understanding: (TBD)** For model only have score interpretation, like SVM, the score after data balancing no need further processing.
+
+#### DD2.1.2. Probability  interpretation
+
+However, if you understand the output as probability (LR, NN, Naive Bayes, Tree, etc.), i.e. you need to use the probability interpretation. Such change from data balancing is problematic.
+
+This is obvious, when the true probability $f_0(2)=\hat{\Pr}(x=1)=0.3$, the model after data balancing give $f_1(2)=\hat{\Pr}(x=1)=0.5$, inconsistent with the probability/behavior of true data.
+
+
+### DD2.3. Model recalibration
+
+Let's say you increase the size of positive sampling to k times.
+
+$$p^* =\frac{p_1}{k(1-p_1)+p_1} $$
+
+**Deduction:**
+
+- $p^* = \frac{N_+}{N_++N_-} = \frac{1}{\frac{N_-}{N_+}+1}$
+  - $\Rightarrow \frac{N_-}{N_+} = \frac{1}{p^*} - 1$
+- $p_1 = \frac{kN_+}{kN_++N_-} = \frac{1}{\frac{1}{k}\frac{N_-}{N_+}+1}$
+  - $\Rightarrow \frac{N_-}{N_+} = (\frac{1}{p_1} - 1)k$
+
+Therefore:
+
+$$\begin{aligned}
+  \frac{1}{p^*} - 1 &= (\frac{1}{p_1} - 1)k\\
+  \frac{1}{p^*} &= (\frac{1}{p_1} - 1)k + 1\\
+  p^* &= \frac{1}{(\frac{1}{p_1} - 1)k + 1}\\
+  p^* &= \frac{p_1}{(1 - p_1)k + p_1}\\
+\end{aligned}$$

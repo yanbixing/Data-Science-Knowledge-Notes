@@ -203,11 +203,15 @@ $$
 
 ### 2.1. Learning with different batch size
 
-  - Full batch learning: for each step, use the full dataset to update the parameter.
-  - Mini-batch learning: for each step, use subset of dataset to update parameter.
-  - Online learning:  for each step, use only 1 sample to update the parameter.
+- Full batch learning: for each step, use the full dataset to update the parameter.
+- Mini-batch learning: for each step, use subset of dataset to update parameter.
+- Online learning:  for each step, use only 1 sample to update the parameter.
+  - **Note:**Online learning usually specially refers engineering practice that we use the most recent user feedback to update model in real time.
 
-Ref: [kaggle-notebook](https://www.kaggle.com/residentmario/full-batch-mini-batch-and-online-learning), [StackExchange](https://stats.stackexchange.com/questions/110078/full-batch-vs-online-learning-vs-mini-batch)
+Ref: 
+- [kaggle-notebook](https://www.kaggle.com/residentmario/full-batch-mini-batch-and-online-learning): Full-batch vs mini-batch vs online.
+- [StackExchange](https://stats.stackexchange.com/questions/110078/full-batch-vs-online-learning-vs-mini-batch): Full-batch vs mini-batch vs online.
+- [Educative-Grokking_ML_interview-Ad-Ad_selection](https://www.educative.io/courses/grokking-the-machine-learning-interview/R12R8pJ3B1q): "online learning" usually means we user feedback update model in real time.
 
 ### 2.2. Effect of batch size
 

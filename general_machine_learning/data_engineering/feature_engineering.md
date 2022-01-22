@@ -1,8 +1,33 @@
 # Feature Engineering
 
-## 1. Feature Engineering
+## 0. feature kinds and summary (TBD) 
+
+- Categorical feature
+  - Sparse features: features that is very sparse with typical methods like one-hot encoding, bag of word
+    - Typical types: id, text, purchase history (user-item matrix)
+    - Methods:
+      - PCA
+      - HashEncoder
+      - Mean (Target) Encoding
+      - Embedding
+      - Extract keywords
+      - Convert to binary/dense with experience/stats/model. E.g.
+        - Summarize purchase history to histogram of purchase quantity on different category/company
+        - Sentiment analysis: convert comments to positive/negative feedback.
+  - Dense features: features that is dense with typical methods.
+    - One-hot encoding.
+    - Label encoding
+  - (TBD) Ref on dense features???
+- Numerical features
+  - numerical features are dense
+
+- Ref: 
+  - [Educative-Grokking_ML_Interview-RecSys-Feature_Engineering](https://www.educative.io/courses/grokking-the-machine-learning-interview/m7yvJPANx19)
+  - [StackExchange](https://stats.stackexchange.com/questions/266996/what-do-the-terms-dense-and-sparse-mean-in-the-context-of-neural-networks): Seems dense/sparse feature := the features that, if converted to a vector, the vector is dense/sparse. Like high cardinality feature is sparse feature.
+  - [Quora](https://quoraengineering.quora.com/Unifying-dense-and-sparse-features-for-neural-networks): The different on implementation in NN for dense/sparse feature. For dense feature, normal FC is fine. For sparse, usually need an embedding layer, i.e. squeeze it to a smaller dimension, and the weight will be the embedding.
 
 
+## 1. Methods
 ### 1.1 General feature engineering techniques
 
 - **Binning**: 

@@ -45,3 +45,26 @@ Typically, the prediction and label here is in a vector form, and the loss is sm
 
 
 
+### Deep Dive: Ranking loss vs CE? (TBD)
+
+Also see: [sysdesign_interview.md](../../ranking_system/sysdesign_interview.md)
+
+
+Seems both CE and ranking loss (pairwise-loss or triplet loss) can also be used in ranking models (Learn To Rank, LTR task): 
+
+Ref: 
+
+- [Medium](https://hemanthkumargadi.medium.com/introduction-to-pairwise-loss-function-a47f2282f16): RankSVM, RankBoost, RankNet user pairwise loss
+    <div  align="center"><img src=https://miro.medium.com/max/916/1*DORaAoXpUSlIiMU1vA2Sxw.jpeg style = "zoom:60%"> </div>
+
+  - function $\phi$ can be hinge, exponential or logistic.
+- [GithubBlog](https://gombru.github.io/2019/04/03/ranking_loss/): pairwise loss and triplet loss for image embedding.
+  - Pairwise loss: $L(r_0,r_1,y) = y\left \| r_0 - r_1 \right \| + (1-y) max(0,m - \left \| r_0 - r_1 \right \|)$
+  - Triplet loss: $L(r_a,r_p,r_n) = max(0,m + d(r_a,r_p) - d(r_a,r_n))$
+- Pairwise loss takes $(r_0,r_1,y)$, from the format of data,pairwise ranking should use pair wise loss.
+
+Other refs:
+
+- [Github-blog-Intro_to_LTR](https://everdark.github.io/k9/notebooks/ml/learning_to_rank/learning_to_rank.html): RankNet use cross entropy.
+- [Medium](https://medium.com/analytics-vidhya/triplet-loss-b9da35be21b8): Ranking loss is often used to train network that create embedding, output is the similarity score.
+<!-- - [DL-loss.md](../deep_learning/training_techniques/loss.md) -->
