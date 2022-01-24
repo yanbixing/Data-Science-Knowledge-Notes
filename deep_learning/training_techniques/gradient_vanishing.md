@@ -1,5 +1,12 @@
 # Gradient Vanishing
 
+**Problem statement:** As more layers using certain activation functions are added to neural networks, the gradients of the loss function approaches zero, making the network hard to train.
+
+Ref: 
+
+- [TowardsDataScience](https://towardsdatascience.com/the-vanishing-gradient-problem-69bf08b15484)
+- [Wiki-Vanishing_grad](https://en.wikipedia.org/wiki/Vanishing_gradient_problem)
+
 ## 1. Origin: Backpropagation
 
 $\boldsymbol{Z}^{(1)} = \boldsymbol{W}^{(1)} \boldsymbol{X}+\boldsymbol{b}^{(1)} $
@@ -26,7 +33,7 @@ $\begin{aligned}
 
 Ref: [Wiki-BP](https://en.wikipedia.org/wiki/Backpropagation), [Coursera](https://www.coursera.org/learn/neural-networks-deep-learning/lecture/Wh8NI/gradient-descent-for-neural-networks)
 
-In sum:
+In sum, with **backpropagation**:
 
 $$ \frac{\partial R^{(n)}}{\partial W^{(n-k)}} =  \frac{dR^{n}}{dA^{(n)}} \prod^{n-k}_{i=n}g'(Z^{(i)})\prod^{n-k+1}_{j=n}W^{(j)}\frac{\partial Z^{(n-k)}}{\partial W^{(n-k)}}$$
 

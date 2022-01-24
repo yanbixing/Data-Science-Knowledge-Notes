@@ -28,6 +28,7 @@
 
 
 ## 1. Methods
+
 ### 1.1 General feature engineering techniques
 
 - **Binning**: 

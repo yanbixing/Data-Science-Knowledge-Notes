@@ -14,7 +14,10 @@
       - negative: hide, ignore, never-see, report, dislike/angry (?)
     - Ranking score: value score, a weighted action rate of different actions
       - Usually include both positive actions and negative actions.
-      - Weight is determined by your business objective (Manually or learned from model.) Ref: [Educative-GMLI-Feed-TweetSelection](https://www.educative.io/courses/grokking-the-machine-learning-interview/gxM4VzxZ1Aj)
+      - Weight is determined by your business objective 
+        - Manually
+        - learned from model: (input-feature, output-goal_metric), then output metric value can be used as ranking score.
+      - Ref: [Educative-GMLI-Feed-TweetSelection](https://www.educative.io/courses/grokking-the-machine-learning-interview/gxM4VzxZ1Aj)
   - Ads:
     - Model target: action(engagement) rate
       - The rate of desired action
@@ -35,10 +38,11 @@
   - Used to define output of model
   - E.g. action rate? value score?
   - If action rate, what action? Click? conversion? add-to-cart?
-- Ask what is the form of interface to user / number of items shown to user.
-  - Used to determine offline metric
-    - If only one or few: classification metrics
-    - If a list of items: ranking metrics
+- ~~Ask what is the form of interface to user / number of items shown to user.~~
+  - ~~Used to determine offline metric~~
+    - ~~If only one or few: classification metrics~~
+    - ~~If a list of items: ranking metrics~~
+  - Use both is safer. I.e. use classification metric to eval scoring model, use ranking metric to evaluate its ability to ranking.
 
 
 Ref: 
@@ -207,7 +211,7 @@ Ref:
 
 - [Educative-GMLI-Feed-Online_experiment](https://www.educative.io/courses/grokking-the-machine-learning-interview/7n71LgM1vYQ): AUC, online metrics
 - [Educative-GMLI-RecSys-Metrics](https://www.educative.io/courses/grokking-the-machine-learning-interview/q2NWLJNZ8Pk): Ranking metric, online metric. (Movie RecSys)
-- [Educative-GMLI-Ads-Metrics](https://www.educative.io/courses/grokking-the-machine-learning-interview/N0P4R1v8mXL): CE, CE vs AUC, online metrics.
+- [Educative-GMLI-Ads-Metrics](https://www.educative.io/courses/grokking-the-machine-learning-interview/N0P4R1v8mXL): CE, CE vs AUC, online metrics:revenue, CTR/Conversion, negative feedback rate 
 
 
 ### 3.1. Offline
@@ -216,8 +220,14 @@ Note: you log history is usually a ranked list, like {user1@t1:[(item1,action1),
 
 For offline evaluation, 
 
-- you can evaluate your model in individual sample level, i.e. individual unit = (user,item,rating), with binary classification metrics.
-- Or you can evaluate your model in whole list level,i.e. individual unit = "user:[(item1,action1),(item2,action2),....]", with ranking metrics.
+- Classification metric: 
+  - Not often in report, may be used for debugging?
+  - evaluate the accuracy of the score, 
+  - evaluate the model in individual sample level, i.e. individual unit = (user,item,rating), with binary classification metrics.
+- Ranking metric: 
+  - Usually for reporting.
+  - evaluate the performance of model on ranking task
+  - evaluate your model in whole list level,i.e. individual unit = "user:[(item1,action1),(item2,action2),....]", with ranking metrics.
 
 
 
@@ -225,8 +235,8 @@ For offline evaluation,
 
 Used for
 
-- The scenario that **user can only see one or very few recommended item** ,so we just care about the click-or-not for the item(s), rather than the ranks of different items.
-- Or you just want to **just** evaluate the accuracy of the **scoring model** rather than the accuracy of whole ranking, i.e. break your ranking ranking list into samples, and evaluate the model in (user,item,rating) sample level.
+- ~~The scenario that **user can only see one or very few recommended item** ,so we just care about the click-or-not for the item(s), rather than the ranks of different items.~~
+- Or you just want to **just** evaluate the accuracy of the **score** rather than the accuracy of whole ranking, i.e. break your ranking ranking list into samples, and evaluate the model in (user,item,rating) sample level.
 
 Metircs:
 
@@ -246,7 +256,7 @@ Metircs:
 
 Used for 
 
-- The scenario that **user can see a list of (many) retrieved item**, ranking order of these items is important.
+- ~~The scenario that **user can see a list of (many) retrieved item**, ranking order of these items is important.~~
 - I.e. you want to evaluate the ranking performance, i.e. the individual evaluation unit is a whole ranking list, like "user:[(item1,action1),(item2,action2),....]"
 
 Metrics:
@@ -267,12 +277,12 @@ Note: ranking metric is typically offline metric, not online. Online metric is u
 Metrics determined by your goal. Usually used in **AB test**, determining whether to launch the system or not.
 
 - In terms of business goal:
-  - Number of user (growth rate, churn rate, etc.)
-  - User activity(DAU, MAU, active time per day, etc.)
   - User engagement 
     - User level: num actions per user, 
     - Overall quantity: **CTR**, add-to-cart rate, conversion rate
     - Overall quality: session time, bounce rate, hide/never-see/report rate
+  - Number of user (growth rate, churn rate, etc.)
+  - User activity(DAU, MAU, active time per day, etc.)
   - Revenue (revenue per user, revenue grow rate, profit, etc.)
 
 Also, don't forget to evaluate the **quality** of actions.
@@ -386,6 +396,8 @@ Ref:[]
     - missing value handling: 
       - MF: Don't fill missing value while using MF; 
       - SVD/PCA: there are specialized algos for SVD/PCA to process missing values.
+- User fatigue: we don't want to show same negative feedback (or no-action) content again and again.
+  - Introduce previous action/rating on this item.
 - Other problem:
   - Selection bias: user only select the item they prefer to rating (TBD)
     - Solution: Fill missing value, 

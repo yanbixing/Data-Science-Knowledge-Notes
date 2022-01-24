@@ -4,6 +4,19 @@
 
 Ref: [StackExchange](https://stats.stackexchange.com/questions/244507/what-algorithms-need-feature-scaling-beside-from-svm), [DataSchool](http://www.dataschool.io/comparing-supervised-learning-algorithms/)
 
+## Interview Q:
+
+- 22, Should we rescale features before gradient descent? why?
+  - Yes. In short, GD will converge more smoothly and quickly.
+    - If not scaling, descend on small scale is quick, on large scale is slow, will oscillate inefficiently.
+    <div  align="center"><img src=https://miro.medium.com/max/1160/1*iwY9jGjCq1REPr1ryXjjhA.png style = "zoom:80%"></div>
+    
+  - Ref:
+    - [Blog](https://www.atoti.io/when-to-perform-a-feature-scaling/#:~:text=To%20ensure%20that%20the%20gradient,more%20quickly%20towards%20the%20minima.): description
+    - [Medium](https://societyofai.medium.com/simplest-way-for-feature-scaling-in-gradient-descent-ae0aaa383039): figure
+    - [Medium](https://rahul-saini.medium.com/feature-scaling-why-it-is-required-8a93df1af310): explain
+
+
 ## 0. Summary
 
 - Typically, scaling is compulsory when there is an interaction between different features/weights:

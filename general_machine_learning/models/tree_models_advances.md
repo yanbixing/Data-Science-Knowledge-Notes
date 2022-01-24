@@ -16,10 +16,12 @@ XGBoost is actually an engineering implementation (and plus) of Gradient Boost i
   - GB: typically only use tree classifier.
   - XGB: besides tree classifier, there are other types of linear classifiers (linear booster)
 - Regularization:
-  - GB: no explicit regularization term.
-  - XGB: have explicit regularization term 
-    - linear classifiers: L1, L2 regularization
-    - tree: number of leave nodes, IG (score) at leave nodes
+  - GB: **NO regularization** on leaf score ("leaf weights") in the **loss function.**
+    - Only have typically tree regularization methods: number of leave nodes, IG (score) at leave nodes
+  - XGB: Introduce explicit L1&L2 regularization term on **leaf score ('leaf weights')** to the **loss function**
+    - Also have typical regularization methods like 
+      - linear classifiers: L1, L2 regularization
+      - tree: number of leave nodes, IG (score) at leave nodes
 - Order of derivative:
   - GB: pseudo residue, i.e. first-order derivative
   - XGB: both first- and second- order of derivative
@@ -96,3 +98,65 @@ XGBoost use pre-sort-based algorithm [analyticsindiamag](https://analyticsindiam
 ## Boost vs XGboost vs lihghtboost vs Catboost
 
 - [machinelearningmastery](https://machinelearningmastery.com/gradient-boosting-with-scikit-learn-xgboost-lightgbm-and-catboost/)
+
+
+## Draft: Un organized contents
+
+		https://campus.datacamp.com/courses/extreme-gradient-boosting-with-xgboost/regression-with-xgboost?ex=7
+			XGBoost Characteristics:
+				Base Learning, not only tree, but also linear classifiers
+					(GBM only tree)
+				Has, regularization, on "leaf score"/"leaf nodes"
+					(GBM no regularization)
+		
+		https://blog.csdn.net/weixin_35710893/article/details/112900925
+			Xgboos regularization (正则化)
+				1, 与正常树相同: max_depth, min_sample, min_gain
+				2, L1 & L2 regularization on "leaf weights"
+				3, Xgboost have column sampling, can use emsemble to prevent overfitting (parallel computing)
+				
+			Xgboost vs Light GBM
+				1)xgBoosting采用预排序，在迭代之前，对结点的特征做预排序，遍历选择最优分割点，数据量大时，贪心法耗时，LightGBM方法采用histogram算法，占用的内存低，数据分割的复杂度更低；
+				
+				2)xgBoosting采用level-wise生成决策树，同时分裂同一层的叶子，从而进行多线程优化，不容易过拟合，但很多叶子节点的分裂增益较低，没必要进行跟进一步的分裂，这就带来了不必要的开销；LightGBM采用深度优化，leaf-wise生长策略，每次从当前叶子中选择增益最大的结点进行分裂，循环迭代，但会生长出更深的决策树，产生过拟合，因此引入了一个阈值进行限制，防止过拟合
+				
+			Leaf Weight:
+			https://datascience.stackexchange.com/questions/73317/what-is-the-intuitive-meaning-of-leaf-weight-in-xgboost
+				LWeight is a value calculated from first and secondary derivative.
+				其他:
+					https://discuss.xgboost.ai/t/what-does-leaf-weight-mean/1587
+					https://stats.stackexchange.com/questions/265940/xgboost-weights-in-classifcation-tree-0-or-1
+				
+				https://towardsdatascience.com/de-mystifying-xgboost-part-i-f37c5e64ec8e
+				
+					https://towardsdatascience.com/de-mystifying-xgboost-part-ii-175252dcdbc5
+					Leaf score
+					
+				
+				https://stats.stackexchange.com/questions/265940/xgboost-weights-in-classifcation-tree-0-or-1
+					这条里面回答关于 "leaf weight"的理解似乎更正确, 就是 leaf 的 output value
+						I.e. sample 落入该leaf时, tree 给出的value, 由training时该leaf node中的sample来决定
+					" 𝑦𝑖^yi^ is from your boosting trees and equal to the sum of the leaf weights."
+				个人理解 
+					对于一般classification tree, 当sample 落入一个leaf node时，根据majority vote, 我们会决定这个leaf node是 0 or 1, binary
+						不同的，对于regression tree，我们输出的avg value (numerical)
+					XGB  更像 regression tree 
+						每个node输出是 numerical value, 叫 "weight"
+						但这个weight 在 [0,1] 范围内
+							似乎叫leaf score更合适?
+					当一个 leaf weight =0 or =1 时，这个leaf 过于确定 sample 的 label 是不好的,  所以要punish leaf weight, i.e. 我们不想让final eval  rely on perticular leaf node too much.
+					
+					
+				个人理解 - 联系GB (似乎不对)
+					1, the final learning is still a weighted sum of different learner
+					
+					2, the weight is determined by loss 
+						
+					
+					
+					
+					3, Loss is the first order derivative  (minize it.)
+					
+					So, we can see the weight is related to the first order direvative
+					
+					XGBoost weight not only determined by first order derivative, but also determined by second order derivative

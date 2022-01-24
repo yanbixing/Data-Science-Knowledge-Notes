@@ -112,13 +112,16 @@ Ref: [TowardsDataScience](https://towardsdatascience.com/an-implementation-guide
 
 #### 2.1.4. Loss
 
-The strategy for word2vec is MLE. The loss is usually **log probability**.
+The strategy for word2vec is MLE. The loss is usually **negative log probability** (cross entropy).
 
 <div  align="center">
   <img src=https://miro.medium.com/max/994/1*XPhzBnf1xEb0u67qazx9nA.png style = "zoom:70%">
 </div>
 
-Ref: [TowardsDataScience](https://towardsdatascience.com/an-implementation-guide-to-word2vec-using-numpy-and-google-sheets-13445eebd281)
+Ref: 
+- [TowardsDataScience](https://towardsdatascience.com/an-implementation-guide-to-word2vec-using-numpy-and-google-sheets-13445eebd281): NNL
+- [HeidelbergU-Slide](https://www.cl.uni-heidelberg.de/courses/ss19/emb/material/word2vec2.pdf): Loss is NNL, i.e. CE.
+
 
 
 

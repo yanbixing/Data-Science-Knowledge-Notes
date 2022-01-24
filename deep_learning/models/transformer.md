@@ -4,6 +4,41 @@ Ref:
 - [Github-blog](http://jalammar.github.io/illustrated-transformer/)
 - [Wechat](https://mp.weixin.qq.com/s?__biz=MzI1NjQ0Mzc1Mw==&mid=2247496823&idx=1&sn=7517e2b8c225b79b2bb54ae6a5c40cf7&source=41#wechat_redirect)
 
+
+## Interview Qs
+
+- Transformer characteristics
+  - Self-attention, capture the word-word (long-term) dependency
+  - Position embedding, encoding the info of word position. So that different order give different output.
+
+- Advantage of CNN(TBD)
+  - Smaller number of parameters
+  - Faster
+  - Better performance
+  - Ref: [CSDN](https://blog.csdn.net/qq_41558173/article/details/105602022)
+  
+
+- Transformer vs RNN/LSTM 
+  - Transformer is parallel, non-sequential; 
+    - RNN is sequential, slower
+  - Transformer uses self-attention, the long-term dependency is kept (depdency are not affected by distance.)
+    - Naive-RNN only have hidden state, LSTM use cell, slightly better, but both of them will lose very long term dependency
+  - Transformer have positional embedding to denote order information. So words with different order have different output. No problem.
+    - RNN run sequentially, inherently have an order. 
+  - Ref: [StackExhcange](https://ai.stackexchange.com/questions/20075/why-does-the-transformer-do-better-than-rnn-and-lstm-in-long-range-context-depen/20084)
+
+- Transformer vs CNN
+  - Transformer can capture dependency over the whole sentence
+    - CNN only capture the dependency within the kernel size.
+  - Ref: [StackExhcange](https://ai.stackexchange.com/questions/20075/why-does-the-transformer-do-better-than-rnn-and-lstm-in-long-range-context-depen/20084)
+  
+
+- My unsolved Qs
+  - Attention 为了解决什么: long term dependency problem; sequential computing slow problem;
+  - Attention之前模型是什么: LSTM? CNN for Text?
+
+
+
 ## 0. Basics
 
 ### 0.0 Notation:
@@ -201,3 +236,12 @@ Note: actually, in BERT, the info (embedding) from encoder is fed to the "encode
 #### 2.3 Out-of-vocabulary word processing
 
 BERT use character level token, so usually is able to handle OOV words.
+
+
+## Other Basics
+
+- Types of attention depending on range:
+  - Soft/Global attention: consider **all other keys**
+  - Hard attention: only consider **one key**
+  - Local attention: locate one key with hard attention first, consider the keys within a **window** of that hard attention key.
+  - Ref: [CSDN](https://blog.csdn.net/qq_41558173/article/details/105602022)

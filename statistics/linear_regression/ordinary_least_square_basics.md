@@ -248,6 +248,7 @@ Change:
   - $\mathrm{SE}_{\beta^{(1)}} \propto \frac{1}{\sqrt{m}}$ will decrease.
   - $z^{obs} = \frac{\beta^{(1)obs}-0 }{\mathrm{SE}_{\beta^{(1)}}} \propto \sqrt{m}$ increase.
     - observed mean $\beta^{(1)obs}$ not change, SE will change.
+  - $\beta^{(0)} = \bar{y} - \beta^{(1)}\bar{x}$, so should also have $\mathrm{SE}_{\beta^{(0)}} \propto \frac{1}{\sqrt{m}}$ and $z^{obs} = \frac{\beta^{(0)obs}-0 }{\mathrm{SE}_{\beta^{(0)}}} \propto \sqrt{m}$
 
 
 **Note: how to understand the change of SE and z-score here?**

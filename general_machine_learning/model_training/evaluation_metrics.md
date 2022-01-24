@@ -32,7 +32,7 @@ Difference:
     - I.e. **AUC** only cares about the ranking distribution of positive and relative samples, **NOT dependent (care about) on the absolute value of score**.
       - AUC is the prob that a random positive sample have higher ranking/score than a random negative sample.
     - This is not good when your score have specific meaning, like probability.
-  - CE's value is dependant on the absolute value of the score. A
+  - CE's value is dependant on the absolute value of the score.
     - CE is positively correlated with to the difference between two distribution.
     - I.e. **CE is minimized when the estimated/predicted probability distribution is same with real probability distribution.**
     - Additional Notes:
@@ -40,6 +40,7 @@ Difference:
       - $M \cdot CE = NNL \Rightarrow$ minimize CE = Maximize likelihood (MLE)
       - Ref: [entropy_related_statistics.md](../math_topics/entropy_related_statistics.md)
 - But CE is affected by class imbalance while AUC not.
+  - AUC is **base-rate invariant**, CE not.
 
 Ref:
 [Educative-GMLI-Ads-Metrics](https://www.educative.io/courses/grokking-the-machine-learning-interview/N0P4R1v8mXL): CE better than AUC when your output means "probability".
@@ -127,7 +128,8 @@ $TPR = \frac{TP}{TP+FN} = \frac{TP}{P} = \text{recall} = \text{sensitivity}= 1-\
     - "calibration" is needed usually when score is probability, we hope to prediction the correct probability, rather than relative ranking.
     - when calibration is needed, usually it is better to use **cross entropy** rather than AUC, cross entropy is **also threshold invariant but not scale-invariant**.
   
-- AUC is invariant to class imbalance.
+- AUC is **base-rate** invariant, 
+  - AUC is not change with the ratio of positive/negative samples, i.e not affected by class imbalance.
 
 
 Ref:
@@ -263,7 +265,7 @@ How to handle it? Depends on your definition. E.g. when you have nan
 
 - [Base_rate](https://en.wikipedia.org/wiki/Base_rate): generally refers to the (base) class probabilities unconditioned on featural evidence, i.e. p(y)
 
-- base-rate-invariant metric: the metric will not change with different p(y) distribution. I.e. the metric is not affected by data imbalance. [Ref: Imbalanced_data](../data_engineering/Imbalanced_data.md)
+- **base-rate-invariant** metric: the metric will not change with different p(y) distribution. I.e. the metric is not affected by data imbalance. [Ref: Imbalanced_data](../data_engineering/Imbalanced_data.md)
   - Mechanism:
     - Data imbalance: the ground true label is not equal.
     - For different models, 
