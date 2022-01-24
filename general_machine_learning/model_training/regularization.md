@@ -1,5 +1,89 @@
 # Regularization
 
+## Interview: Probabilistic understand L1/L2 (TBD, Interview)
+
+- Ref:
+  - [Github-blog](https://bjlkeng.github.io/posts/probabilistic-interpretation-of-regularization/): probablistic interpretation of L1 and L2
+  - [1p3a]( https://www.1point3acres.com/bbs/thread-710489-1-1.html): L-interview
+
+- L2: Normally Distributed Priors
+  - $f_{\text{Gaussian}}(x;\mu, \sigma)={\frac {1}{\sigma {\sqrt {2\pi }}}}e^{-{\frac {1}{2}}\left({\frac {x-\mu }{\sigma }}\right)^{2}}$
+  - L2 $f_{\text{Gaussian}}(x; 0, \sigma_{\beta_j}) = \frac{1}{\sigma_{\beta_j}\sqrt{2\pi}}e^{-\frac{\beta_j^2}{2\sigma_{\beta_j}^2}} $
+- L1: Laplacian prior:
+  - $f_{Laplace}(x;\mu, b) = \frac{1}{2b} e^{-\frac{|x-\mu|}{b}}$
+  - L1 $f_{Laplace}(\beta_j;0, b)  = \frac{1}{2b}e^{-\frac{|\beta_j|}{b}}$
+
+**Personal understanding:** after adding regularization, it is like we are getting MAP solution, MAP equal is like "MLE while consider the prior of $\theta$", or MLE is equal to "MAP when the prior is distributed evenly."
+
+$$\begin{aligned}
+\theta_{MLE} = \underset{\theta}{\argmax}[p(\mathcal{S}|\theta)]
+\end{aligned}$$
+
+$$\begin{aligned}
+  \theta_{MAP} &= \underset{\theta}{\argmax}[p(\theta|\mathcal{S})]
+\end{aligned}$$
+
+  $$\begin{aligned}
+  \theta_{MAP} &= \underset{\theta}{\argmax}[p(\theta|\mathcal{S})] \\
+  & = \underset{\theta}{\argmax}[\frac{P(\mathcal{S} \vert \theta) P(\theta)}{P(\mathcal{S})}] \leftarrow P(\mathcal{S}) \text{is const to } \theta\\
+  & = \underset{\theta}{\argmax}[P(\mathcal{S} \vert \theta) P(\theta)]\\
+  & = \underset{\theta}{\argmax}\{ \log[ P(\mathcal{S} \vert \theta) P(\theta) ] \}\\
+  & = \underset{\theta}{\argmax}\{ \log[ P(\mathcal{S} \vert \theta)]+\log[ P(\theta) ] \} \leftarrow \text{see MLE}\\
+  & = \underset{\theta}{\argmax}\{ \sum_i\log[p(s_i|\theta)]+\log[ P(\theta) ] \}
+\end{aligned}$$
+
+- No-regularization = MLE, assume the parameter is evenly distributed.
+- Regularization = MAP, i.e. assume the parameter have specific distribution.
+
+**Deduction:**
+
+
+No-regularization, Likelihood
+
+$$
+\begin{align*}
+\mathcal{L({\bf \beta}|{\bf y})} &:= P({\bf y} | {\bf \beta}) \\
+    &= \prod_{i=1}^{n} P_Y(y_i|{\bf \beta}, \sigma^2) \\
+    &= \prod_{i=1}^{n} \frac{1}{\sigma\sqrt{2\pi}}e^{-\frac{(y_i- (\beta_0 + \beta_1 x_{i,1} + ... + \beta_p x_{i,p}))^2}{2\sigma^2}}
+\end{align*}$$
+
+Posterior = Likelihood * prior
+(log Posterior = log L + log prior)
+
+$$\begin{align*}
+P(\theta | y) &= \frac{P(y | \theta) P(\theta)}{P(y)} \\
+\text{posterior} &= \frac{\text{likelihood} \cdot \text{prior}}{\text{evidence}}
+\end{align*}$$
+
+- L2: Normally Distributed Priors
+  - $f_{\text{Gaussian}}(x;\mu, \sigma)={\frac {1}{\sigma {\sqrt {2\pi }}}}e^{-{\frac {1}{2}}\left({\frac {x-\mu }{\sigma }}\right)^{2}}$
+  - L2 $f_{\text{Gaussian}}(x; 0, \sigma_{\beta_j}) = \frac{1}{\sigma_{\beta_j}\sqrt{2\pi}}e^{-\frac{\beta_j^2}{2\sigma_{\beta_j}^2}} $
+- L1: Laplacian prior:
+  - $f_{Laplace}(x;\mu, b) = \frac{1}{2b} e^{-\frac{|x-\mu|}{b}}$
+  - L1 $f_{Laplace}(\beta_j;0, b)  = \frac{1}{2b}e^{-\frac{|\beta_j|}{b}}$
+
+
+L2 - MAP with Gaussian prior:
+
+$$\begin{aligned}
+  & \arg\max_{\bf \beta} \Big[ \log \prod_{i=1}^{n} \frac{1}{\sigma\sqrt{2\pi}}e^{-\frac{(y_i- (\beta_0 + \beta_1 x_{i,1} + ... + \beta_p x_{i,p}))^2}{2\sigma^2}} + \log \prod_{j=0}^{p} \frac{1}{\tau\sqrt{2\pi}}e^{-\frac{\beta_j^2}{2\tau^2}} \Big] \\
+  &= \arg\max_{\bf \beta} \Big[- \sum_{i=1}^{n} {\frac{(y_i- (\beta_0 + \beta_1 x_{i,1} + ... + \beta_p x_{i,p}))^2}{2\sigma^2}}- \sum_{j=0}^{p} {\frac{\beta_j^2}{2\tau^2}} \Big]\\
+  &= \arg\min_{\bf \beta} \frac{1}{2\sigma^2} \big[ \sum_{i=1}^{n} (y_i-(\beta_0 + \beta_1 x_{i,1} + ... + \beta_p x_{i,p}))^2+ \frac{\sigma^2}{\tau^2} \sum_{j=0}^{p} \beta_j^2 \big] \\
+  &= \arg\min_{\bf \beta} \big[ \sum_{i=1}^{n} (y_i-(\beta_0 + \beta_1 x_{i,1}+ ... + \beta_p x_{i,p}))^2 + \lambda \sum_{j=0}^{p} \beta_j^2 \big]
+\end{aligned}$$
+
+
+L1 - MAP with Laplacian Prior:
+
+$$\begin{aligned}
+  &\arg\max_{\bf \beta} \Big[ \log \prod_{i=1}^{n} \frac{1}{\sigma\sqrt{2\pi}}e^{-\frac{(y_i- (\beta_0 + \beta_1 x_{i,1} + ... + \beta_p x_{i,p}))^2}{2\sigma^2}} + \log \prod_{j=0}^{p} \frac{1}{2b}e^{-\frac{|\beta_j|}{b}} \Big] \\
+  &= \arg\max_{\bf \beta} \Big[- \sum_{i=1}^{n} {\frac{(y_i- (\beta_0 + \beta_1 x_{i,1} + ... + \beta_p x_{i,p}))^2}{2\sigma^2}} - \sum_{j=0}^{p} {\frac{|\beta_j|}{b}} \Big]\\
+  &= \arg\min_{\bf \beta} \frac{1}{2\sigma^2} \big[ \sum_{i=1}^{n} (y_i-(\beta_0 + \beta_1 x_{i,1} + ... + \beta_p x_{i,p}))^2 + \frac{2\sigma^2}{b} \sum_{j=0}^{p} |\beta_j| \big] \\
+  &= \arg\min_{\bf \beta} \big[ \sum_{i=1}^{n} (y_i-(\beta_0 + \beta_1 x_{i,1} + ... + \beta_p x_{i,p}))^2 + \lambda \sum_{j=0}^{p} |\beta_j| \big]
+\end{aligned}$$
+
+
+
 ## 1. L1 and L2 Regularization
 
 ### 1.1. Form
@@ -292,3 +376,5 @@ Since the trade-off is just an intuitive understanding, the regularization of th
 ## TBD questions:
 
 - what does math mark ";" like ";D" means? parameterized? Ref: [Wiki-Bias-variance tradeoff](https://en.wikipedia.org/wiki/Bias%E2%80%93variance_tradeoff)
+
+

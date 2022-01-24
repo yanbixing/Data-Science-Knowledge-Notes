@@ -67,10 +67,20 @@ Note: for very long dependency, LSTM will also have gradient vanishing, because 
 
 ## 2.1. LSTM structure
 
-- Ref: 
-  - [Github-blog](http://colah.github.io/posts/2015-08-Understanding-LSTMs/): LSTM structure
-  - [StackExchange](https://stats.stackexchange.com/questions/512542/what-is-the-encoder-in-a-seq2seq-rnn-doing): source of fig.
-  - [TowardsDataScience](https://towardsdatascience.com/illustrated-guide-to-lstms-and-gru-s-a-step-by-step-explanation-44e9eb85bf21): visualization of 
+In sum:
+- **Forget gate:** generate forget vector $f_t = F(h_{t-1},x_t)$
+  - So that we can attenuate/forget previous cell $C_{t,tmp} = f_t * C_{t-1} $
+- **Input gate:** generate input vector $i_t = I(h_{t-1},x_t)$
+  - So that we can revise previous cell $C_{t} = f_t * C_{t-1} + i_t * \tilde{c}_{t}$
+  - $\tilde{c}_t = \tilde{c}_{gen}(h_{t-1},x_t) $ 
+- **Output gate:** generate output vector $o_t = O(h_{t-1},x_t)$
+  - $h_t = \tanh(C_{t})$
+
+Ref: 
+
+- [Github-blog](http://colah.github.io/posts/2015-08-Understanding-LSTMs/): LSTM structure
+- [StackExchange](https://stats.stackexchange.com/questions/512542/what-is-the-encoder-in-a-seq2seq-rnn-doing): source of fig.
+- [TowardsDataScience](https://towardsdatascience.com/illustrated-guide-to-lstms-and-gru-s-a-step-by-step-explanation-44e9eb85bf21): visualization of 
 
 <div  align="center"><img src=https://i.stack.imgur.com/3Rn8m.png style = "zoom:40%"></div> 
 
@@ -82,7 +92,7 @@ Note: for very long dependency, LSTM will also have gradient vanishing, because 
       - $\tilde{C}_{t}$: cell state component calculated from hidden state $h_{t-1}$ and new input $x_t$
         <div  align="center"><img src=http://colah.github.io/posts/2015-08-Understanding-LSTMs/img/LSTM3-focus-C.png  style = "zoom:40%"></div> 
 
-  - Forget gate: a sigmoid function with hidden state $h_t$ and input variable $x_t$ as input, give the "forget vector" to cell state.
+  - **Forget gate**: a sigmoid function with hidden state $h_t$ and input variable $x_t$ as input, give the "forget vector" to cell state.
     - Forget vector is a vector having same dimension with the cell state, each position have a numerical value [0,1] denoting how much value the cell state should keep at that position.
         <div  align="center"><img src=http://colah.github.io/posts/2015-08-Understanding-LSTMs/img/LSTM3-focus-f.png style = "zoom:40%"></div> 
     
@@ -92,12 +102,12 @@ Note: for very long dependency, LSTM will also have gradient vanishing, because 
       - $+$ here means pointwise addition.
         - Ref: [TowardsDataScience](https://towardsdatascience.com/illustrated-guide-to-lstms-and-gru-s-a-step-by-step-explanation-44e9eb85bf21)
   - new input cell state: a vector have same dimension with cell state, calculated from hidden state $h_t$ and input variable $x_t$.
-  - Input gate:  sigmoid function with hidden state $h_t$ and input variable $x_t$ as input, give an "input vector" denoting, on each position, how much the new input cell state should be-superposed-to/added prev cell state.
+  - **Input gate**:  sigmoid function with hidden state $h_t$ and input variable $x_t$ as input, give an "input vector" denoting, on each position, how much the new input cell state should be-superposed-to/added prev cell state.
         <div  align="center"><img src=http://colah.github.io/posts/2015-08-Understanding-LSTMs/img/LSTM3-focus-i.png style = "zoom:40%"></div> 
 
 
 - Hidden state: output hidden state $h_t$ is created based on the updated cell state $C_t$ and "output vector" $o_t$
-  - Output gate: generate an output vector $o_t$ denoting, on each position of the cell state, how much we want to use as the output hidden states. 
+  - **Output gate**: generate an output vector $o_t$ denoting, on each position of the cell state, how much we want to use as the output hidden states. 
   - The weight is 
 <div  align="center"><img src=http://colah.github.io/posts/2015-08-Understanding-LSTMs/img/LSTM3-focus-o.png style = "zoom:40%"></div> 
 
