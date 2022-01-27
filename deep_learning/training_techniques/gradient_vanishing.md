@@ -1,6 +1,32 @@
 # Gradient Vanishing
 
-**Problem statement:** As more layers using certain activation functions are added to neural networks, the gradients of the loss function approaches zero, making the network hard to train.
+## 0. Summary
+
+- **Problem statement:** As more layers using certain activation functions are added to neural networks, the gradients of the loss function approaches zero, making the network hard to train.
+
+- **Reason:** Deducted from **chain rule** of **backpropagation**, for the $i$-th layer weights in an $N$ layer network, the gradient contains products of:
+  1. weights: $\left[ \prod^{n-k}_{i=n}g'(Z^{(i)}) \right] $
+  2. derivatives of activation function, i.e. $\left[ \prod^{n-k+1}_{j=n}W^{(j)} \right]$
+  - So, the grad will be $\to 0$ or $\to \infty$, if any cases happens
+    - If all **weights** values are $<1$ or $>1$, 
+    - If any **weights** value is $0$
+    - If all **activation functions saturates** slightly, i.e. derivative $<1$ or $>1$, 
+    - If any **activation functions saturates** heavily, i.e. derivative $=0$
+  - Note: RNN suffers-more/easier to have vanishing/explosion problem because
+    - 1, Easily be very deep, since recurrent.
+    - 2, Easily "all weights/activation-derivative $>1$ or $<1$" happens, because all recurrent units share same weights
+
+**Solution:**
+
+- **Skip connection**: shorten the distance, so not vanish/explode
+  - E.g. LSTM, ResNet (Residual Networks)
+- **Change activation function**: activation func hard to saturate
+  - leaky relu: solve that relu(x<0) = 0, saturate at negative range
+  - relu: solve that tanh/sigomid saturates at x large or small
+  - tanh: larger grad than sigmoid
+- **Batch normalization**: activation func hard to saturate during training
+  - Because the value are **normalized, i.e. scaling** to a moderate range
+- multi-hierarchy: **train one layer at a time, freeze other layers**. Especially useful when you have pre-trained part in you network.
 
 Ref: 
 
@@ -35,7 +61,7 @@ Ref: [Wiki-BP](https://en.wikipedia.org/wiki/Backpropagation), [Coursera](https:
 
 In sum, with **backpropagation**:
 
-$$ \frac{\partial R^{(n)}}{\partial W^{(n-k)}} =  \frac{dR^{n}}{dA^{(n)}} \prod^{n-k}_{i=n}g'(Z^{(i)})\prod^{n-k+1}_{j=n}W^{(j)}\frac{\partial Z^{(n-k)}}{\partial W^{(n-k)}}$$
+$$ \frac{\partial R^{(n)}}{\partial W^{(n-k)}} =  \frac{dR^{n}}{dA^{(n)}} \left[ \prod^{n-k}_{i=n}g'(Z^{(i)}) \right] \left[ \prod^{n-k+1}_{j=n}W^{(j)} \right] \frac{\partial Z^{(n-k)}}{\partial W^{(n-k)}}$$
 
 Gradient vanishing: If $W$ is slightly smaller than 1, then $\prod^{n-k+1}_{j=n}W^{(j)} \rightarrow 0$
 Gradient exploding: If $W$ is slightly larger than 1, then $\prod^{n-k+1}_{j=n}W^{(j)} \rightarrow \infty$

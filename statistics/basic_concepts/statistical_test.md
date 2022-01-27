@@ -1,7 +1,7 @@
 # Statistical test
 
 
-## T test
+## 1. T test
 
 t-stats: how much times of SE does the observed value deviates from the hypothesis value. (t-score $\uparrow$, deviation $\uparrow$, chance the hypothesis is incorrect $\uparrow$)
 
@@ -27,7 +27,7 @@ Ref:
 - [JMP](https://www.jmp.com/en_us/statistics-knowledge-portal/t-test/one-sample-t-test.html),[JMP](https://www.jmp.com/en_us/statistics-knowledge-portal/t-test/two-sample-t-test.html): one-sample and two-sample test
 
 
-## T test vs Z test
+### 1.2. T test vs Z test
 
 Mathematic form of Z-stats is same with t-stats:
 
@@ -55,6 +55,20 @@ Ref:
 - [TowardsDataScience-blog](https://towardsdatascience.com/statistical-tests-when-to-use-which-704557554740): z vs t vs chi test.
 - [Bloomingtontutors](https://bloomingtontutors.com/blog/when-to-use-the-z-test-versus-t-test), [Oxford-Slides-P18](http://www.stats.ox.ac.uk/~massa/Lecture%2010.pdf): Z or t test.
 - [Medium-blog](https://medium.com/dataseries/hypothesis-testing-in-machine-learning-what-for-and-why-ad6ddf3d7af2): Z or t test Figure.
+
+
+## 2. 
+
+### 2.1. Chi-square independence test (TBD)
+
+Also a test can use to check whether two distribution (dataset) are same or not.
+
+
+### 2.2. KS (Kolmogorov–Smirnov test ) test (TBD)
+
+A test can use to check whether two distribution (dataset) are same or not.
+
+KL-divergence vs KS distance/test: https://stats.stackexchange.com/questions/9311/kullback-leibler-vs-kolmogorov-smirnov-distance
 
 
 ## Deep dive: 1/N vs 1/(n-1) - population vs sample

@@ -32,6 +32,19 @@
 
 Consider of permutation cases.
 
+- Average: O(N)
+  - Proof: [Blog](https://rcoh.me/posts/linear-time-median-finding/)
+  - Idea: on average, the left size to check = n/2
+  - TC = N + N/2 + N/4 +... = N (1+ 0.5 + 0.5^2 +...) = N 1/(1-0.5) ～ 2N = O(N) 
+- Worst: O(N^2)
+  - Each time just eliminate one element
+  - TC = N + (N-1) + (N-2)... = N(N-1)/2 = O(N^2
+
+
+### Median of Median (TBD)
+
+Use the median of medians a 
+
 
 
 

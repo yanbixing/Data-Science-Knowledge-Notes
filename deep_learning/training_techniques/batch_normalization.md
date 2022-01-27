@@ -12,7 +12,11 @@ Ref: [Youtube](https://www.youtube.com/watch?v=-5hESl-Lj-4), [CSDN](https://blog
 
 
 - What problem the BN targets? (TBD)
-  - When the network is non-linear, <mark style="background-color:yellow;"><font color="#0000dd">**large value will be suppressed.**</font></mark>
+  - When activation function saturates, the training is slow, and "gradient vanishing happens" if a lot neurons saturates.
+    - Activation saturates = derivative $g'(z)\to 0$
+    - $\partial_{w^{(i)}}L \propto \underset{\forall j>i}{\prod} W^{(j)} \underset{\forall j>i}{\prod} g'(z^{(j)})$
+    - ref: [gradient_vanishing.md](./gradient_vanishing.md)
+  - "Saturates": When the network is non-linear, <mark style="background-color:yellow;"><font color="#0000dd">**large value will be suppressed.**</font></mark>
     - Before the network is well trained, the weight may be very large, then the network will be insensitive to large input. (saturate) 
     - However, in the ground truth, the output may be sensitive to the large input. In this case, change in weight*feature cannot efficiently passed to the output, <mark style="background-color:yellow;"><font color="#0000dd">**make the training slow**</font></mark>.
       - I.e. large change in weight*feature result in small change in output. The apparent conclusion then is **output is not sensitive to the feature**. But this conclusion is actually false/incorrect. (Why?)

@@ -93,7 +93,7 @@ $$CE = - \sum_k p(y_i = k)\log p(\hat{y}_i = y_i)$$
       - $\sum_i\partial_x(\hat{y}-y_i)^2 = 0 \Rightarrow \hat{y} = \frac{1}{n}\sum_i y_i$
   - L1 optimization give the median value of output distribution.
     - Ref: [Wiki](https://en.wikipedia.org/wiki/Mean_absolute_error#Optimality_property), [StackOverflow](https://math.stackexchange.com/questions/113270/the-median-minimizes-the-sum-of-absolute-deviations-the-ell-1-norm/113336#113336)
-  - E.g. In a sample set, we have two points with same $x$ value: $(x_1, 1)$ and (x_1, 0)$
+  - E.g. In a sample set, we have two points with same $x$ value: $(x_1, 1)$ and $(x_1, 0)$
     - L1 (MAE) has the same loss between $h(x_i)\in[0,1]$
     - L2 (MSE) has the smallest loss at $h(x_i) = 0.5$.
     - Ref: [Quora](https://www.quora.com/How-would-a-model-change-if-we-minimized-absolute-error-instead-of-squared-error-What-about-the-other-way-around)

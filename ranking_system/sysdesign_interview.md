@@ -1,5 +1,22 @@
 # SysDesign Interview Framework
 
+## 0. Recent exp
+
+- Opening: After clarifying question, explain the **main structure of my answer**.
+  - I will organize my design as following:
+    - label, 
+    - feature, 
+      - feature exploration
+      - preprocessing:feature engineering
+    - model selection
+      - Baseline (most simple)
+      - Advanced model/comparison
+    - evaluation
+      - offline
+      - online
+
+- Evaluation: need to propose **baseline model** when evaluating.
+
 ## 0. Problem statement: what we want to predict?
 
 - Search engine: given (query, item), prediction CTR
@@ -291,6 +308,18 @@ Also, don't forget to evaluate the **quality** of actions.
   - Quantity: CTR
   - Quality: session time, bounce rate
 
+
+Usually, need to discriminate long term vs short term metrics: (TBD)
+
+- Long term: metric can be collected after long term that change happens
+  - 
+- Short term: metric can be collected within short term, immediately affected by your change.
+  - E.g. CTR
+
+Ref: [TowardsDataScience](https://towardsdatascience.com/how-to-reduce-a-b-testing-duration-using-surrogate-metrics-3631c6295039)
+
+
+Typically, AB test use the short term proximate for the long term metric.
 
 ### 4. Score post-modification
 
