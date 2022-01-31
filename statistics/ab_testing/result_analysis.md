@@ -29,6 +29,11 @@
 
 **Example**
 
+- Note, statistics for Bernoulli distribution:
+  - $\mathbb{E}(X) = p = \mathbb{E}(\bar{X})$
+  - $Var(X) = pq = \mathrm{SD}^2 \Rightarrow \mathrm{SE}(\bar{X} ) = \sqrt{\frac{pq}{N}}$
+- Ref:? (TBD)
+
 <div  align="center"><img src=./result_analysis_asset/confidence_interval_calculation.png style = "zoom:20%"></div>
 
 ### 1.2. CI analysis

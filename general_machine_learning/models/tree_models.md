@@ -9,6 +9,10 @@
   - Boosting: yes and no -> samples are same but weight/value different
     - AdaBoost: reweigh the samples, weight changes
     - GradientBoost: training pseudo residue, rather than labe.
+- Why ensemble can reduce variance? (TBD)
+  - Ref: MyExp for L.
+  - For an variable when you "sample n times", the variance is smaller $\frac{1}{\sqrt{N}}$ than "sample 1 time", i.e. Variance of sample mean is smaller than variance.
+    - Ref: [Blog](https://www.section.io/engineering-education/ensemble-bias-var/)
 
 ## 0. Basic concepts
 

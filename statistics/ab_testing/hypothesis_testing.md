@@ -2,6 +2,21 @@
 
 Ref: [StatTrek](https://stattrek.com/hypothesis-test/hypothesis-testing.aspx)
 
+## 0. Interview Qs
+
+### 0.1 How to test a coin is fair
+
+- Solution: Hypothesis testing
+  - Ref: 
+    - [Wiki](https://en.wikipedia.org/wiki/Checking_whether_a_coin_is_fair) (TBD)
+    - [Zhihu](https://zhuanlan.zhihu.com/p/89065805),
+    - [CSDN](https://blog.csdn.net/Tonywu2018/article/details/83901831)
+- MyAns:
+- Advanced version: determine a dice is fair or not.
+  - Ref: [1p3a](https://www.1point3acres.com/bbs/thread-676967-1-1.html): M-Itv.
+  - MyAns: Similar idea, use binomial/one-vs-all way, check whether each different faces have a 1/6 prob 
+
+
 ## 1. Two types of hypothesis
 
 Normally, there are two kinds of hypothesis:

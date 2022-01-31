@@ -4,7 +4,11 @@
 
 - Opening: After clarifying question, explain the **main structure of my answer**.
   - I will organize my design as following:
-    - label, 
+    - label and data collection
+      - manual labelling
+      - use existing data to simulate (current user friends, current user skills)
+      - rule-based recommendation (skills parsed from user profile)
+      - simple/baseline model to collect data.
     - feature, 
       - feature exploration
       - preprocessing:feature engineering
