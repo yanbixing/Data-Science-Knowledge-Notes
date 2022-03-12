@@ -1,9 +1,19 @@
 {
     "cSpell.words": [
+        "Coursera",
+        "Jaccard",
         "Rademacher",
+        "boldsymbol",
+        "deseasonalize",
+        "eigen",
+        "hyperparams",
         "infty",
         "mathbb",
-        "mathbf",
-        "rightarrow"
+        "optimizely",
+        "overfit",
+        "quora",
+        "rightarrow",
+        "underfit",
+        "underfitting"
     ]
 }
