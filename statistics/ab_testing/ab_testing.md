@@ -137,12 +137,6 @@ Thus, we need to consider unit for proper **duration**.
 
 ### 1.2. AB test process
 
-
-
-
-     
-
-
  - Any potential influential factors/bugs, any possible discrepancy between designer and user
    - Can be verified by designing invariant metric 
    - Can used to analyze result.
@@ -152,6 +146,13 @@ Thus, we need to consider unit for proper **duration**.
 
 Ref: [TowardsDataScience](https://towardsdatascience.com/a-summary-of-udacity-a-b-testing-course-9ecc32dedbb1)
 
+0. (See above) Brainstorm
+   - What is your objective?
+   - What is unit of diversion (experiment unit)?
+   - What is your target population?
+     - Filtration/funnel model
+     - Subpopulation
+   - Duration of experiment.
 1. Choose the evaluation metric and invariant metric.
    - Evaluation metric: your target metric or design one based on your goal.
    - Invariant metric is for sanity check, i.e. "what should be affected during the experiment"
@@ -171,7 +172,7 @@ Ref: [TowardsDataScience](https://towardsdatascience.com/a-summary-of-udacity-a-
      - $\alpha$: significance level
      - $1-\beta$: sensitivity (statistical power)
    - Need to consider about unit of diversion, population, duration.(?)
-4. Collect data for experimental group and control group. (?)
+4. Determine/split experimental and control group, and collect data.
    - Duration: how long the experiment will run
    - Exposure: what fraction of user you want to expose to experimental group.
    - Learning effect (see below.)
@@ -221,11 +222,16 @@ Ref: [Udacity-Abtesting-Lesson1-Lecture3](https://classroom.udacity.com/courses/
      - Ref: [Udacity-Lesson4-Lec23](https://classroom.udacity.com/courses/ud257/lessons/4001558669/concepts/39700990310923)
    - New services: adding premium service.
      - <mark style="background-color:yellow;"><font color="#0000dd">**No baseline**</font></mark>: A/B testing is to test the metrics of version A with version B. You may have a baseline metric value.
+   - Data behavior: (TBD) 
+     - The difference between Exp and control decrease with time.(TBD)
+       - Ref: [1p3a](https://www.1point3acres.com/bbs/thread-807649-1-1.html): MS-interview.
 2. Changes that have **long term effect**. 
    - I.e. For A/B test, we should be able to get user's response instantly. 
    - Reason: The responses we collect <mark style="background-color:yellow;"><font color="#0000dd">may not represent the whole population.</font></mark>
    - Eg. Two colors of house-rental promotion letter.
      - Explaination: People don't buy house often. The effect of our change can only be gather after a long time. I.e. It is <mark style="background-color:yellow;"><font color="#0000dd">**hard to comprehensively collect data**</font></mark> within the experimental period.
+   - Data behavior: (TBD)
+     - The difference between exp and control increase with time?
   <!-- - Long term effect. E.g. the user activity is infrequent, or it takes user long time to adapt
   - Cannot comprehensively collect data. -->
 
@@ -241,6 +247,22 @@ Ref: [Udacity-Abtesting-Lesson1-Lecture3](https://classroom.udacity.com/courses/
      - Ref: [ResearchGate-Paper](https://www.researchgate.net/profile/Arnold-Vermeeren/publication/221248254_User_experience_evaluation_methods_Current_state_and_development_needs/links/09e4150c5d003a175b000000/User-experience-evaluation-methods-Current-state-and-development-needs.pdf)
    - Heuristic/expert evaluation: ask expert to evaluate the new feature based on their experience. Ref: [YouTube](https://www.youtube.com/watch?v=TQ5jY1kKUNk), [Wiki](https://en.wikipedia.org/wiki/Heuristic_evaluation) 
    - Ref: [Udacity-Abtesting-Lesson1-Lecture6](https://classroom.udacity.com/courses/ud257/lessons/4018018619/concepts/40043986810923)
+
+- If cannot use A/B test? (TBD)
+  - Ref: [Medium](https://medium.com/teconomics-blog/5-tricks-when-ab-testing-is-off-the-table-f2637e9f15a5)
+    - Controlled Regression
+    - Regression Discontinuity Design
+    - Difference-in-Differences
+    - Fixed-Effects Regression
+    - Instrumental Variables
+    - Causal inference.
+- When A/B testing is not useful, we can: (TBD)
+  - Ref: [TowardsDataScience](https://towardsdatascience.com/a-summary-of-udacity-a-b-testing-course-9ecc32dedbb1)
+  - Analyze the user activity logs
+  - Conduct retrospective analysis
+  - Conduct user experience research
+  - Focus groups and surveys
+  - Human evaluation
 
 
 **Further Q:** Some example questions suitable (CAN) for ab-testing?

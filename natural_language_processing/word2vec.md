@@ -200,3 +200,14 @@ Ref:
 ## Possible interview questions:
 
 How to do word2vec? From [1p3c](https://www.1point3acres.com/bbs/thread-504099-1-1.html).
+
+
+## DD2. Negative sampling
+
+Instead of maximize the prob of all words, the negative sampling use select a handle of words to maximize their probability, which could reduce the complexity.
+
+Ref: 
+- [PersonalBlog](https://www.baeldung.com/cs/nlps-word2vec-negative-sampling)
+
+Q: maximize similarity? Relation between it and entropy?
+- Ref: [Stackoverflow](https://stackoverflow.com/questions/27860652/word2vec-negative-sampling-in-layman-term)

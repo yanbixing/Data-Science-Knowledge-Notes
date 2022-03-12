@@ -1,5 +1,14 @@
 # SysDesign Interview Framework
 
+steps: 
+
+<div  align="center">
+  <img src= https://codeit.us/storage/ngrRQBHhgldYMapZXHohfuk8pXPmodn3ECcDI4fm.png style = "zoom:80%">
+</div>
+
+
+Ref: [CodeIt-blog](https://codeit.us/blog/machine-learning-time-series-forecasting)
+
 ## 0. Recent exp
 
 - Opening: After clarifying question, explain the **main structure of my answer**.
@@ -316,7 +325,7 @@ Also, don't forget to evaluate the **quality** of actions.
 Usually, need to discriminate long term vs short term metrics: (TBD)
 
 - Long term: metric can be collected after long term that change happens
-  - 
+  - E.g. 
 - Short term: metric can be collected within short term, immediately affected by your change.
   - E.g. CTR
 

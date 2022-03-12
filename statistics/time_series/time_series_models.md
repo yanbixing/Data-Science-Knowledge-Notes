@@ -304,7 +304,7 @@ Penalize the model complexity with metrics like AIC, BIC
 
 #### 5.3.4. Cross validation for time series
 
-Forward Chaining Cross Validation:
+**Forward Chaining Cross Validation**:
 
 - fold 1 : training [1], test [2]
 - fold 2 : training [1 2], test [3]

@@ -65,33 +65,41 @@ Ref: [CsharpCorner-blog](https://www.c-sharpcorner.com/blogs/difference-between-
 ### 3.1. Table vs view
 
 - Table
-  - A table consists of rows and columns used to organize data 
+  - A table consists of rows and columns used to organize data.
 
 
-- View: The view is a virtual/logical table formed as a result of a query and used to view or manipulate parts of the table. We can create the columns of the view from one or more tables. Its content is based on base tables.
-  - Views are usually virtual and do not occupy space in systems.
-  - Views enable us to hide some of the columns from the table.
-  - It simplifies complex queries because it can draw data from multiple tables and present it as a single table.
-  - It helps in data security that shows only authorized information to the users.
-  - It presents a consistent, unchanged image of the database structure, even if the source tables are renamed, split, or restructured.
+- View: 
+  - A virtual/logical table formed as a result of a query and used to view or manipulate parts of the table. We can create the columns of the view from one or more tables. Its content is based on base tables.
+  - Characteristics:
+    - Usually virtual and do not occupy space in systems.
+    - Views enable us to hide some of the columns from the table.
+    - It simplifies complex queries because it can draw data from multiple tables and present it as a single table.
+    - It helps in data security that shows only authorized information to the users.
+    - It presents a consistent, unchanged image of the database structure, even if the source tables are renamed, split, or restructured.
 
 - Table vs View:
   - A table is a database object that holds information used in applications and reports. 
     - On the other hand, a view is also a database object utilized as a table and can also link to other tables.
   - A table consists of rows and columns to store and organized data in a structured format
     - while the **view is a result set of SQL statements**.
-  - A table is structured with columns and rows, while a view is a virtual table extracted from a database.
-  - The table is an independent data object while views are usually depending on the table.
-  - The table is an actual or real table that exists in physical locations. On the other hand, views are the virtual or logical table that does not exist in any physical location.
-  - A table allows to performs add, update or delete operations on the stored data. On the other hand, we cannot perform add, update, or delete operations on any data from a view. If we want to make any changes in a view, we need to update the data in the source tables.
-  - We cannot replace the **table object** directly because it is **stored as a physical entry**. In contrast, we can easily use the replace option to recreate the view because it is a pseudo name to the SQL statement running behind on the database server.
+  - A table is structured with columns and rows
+    - while a view is a virtual table extracted from a database.
+  - The table is an independent data object 
+    - while views are usually depending on the table.
+  - The table is an actual or real table that **exists in physical locations**. 
+    - views are the **virtual or logical table that does not exist in any physical location**.
+  - A table allows to performs add, update or delete operations on the stored data. 
+    - On the other hand, we **CANNOT perform** add, update, or delete **operations** on any data from a view. If we want to make any changes in a view, we need to update the data in the source tables.
+  - We cannot replace the **table object** directly because it is **stored as a physical entry**. 
+    - In contrast, we can easily use the replace option to recreate the view because it is a pseudo name to the SQL statement running behind on the database server.
 
 
 - Personal summary:
-  - Table: a physical stored data
-  - View: result of query, not physically stored
-    - More convenient to use, can be used as table, just not physically stored.
-    - Can hid information, more secure
+  - Table: physically stored data.
+  - View: result of query, not physically stored.
+    - Pros:
+      - Convenient to use, can be used same as table, but no need to be physically stored.
+      - Can hide information, more secure.
 
 [1p3a](https://www.1point3acres.com/bbs/thread-818409-1-1.html): Interview of M - Table vs View
 

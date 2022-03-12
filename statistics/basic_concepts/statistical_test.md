@@ -56,6 +56,32 @@ Ref:
 - [Bloomingtontutors](https://bloomingtontutors.com/blog/when-to-use-the-z-test-versus-t-test), [Oxford-Slides-P18](http://www.stats.ox.ac.uk/~massa/Lecture%2010.pdf): Z or t test.
 - [Medium-blog](https://medium.com/dataseries/hypothesis-testing-in-machine-learning-what-for-and-why-ad6ddf3d7af2): Z or t test Figure.
 
+### 1.3 t-distribution vs z-distribution (TBD)
+
+Ref: [JMP-Webpage](https://www.jmp.com/en_us/statistics-knowledge-portal/t-test/t-distribution.html)
+
+Some Key Points:
+
+- z-distribution is just normal distribution
+  - Ref: [JMP-Webpage](https://www.jmp.com/en_us/statistics-knowledge-portal/t-test/t-distribution.html), [Quora](https://www.quora.com/What-is-the-difference-between-the-z-distribution-and-the-Normal-distribution)
+
+t vs z
+
+Difference:
+
+- The standard normal or z-distribution assumes that you know the population standard deviation. 
+  - The t-distribution is based on the sample standard deviation. I.e. for t-distribution, you don't know population standard deviation.
+- The normal distribution assumes that the population standard deviation is known.
+  - The t-distribution does not make this assumption.
+  - The t-distribution is defined by the degrees of freedom. These are related to the sample size.
+  - As the sample size increases, the t-distribution becomes more similar to a normal distribution.
+- The t-distribution is most useful for small sample sizes, when the population standard deviation is not known, or both.
+
+Similarity:
+
+- Like the normal distribution, the t-distribution has a smooth shape.
+- Like the normal distribution, the t-distribution is symmetric. If you think about folding it in half at the mean, each side will be the same.
+- Like a standard normal distribution (or z-distribution), the t-distribution has a mean of zero.
 
 ## 2. 
 

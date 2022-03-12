@@ -220,7 +220,8 @@ Missing value means a lot of values are unkown.
   - 0/Average/median/mode(majority) accordingly.
   - Train model to predict if it is related with other features.
     - E.g. Mixed effect model: not sure if it is a classical/typical method.(TBD):
-      - Ref: [Walmart](https://www.1point3acres.com/bbs/thread-682274-1-1.html), [ResearchGate](https://www.researchgate.net/post/How-are-missing-data-handled-in-linear-mixed-effects-models), [christophe-pdf](http://christophe.genolini.free.fr/recherche/atelierATelecharger/atelier205_1_HJG.pdf)
+      - Ref: [ResearchGate](https://www.researchgate.net/post/How-are-missing-data-handled-in-linear-mixed-effects-models), [christophe-pdf](http://christophe.genolini.free.fr/recherche/atelierATelecharger/atelier205_1_HJG.pdf)
+      - InterviewQ Ref: [1p3a-MS_interview](https://www.1point3acres.com/bbs/thread-818409-1-1.html),[1p3a-WMT_interview](https://www.1point3acres.com/bbs/thread-682274-1-1.html),
 
 ### 2.2. Sparse value (TBD)
 

@@ -1,5 +1,23 @@
 # Model comparison (Model selection?) (TBD)
 
+感觉是不是可以归结为几个不同的方面 (TBD)
+
+- interpretable?
+  - probability interpretation?
+  - Model easy to interpret?
+- Resources consumption?
+  - time complexity?
+    - Easy to train or not?
+  - Scaling?
+    - Whether can find to large data?
+- Accuracy?
+  - Boundary complexity?
+    - Can fit non-linear boundary or not?
+- Stability/Robust
+  - Able to handle imbalanced data or missing values?
+
+
+
 ## 1. Model details
 
 ### 1.1. Linear models
