@@ -1,0 +1,8 @@
+- Hyper param tuning:
+  - Grid search:
+  - Random search: provide the distribution of param rather than exact point.
+  - Bayesian optimization:
+    - Sequential model-based optimization
+    - Next point is selected based on previous point.
+  - Cross Validation: use n-1 folds as training and 1 folds are evaluation iteratively.
+  - Ref: [Medium-blog](https://medium.com/analytics-vidhya/comparison-of-hyperparameter-tuning-algorithms-grid-search-random-search-bayesian-optimization-5326aaef1bd1): GridSearch, RandomSearch, BayesianOptimization.
