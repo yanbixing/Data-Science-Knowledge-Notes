@@ -381,3 +381,120 @@ where:
 
 
 Ref: [StatisticsHowTo](https://www.statisticshowto.com/probability-and-statistics/confidence-interval/), [Quora](https://www.quora.com/What-is-the-difference-between-confidence-interval-and-confidence-level), [Wiki-Confidence_interval](https://en.wikipedia.org/wiki/Confidence_interval)
+
+
+## Industry Application
+
+### Case: metric dilution
+
+Calculate the impact if the experiment is diluted.
+
+#### Undiluted stats
+
+- Prob
+$$\begin{aligned}
+ & p^{EG}(X):=\frac{n_+^{EG}}{N^{EG}}\\
+ & p^{CG}(X):=\frac{n_+^{CG}}{N^{CG}}\\ 
+\end{aligned}$$
+
+- Diff:
+$$\Delta \mu^{obs} = p_s^{EG} - p_s^{CG}$$
+
+
+- Pooled prob:
+
+$$p_{pooled} = \frac{n^{EG}_+ + n^{CG}_+}{N^{EG} + N^{CG}}$$
+
+- the pooled standard deviation of X: 
+
+$$\begin{aligned}
+  SD_{pooled}(X) &= \sqrt{\frac{(N^{EG}-1)(\mathrm{SD}^{EG})^2 + (N^{CG}-1)(\mathrm{SD}^{CG})^2}{N^{EG}+N^{CG} - 2}}\\
+  &\approx \sqrt{\frac{(\mathrm{SD}^{EG})^2+(\mathrm{SD}^{CG})^2}{2}} \leftarrow \text{if } N^{EG} \approx N^{CG}\\
+  &\approx \sqrt{p_{pooled} q_{pooled}} \leftarrow \text{if } p^{EG} \approx p^{CG}
+\end{aligned}$$
+
+- the standard error of the $\Delta \mu$: 
+
+$$\mathrm{SE}(\Delta \mu) = SD_{pooled}(X)\sqrt{\frac{1}{N^{EG}} + \frac{1}{N^{CG}}}$$
+
+#### Diluted stats
+
+Assume we have polution population blended to the A/B test population. Its success probability $p^{polu}$ is irrelavant to the A/B test. And its size $r^{polu}$ times the size of the A/B test population.
+
+- The diluted prob is:
+
+$$\begin{aligned}
+ p^{EG\_dilu}(X)&=\frac{p^{EG}N^{EG}+p^{polu}r^{polu}N^{EG}}{N^{EG}+r^{polu}N^{EG}}=\frac{ (p^{EG} + p^{polu}r^{polu})}{1+r^{polu}}\\
+ &=p^{EG} + \frac{ (p^{polu} - p^{EG})r^{polu}}{1+r^{polu}}\\
+ p^{CG\_dilu}(X)&=\frac{p^{CG}N^{CG}+p^{polu}r^{polu}N^{CG}}{N^{CG}+r^{polu}N^{CG}}=p^{CG} + \frac{ (p^{polu} - p^{CG})r^{polu}}{1+r^{polu}}\\
+\end{aligned}$$
+
+- The diluted expectation of observed difference is:
+$$\begin{aligned}
+  \Delta \mu^{obs\_dilu}&= \Delta \mu^{obs} +\frac{ (p^{CG} - p^{EG})r^{polu}}{1+r^{polu}} = \Delta \mu^{obs} -\frac{ \Delta \mu^{obs}r^{polu}}{1+r^{polu}}\\
+   &= \frac{ \Delta \mu^{obs}}{1+r^{polu}}
+\end{aligned}$$
+
+- The diluted pool probability is:
+
+<!-- &= \frac{ \begin{aligned}
+  p^{EG}N^{EG} + p^{CG}N^{CG} +\\
+  p^{polu}r^{polu}N^{EG} + p^{polu}r^{polu}N^{CG} 
+\end{aligned} }{ (1+r^{polu})(N^{EG} + N^{CG})}\\ -->
+
+$$\begin{aligned}
+  p^{polu}_{pooled} 
+&=\frac{
+  p^{EG}N^{EG} + p^{CG}N^{CG} +
+  p^{polu}r^{polu}N^{EG} + p^{polu}r^{polu}N^{CG}  }{ (1+r^{polu})(N^{EG} + N^{CG})}
+  \\
+  &= \frac{
+  p^{EG}N^{EG} + p^{CG}N^{CG}}{ (1+r^{polu})(N^{EG} + N^{CG})} + \frac{
+  p^{polu}r^{polu}N^{EG} + p^{polu}r^{polu}N^{CG}  }{ (1+r^{polu})(N^{EG} + N^{CG})}\\
+  &= \frac{1}{1+r^{polu}}p_{pooled} + \frac{
+  r^{polu} }{1+r^{polu}}p^{polu}\\
+\frac{p^{polu}_{pooled} }{p_{pooled}}& = \frac{1+r^{polu}\frac{p^{polu}}{p_{pooled}}}{1+r^{polu}} 
+\end{aligned}$$
+
+$$\begin{aligned}
+  q^{polu}_{pooled}&=1-p^{polu}_{pooled} \\
+  &= (\frac{1}{1+r^{polu}}+ \frac{
+  r^{polu} }{1+r^{polu}}) -(\frac{1}{1+r^{polu}}p_{pooled} + \frac{
+  r^{polu} }{1+r^{polu}}p^{polu})\\ 
+  &= \frac{1}{1+r^{polu}}q_{pooled} + \frac{
+  r^{polu} }{1+r^{polu}}q^{polu}\\
+\frac{q^{polu}_{pooled} }{q_{pooled}}& = \frac{1+r^{polu}\frac{q^{polu}}{q_{pooled}}}{1+r^{polu}} 
+\end{aligned}$$
+
+- The diluted SE is
+$$\begin{aligned}
+\frac{\mathrm{SE}^{polu}(\Delta \mu)}{\mathrm{SE}(\Delta \mu)} & = \sqrt{\frac{p^{polu}_{pooled} }{p_{pooled}} \frac{q^{polu}_{pooled} }{q_{pooled}}} \sqrt{\frac{1}{1+r^{polu}}}\\
+&=\frac{\sqrt{ (1+r^{polu}\frac{p^{polu}}{p_{pooled}})( 1+r^{polu}\frac{q^{polu}}{q_{pooled}} ) }}{(1+r^{polu})^{\frac{3}{2}}}
+\end{aligned}$$
+
+
+#### Numerical calcuation:
+
+Assume that, for an experiment we have: $r^{polu} = \frac{1}{2}$, $p^{polu} = 0.7$, $p^{pooled} = 0.1$, and the $\mathrm{\text{p-val}} = 0.03$, what is the expected observed difference and p-val after dilution?
+
+- Given p values, the q value are"
+$$\begin{aligned}
+  q^{polu} = 0.3 \qquad q^{pooled} = 0.9
+\end{aligned}$$
+
+- The expectation of observed difference is:
+
+$$\begin{aligned}
+  \Delta \mu^{obs\_dilu}&= \frac{ \Delta \mu^{obs}}{1+r^{polu}}=\frac{2}{3} \Delta \mu^{obs}
+\end{aligned}$$
+
+- The relation between diluted and un-diluted standard error can be expressed as: 
+
+$$\begin{aligned}
+\frac{\mathrm{SE}^{polu}(\Delta \mu)}{\mathrm{SE}(\Delta \mu)} &=\frac{\sqrt{ (1+r^{polu}\frac{p^{polu}}{p_{pooled}})( 1+r^{polu}\frac{q^{polu}}{q_{pooled}} ) }}{(1+r^{polu})^{\frac{3}{2}}}\\
+&=\frac{\sqrt{ (1+\frac{1}{2}\cdot7)( 1+\frac{1}{2}\frac{1}{3} ) }}{(1+\frac{1}{2})^{\frac{3}{2}}}\\
+&=\frac{\sqrt{\frac{63}{12}}}{\sqrt{\frac{27}{8}}} = \frac{2.291}{1.837} = 1.247
+\end{aligned}$$
+
+- Assume this distribution is Z-distribution, given $\mathrm{\text{p-val}} = 0.03$, we can know $Z = 1.881$ 
+- Given $Z=\frac{x-\mu}{\sigma}$ and here $x\rightarrow\Delta\mu, \mu\rightarrow0, \sigma\rightarrow\mathrm{SE}$, we can know $Z^{polu} = Z \frac{\frac{\Delta \mu^{obs\_dilu}}{\Delta \mu^{obs}}}{\frac{\mathrm{SE}^{polu}(\Delta \mu)}{\mathrm{SE}(\Delta \mu)}} = 1.881\cdot\frac{0.67}{1.247} = 1.011$, then the corresponding $\mathrm{\text{p-val}}^{polu} = 0.16$.
